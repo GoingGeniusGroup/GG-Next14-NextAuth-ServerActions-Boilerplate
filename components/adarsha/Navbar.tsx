@@ -62,7 +62,7 @@ const Navbar = () => {
               Login
             </button>
           </Link>
-          <Link href="./login/adarshaSignup">
+          <Link href="../adarsha/">
             <button className="px-4 py-2 text-white bg-purple-600 border border-gray-300 rounded-lg hover:border-blue-400 hover:bg-purple-700 transition-colors transform hover:scale-105">
               Signup
             </button>
