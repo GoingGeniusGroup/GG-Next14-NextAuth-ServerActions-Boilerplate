@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Account {
@@ -45,6 +45,8 @@ model User {
   accounts              Account[]
   isTwoFactorEnabled    Boolean                @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
+  Cart                  Cart[]
+  Order                 Order[]
 }
 
 model VerificationToken {
@@ -79,4 +81,137 @@ model TwoFactorConfirmation {
   userId  String   @unique
   expires DateTime
   user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Product {
+  id              String  @id @default(cuid())
+  name            String
+  description     String?
+  image           String?
+  costPrice       Float
+  quantityInStock Int
+  validity        String?
+  discount        String?
+  salePrice       Float?
+  margin          String?
+
+  inventory Inventory?
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  suppliers Supplier[] @relation("ProductSuppliers")
+  // orders    Order[]    @relation("ProductOrders")
+  carts     Cart[]
+  Variants  Variant[]
+}
+
+enum CartStatus {
+  PENDING
+  CHECKOUT
+}
+
+model Cart {
+  id String @id @default(cuid())
+
+  quantity Int
+  status   CartStatus @default(PENDING)
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+
+  variantId String?
+  variant   Variant? @relation(fields: [variantId], references: [id])
+
+  userId String? // User ID for authenticated users
+  user   User?   @relation(fields: [userId], references: [id])
+
+  orderId String?
+  order   Order?  @relation(fields: [orderId], references: [id], name: "OrderCarts")
+}
+
+model Variant {
+  id              String  @id @default(uuid())
+  name            String
+  salePrice       Float
+  priceDifference Float?
+  status          String?
+  costPrice       Float?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+
+  carts Cart[]
+
+  // orders Order[] @relation("OrderVariants")
+}
+
+model Category {
+  id           String  @id @default(cuid())
+  categoryName String
+  description  String?
+
+  products Product[]
+}
+
+model Inventory {
+  id          String   @id @default(cuid())
+  status      String
+  quantity    Int
+  restockDate DateTime
+  location    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  productId String  @unique
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+model Supplier {
+  id           String  @id @default(cuid())
+  supplierName String
+  email        String?
+  phone        String?
+
+  products Product[] @relation("ProductSuppliers")
+}
+
+enum OrderStatus {
+  PENDING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+model Order {
+  id            String      @id @default(cuid())
+  orderDate     DateTime    @default(now())
+  quantity      Int
+  deliveryDate  DateTime?
+  streetAddress String
+  state         String
+  city          String
+  status        OrderStatus @default(PENDING)
+
+  // products Product[] @relation("ProductOrders") //
+
+  // variants Variant[] @relation("OrderVariants")
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  paymentMethod   PaymentMethod @relation(fields: [paymentMethodId], references: [id])
+  paymentMethodId String
+
+  carts Cart[] @relation("OrderCarts")
+}
+
+model PaymentMethod {
+  id          String @id @default(cuid())
+  paymentType String // e.g., 'Cash', 'Credit Card'
+
+  orders Order[]
 }
