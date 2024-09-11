@@ -179,12 +179,12 @@ model Supplier {
   products Product[] @relation("ProductSuppliers")
 }
 
-enum OrderStatus {
-  PENDING
-  SHIPPED
-  DELIVERED
-  CANCELLED
-}
+// enum OrderStatus {
+//   PENDING
+//   SHIPPED
+//   DELIVERED
+//   CANCELLED
+// }
 
 model Order {
   id            String      @id @default(cuid())
