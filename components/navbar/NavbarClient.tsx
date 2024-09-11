@@ -12,6 +12,7 @@ import { LuLogOut } from 'react-icons/lu'
 import { RiEarthFill } from 'react-icons/ri'
 import CustomToolTip from '../MyComponents/CustomToolTip'
 
+
 interface NavbarClientProps {
   user: ExtendedUser | undefined
   handleServerSignOut: () => Promise<void>
@@ -88,7 +89,7 @@ const NavbarClient: React.FC<NavbarClientProps> = ({
           <div className='hidden text-black/70 lg:flex'>
             <div className='flex h-10 items-center justify-center gap-2 rounded-full bg-white px-12 shadow-lg backdrop-blur-md  md:gap-x-7 lg:gap-x-14'>
               <Link
-                href='/hud'
+                href='/adarsha/testing/login'
                 className={`group ${pathname === '/hud' ? 'scale-110 py-2 text-2xl font-bold text-pink-700' : 'py-2 font-semibold transition-all duration-300 ease-out hover:scale-105 hover:text-purple-600'}`}
               >
                 <GiShipWheel size={25} className='drop-shadow' />
@@ -143,7 +144,7 @@ const NavbarClient: React.FC<NavbarClientProps> = ({
               </Link>
             </li>
             <li>
-              <Link href='/hud' className='hover:text-violet-400' onClick={closeMenu}>
+              <Link href='/adarsha/testing/signup' className='hover:text-violet-400' onClick={closeMenu}>
                 HUD
               </Link>
             </li>
