@@ -16,7 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { getProducts } from "@/src/services/product";
+import { getProducts } from "@/services/product";
 
 import { CheckCircle2, MoreVertical, XCircle } from "lucide-react";
 import Link from "next/link";
