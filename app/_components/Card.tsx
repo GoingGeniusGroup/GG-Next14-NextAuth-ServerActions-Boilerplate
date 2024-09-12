@@ -12,10 +12,10 @@ const Card = () => {
 
   const images = useMemo(
     () => ({
-      qr: <Image src='qr.svg' height={72} width={72} alt="QR" className="absolute top-16 right-8" />,
-      qrgif: <Image src="qrgif" height={116} width={116} alt="QR Animation" className="absolute top-[42px] right-[10.6px] opacity-0 hover:opacity-100 transition-opacity duration-300" />,
-      flag: <Image src='flag' height={22} width={22} alt="flag" />,
-      nfc: <Image src="nfc" height={27} width={27} alt="NFC" />,
+      qr: <Image src='../../public/mixed/qr.svg' height={72} width={72} alt="QR" className="absolute top-16 right-8" />,
+      qrgif: <Image src="/public/mixed/qr" height={116} width={116} alt="QR Animation" className="absolute top-[42px] right-[10.6px] opacity-0 hover:opacity-100 transition-opacity duration-300" />,
+      flag: <Image src='/public/mixed/flag' height={22} width={22} alt="flag" />,
+      nfc: <Image src="/public/mixed/NFC" height={27} width={27} alt="NFC" />,
     }),
     []
   );
@@ -23,9 +23,8 @@ const Card = () => {
   return (
     <div className="flex items-center justify-center text-white">
       <div
-        className={`w-[318px] h-[201px] rounded-lg bg-transparent shadow-xl p-3 bg-white-400 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-20 border border-gray-100 relative duration-300 ${
-          isFlipped ? "" : ""
-        }`}
+        className={`w-[318px] h-[201px] rounded-lg bg-transparent shadow-xl p-3 bg-white-400 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-20 border border-gray-100 relative duration-300 ${isFlipped ? "" : ""
+          }`}
       >
         {isFlipped ? (
           <>

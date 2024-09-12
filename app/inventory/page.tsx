@@ -1,6 +1,6 @@
 import React from 'react'
 import Card from '../_components/Card'
-import background from '../../../../public/Rectangle.svg'
+import background from '../../public/mixed/Rectangle.svg'
 
 const page = () => {
     return (
