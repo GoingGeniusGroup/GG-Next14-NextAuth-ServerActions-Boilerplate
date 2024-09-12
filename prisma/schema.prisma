@@ -185,10 +185,10 @@ model Supplier {
 }
 
 enum OrderStatus {
-  PENDING
-  SHIPPED
-  DELIVERED
-  CANCELLED
+   PENDING
+   SHIPPED
+   DELIVERED
+   CANCELLED
 }
 
 model Order {
