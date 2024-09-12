@@ -3,7 +3,7 @@ import { CheckCircle2 } from "lucide-react";
 
 
 import { Button } from "@/components/ui/button";
-import PageHeader from "@/components/PageHeader/PageHeader";
+// import PageHeader from "@/components/PageHeader/PageHeader";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,8 +21,8 @@ const page = () => {
   return (
     <>
       <div className="container mx-auto flex justify-between items-center gap-4">
-        <PageHeader>All Products</PageHeader>
-
+        All Products
+        
         <Button asChild variant={"secondary"}>
           <Link href="/admin/products/new">Add Product</Link>
         </Button>
