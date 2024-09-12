@@ -1,6 +1,6 @@
 "use client";
 
-import { productSchema } from "@/src/schemas";
+import { productSchema } from "@/schemas";
 import { useRouter } from "next/router";
 import { useTransition } from "react";
 import { Controller, useForm } from "react-hook-form";
