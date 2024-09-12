@@ -14,7 +14,7 @@ import {
 import Link from "next/link";
 import ProductTable from "./_components/ProductTable";
 import ProductForm from "@/components/form/ProductForm";
-import ProductModel from "@/components/Model/ProductModel";
+// import ProductModel from "@/components/Model/ProductModel";
 import { db } from "@/lib/db";
 
 const page = () => {
@@ -28,7 +28,7 @@ const page = () => {
         </Button>
       </div>
       <ProductTable />
-      <ProductModel/>
+{/*       <ProductModel/> */}
     </>
   );
 };
