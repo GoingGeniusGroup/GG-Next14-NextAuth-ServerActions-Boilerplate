@@ -146,9 +146,28 @@ function Form() {
                 }
             </AnimatePresence>
 
-            <div className={`absolute bottom-4 ${!hidden ? 'hidden' : ''}`}>
-                <button onClick={toggleHidden} className="mt-5 p-3 bg-gray-400 rounded-full bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-20 text-white/80 hover:text-white capitalize flex justify-center gap-8 items-center"><span className="pl-2.5">add product</span> <span className="h-full w-8 rounded-full inline-block bg-blue-500 text-2xl">+</span></button>
-            </div>
+            <AnimatePresence>
+                <motion.div initial={{
+                    opacity: 0,
+                    scale: 0.5
+                }}
+                    animate={{
+                        opacity: 1,
+                        scale: 1
+                    }}
+                    transition={{
+                        duration: 0.6,
+                        // delay: 0.5,
+                        ease: 'easeOut'
+                    }}
+                    exit={{
+                        opacity: 0,
+                        scale: 0.5
+                    }}
+                    className={`absolute bottom-4 ${!hidden ? 'hidden' : ''}`}>
+                    <button onClick={toggleHidden} className="mt-5 p-3 bg-gray-400 rounded-full bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-20 text-white/80 hover:text-white capitalize flex justify-center gap-8 items-center"><span className="pl-2.5">add product</span> <span className="h-full w-8 rounded-full inline-block bg-blue-500 text-2xl">+</span></button>
+                </motion.div>
+            </AnimatePresence>
         </div>
     )
 }
