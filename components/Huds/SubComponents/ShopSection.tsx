@@ -184,10 +184,11 @@ export default function ShopSection() {
                   onClick={() => addToCart(product.id)}
                   className="w-full text-xs sm:text-sm"
                   size="sm"
+                  variant="black"
                 >
                   Add to Cart
                   {cart[product.id] && (
-                    <Badge variant="secondary" className="ml-2">
+                    <Badge variant="cool" className="ml-2">
                       {cart[product.id]}
                     </Badge>
                   )}
