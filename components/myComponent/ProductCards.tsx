@@ -1,26 +1,64 @@
 'use client'
-import Image from 'next/image'
-import React from 'react'
-import Button from './Button'
+import React, { useEffect, useState } from 'react'
+import Button from '../../components/myComponent/Button'
+
+interface Product {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+  rating: {
+    rate: number;
+    count: number;
+  };
+}
 
 function ProductCards() {
+  const [product, setProduct] = useState<Product | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const res = await fetch('https://fakestoreapi.com/products/1')
+        if (!res.ok) throw new Error('Failed to fetch product')
+        const fetchedProduct: Product = await res.json()
+        setProduct(fetchedProduct)
+      } catch (err) {
+        setError('Error fetching product. Please try again.')
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchProduct()
+  }, [])
+
+  if (isLoading) return <div className="flex justify-center items-center h-screen">Loading...</div>
+  // if (error) return <div className="flex justify-center items-center h-screen text-red-500">{error}</div>
+  if (!product) return null
+
   return (
-    <div className='w-[32rem] h-[22rem] mt-10 flex border'>
-      <div className='h-full flex-[50%]'>
-        <Image src='' alt='12' />
+
+    <div className='w-[42rem] h-[22rem] flex rounded-lg overflow-hidden shadow-lg border-b border-r border-gray-300 bg-[rgba(0,0,0,0.5)]'>
+      <div className='h-full w-1/2 bg-white p-4'>
+        <img src={product.image} alt={product.title || 'Product image'} className='h-full w-full object-contain' />
       </div>
-      <div className='flex flex-col border h-full flex-[50%] gap-2'>
-        <div className='flex flex-col border p-5'>
-          <h3 className='text-[1.4rem]'>title</h3>
-          <h4 className='text-[1rem]'>sub title</h4>
-          <p className='text-sm'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum natus fuga enim, odio facilis obcaecati recusandae tempora porro perspiciatis dolor ratione dolorum in omnis pariatur quae quo. Laboriosam, quibusdam necessitatibus</p>
+      <div className='flex flex-col h-full flex-1 gap-2 backdrop-filter backdrop-blur-sm bg-opacity-10'>
+        <div className='flex flex-col p-5 flex-grow'>
+          <h3 className='text-xl font-semibold mb-1'>{product.title}</h3>
+          <h4 className='text-base text-gray-400 mb-2'>{product.category}</h4>
+          <p className='text-sm line-clamp-5'>{product.description}</p>
         </div>
-        <div className='flex item-center  gap-5 border p-5'>
-          <p>price</p>
-          {/* <Button >buy now</Button> */}
+        <div className='flex items-center justify-between px-5 py-3'>
+          <p className='text-lg font-bold'>${product.price.toFixed(2)}</p>
+          <Button text="Buy Now" />
         </div>
       </div>
     </div>
+
   )
 }
 

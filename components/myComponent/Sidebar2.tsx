@@ -173,7 +173,6 @@ const Sidebar2: React.FC = () => {
                 {menuItem.name}
               </a>
               <div>{menuItem.hr}</div>
-              
 
               {/* Submenu Items */}
               {menuItem.submenu && active && (
