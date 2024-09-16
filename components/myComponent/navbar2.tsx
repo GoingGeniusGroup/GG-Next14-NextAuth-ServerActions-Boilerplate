@@ -18,7 +18,7 @@ const Navbar: React.FC<NavbarProps> = () => {
           <h2 className="text-3xl font-bold text-slate-200 ">name</h2>
         </div>
         <div className="flex items-center gap-6">
-          <Button onClick={undefined} />
+          <Button text="Add Product" />
           <span>
             <MdOutlineMail className="text-3xl text-slate-200" />
           </span>
