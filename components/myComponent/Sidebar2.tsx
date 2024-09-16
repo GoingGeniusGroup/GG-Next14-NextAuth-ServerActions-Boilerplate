@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import React, { useState } from "react";
 import { BsArrowLeftShort, BsSearch } from "react-icons/bs";
 import { BiSolidDashboard } from "react-icons/bi";
@@ -11,43 +11,59 @@ import { PiUserFocusThin } from "react-icons/pi";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import Image from "next/image";
 
-/**
- * Sidebar component with menu items and submenus
- *
- * @return {ReactElement} The rendered sidebar component
- */
-const Sidebar2 = () => {
-  const [active, setActive] = useState(true);
-  const [open, setOpen] = useState(false);
+// Type for submenu items
+interface SubmenuItem {
+  subId: number;
+  name: string;
+  link: string;
+  isActive?: boolean;
+}
 
-  /**
-   * Menu items with submenus
-   *
-   * @type {Array<Object>}
-   */
-  const menu = [
+// Type for main menu items
+interface MenuItem {
+  id: number;
+  name: string;
+  link?: string;
+  icon: React.ReactNode; // Icons as React elements
+  isActive?: boolean;
+  submenu?: boolean;
+  submenuItems?: SubmenuItem[]; // Optional submenu items array
+  spacing?: boolean;
+  onClick?: () => void;
+  hr?: JSX.Element;
+}
+
+// Sidebar2 component
+const Sidebar2: React.FC = () => {
+  const [active, setActive] = useState<boolean>(true);
+  const [open, setOpen] = useState<number | null>(null); // Track open submenu by ID
+
+  // Menu items with optional submenus
+  const menu: MenuItem[] = [
     {
       id: 1,
       name: "Dashboard",
       link: "/dashboard",
       icon: <BiSolidDashboard />,
+      isActive: true
     },
     {
       id: 2,
       name: "Inventory",
       link: "/dashboard/inventory",
       icon: <MdInventory />,
+      isActive: true
     },
     {
       id: 3,
       name: "Top Selling",
       link: "/dashboard/top-selling",
       icon: <MdOutlineSell />,
+      isActive: true
     },
     {
-      name: "Report",
       id: 4,
-      link: "/dashboard/report",
+      name: "Report",
       icon: <HiOutlineDocumentReport />,
       submenu: true,
       submenuItems: [
@@ -55,9 +71,20 @@ const Sidebar2 = () => {
           subId: 1,
           name: "Product Summary",
           link: "/dashboard/report/product-summary",
+          isActive: true
         },
-        { subId: 2, name: "Purchase", link: "/dashboard/report/purchase" },
-        { subId: 3, name: "Sales", link: "/dashboard/report/sales" },
+        {
+          subId: 2,
+          name: "Purchase",
+          link: "/dashboard/report/purchase",
+          isActive: true
+        },
+        {
+          subId: 3,
+          name: "Sales",
+          link: "/dashboard/report/sales",
+          isActive: true
+        },
       ],
     },
     {
@@ -65,6 +92,7 @@ const Sidebar2 = () => {
       name: "Customers",
       link: "/dashboard/customers",
       spacing: true,
+      hr: <hr className="border border-emerald-300 rounded-lg text-center" />,
       icon: <PiUserFocusThin />,
     },
     {
@@ -73,7 +101,12 @@ const Sidebar2 = () => {
       link: "/dashboard/settings",
       icon: <IoSettingsOutline />,
     },
-    { id: 7, name: "Logout", link: "/dashboard/logout", icon: <IoIosLogOut /> },
+    {
+      id: 7,
+      name: "Logout",
+      link: "/dashboard/logout",
+      icon: <IoIosLogOut />
+    },
   ];
 
   return (
@@ -118,40 +151,40 @@ const Sidebar2 = () => {
               }`}
           />
         </div>
+
         <ul className="pt-6">
-          <hr className=" border border-emerald-300 rounded-lg text-center" />
           {menu.map((menuItem) => (
-            <React.Fragment key={menuItem.id}>
-              <li
-                className={`text-white text-sm flex items-center gap-x-2 cursor-pointer p-1.5 duration-200 hover:bg-zinc-600 rounded-md ${menuItem.spacing ? "mt-12" : "mt-2"
+            <li key={menuItem.id}
+              className={`text-white text-sm flex items-center gap-x-2 cursor-pointer p-1.5 duration-200 hover:bg-zinc-600 rounded-md ${menuItem.spacing ? "mt-12" : "mt-2"
+                }`}
+            >
+              <span
+                className={`block float-left duration-300 ${!active ? "text-3xl" : "text-2xl"
+                  }`}
+                onClick={() => setActive(!active)}
+              >
+                {menuItem.icon}
+              </span>
+              <a
+                href={menuItem.link}
+                className={`text-white text-base font-medium flex-1 duration-500 ${!active && "hidden"
                   }`}
               >
-                <span
-                  className={`block float-left duration-300 ${!active ? "text-3xl" : "text-2xl"
-                    }`}
-                  onClick={() => setActive(!active)}
-                >
-                  {menuItem.icon}
-                </span>
-                <a
-                  href={menuItem.link}
-                  className={`text-white text-base font-medium flex-1 duration-500 ${!active && "hidden"
-                    }`}
-                >
-                  {menuItem.name}
-                </a>
-                {menuItem.submenu && active && (
-                  <MdKeyboardArrowDown
-                    className={`${open && "rotate-180"}`}
-                    onClick={() => setOpen(!open)}
-                  />
-                )}
-              </li>
-              {menuItem.submenu && open && active && (
-                <ul
-                  className={`text-white text-sm cursor-pointer p-2 rounded-md ml-3 bg-transparent`}
-                >
-                  {menuItem.submenuItems.map((submenuItem) => (
+                {menuItem.name}
+              </a>
+              <div>{menuItem.hr}</div>
+              
+
+              {/* Submenu Items */}
+              {menuItem.submenu && active && (
+                <MdKeyboardArrowDown
+                  className={`${open === menuItem.id && "rotate-180"}`}
+                  onClick={() => setOpen(open === menuItem.id ? null : menuItem.id)} // Toggle submenu
+                />
+              )}
+              {menuItem.submenu && open === menuItem.id && active && (
+                <ul className="text-white text-sm cursor-pointer p-2 rounded-md ml-3 bg-transparent">
+                  {menuItem.submenuItems?.map((submenuItem) => (
                     <li
                       key={submenuItem.subId}
                       className={`text-white text-sm flex items-center gap-x-4 cursor-pointer p-2 px-5 rounded-md hover:bg-slate-400`}
@@ -161,7 +194,7 @@ const Sidebar2 = () => {
                   ))}
                 </ul>
               )}
-            </React.Fragment>
+            </li>
           ))}
         </ul>
       </div>

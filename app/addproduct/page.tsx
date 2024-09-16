@@ -25,7 +25,7 @@ type form = {
 
 function Form() {
     const form = useForm<form>()
-    const { register, control, handleSubmit, formState } = form
+    const { register, handleSubmit, formState } = form
     const { errors } = formState
 
     const onSubmit = (data: form) => {
@@ -37,7 +37,6 @@ function Form() {
     const toggleHidden = () => {
         setUnhidden(!hidden)
     }
-
 
     return (
         <div className="flex flex-col items-center bg-black min-h-dvh pt-6">

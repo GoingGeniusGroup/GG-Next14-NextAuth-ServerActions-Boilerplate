@@ -8,7 +8,7 @@ import { FaRegMoneyBillAlt } from "react-icons/fa";
 
 
 
-const SalesOverview = () => {
+const SalesOverview: React.FC = () => {
   return (
     <div className="bg-gray-300 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-15 border border-gray-100 flex flex-col gap-y-4 p-5 w-7/12 text-white">
       <div>

@@ -5,9 +5,7 @@ import { TbBasketCancel } from "react-icons/tb";
 import { MdAssignmentReturn } from "react-icons/md";
 
 
-
-
-const PurchaseOverview = () => {
+const PurchaseOverview: React.FC = () => {
   return (
     <div className=" bg-gray-300 rounded-md bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-20 border text-white border-gray-100 flex flex-col gap-y-4 p-5 w-7/12">
       <div className="">

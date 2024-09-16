@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-
+// Define a type for the data structure
 type FoodData = {
   name: string;
   calories: number;
@@ -16,11 +16,19 @@ type FoodData = {
   protein: number;
 };
 
-function createData(name: string, calories: number, fat: number, carbs: number, protein: number) {
+// Function to create a FoodData object
+function createData(
+  name: string,
+  calories: number,
+  fat: number,
+  carbs: number,
+  protein: number
+): FoodData {
   return { name, calories, fat, carbs, protein };
 }
 
-const rows: FoodData[] = [
+// Define the rows as a readonly array to prevent mutation
+const rows: readonly FoodData[] = [
   createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
   createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
   createData('Eclair', 262, 16.0, 24, 6.0),
@@ -28,9 +36,13 @@ const rows: FoodData[] = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-export default function BasicTable() {
+// BasicTable component with proper type annotations
+const BasicTable: React.FC = () => {
   return (
-    <TableContainer component={Paper} className='bg-gray-300 rounded-md bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-20 border border-gray-100 '>
+    <TableContainer
+      component={Paper}
+      className="bg-gray-300 rounded-md bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-20 border border-gray-100"
+    >
       <Table sx={{ minWidth: 500 }} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -60,4 +72,6 @@ export default function BasicTable() {
       </Table>
     </TableContainer>
   );
-}
+};
+
+export default BasicTable;
