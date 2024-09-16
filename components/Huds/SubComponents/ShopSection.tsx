@@ -38,35 +38,39 @@ const products: Product[] = [
     id: 1,
     name: "Classic T-Shirt",
     price: 19.99,
-    image: "/placeholder.svg",
+    image: "https://purepng.com/public/uploads/large/white-tshirt-n0j.png",
     category: "Clothing",
   },
   {
     id: 2,
     name: "Denim Jeans",
     price: 49.99,
-    image: "/placeholder.svg",
+    image:
+      "https://static.vecteezy.com/system/resources/thumbnails/021/938/733/small_2x/blue-jeans-isolated-on-a-transparent-background-png.png",
     category: "Clothing",
   },
   {
     id: 3,
     name: "Sneakers",
     price: 79.99,
-    image: "/placeholder.svg",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSByAWaWoInX4M5P9luXYgAU-Y9W7FisXvTbQ&s",
     category: "Shoes",
   },
   {
     id: 4,
     name: "Hoodie",
     price: 39.99,
-    image: "/placeholder.svg",
+    image:
+      "https://png.pngtree.com/png-vector/20240402/ourmid/pngtree-blank-black-male-hoodie-sweatshirt-long-sleeve-with-clipping-path-mens-png-image_12258589.png",
     category: "Clothing",
   },
   {
     id: 5,
     name: "Sunglasses",
     price: 29.99,
-    image: "/placeholder.svg",
+    image:
+      "https://img.drz.lazcdn.com/static/pk/p/b6326aee217bb925d7bc39cd65fead89.jpg_720x720q80.jpg",
     category: "Accessories",
   },
 ];
@@ -164,7 +168,9 @@ export default function ShopSection() {
                   src={product.image}
                   alt={product.name}
                   fill
-                  className="object-cover"
+                  className="hover:scale-110 transition-transform duration-300 object-contain"
+                  unoptimized
+                  loading="lazy"
                 />
               </div>
               <div className="p-3 sm:p-4">
@@ -214,6 +220,8 @@ export default function ShopSection() {
                       width={64}
                       height={64}
                       className="object-cover rounded"
+                      unoptimized
+                      loading="lazy"
                     />
                     <div className="flex-grow">
                       <h4 className="font-semibold">{item.name}</h4>
