@@ -54,10 +54,28 @@ const menu: MenuItem[] = [
   },
   {
     id: 3,
-    name: "Top Selling",
-    link: "/dashboard/top-selling",
+    name: "Product",
+    link: "/product",
     icon: <MdOutlineSell />,
-    isActive: false
+    isActive: false,
+    submenu: true,
+    submenuItems: [
+      {
+        subId: 1,
+        name: "add product",
+        link: "/product/addproduct",
+      },
+      {
+        subId: 2,
+        name: "product list",
+        link: "/product/productlist",
+      },
+      {
+        subId: 3,
+        name: "product category",
+        link: "/product/productcategory",
+      },
+    ],
   },
   {
     id: 4,
@@ -183,20 +201,31 @@ const Sidebar2: React.FC = () => {
                 <a
                   href={menuItem.link}
                   className={`text-white text-base font-medium flex-1 duration-500 ${!active && "hidden"
-                    }`}
+                    }`
+                  }
+                  onClick={() => setOpen(open === menuItem.id ? null : menuItem.id)}
                 >
                   {menuItem.name}
                 </a>
-                {/* Submenu Items */}
-
-                {menuItem.submenu && active && (
-                  <MdKeyboardArrowDown
-                    className={`${open === menuItem.id && "rotate-180"}`}
-                    onClick={() => setOpen(open === menuItem.id ? null : menuItem.id)} // Toggle submenu
-                  />
-                )}
-
+                {
+                  menuItem.id === 3 && active && (
+                    <MdKeyboardArrowDown
+                      // onClick={() => setOpen(open === menuItem.id ? null : menuItem.id)} // Toggle submenu
+                      className={`${open === menuItem.id && "rotate-180"} text-2xl text-white`}
+                    />
+                  )
+                }
+                {
+                  menuItem.id === 4 && active && (
+                    <MdKeyboardArrowDown
+                      // onClick={() => setOpen(open === menuItem.id ? null : menuItem.id)} // Toggle submenu
+                      className={`${open === menuItem.id && "rotate-180"} text-2xl text-white`}
+                    />
+                  )
+                }
               </li>
+
+              {/* Submenu Items */}
               {
                 menuItem.submenu && open && active && (
                   <ul className="text-white text-sm cursor-pointer p-2 rounded-md ml-3 bg-transparent">
@@ -205,7 +234,7 @@ const Sidebar2: React.FC = () => {
                         key={submenuItem.subId}
                         className={`text-white text-sm flex items-center gap-x-4 cursor-pointer p-2 px-5 rounded-md hover:bg-slate-400`}
                       >
-                        <a href={submenuItem.link}>{submenuItem.name}</a>
+                        <a href={submenuItem.link} className="text-white text-sm font-medium capitalize">{submenuItem.name}</a>
                       </li>
                     ))}
                   </ul>
