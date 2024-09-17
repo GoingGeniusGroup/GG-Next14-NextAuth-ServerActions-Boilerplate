@@ -14,7 +14,7 @@ const page = () => {
         <>
             <div className="flex md:flex-row px-8 pt-8 pb-4 bg-cover bg-no-repeat bg-center min-h-dvh"
                 style={{ backgroundImage: `url(${BG.src})` }}>
-                <div className='h-full' >
+                <div className='min-h-dvh' >
                     <Sidebar2 />
                 </div>
                 <div className=" flex flex-col w-full h-full">
