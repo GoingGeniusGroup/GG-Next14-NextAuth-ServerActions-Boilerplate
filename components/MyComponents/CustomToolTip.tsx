@@ -1,4 +1,3 @@
-// NOTE: make sure you add group in the parent element className
 interface toolTip {
   content : String
   top : String
