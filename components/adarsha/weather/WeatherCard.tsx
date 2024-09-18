@@ -3,8 +3,18 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
+interface WeatherData {
+  main: {
+    temp: number
+    humidity: number
+  }
+  weather: Array<{
+    description: string
+  }>
+  name: string
+
 const WeatherCard = () => {
-  const [weatherData, setWeatherData] = useState(null);
+  const [weatherData, setWeatherData] = useState<WeatherData | null>(null)
 
   // Mapping of weather conditions to custom icon filenames
   const iconMapping = {
@@ -26,22 +36,26 @@ const WeatherCard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://api.openweathermap.org/data/2.5/weather', {
+        const response = await axios.get<WeatherData>('https://api.openweathermap.org/data/2.5/weather', {
           params: {
             q: 'Kathmandu',
             appid: 'ae4ca9856c92c4ede63a36c109a16c24',
             units: 'metric',
           },
-        });
-        console.log('Fetched data:', response.data); // Log the fetched data
-        setWeatherData(response.data);
+        })
+        console.log('Fetched data:', response.data)
+        setWeatherData(response.data)
       } catch (error) {
-        console.error('Error fetching the weather data:', error.message);
+        if (error instanceof Error) {
+          console.error('Error fetching the weather data:', error.message)
+        } else {
+          console.error('An unknown error occurred while fetching weather data')
+        }
       }
-    };
+    }
 
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
 
   if (!weatherData) {
     return <p>Loading...</p>;
