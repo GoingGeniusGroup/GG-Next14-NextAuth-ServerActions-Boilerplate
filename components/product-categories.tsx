@@ -7,9 +7,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
   Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -28,23 +25,23 @@ import { Label } from "@/components/ui/label"
 type Category = {
   id: string
   name: string
-  icon: React.ElementType
-  iconName: keyof typeof LucideIcons
+  iconName: keyof typeof LucideIcons // Only store the icon name
 }
 
 export default function ProductCategoriesComponent() {
   const [categories, setCategories] = useState<Category[]>([
-    { id: '1', name: 'Electronics', icon: LucideIcons.Smartphone, iconName: 'Smartphone' },
-    { id: '2', name: 'Clothing', icon: LucideIcons.Shirt, iconName: 'Shirt' },
-    { id: '3', name: 'Books', icon: LucideIcons.BookOpen, iconName: 'BookOpen' },
+    { id: '1', name: 'Electronics', iconName: 'Smartphone' },
+    { id: '2', name: 'Clothing', iconName: 'Shirt' },
+    { id: '3', name: 'Books', iconName: 'BookOpen' },
   ])
-  const [newCategory, setNewCategory] = useState<Omit<Category, 'id'>>({ name: '', icon: LucideIcons.HelpCircle, iconName: 'HelpCircle' })
+  
+  const [newCategory, setNewCategory] = useState<Omit<Category, 'id'>>({ name: '', iconName: 'HelpCircle' })
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   const handleAddCategory = () => {
     if (newCategory.name && newCategory.iconName) {
-      setCategories([...categories, { ...newCategory, id: Date.now().toString(), icon: LucideIcons[newCategory.iconName] }])
-      setNewCategory({ name: '', icon: LucideIcons.HelpCircle, iconName: 'HelpCircle' })
+      setCategories([...categories, { ...newCategory, id: Date.now().toString() }])
+      setNewCategory({ name: '', iconName: 'HelpCircle' })
       setIsDialogOpen(false)
     } else {
       alert('Please fill in all fields.')
