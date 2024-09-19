@@ -1,54 +1,32 @@
 "use client";
 
-import { productSchema } from "@/schemas";
-
-import {  useEffect,useTransition } from "react";
-import {
-  useForm,
-  useFieldArray
-} from "react-hook-form";
-import { z } from "zod";
-
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Form } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
-import { SelectModel } from "@/components/ui/select";
 import { addProduct } from "@/actions/product";
-import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Form } from "@/components/ui/form";
+import { SelectModel } from "@/components/ui/select";
+import { useFetchValues } from "@/hooks/useFetchValues";
+import { productSchema } from "@/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Minus, Plus } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { useFetchValues } from "@/hooks/useFetchValues";
-import ImageInput from "../form/ImageInput";
+import { useRouter } from "next/navigation";
+import { useEffect, useTransition } from "react";
+import { useFieldArray, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { z } from "zod";
 import { FormInput } from "../auth/form-input";
+import ImageInput from "../form/ImageInput";
 import { Spinner } from "../ui/Spinner";
 
-
-
 const productstatus = [
-    { label: "Available", value: "AVAILABLE" },
-    { label: "Not Available", value: "NOTAVAILABLE" },
-  ];
-
-
+  { label: "Available", value: "AVAILABLE" },
+  { label: "Not Available", value: "NOTAVAILABLE" },
+];
 
 const ProductForm: React.FC = () => {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const { categories, suppliers, getValues } = useFetchValues();
-
-
-
-  const userId = session?.user?.id;
-
-  useEffect(() => {
-    if (userId) {
-      const fetchValues = async () => {
-        return await getValues();
-      };
-      fetchValues();
-    }
-  }, [userId]);
 
   const [isPending, startTransition] = useTransition();
   type productType = z.infer<typeof productSchema>;
@@ -71,14 +49,25 @@ const ProductForm: React.FC = () => {
       suppliers: [{ id: "", supplier: "" }],
     },
   });
+
   const { control, setValue } = form;
   const { fields, append, remove } = useFieldArray({
     name: "suppliers",
     control,
   });
+
+  useEffect(() => {
+    if (status === "authenticated" && session?.user?.id) {
+      const fetchValues = async () => {
+        await getValues();
+      };
+      fetchValues();
+    }
+  }, [status, session?.user?.id, getValues]);
+
   const selectedSuppliers = form.watch("suppliers") || [];
 
-  const getAvailableSuppliers = (index: string | number) => {
+  const getAvailableSuppliers = (index: number) => {
     const selectedSupplierIds = selectedSuppliers
       .filter((_, i) => i !== index)
       .map((supplier) => supplier?.supplier);
@@ -93,71 +82,60 @@ const ProductForm: React.FC = () => {
       (supplier) => supplier.value === value
     );
     if (selectedSupplier) {
-      // Update the supplier ID and value in the form state
       setValue(`suppliers.${idx}.id`, selectedSupplier.id);
       setValue(`suppliers.${idx}.supplier`, value);
     }
   };
-
-
-  // const onSubmit: SubmitHandler<productType> = (data:productType) => {
-  //      setSaving(true);
-  //     console.log("Submitted Data:", data);
-  //   };
-  //   const onInvalid: SubmitErrorHandler<FormData> = (errors) => {
-  //     console.log("Validation Errors:", errors);
-  //   };
-
-
 
   const onSubmit = async (values: productType) => {
     const formData = new FormData();
     if (values.image) {
       formData.append("image", values.image);
     }
-
-    // Append other form fields
+  
     for (const [key, value] of Object.entries(values)) {
       if (key !== "image" && !Array.isArray(value)) {
         formData.append(key, value as string);
       } else if (Array.isArray(value)) {
-        // Convert arrays to JSON string
         formData.append(key, JSON.stringify(value));
       }
     }
-    console.log(formData);
-
+  
     startTransition(async () => {
-      await addProduct(formData)
-        .then((data) => {
-          if (!data) return;
-          if (!data.success) {
-            return toast.error(data.error.message);
-          }
-          toast.success("product added sucsesfully", {
+      try {
+        const result = await addProduct(formData);
+        if (result.success) {
+          toast.success(result.message, {
             autoClose: 2000,
           });
-
-          return router.push("/admin/products");
-        })
-        .catch((error) => {
-          console.log(error);
-
-          toast.error("Something went wrong.", {
+          router.push("/admin/products");
+        } else {
+          toast.error(result.error?.message || "An error occurred", {
             autoClose: 2000,
           });
+        }
+      } catch (error) {
+        console.error(error);
+        toast.error("Something went wrong.", {
+          autoClose: 2000,
         });
+      }
     });
   };
 
+  if (status === "loading") {
+    return <Spinner />;
+  }
 
+  if (status === "unauthenticated") {
+    router.push("/login");
+    return null;
+  }
 
   return (
     <div className="container mx-auto flex items-center justify-center">
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-        >
+        <form onSubmit={form.handleSubmit(onSubmit)}>
           <fieldset disabled={isPending} className="group">
             <ImageInput
               control={form.control}
@@ -192,7 +170,6 @@ const ProductForm: React.FC = () => {
                   placeholder="Enter cost price"
                   isPending={isPending}
                 />
-
                 <FormInput
                   control={form.control}
                   name="quantityInStock"
@@ -227,7 +204,6 @@ const ProductForm: React.FC = () => {
                   placeholder="Enter sale price"
                   isPending={isPending}
                 />
-
                 <FormInput
                   control={form.control}
                   name="margin"
@@ -238,8 +214,6 @@ const ProductForm: React.FC = () => {
                 />
               </div>
               <div className="space-y-4">
-                {/* Status Select */}
-
                 <SelectModel
                   control={form.control}
                   name="status"
@@ -248,8 +222,6 @@ const ProductForm: React.FC = () => {
                   label="Status"
                   defaultValue="Select a status"
                 />
-                {/* Status Category */}
-
                 <SelectModel
                   control={form.control}
                   name="category"
@@ -258,54 +230,48 @@ const ProductForm: React.FC = () => {
                   label="Category"
                   defaultValue="Select a category"
                 />
-                {/* Status suppliers */}
-                <div className=" gap-2 ">
-                  {fields.map((field, index) => {
-                    return (
-                      <div
-                        className=" form-control flex flex-col  gap-2"
-                        key={field.id}
-                      >
-                        <SelectModel
-                          control={form.control}
-                          name={`suppliers.${index}.supplier` as const}
-                          options={getAvailableSuppliers(index)}
-                          isPending={isPending}
-                          label={`Supplier ${index + 1}` as const}
-                          idx={index}
-                          onValueChange={handleSelectChange}
-                          id={true}
-                          defaultValue="Select a supplier"
-                        />
-                        {index > 0 && (
-                          <Button
-                            asChild
-                            variant={"outline"}
-                            onClick={() => remove(index)}
-                          >
-                            <div className="text-red-500  hover:text-red-700 cursor-pointer">
-                              <Minus className=" h-6 w-6" />
-                            </div>
-                          </Button>
-                        )}
-                      </div>
-                    );
-                  })}
+                <div className="gap-2">
+                  {fields.map((field, index) => (
+                    <div
+                      className="form-control flex flex-col gap-2"
+                      key={field.id}
+                    >
+                      <SelectModel
+                        control={form.control}
+                        name={`suppliers.${index}.supplier` as const}
+                        options={getAvailableSuppliers(index)}
+                        isPending={isPending}
+                        label={`Supplier ${index + 1}` as const}
+                        idx={index}
+                        onValueChange={handleSelectChange}
+                        id={true}
+                        defaultValue="Select a supplier"
+                      />
+                      {index > 0 && (
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={() => remove(index)}
+                          className="text-red-500 hover:text-red-700"
+                        >
+                          <Minus className="h-6 w-6" />
+                        </Button>
+                      )}
+                    </div>
+                  ))}
                   {selectedSuppliers.length === suppliers.length ? (
                     <div className="rounded-md p-2 cursor-pointer text-indigo-500 hover:text-indigo-700">
-                      No more supplier
+                      No more suppliers
                     </div>
                   ) : (
                     <Button
-                      asChild
-                      variant={"outline"}
+                      type="button"
+                      variant="outline"
                       onClick={() => append({ id: "", supplier: "" })}
-                      className="mt-4"
+                      className="mt-4 flex cursor-pointer text-indigo-500 hover:text-indigo-700"
                     >
-                      <div className="flex cursor-pointer text-indigo-500 hover:text-indigo-700">
-                        <Plus className="mr-2 h-4 w-4 " />
-                        Add new supplier
-                      </div>
+                      <Plus className="mr-2 h-4 w-4" />
+                      Add new supplier
                     </Button>
                   )}
                 </div>
@@ -313,10 +279,6 @@ const ProductForm: React.FC = () => {
             </div>
 
             <div className="mt-8 space-x-6 text-center mb-5">
-              {/* <Modal.Close className="rounded px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-600">
-              Cancel
-            </Modal.Close> */}
-
               <Button
                 type="submit"
                 className="inline-flex items-center justify-center rounded bg-indigo-500 px-12 py-4 text-sm font-medium text-white hover:bg-indigo-600 group-disabled:pointer-events-none"

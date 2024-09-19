@@ -1,9 +1,9 @@
 "use server";
+import { db } from "@/lib/db";
 import { response } from "@/lib/utils";
 import { productSchema } from "@/schemas";
 import fs from "fs/promises";
 import { revalidatePath } from "next/cache";
-import { db } from "@/lib/db";
 
 
 const writeImageToDisk = async (image:File) => {
@@ -79,26 +79,33 @@ export const addProduct = async (
    console.log(product,'product from server');
 
    if (product) {
- 
-     revalidatePath('/admin/products')
-     return response({
-       success: true,
-       code: 201,
-       message: "Product created successfully",
-     });
-   }
- } catch (error) {
-  console.log(error,'unkwnon');
-  
-  return response({
-    success: false,
-  
-    error: {
-      code: 500,
-      message: "Unknown error occurred",
-    },
-  });
- }
+      revalidatePath('/admin/products')
+      return response({
+        success: true,
+        code: 201,
+        message: "Product created successfully",
+        data: product, // Include the created product in the response
+      });
+    } else {
+      return response({
+        success: false,
+        error: {
+          code: 500,
+          message: "Failed to create product",
+        },
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    
+    return response({
+      success: false,
+      error: {
+        code: 500,
+        message: "Unknown error occurred",
+      },
+    });
+  }
 };
 
 
