@@ -16,14 +16,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { getProducts } from "@/services/product";
+
 
 import { CheckCircle2, MoreVertical, XCircle } from "lucide-react";
 import Link from "next/link";
+import { getProducts } from "@/services/product";
 
 const ProductTable = async () => {
   const products = await getProducts();
-  console.log(products, "products");
+
 
   if (products?.length === 0) return <p>No products found</p>;
   return (
@@ -85,13 +86,12 @@ const ProductTable = async () => {
                       </Link>
                     </DropdownMenuItem>
 
-                   
                     <DropdownMenuSeparator />
-                     {/* <ActiveToggleDropdownItem
+                    {/* <ActiveToggleDropdownItem
                     id={product.id}
                     isAvailableForPurchase={product.isAvailableForPurchase}
                   /> */}
-                  {/* <DeleteDropdownItem
+                    {/* <DeleteDropdownItem
                     id={product.id}
                     disabled={product._count.orders > 0}
                   /> */}
