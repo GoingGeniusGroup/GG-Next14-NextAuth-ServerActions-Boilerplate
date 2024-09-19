@@ -106,56 +106,57 @@ export const profileSchema = z
       "File size should be less than 5MB."
     );
 
-  export const productSchema = z.object({
-    name: z.string().min(1, "Name is required"),
-    image: imageSchema,
-    description: z.string().optional(),
-    costPrice: z
-    .preprocess((value) => {
-      if (typeof value === "string") {
-        return parseFloat(value);
-      }
-      return value;
-    }, z.number({
-      required_error: "Cost price is required",
-    })),
-  
-    quantityInStock: z
-    .preprocess((value) => {
-      if (typeof value === "string") {
-        return parseFloat(value);
-      }
-      return value;
-    }, z.number({
-      required_error: "quantity  is required",
-    })),
-    validity: z.string().optional(),
-    discount: z.string().optional(),
-    salePrice: z.preprocess((value) => {
-      if (typeof value === "string") {
-        return parseFloat(value);
-      }
-      return value;
-    }, z.number({
-      required_error: "Sale price is required",
-    })),
-    margin: z.string().optional(),
-  
-    status: z.enum(["AVAILABLE", "NOTAVAILABLE"], {
-      message: "Status is required",
-    }),
-    category: z.string().refine((val) => val !== "", {
-      message: "Please select a valid category",
-    }),
-  
-    suppliers: z
-    .array(
-      z.object({
-        id: z.string().min(1, { message: "Supplier is required" }),
-        supplier: z.string().min(1, { message: "Supplier is required" }),
-      })
-    )
-    .nonempty({ message: "At least one supplier is required" }),
-  
-  });
+    export const productSchema = z.object({
+      name: z.string().min(1, "Name is required"),
+      image: imageSchema, // Assuming `imageSchema` is defined elsewhere
+      description: z.string().optional(),
+      
+      costPrice: z.preprocess((value) => {
+        if (typeof value === "string") {
+          return parseFloat(value);
+        }
+        return value;
+      }, z.number({
+        required_error: "Cost price is required",
+      })),
+    
+      quantityInStock: z.preprocess((value) => {
+        if (typeof value === "string") {
+          return parseFloat(value);
+        }
+        return value;
+      }, z.number({
+        required_error: "Quantity is required",
+      })),
+    
+      validity: z.string().optional(),
+      discount: z.string().optional(),
+    
+      salePrice: z.preprocess((value) => {
+        if (typeof value === "string") {
+          return parseFloat(value);
+        }
+        return value;
+      }, z.number({
+        required_error: "Sale price is required",
+      })),
+    
+      margin: z.string().optional(),
+    
+      // Updated status field with correct error message handling
+      status: z.enum(["AVAILABLE", "NOTAVAILABLE"], {
+        required_error: "Status is required",
+      }),
+    
+      category: z.string().refine((val) => val !== "", {
+        message: "Please select a valid category",
+      }),
+    
+      suppliers: z.array(
+        z.object({
+          id: z.string().min(1, { message: "Supplier ID is required" }),
+          supplier: z.string().min(1, { message: "Supplier name is required" }),
+        })
+      ).nonempty({ message: "At least one supplier is required" }),
+    });
   
