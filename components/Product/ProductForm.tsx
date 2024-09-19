@@ -12,17 +12,16 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-
-import { Spinner } from "@/components/ui/Spinner";
 import { SelectModel } from "@/components/ui/select";
 import { addProduct } from "@/actions/product";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { Minus, Plus } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { useFetchValues } from "@/src/hooks/useFetchValues";
+import { useFetchValues } from "@/hooks/useFetchValues";
 import ImageInput from "../form/ImageInput";
 import { FormInput } from "../auth/form-input";
+import { Spinner } from "../ui/Spinner";
 
 
 
