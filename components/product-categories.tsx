@@ -24,7 +24,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
-    
+
 type Category = {
   id: string
   name: string
@@ -42,8 +42,8 @@ export default function ProductCategoriesComponent() {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   const handleAddCategory = () => {
-    if (newCategory.name && newCategory.icon) {
-      setCategories([...categories, { ...newCategory, id: Date.now().toString(), iconName: newCategory.icon as keyof typeof LucideIcons }])
+    if (newCategory.name && newCategory.iconName) {
+      setCategories([...categories, { ...newCategory, id: Date.now().toString(), icon: LucideIcons[newCategory.iconName] }])
       setNewCategory({ name: '', icon: LucideIcons.HelpCircle, iconName: 'HelpCircle' })
       setIsDialogOpen(false)
     } else {
@@ -52,7 +52,7 @@ export default function ProductCategoriesComponent() {
   }
 
   const IconComponent = ({ iconName }: { iconName: keyof typeof LucideIcons }) => {
-    const Icon = LucideIcons[iconName]
+    const Icon = LucideIcons[iconName] as React.ElementType
     return Icon ? <Icon className="h-6 w-6" /> : null
   }
 
@@ -102,8 +102,8 @@ export default function ProductCategoriesComponent() {
                 </Label>
                 <Input
                   id="icon"
-                  value={newCategory.icon}
-                  onChange={(e) => setNewCategory({ ...newCategory, icon: e.target.value })}
+                  value={newCategory.iconName}
+                  onChange={(e) => setNewCategory({ ...newCategory, iconName: e.target.value as keyof typeof LucideIcons })}
                   className="col-span-3"
                   placeholder="e.g., Smartphone, Shirt, BookOpen"
                 />
