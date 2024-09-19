@@ -3,7 +3,7 @@ import { CheckCircle2 } from "lucide-react";
 
 
 import { Button } from "@/components/ui/button";
-import PageHeader from "@/components/PageHeader/PageHeader";
+// import PageHeader from "@/components/PageHeader/PageHeader";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,21 +14,21 @@ import {
 import Link from "next/link";
 import ProductTable from "./_components/ProductTable";
 import ProductForm from "@/components/form/ProductForm";
-import ProductModel from "@/components/Model/ProductModel";
+// import ProductModel from "@/components/Model/ProductModel";
 import { db } from "@/lib/db";
 
 const page = () => {
   return (
     <>
       <div className="container mx-auto flex justify-between items-center gap-4">
-        <PageHeader>All Products</PageHeader>
-
+        All Products
+        
         <Button asChild variant={"secondary"}>
           <Link href="/admin/products/new">Add Product</Link>
         </Button>
       </div>
       <ProductTable />
-      <ProductModel/>
+{/*       <ProductModel/> */}
     </>
   );
 };

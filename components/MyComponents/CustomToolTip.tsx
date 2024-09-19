@@ -1,5 +1,12 @@
 // NOTE: make sure you add group in the parent element className
-export default function CustomToolTip({ content, top, left, translateY }) {
+interface toolTip {
+  content : String
+  top : String
+  left: String
+  translateY : String
+}
+
+export default function CustomToolTip({ content, top, left, translateY }: toolTip) {
   return (
     <>
       <div
