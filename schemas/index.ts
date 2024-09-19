@@ -91,35 +91,71 @@ export const profileSchema = z
   );
 
 
-  const fileSchema = z.instanceof(File, { message: "Required"})
-
-
-
-  const imageSchema = fileSchema.refine(
-      file => file.size === 0 || file.type.startsWith("image/")
-    )
-  
-  const ProductStatusSchema = z.enum(['AVAILABLE', 'NOTAVAILABLE']);
-  export const productSchema = z.object({
-      name: z.string().min(1, 'Name is required'),
-      image: imageSchema.refine(file => file.size >0, "Required"),
-      description: z.string().optional(),
-      costPrice: z.number().min(0, 'Cost Price must be non-negative'), 
-      quantityInStock: z.number().int().min(0, 'Quantity in Stock must be a non-negative integer'),
-      validity: z.string().optional(),
-      discount: z.string().optional(), 
-      salePrice: z.number().min(0, 'Sale Price must be non-negative').optional(),
-      margin: z.string().optional(), 
-  
-      status: ProductStatusSchema,
-  
-      category: z
-      .string()
-      .refine((val) => val !== 'Choose category', { message: 'Please select a valid city' }),
-  
-      // suppliers: z
-      // .array(z.string().min(1, { message: "Supplier is required" }))
-      // .nonempty({ message: "At least one supplier is required" }),
-  
-  
+  const MAX_FILE_SIZE = 5000000;
+  const imageSchema = z
+    .instanceof(File)
+    .refine((file) => file.size > 0, {
+      message: "Image is required",
     })
+    .refine(
+      (file) => file.type.startsWith("image/"),
+      "Invalid file type. Only image files are allowed."
+    )
+    .refine(
+      (file) => file.size <= MAX_FILE_SIZE,
+      "File size should be less than 5MB."
+    );
+
+  export const productSchema = z.object({
+    name: z.string().min(1, "Name is required"),
+    image: imageSchema,
+    description: z.string().optional(),
+    costPrice: z
+    .preprocess((value) => {
+      if (typeof value === "string") {
+        return parseFloat(value);
+      }
+      return value;
+    }, z.number({
+      required_error: "Cost price is required",
+    })),
+  
+    quantityInStock: z
+    .preprocess((value) => {
+      if (typeof value === "string") {
+        return parseFloat(value);
+      }
+      return value;
+    }, z.number({
+      required_error: "quantity  is required",
+    })),
+    validity: z.string().optional(),
+    discount: z.string().optional(),
+    salePrice: z.preprocess((value) => {
+      if (typeof value === "string") {
+        return parseFloat(value);
+      }
+      return value;
+    }, z.number({
+      required_error: "Sale price is required",
+    })),
+    margin: z.string().optional(),
+  
+    status: z.enum(["AVAILABLE", "NOTAVAILABLE"], {
+      message: "Status is required",
+    }),
+    category: z.string().refine((val) => val !== "", {
+      message: "Please select a valid category",
+    }),
+  
+    suppliers: z
+    .array(
+      z.object({
+        id: z.string().min(1, { message: "Supplier is required" }),
+        supplier: z.string().min(1, { message: "Supplier is required" }),
+      })
+    )
+    .nonempty({ message: "At least one supplier is required" }),
+  
+  });
+  
