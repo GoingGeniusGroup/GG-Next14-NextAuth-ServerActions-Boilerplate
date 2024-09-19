@@ -1,35 +1,33 @@
-"use client";
+'use client'
 
-import { addProduct } from "@/actions/product";
-import { Button } from "@/components/ui/button";
-import { Form } from "@/components/ui/form";
-import { SelectModel } from "@/components/ui/select";
-import { useFetchValues } from "@/hooks/useFetchValues";
-import { productSchema } from "@/schemas";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Minus, Plus } from "lucide-react";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useEffect, useTransition } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
-import { toast } from "react-toastify";
-import { z } from "zod";
-import { FormInput } from "../auth/form-input";
-import ImageInput from "../form/ImageInput";
-import { Spinner } from "../ui/Spinner";
+import { addProduct } from "@/actions/product"
+import { Button } from "@/components/ui/button"
+import { Form } from "@/components/ui/form"
+import { SelectModel } from "@/components/ui/select"
+import { useFetchValues } from "@/hooks/useFetchValues"
+import { productSchema } from "@/schemas"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Minus, Plus } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { useTransition } from "react"
+import { useFieldArray, useForm } from "react-hook-form"
+import { toast } from "react-toastify"
+import { z } from "zod"
+import { FormInput } from "../auth/form-input"
+import ImageInput from "../form/ImageInput"
+import { Spinner } from "../ui/Spinner"
 
 const productstatus = [
   { label: "Available", value: "AVAILABLE" },
   { label: "Not Available", value: "NOTAVAILABLE" },
-];
+]
 
 const ProductForm: React.FC = () => {
-  const router = useRouter();
-  const { data: session, status } = useSession();
-  const { categories, suppliers, getValues } = useFetchValues();
+  const router = useRouter()
+  const { categories, suppliers, getValues } = useFetchValues()
 
-  const [isPending, startTransition] = useTransition();
-  type productType = z.infer<typeof productSchema>;
+  const [isPending, startTransition] = useTransition()
+  type productType = z.infer<typeof productSchema>
 
   const form = useForm<productType>({
     resolver: zodResolver(productSchema),
@@ -48,88 +46,70 @@ const ProductForm: React.FC = () => {
       category: "",
       suppliers: [{ id: "", supplier: "" }],
     },
-  });
+  })
 
-  const { control, setValue } = form;
+  const { control, setValue } = form
   const { fields, append, remove } = useFieldArray({
     name: "suppliers",
     control,
-  });
+  })
 
-  useEffect(() => {
-    if (status === "authenticated" && session?.user?.id) {
-      const fetchValues = async () => {
-        await getValues();
-      };
-      fetchValues();
-    }
-  }, [status, session?.user?.id, getValues]);
-
-  const selectedSuppliers = form.watch("suppliers") || [];
+  const selectedSuppliers = form.watch("suppliers") || []
 
   const getAvailableSuppliers = (index: number) => {
     const selectedSupplierIds = selectedSuppliers
       .filter((_, i) => i !== index)
-      .map((supplier) => supplier?.supplier);
+      .map((supplier) => supplier?.supplier)
 
     return suppliers.filter(
       (option) => !selectedSupplierIds.includes(option.value)
-    );
-  };
+    )
+  }
 
   const handleSelectChange = (idx: number, value: string) => {
     const selectedSupplier = suppliers.find(
       (supplier) => supplier.value === value
-    );
+    )
     if (selectedSupplier) {
-      setValue(`suppliers.${idx}.id`, selectedSupplier.id);
-      setValue(`suppliers.${idx}.supplier`, value);
+      setValue(`suppliers.${idx}.id`, selectedSupplier.id)
+      setValue(`suppliers.${idx}.supplier`, value)
     }
-  };
+  }
 
   const onSubmit = async (values: productType) => {
-    const formData = new FormData();
+    const formData = new FormData()
     if (values.image) {
-      formData.append("image", values.image);
+      formData.append("image", values.image)
     }
-  
+
     for (const [key, value] of Object.entries(values)) {
       if (key !== "image" && !Array.isArray(value)) {
-        formData.append(key, value as string);
+        formData.append(key, value as string)
       } else if (Array.isArray(value)) {
-        formData.append(key, JSON.stringify(value));
+        formData.append(key, JSON.stringify(value))
       }
     }
-  
+
     startTransition(async () => {
       try {
-        const result = await addProduct(formData);
+        const result = await addProduct(formData)
         if (result.success) {
           toast.success(result.message, {
             autoClose: 2000,
-          });
-          router.push("/admin/products");
+          })
+          router.push("/admin/products")
         } else {
           toast.error(result.error?.message || "An error occurred", {
             autoClose: 2000,
-          });
+          })
         }
       } catch (error) {
-        console.error(error);
+        console.error(error)
         toast.error("Something went wrong.", {
           autoClose: 2000,
-        });
+        })
       }
-    });
-  };
-
-  if (status === "loading") {
-    return <Spinner />;
-  }
-
-  if (status === "unauthenticated") {
-    router.push("/login");
-    return null;
+    })
   }
 
   return (
@@ -291,7 +271,7 @@ const ProductForm: React.FC = () => {
         </form>
       </Form>
     </div>
-  );
-};
+  )
+}
 
-export default ProductForm;
+export default ProductForm

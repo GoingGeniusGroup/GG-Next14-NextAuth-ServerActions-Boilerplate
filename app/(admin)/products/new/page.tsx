@@ -1,14 +1,12 @@
 
-import ProductForm from '@/components/Product/ProductForm'
-import React from 'react'
+import { Suspense } from 'react'
+import { ProductFormWrapper } from './ProductFormWrapper'
 
-const page = () => {
+
+export default function NewProductPage() {
   return (
-    <div>
-      
-      <ProductForm/>
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <ProductFormWrapper />
+    </Suspense>
   )
 }
-
-export default page
