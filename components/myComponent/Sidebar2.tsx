@@ -79,6 +79,30 @@ const menu: MenuItem[] = [
   },
   {
     id: 4,
+    name: "seller",
+    icon: <MdOutlineSell />,
+    isActive: false,
+    submenu: true,
+    submenuItems: [
+      {
+        subId: 1,
+        name: "seller list",
+        link: "/seller/sellerlist",
+      },
+      {
+        subId: 2,
+        name: "add seller",
+        link: "/seller/addseller",
+      },
+      {
+        subId: 3,
+        name: "seller category",
+        link: "/seller/sellercategory",
+      },
+    ],
+  },
+  {
+    id: 5,
     name: "Report",
     icon: <HiOutlineDocumentReport />,
     submenu: true,
@@ -102,7 +126,7 @@ const menu: MenuItem[] = [
     ],
   },
   {
-    id: 5,
+    id: 6,
     name: "Customers",
     link: "/dashboard/customers",
     spacing: true,
@@ -111,14 +135,14 @@ const menu: MenuItem[] = [
     isActive: false
   },
   {
-    id: 6,
+    id: 7,
     name: "Settings",
     link: "/dashboard/settings",
     icon: <IoSettingsOutline />,
     isActive: false
   },
   {
-    id: 7,
+    id: 8,
     name: "Logout",
     link: "/dashboard/logout",
     icon: <IoIosLogOut />,

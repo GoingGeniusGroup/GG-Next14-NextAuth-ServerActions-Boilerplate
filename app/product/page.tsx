@@ -25,6 +25,7 @@ const Page = () => {
                         <Navbar />
                     </div>
                     <div className='pl-5 pt-5'>
+                        
                         {pathname === '/product' && <ProductList />}
                         {pathname === 'product/addproduct' && <AddProduct />}
                         {pathname === '/product/productcard' && <ProductCard />}

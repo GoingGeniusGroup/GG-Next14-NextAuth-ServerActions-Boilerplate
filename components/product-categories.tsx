@@ -34,7 +34,7 @@ export default function ProductCategoriesComponent() {
     { id: '2', name: 'Clothing', iconName: 'Shirt' },
     { id: '3', name: 'Books', iconName: 'BookOpen' },
   ])
-  
+
   const [newCategory, setNewCategory] = useState<Omit<Category, 'id'>>({ name: '', iconName: 'HelpCircle' })
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
@@ -56,7 +56,7 @@ export default function ProductCategoriesComponent() {
   return (
     <div className="container mx-auto py-10">
       <h1 className="text-2xl font-bold mb-5">Product Categories</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
         {categories.map((category) => (
           <Card key={category.id}>
             <CardHeader>
@@ -69,7 +69,7 @@ export default function ProductCategoriesComponent() {
         ))}
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button variant="outline" className="h-[140px] w-full">
+            <Button variant="outline" className="h-[74px] w-full">
               <PlusCircle className="mr-2 h-4 w-4" />
               Add Category
             </Button>
@@ -99,6 +99,7 @@ export default function ProductCategoriesComponent() {
                 </Label>
                 <Input
                   id="icon"
+                  type='file'
                   value={newCategory.iconName}
                   onChange={(e) => setNewCategory({ ...newCategory, iconName: e.target.value as keyof typeof LucideIcons })}
                   className="col-span-3"
