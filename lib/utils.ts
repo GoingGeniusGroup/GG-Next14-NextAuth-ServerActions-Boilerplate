@@ -59,6 +59,17 @@ export const verifyJwtToken = <T extends object>(token: string) => {
   }
 };
 
+export const fileToBase64 = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      resolve(reader.result as string);
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+};
+
 // Overload for response status in server action
 export function response(response: ResponseWithMessage): Response;
 export function response<T extends Record<string, unknown>>(response: Response<T>): Response<T>;
