@@ -1,5 +1,8 @@
+<<<<<<< Updated upstream
 // import { Layout } from '@/components/dom/Layout';
 import { Toaster } from "@/components/ui/sonner";
+=======
+>>>>>>> Stashed changes
 import "@/styles/globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -18,10 +21,15 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en">
       <body className={inter.className}>
+<<<<<<< Updated upstream
       {/* <Layout> */}
         <Toaster position="bottom-left" richColors theme="light" />
         {children}
       {/* </Layout> */}
+=======
+        <Toaster position="bottom-left" richColors theme="light" />
+        {children}
+>>>>>>> Stashed changes
       </body>
     </html>
   );
