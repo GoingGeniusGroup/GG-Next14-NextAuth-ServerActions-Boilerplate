@@ -1,13 +1,11 @@
 "use client";
 
-import { productSchema } from "@/src/schemas";
+import { productSchema } from "@/schemas";
 
-import { FormEvent, useEffect, useRef, useState, useTransition } from "react";
+import {  useEffect,useTransition } from "react";
 import {
   useForm,
-  useFieldArray,
-  SubmitHandler,
-  SubmitErrorHandler,
+  useFieldArray
 } from "react-hook-form";
 import { z } from "zod";
 
@@ -15,19 +13,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 
-import FormInput from "./FormInput";
-
 import { Spinner } from "@/components/ui/Spinner";
-
 import { SelectModel } from "@/components/ui/select";
-import { addProduct } from "@/src/server-actions/product/product";
+import { addProduct } from "@/server-actions/product/product";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import ImageInput from "./ImageInput";
 import { Minus, Plus } from "lucide-react";
 
 import { useSession } from "next-auth/react";
 import { useFetchValues } from "@/src/hooks/useFetchValues";
+import ImageInput from "../form/ImageInput";
+import { FormInput } from "../auth/form-input";
 
 
 
