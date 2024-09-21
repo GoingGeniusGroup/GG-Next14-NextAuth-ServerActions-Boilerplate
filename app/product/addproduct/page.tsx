@@ -5,7 +5,6 @@ import { useState } from "react"
 import { IoClose } from "react-icons/io5";
 import { motion, AnimatePresence } from "framer-motion";
 
-
 type form = {
     productName: string
     productId: number
@@ -23,6 +22,21 @@ type form = {
     barcode: string
 }
 
+const containerVariants = {
+    hidden: { opacity: 0, scale: 0.8, y: 100 },
+    visible: {
+        opacity: 1,
+        scale: 1,
+        y: 0,
+        transition: {
+            duration: 0.4,
+            ease: [0.42, 0, 0.58, 1],
+            staggerChildren: 0.15
+        }
+    },
+    exit: { opacity: 0, y: 100, transition: { duration: 0.3, ease: 'easeIn' } }
+};
+
 function Form() {
     const form = useForm<form>()
     const { register, handleSubmit, formState } = form
@@ -39,34 +53,19 @@ function Form() {
     }
 
     return (
-        <div className="flex flex-col items-center bg-black min-h-dvh pt-6">
+        <div className="flex flex-col items-center min-h-dvh pt-6 rounded-md overflow-hidden bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-20 border border-gray-100 h-full w-full">
             <h2 className="text-white text-center capitalize"> add product </h2>
             <AnimatePresence>
                 {
                     !hidden && <motion.div
-                        initial={{
-                            y: 220,
-                            opacity: 0.5,
-                            // scale: 0.5,
-                        }}
-                        animate={{
-                            opacity: 0.8,
-                            // scale: 1,
-                            y: 0
-                        }}
-                        transition={{
-                            duration: 0.6,
-                            // delay: 0.5,
-                            ease: 'easeOut'
-                        }}
-                        exit={{
-                            opacity: 0,
-                            // scale: 0.5
-                            y: 250
-                        }}
-                        className={`bg-[rgba(92,136,218,0.51)] w-11/12 rounded-lg capitalize transition-all duration-300 m-5 p-4 `}>
+                        variants={containerVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        className="bg-[rgba(35,35,37,0.51)] rounded-lg capitalize transition-all duration-300 m-5 p-4"
+                    >
                         <div className="flex justify-end">
-                            <button title="Close" className="p-1.5 bg-white rounded-full"
+                            <button title="Close" className="p-1.5 bg-white rounded-full "
                                 onClick={toggleHidden}
                             ><IoClose className="text-2xl font-extrabold" /></button>
                         </div>
@@ -80,7 +79,7 @@ function Form() {
                                             value: true,
                                             message: 'enter product name'
                                         }
-                                    })} className="p-2 rounded-md" placeholder="enter email" />
+                                    })} className="p-2 rounded-md" placeholder="enter product name" />
                                     <p className="text-red-400"> {errors.productName?.message} </p>
                                 </div>
 
@@ -96,7 +95,7 @@ function Form() {
                                 </div>
 
                                 <div className="flex flex-col justify-center mt-5 gap-2">
-                                    <label htmlFor="password" className="text-white">expiry date</label>
+                                    <label htmlFor="expiryDate" className="text-white">expiry date</label>
                                     <input type="date" {...register("expiryDate", {
                                         required: {
                                             value: true,
@@ -107,7 +106,7 @@ function Form() {
                                 </div>
 
                                 <div className="flex flex-col justify-center mt-5 gap-2">
-                                    <label htmlFor="password" className="text-white">received date</label>
+                                    <label htmlFor="receivedDate" className="text-white">received date</label>
                                     <input type="date" {...register("receivedDate", {
                                         required: {
                                             value: true,
@@ -116,8 +115,9 @@ function Form() {
                                     })} className="p-2 rounded-md border-none" />
                                     <p className="text-red-400"> {errors.receivedDate?.message} </p>
                                 </div>
+
                                 <div className="flex flex-col justify-center mt-5 gap-2">
-                                    <label htmlFor="password" className="text-white">price</label>
+                                    <label htmlFor="price" className="text-white">price</label>
                                     <input type="number" {...register("price", {
                                         required: {
                                             value: true,
@@ -128,7 +128,7 @@ function Form() {
                                 </div>
 
                                 <div className="flex flex-col justify-center mt-5 gap-2">
-                                    <label htmlFor="password" className="text-white">barcode</label>
+                                    <label htmlFor="barcode" className="text-white">barcode</label>
                                     <input type="text" {...register("barcode", {
                                         required: {
                                             value: true,
@@ -146,25 +146,17 @@ function Form() {
             </AnimatePresence>
 
             <AnimatePresence>
-                <motion.div initial={{
-                    opacity: 0,
-                    scale: 0.5
-                }}
-                    animate={{
-                        opacity: 1,
-                        scale: 1
-                    }}
-                    transition={{
-                        duration: 0.6,
-                        // delay: 0.5,
-                        ease: 'easeOut'
-                    }}
-                    exit={{
-                        opacity: 0,
-                        scale: 0.5
-                    }}
-                    className={`absolute bottom-4 ${!hidden ? 'hidden' : ''}`}>
-                    <button onClick={toggleHidden} className="mt-5 p-3 bg-gray-400 rounded-full bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-20 text-white/80 hover:text-white capitalize flex justify-center gap-8 items-center"><span className="pl-2.5">add product</span> <span className="h-full w-8 rounded-full inline-block bg-blue-500 text-2xl">+</span></button>
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, ease: [0.42, 0, 0.58, 1] }}
+                    exit={{ opacity: 0, scale: 0.5 }}
+                    className={`absolute bottom-4 ${!hidden ? 'hidden' : ''}`}
+                >
+                    <button onClick={toggleHidden} className="mt-5 p-3 bg-gray-400 rounded-full bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-20 text-white/80 hover:text-white capitalize flex justify-center gap-8 border border-blue-800 items-center">
+                        <span className="pl-2.5">add product</span>
+                        <span className="h-full w-8 rounded-full inline-block bg-blue-500 text-2xl">+</span>
+                    </button>
                 </motion.div>
             </AnimatePresence>
         </div>
