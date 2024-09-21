@@ -61,10 +61,9 @@ const products: Product[] = [
     },
 ];
 
-
 export default function InventoryPage() {
     return (
-        <div className="container mx-auto py-10">
+        <div className="container py-10 bg-white-400 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-gray-100 rounded-md">
             <h1 className="text-2xl font-bold mb-5">Inventory</h1>
             <Table>
                 <TableCaption>List of Products in Inventory</TableCaption>
