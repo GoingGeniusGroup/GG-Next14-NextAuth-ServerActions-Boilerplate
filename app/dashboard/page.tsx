@@ -2,12 +2,12 @@ import React from 'react'
 import InventorySummary from '../../components/myComponent/InventorySummary'
 import SalesOverview from '../../components/myComponent/SalesOverview'
 import PurchaseOverview from '../../components/myComponent/PurchaseOverview'
-import TopSelling from '../../components/myComponent/TopSelling'
 import Sidebar2 from '../../components/myComponent/Sidebar2'
 import Navbar from '../../components/myComponent/navbar'
 import ProductSummary from '../../components/myComponent/ProductSummary'
 import LowQuantity from '../../components/myComponent/LowQuantity'
 import BG from '../../public/bg/bg.jpg'
+import TopSelling from '@/components/myComponent/TopSelling'
 
 const page = () => {
     return (

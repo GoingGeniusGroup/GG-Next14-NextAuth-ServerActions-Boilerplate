@@ -3,6 +3,7 @@ import "@/styles/globals.css";
 import { Toaster } from "@/ui/sonner";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+// import { Providers } from "./store/provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,3 +31,5 @@ export default async function RootLayout({
     </html>
   );
 }
+
+
