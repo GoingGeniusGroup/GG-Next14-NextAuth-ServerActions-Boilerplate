@@ -14,11 +14,11 @@ const SearchBar: React.FC<SearchBarProps> = ({
 }) => (
   <div className="max-w-2xl mx-auto mb-8">
     <div className="relative">
-      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
       <Input
         type="text"
         placeholder="Search posts"
-        className="pl-10 pr-4 py-2 w-full bg-white bg-opacity-80 backdrop-blur-sm rounded-full"
+        className="pl-10 pr-4 py-2 w-full bg-white/90 backdrop-blur-sm rounded-full"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
