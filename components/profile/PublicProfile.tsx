@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { gsap } from "gsap";
 
 // Sub-components
 import Header from "./subComponents/Header";
@@ -54,19 +55,6 @@ const posts = [
     content: "Just finished an amazing sci-fi novel. Highly recommend!",
     image: "/placeholder.svg",
   },
-  {
-    id: 7,
-    title: "BookaWE Review",
-    content: "Justawsga finished an amazing sci-fi novel. Highly recommend!",
-    image: "/placeholder.svg",
-  },
-  {
-    id: 8,
-    title: "Booksss Review",
-    content:
-      "Justasfasgqag finished an amazing sci-fi novel. Highly recommend!",
-    image: "/placeholder.svg",
-  },
 ];
 
 type Layout = "full" | "headings" | "compact" | "gap";
@@ -76,6 +64,16 @@ export default function PublicProfile({ username }: { username: string }) {
   const [isPlaying, setIsPlaying] = useState(true);
   const [layout, setLayout] = useState<Layout>("full");
   const [searchQuery, setSearchQuery] = useState("");
+  const [isMinimized, setIsMinimized] = useState(false);
+
+  const postGridRef = useRef<HTMLDivElement>(null);
+  const minimizeIconRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Set up GSAP defaults
+    gsap.defaults({ ease: "power3.inOut" });
+  }, []);
 
   const changeVideo = (index: number) => {
     setCurrentVideo(index);
@@ -89,6 +87,64 @@ export default function PublicProfile({ username }: { username: string }) {
     setIsPlaying(!isPlaying);
   };
 
+  const toggleMinimize = () => {
+    if (isMinimized) {
+      // Animate back to full size
+      gsap.to(minimizeIconRef.current, {
+        y: "100%",
+        opacity: 0,
+        duration: 0.3,
+        onComplete: () => {
+          gsap.set(minimizeIconRef.current, { display: "none" });
+        },
+      });
+
+      gsap.to(postGridRef.current, {
+        y: 0,
+        scale: 1,
+        opacity: 1,
+        duration: 0.5,
+        delay: 0.1,
+      });
+
+      gsap.to(containerRef.current, {
+        backgroundColor: "rgba(255, 255, 255, 0.2)",
+        backdropFilter: "blur(10px)",
+        duration: 0.5,
+      });
+
+      // Allow scrolling again when maximized
+      gsap.set(containerRef.current, { overflowY: "auto" });
+    } else {
+      // Animate to minimize
+      gsap.to(postGridRef.current, {
+        y: "50%",
+        scale: 0.8,
+        opacity: 0,
+        duration: 0.5,
+        onComplete: () => {
+          gsap.set(minimizeIconRef.current, { display: "flex" });
+          gsap.from(minimizeIconRef.current, {
+            y: "100%",
+            opacity: 0,
+            duration: 0.3,
+          });
+        },
+      });
+
+      gsap.to(containerRef.current, {
+        backgroundColor: "rgba(255, 255, 255, 0)",
+        backdropFilter: "blur(0px)",
+        duration: 0.5,
+        delay: 0.3,
+      });
+
+      // Disable scrolling when minimized
+      gsap.set(containerRef.current, { overflowY: "hidden" });
+    }
+    setIsMinimized(!isMinimized);
+  };
+
   const filteredPosts = posts.filter(
     (post) =>
       post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -96,28 +152,46 @@ export default function PublicProfile({ username }: { username: string }) {
   );
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gray-100">
+    <div className="min-h-screen relative overflow-hidden">
       {/* Video Background */}
       <VideoBackground src={videos[currentVideo]} isPlaying={isPlaying} />
 
       {/* Black Opacity */}
       <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-30" />
-      
 
       {/* Header with Layout Dropdown */}
       <Header changeLayout={changeLayout} />
 
       <main
-        className={`relative z-10 container mx-auto px-4 py-8 ${
+        className={`relative z-10 container mx-auto w-[85%] px-4 py-8 ${
           layout === "gap" ? "mt-16" : ""
-          }`}
+        }`}
       >
-        <div className="h-20"/>
+        <div className="h-12" />
+
         {/* Search Bar */}
         <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        {/* Minimize Button */}
+        <div className="flex justify-end -mt-12 mb-2">
+          <button
+            onClick={toggleMinimize}
+            className="bg-blue-500 text-white py-2 px-4 rounded-md z-20"
+          >
+            {isMinimized ? "Show Posts" : "Minimize Posts"}
+          </button>
+        </div>
 
-        {/* Posts Grid */}
-        <PostsGrid posts={filteredPosts} layout={layout} />
+        {/* Posts Container */}
+
+        <div
+          ref={containerRef}
+          className={`bg-white/20 rounded-xl backdrop-blur-md p-4 transition-all duration-500 relative`}
+        >
+          {/* Posts Grid */}
+          <div ref={postGridRef} className="transition-all duration-500">
+            <PostsGrid posts={filteredPosts} layout={layout} />
+          </div>
+        </div>
       </main>
 
       {/* Floating Controls */}

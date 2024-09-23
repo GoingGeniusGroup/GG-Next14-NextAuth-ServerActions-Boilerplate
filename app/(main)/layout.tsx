@@ -1,6 +1,6 @@
 import Navbar from "@/app/_components/navbar";
 import { RightSideHudProvider } from "@/components/dom/RightSideHudProvider";
-import RightSideHud from '@/components/Huds/RightSideHud';
+import RightSideHud from "@/components/Huds/RightSideHud";
 import ProfileHud from "@/components/profile/ProfileHud";
 
 export default async function MainLayout({
@@ -14,7 +14,7 @@ export default async function MainLayout({
         <RightSideHud />
         <Navbar />
         <main>{children}</main>
-        {/* <ProfileHud /> */}
+        <ProfileHud />
       </RightSideHudProvider>
     </>
   );

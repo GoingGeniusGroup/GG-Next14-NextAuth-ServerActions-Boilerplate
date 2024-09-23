@@ -27,7 +27,7 @@ export default function ProfileHud() {
   };
 
   //   const username = user?.username;
-  const username = "ram";
+  const username = "loggedin-user";
 
   const getIcon = (tab: string) => {
     switch (tab) {
