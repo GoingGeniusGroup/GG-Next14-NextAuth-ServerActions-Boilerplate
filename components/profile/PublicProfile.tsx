@@ -190,6 +190,7 @@ export default function PublicProfile({ username }: { username: string }) {
             onClick={toggleMinimize}
             variant="outline"
             className="px-3 py-1"
+            aria-label="Maximize Minimize"
           >
             {isMinimized ? (
               <FiMaximize2 size={18} />

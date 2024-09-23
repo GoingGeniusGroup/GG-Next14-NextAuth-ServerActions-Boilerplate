@@ -1,6 +1,5 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { PauseIcon, PlayIcon } from "lucide-react";
 
 type FloatingControlsProps = {
@@ -28,7 +27,6 @@ const FloatingControls: React.FC<FloatingControlsProps> = ({
         <PlayIcon className="size-4" />
       )}
     </Button>
-    
   </div>
 );
 

@@ -44,6 +44,7 @@ const Header: React.FC<HeaderProps> = ({ changeLayout }) => {
             variant="outline"
             size="sm"
             className="bg-white text-gray-800 hover:bg-gray-100"
+            aria-label="Layout Icon"
           >
             <LayoutIcon className="size-4" />
           </Button>

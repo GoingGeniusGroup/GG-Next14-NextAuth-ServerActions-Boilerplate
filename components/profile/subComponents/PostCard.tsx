@@ -19,12 +19,17 @@ export const PostCard: React.FC<PostCardProps> = ({ post, layout }) => {
     <Card className="overflow-hidden hover:shadow-md transition-shadow duration-300">
       <CardContent className="p-0">
         {(layout === "full" || layout === "gap") && (
-          <div className="relative w-full h-48">
+          <div
+            className="relative w-full h-48 overflow-hidden"
+            style={{ aspectRatio: "16/9" }}
+          >
             <Image
               src={post.image}
               alt={post.title}
               fill
-              className="object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="rounded object-cover"
+              priority={post.id <= 3}
             />
           </div>
         )}
@@ -41,12 +46,13 @@ export const PostCard: React.FC<PostCardProps> = ({ post, layout }) => {
           )}
         </div>
         {(layout === "headings" || layout === "compact") && (
-          <div className="absolute top-0 right-0 w-16 h-16">
+          <div className="relative w-16 h-16 ml-4">
             <Image
               src={post.image}
               alt={post.title}
               fill
-              className="object-cover"
+              sizes="64px"
+              className="rounded object-cover"
             />
           </div>
         )}

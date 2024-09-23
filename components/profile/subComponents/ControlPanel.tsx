@@ -26,6 +26,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
         variant="outline"
         size="sm"
         className="flex items-center"
+        aria-label="Randomize"
       >
         <Shuffle className="w-4 h-4 mr-2" />
         Randomize
@@ -35,13 +36,14 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
         variant="outline"
         size="sm"
         className="flex items-center"
+        aria-label="Sort By Title"
       >
         <SortAsc className="w-4 h-4 mr-2" />
         Sort by Title
       </Button>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" size="sm" className="flex items-center">
+          <Button variant="outline" size="sm" className="flex items-center" aria-label="Filter By Title">
             Filter by Title
             <ChevronDown className="w-4 h-4 ml-2" />
           </Button>
