@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { gsap } from "gsap";
+import { Button } from "@/components/ui/button";
 
 // Sub-components
 import Header from "./subComponents/Header";
@@ -11,10 +12,18 @@ import PostsGrid from "./subComponents/PostGrids";
 import FloatingControls from "./subComponents/FloatingControls";
 import BackgroundChanger from "./subComponents/BackgroundChanger";
 
+//icons
+import { FiMaximize2, FiMinimize2 } from "react-icons/fi";
+
 const videos = [
   "/livewallpapers/rainy.mp4",
   "/livewallpapers/forest.mp4",
   "/livewallpapers/cloudsAfternoon.mp4",
+  "/livewallpapers/earth.mp4",
+  "/livewallpapers/karma.mp4",
+  "/livewallpapers/vajra.mp4",
+  "/livewallpapers/buddha.mp4",
+  "/livewallpapers/fire.mp4",
 ];
 
 const posts = [
@@ -172,13 +181,22 @@ export default function PublicProfile({ username }: { username: string }) {
         {/* Search Bar */}
         <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
         {/* Minimize Button */}
-        <div className="flex justify-end -mt-12 mb-2">
-          <button
+        <div
+          className={`flex justify-end mb-2 transition-all duration-300 ${
+            isMinimized ? "mt-[-74px] rotate-100" : "-mt-12 rotate-0"
+          }`}
+        >
+          <Button
             onClick={toggleMinimize}
-            className="bg-blue-500 text-white py-2 px-4 rounded-md z-20"
+            variant="outline"
+            className="px-3 py-1"
           >
-            {isMinimized ? "Show Posts" : "Minimize Posts"}
-          </button>
+            {isMinimized ? (
+              <FiMaximize2 size={18} />
+            ) : (
+              <FiMinimize2 size={18} />
+            )}
+          </Button>
         </div>
 
         {/* Posts Container */}

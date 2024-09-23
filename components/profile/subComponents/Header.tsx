@@ -37,7 +37,7 @@ const Header: React.FC<HeaderProps> = ({ changeLayout }) => {
   };
 
   return (
-    <header className="fixed top-24 right-4 z-20">
+    <header className="fixed top-20 right-4 z-20">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button

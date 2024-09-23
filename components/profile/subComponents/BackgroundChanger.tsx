@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { SkipForwardIcon, UploadIcon } from "lucide-react";
+// import { SkipForwardIcon, UploadIcon } from "lucide-react";
 import { CiImageOn } from "react-icons/ci";
 import {
   Dialog,
@@ -48,7 +48,8 @@ const BackgroundChanger: React.FC<BackgroundChangerProps> = ({
           </div>
         ))}
       </div>
-      <div className="flex justify-center">
+      {/* Premium Feature */}
+      {/* <div className="flex justify-center">
         <Button
           variant="ghost"
           className="bg-black text-white hover:text-black"
@@ -56,7 +57,7 @@ const BackgroundChanger: React.FC<BackgroundChangerProps> = ({
           <UploadIcon className="h-6 w-6 mr-2" />
           Upload
         </Button>
-      </div>
+      </div> */}
     </DialogContent>
   </Dialog>
 );
