@@ -35,8 +35,6 @@ export const {
         token.id = user.id;
         token.email = user.email;
         token.name = user.name;
-        token.role = user.role as UserRole;
-        token.isTwoFactorEnabled = user.isTwoFactorEnabled as boolean;
         token.isOAuth = !!account;
       }
 
