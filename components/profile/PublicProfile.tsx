@@ -3,12 +3,12 @@
 import React, { useState } from "react";
 
 // Sub-components
-import Header from "./Header";
-import VideoBackground from "./VideoBackground";
-import SearchBar from "./SearchBar";
-import PostsGrid from "./PostGrids";
-import FloatingControls from "./FloatingControls";
-import BackgroundChanger from "./BackgroundChanger";
+import Header from "./subComponents/Header";
+import VideoBackground from "./subComponents/VideoBackground";
+import SearchBar from "./subComponents/SearchBar";
+import PostsGrid from "./subComponents/PostGrids";
+import FloatingControls from "./subComponents/FloatingControls";
+import BackgroundChanger from "./subComponents/BackgroundChanger";
 
 const videos = [
   "/livewallpapers/rainy.mp4",
@@ -99,7 +99,10 @@ export default function PublicProfile({ username }: { username: string }) {
     <div className="min-h-screen relative overflow-hidden bg-gray-100">
       {/* Video Background */}
       <VideoBackground src={videos[currentVideo]} isPlaying={isPlaying} />
+
+      {/* Black Opacity */}
       <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-30" />
+      
 
       {/* Header with Layout Dropdown */}
       <Header changeLayout={changeLayout} />
@@ -107,8 +110,9 @@ export default function PublicProfile({ username }: { username: string }) {
       <main
         className={`relative z-10 container mx-auto px-4 py-8 ${
           layout === "gap" ? "mt-16" : ""
-        }`}
+          }`}
       >
+        <div className="h-20"/>
         {/* Search Bar */}
         <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
