@@ -5,10 +5,21 @@ import { z } from "zod";
 
 export const getUserByEmail = async (email: string) => {
   try {
-    const user = await db.user.findUnique({ where: { email } });
-
-    return user;
-  } catch {
+    const user = await db.user.findUnique({
+      where: { email },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        password: true,
+        role: true,
+        isTwoFactorEnabled: true,
+        emailVerified: true,
+      }
+    });
+    return user ? { ...user, isOAuth: false } : null;
+  } catch (error) {
+    console.error("Error in getUserByEmail:", error);
     return null;
   }
 };
