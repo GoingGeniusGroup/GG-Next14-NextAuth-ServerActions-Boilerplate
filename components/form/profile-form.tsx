@@ -7,16 +7,17 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import { FormInput } from "@/components/auth/form-input";
-import { Button } from "@/components/ui/button";
 import { profile } from "@/actions/profile";
 import { toast } from "sonner";
 import { ExtendedUser } from "@/types/next-auth";
 import { FormToggle } from "@/components/auth/form-toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { UserRound } from "lucide-react";
-import AnimatedGradientButton from "@/components/ui/button/animatedGradientButton";
 
 import { profileSchema } from "@/schemas";
+
+// SpotlightButton
+import SpotlightButton from "../ui/button/spotlightButton";
 
 type ProfileFormProps = {
   user: ExtendedUser;
@@ -145,10 +146,11 @@ export const ProfileForm = ({ user }: ProfileFormProps) => {
             </>
           )}
 
-          {/* Update Button with Gradient Background */}
-          <AnimatedGradientButton type="submit" isPending={isPending}>
-            {isPending ? "Updating..." : "Update Profile"}
-          </AnimatedGradientButton>
+          <SpotlightButton
+            text={isPending ? "Updating..." : "Update Profile"}
+            type="submit"
+            isPending={isPending}
+          />
         </form>
       </Form>
     </div>
