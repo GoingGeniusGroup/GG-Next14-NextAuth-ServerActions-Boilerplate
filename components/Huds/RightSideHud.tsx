@@ -12,8 +12,8 @@ import {
 import { VscClearAll } from "react-icons/vsc";
 import CustomToolTipLeftRight from "../MyComponents/CustomToolTipLeftRight";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
-import { useRightSideHud } from "@/components/dom/RightSideHudProvider";
-import ShopSection from "./SubComponents/ShopSection";
+import { useRightSideHud } from "@/components/rightSideHud/RightSideHudProvider";
+import ShopSection from "../shop/ShopSection";
 
 type Tab = "Profile" | "Wallet" | "Shop" | "Emergency" | "Notifications";
 
@@ -63,7 +63,7 @@ const RightSideHud: React.FC = () => {
       case "Wallet":
         return <div>Wall</div>;
       case "Shop":
-        return <ShopSection />;
+        return <ShopSection isMobile={true} />;
       case "Emergency":
         return <div>Emer</div>;
       case "Notifications":

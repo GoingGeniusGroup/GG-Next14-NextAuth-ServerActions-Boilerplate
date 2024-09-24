@@ -77,7 +77,7 @@ const products: Product[] = [
 
 const categories = ["All", "Clothing", "Shoes", "Accessories"];
 
-export default function ShopSection() {
+const ShopSection = ({ isMobile = false }) => {
   const [cart, setCart] = useState<Record<number, number>>({});
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -119,11 +119,51 @@ export default function ShopSection() {
       : products.filter((product) => product.category === selectedCategory);
 
   return (
-    <div className="container mx-auto px-4 py-6 sm:py-8">
-      <header className="relative flex items-center mb-8">
-        <nav className="mb-0 w-full sm:w-auto">
+    <div
+      className={`container mx-auto px-2 py-4 ${
+        isMobile ? "max-h-full overflow-y-auto" : ""
+      }`}
+    >
+      <header className="relative mb-4">
+        {isMobile ? (
+          <div className="flex items-center justify-between mb-2">
+            <div
+              className="relative cursor-pointer"
+              onClick={() => setIsCartOpen(true)}
+            >
+              <ShoppingCart className="w-6 h-6" />
+              {totalItems > 0 && (
+                <Badge
+                  variant="destructive"
+                  className="absolute -top-2 -right-2"
+                >
+                  {totalItems}
+                </Badge>
+              )}
+            </div>
+            <h2 className="text-lg font-semibold">Shop</h2>
+          </div>
+        ) : (
+          <div className="absolute -top-8 -right-4">
+            <div
+              className="relative cursor-pointer"
+              onClick={() => setIsCartOpen(true)}
+            >
+              <ShoppingCart className="w-6 h-6" />
+              {totalItems > 0 && (
+                <Badge
+                  variant="destructive"
+                  className="absolute -top-2 -right-2"
+                >
+                  {totalItems}
+                </Badge>
+              )}
+            </div>
+          </div>
+        )}
+        <nav className="w-full">
           <ScrollArea className="w-full">
-            <div className="flex space-x-2 sm:space-x-4 pb-2 sm:pb-0">
+            <div className="flex space-x-2 pb-2">
               {categories.map((category) => (
                 <Button
                   key={category}
@@ -131,7 +171,7 @@ export default function ShopSection() {
                     selectedCategory === category ? "default" : "outline"
                   }
                   size="sm"
-                  className="text-sm sm:text-base whitespace-nowrap"
+                  className="text-xs whitespace-nowrap"
                   onClick={() => setSelectedCategory(category)}
                 >
                   {category}
@@ -141,29 +181,26 @@ export default function ShopSection() {
             <ScrollBar orientation="horizontal" />
           </ScrollArea>
         </nav>
-        <div className="absolute -top-8 -right-4">
-          <div
-            className="relative cursor-pointer"
-            onClick={() => setIsCartOpen(true)}
-          >
-            <ShoppingCart className="w-6 h-6" />
-            {totalItems > 0 && (
-              <Badge variant="destructive" className="absolute -top-2 -right-2">
-                {totalItems}
-              </Badge>
-            )}
-          </div>
-        </div>
       </header>
 
       <main>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div
+          className={`grid ${
+            isMobile
+              ? "grid-cols-2"
+              : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+          } gap-2 sm:gap-4`}
+        >
           {filteredProducts.map((product) => (
             <div
               key={product.id}
-              className="border rounded-lg overflow-hidden shadow-lg"
+              className="border rounded-lg overflow-hidden bg-white shadow-sm"
             >
-              <div className="relative overflow-hidden sm:h-48 h-40">
+              <div
+                className={`relative overflow-hidden ${
+                  isMobile ? "h-24" : "sm:h-48 h-40"
+                }`}
+              >
                 <Image
                   src={product.image}
                   alt={product.name}
@@ -173,22 +210,22 @@ export default function ShopSection() {
                   loading="lazy"
                 />
               </div>
-              <div className="p-3 sm:p-4">
-                <h3 className="font-semibold text-sm sm:text-base mb-1 sm:mb-2 truncate">
+              <div className="p-2">
+                <h3 className="font-semibold text-xs sm:text-sm mb-1 truncate">
                   {product.name}
                 </h3>
-                <p className="text-gray-600 text-xs sm:text-sm mb-2 sm:mb-3">
+                <p className="text-gray-600 text-xs mb-1">
                   ${product.price.toFixed(2)}
                 </p>
                 <Button
                   onClick={() => addToCart(product.id)}
-                  className="w-full text-xs sm:text-sm"
+                  className="w-full text-xs"
                   size="sm"
                   variant="black"
                 >
                   Add to Cart
                   {cart[product.id] && (
-                    <Badge variant="cool" className="ml-2">
+                    <Badge variant="cool" className="ml-1 text-xs">
                       {cart[product.id]}
                     </Badge>
                   )}
@@ -201,14 +238,20 @@ export default function ShopSection() {
 
       {/* Cart sheet */}
       <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
-        <SheetContent className="w-full sm:max-w-lg">
+        <SheetContent
+          className={`w-full ${isMobile ? "sm:max-w-[100vw]" : "sm:max-w-lg"}`}
+        >
           <SheetHeader>
             <SheetTitle>Your Cart</SheetTitle>
             <SheetDescription>
               Review your items, adjust quantities, or proceed to checkout.
             </SheetDescription>
           </SheetHeader>
-          <ScrollArea className="flex-grow mt-4 h-[calc(100vh-200px)]">
+          <ScrollArea
+            className={`flex-grow mt-4 ${
+              isMobile ? "h-[calc(100vh-250px)]" : "h-[calc(100vh-200px)]"
+            }`}
+          >
             {cartItems.length === 0 ? (
               <p className="text-center text-gray-500">Your cart is empty.</p>
             ) : (
@@ -278,4 +321,6 @@ export default function ShopSection() {
       </Sheet>
     </div>
   );
-}
+};
+
+export default ShopSection;

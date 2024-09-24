@@ -1,5 +1,5 @@
 import Navbar from "@/app/_components/navbar";
-import { RightSideHudProvider } from "@/components/dom/RightSideHudProvider";
+import { RightSideHudProvider } from "@/components/rightSideHud/RightSideHudProvider";
 import RightSideHud from "@/components/Huds/RightSideHud";
 import ProfileHud from "@/components/profile/ProfileHud";
 
