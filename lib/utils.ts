@@ -70,6 +70,14 @@ export const fileToBase64 = (file: File): Promise<string> => {
   });
 };
 
+
+export function convertToCapitalized(str: string) {
+  if (!str) return '';
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
+
+
+
 // Overload for response status in server action
 export function response(response: ResponseWithMessage): Response;
 export function response<T extends Record<string, unknown>>(response: Response<T>): Response<T>;

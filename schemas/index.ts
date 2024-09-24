@@ -135,7 +135,13 @@ export const profileSchema = z
       required_error: "quantity  is required",
     })),
     validity: z.string().optional(),
-    discount: z.string().optional(),
+    discount: z.preprocess((value) => {
+      if (typeof value === "string") {
+        return parseFloat(value);
+      }
+      return value;
+    }, z.number()).optional(),
+    
     salePrice: z.preprocess((value) => {
       if (typeof value === "string") {
         return parseFloat(value);

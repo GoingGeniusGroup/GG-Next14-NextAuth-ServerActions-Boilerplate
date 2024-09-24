@@ -39,6 +39,7 @@ model User {
   name                  String?
   email                 String?                @unique
   phone                 String?
+  dob                   DateTime?
   emailVerified         DateTime?
   image                 String? // You can use gravatar.com to get image profile
   password              String?
@@ -97,7 +98,7 @@ model Product {
   costPrice       Float
   quantityInStock Int
   validity        String?
-  discount        String?
+  discount        Float?
   salePrice       Float?
   margin          String?
   status          Boolean  @default(true)

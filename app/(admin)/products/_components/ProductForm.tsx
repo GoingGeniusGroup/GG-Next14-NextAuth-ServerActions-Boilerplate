@@ -1,7 +1,7 @@
 "use client";
 
 import { productSchema } from "@/schemas";
-import { FormEvent, useEffect, useRef, useState, useTransition } from "react";
+import {  useEffect,  useTransition } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,21 +12,22 @@ import { Spinner } from "@/components/ui/Spinner";
 import { addProduct } from "@/actions/product";
 import { SelectModel } from "@/components/ui/select";
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import { Minus, Plus } from "lucide-react";
 import ImageInput from "@/components/form/ImageInput";
 import { useFetchValues } from "@/hooks/useFetchValues";
-import { useSession } from "next-auth/react";
-import { Session } from "next-auth/types";
 
 interface Props {
   userId: string | undefined;
 }
 const ProductForm: React.FC<Props> = (props) => {
   const { userId } = props;
+ 
+  
   const router = useRouter();
   const { categories, suppliers, getValues } = useFetchValues();
-
+  
   useEffect(() => {
     if (userId) {
       getValues();
@@ -45,7 +46,7 @@ const ProductForm: React.FC<Props> = (props) => {
       costPrice: undefined,
       quantityInStock: undefined,
       validity: "",
-      discount: "",
+      discount: undefined,
       salePrice: undefined,
       margin: "",
 
@@ -81,16 +82,7 @@ const ProductForm: React.FC<Props> = (props) => {
     }
   };
 
-  const fileToBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        resolve(reader.result as string);
-      };
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
-  };
+
 
   const onSubmit = async (values: productType) => {
     const formData = new FormData();
@@ -107,7 +99,8 @@ const ProductForm: React.FC<Props> = (props) => {
         formData.append(key, JSON.stringify(value));
       }
     }
-
+ 
+     
     startTransition(async () => {
       await addProduct(formData)
         .then((data) => {
@@ -119,7 +112,7 @@ const ProductForm: React.FC<Props> = (props) => {
             autoClose: 2000,
           });
 
-          return router.push("/admin/products");
+          return router.push("/products");
         })
         .catch((error) => {
           console.log(error);
@@ -192,7 +185,7 @@ const ProductForm: React.FC<Props> = (props) => {
                   control={form.control}
                   name="discount"
                   label="Discount"
-                  type="text"
+                  type="number"
                   placeholder="Enter discount"
                   isPending={isPending}
                 />

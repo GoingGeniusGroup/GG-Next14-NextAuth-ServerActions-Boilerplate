@@ -34,7 +34,7 @@ async function main() {
       phone: '9876543210',  
       password: password,
       dob: new Date('1995-01-01'), 
-      gender: 'Male',  // Example gender
+    //   gender: 'Male',  // Example gender
     
     },
   });

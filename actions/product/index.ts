@@ -1,6 +1,6 @@
 "use server";
 import { db } from "@/lib/db";
-import { response } from "@/lib/utils";
+import { response, convertToCapitalized } from "@/lib/utils";
 import { productSchema } from "@/schemas";
 import fs from "fs/promises";
 import { revalidatePath } from "next/cache";
@@ -29,7 +29,7 @@ export const addProduct = async (payload: FormData) => {
   }
 
   const validatedFields = productSchema.safeParse(payloadObject);
-
+  console.log(payloadObject, validatedFields.error);
   if (!validatedFields.success) {
     return response({
       success: false,
@@ -45,7 +45,11 @@ export const addProduct = async (payload: FormData) => {
     const imagepath = await writeImageToDisk(data.image);
     const supplierIds = data.suppliers.map((sup) => sup.id);
 
-  
+    const categoryId = (
+      await db.category.findFirst({
+        where: { categoryName: convertToCapitalized(data.category as string) },
+      })
+    )?.id!;
 
     const product = await db.product.create({
       data: {
@@ -53,11 +57,7 @@ export const addProduct = async (payload: FormData) => {
         image: imagepath,
         costPrice: data.costPrice,
         quantityInStock: data.quantityInStock,
-        categoryId: (
-          await db.category.findFirst({
-            where: { categoryName: "Electronics" },
-          })
-        )?.id!,
+        categoryId: categoryId,
         description: data.description,
         validity: data.validity,
         discount: data.discount || null,
@@ -70,12 +70,12 @@ export const addProduct = async (payload: FormData) => {
     });
 
     if (product) {
-      revalidatePath("/admin/products");
+      revalidatePath("/products");
       return response({
         success: true,
         code: 201,
         message: "Product created successfully",
-        data: product, // Include the created product in the response
+        data: product,
       });
     } else {
       return response({
