@@ -2,6 +2,7 @@
 import "@/styles/globals.css";
 import { Toaster } from "@/ui/sonner";
 import type { Metadata } from "next";
+import Providers from "@/app/providers/SessionProvider";
 import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -24,7 +25,7 @@ export default async function RootLayout({
       <body className={inter.className}>
         {/* <Layout> */}
         <Toaster position="bottom-left" richColors theme="light" />
-        {children}
+        <Providers>{children}</Providers>
         {/* </Layout> */}
       </body>
     </html>

@@ -1,6 +1,6 @@
 "use client";
 
-import { profileSchema } from "@/schemas";
+import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -15,6 +15,8 @@ import { FormToggle } from "@/components/auth/form-toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { UserRound } from "lucide-react";
 
+import { profileSchema } from "@/schemas";
+
 type ProfileFormProps = {
   user: ExtendedUser;
 };
@@ -24,12 +26,12 @@ export const ProfileForm = ({ user }: ProfileFormProps) => {
   const form = useForm<z.infer<typeof profileSchema>>({
     resolver: zodResolver(profileSchema),
     mode: "onChange",
-    values: {
-      name: user.name || undefined,
-      email: user.email || undefined,
-      password: undefined,
-      newPassword: undefined,
-      isTwoFactorEnabled: user.isTwoFactorEnabled || undefined,
+    defaultValues: {
+      name: user.name || "",
+      email: user.email || "",
+      password: "",
+      newPassword: "",
+      isTwoFactorEnabled: user.isTwoFactorEnabled || false,
     },
   });
 
@@ -37,81 +39,76 @@ export const ProfileForm = ({ user }: ProfileFormProps) => {
     startTransition(() => {
       profile(values).then((data) => {
         if (data.success) {
-          form.reset();
-          return toast.success(data.message);
+          toast.success(data.message);
+        } else {
+          toast.error(data.error.message);
         }
-        return toast.error(data.error.message);
       });
     });
   });
 
   return (
-    <>
-      <div className="col-span-2 col-start-2 flex justify-center">
-        <Avatar className="w-64 h-64">
+    <div className="space-y-6">
+      <div className="flex justify-center">
+        <Avatar className="w-24 h-24 sm:w-32 sm:h-32">
           <AvatarImage src={user.image ?? ""} />
           <AvatarFallback>
-            <UserRound size={128} />
+            <UserRound className="w-12 h-12 sm:w-16 sm:h-16" />
           </AvatarFallback>
         </Avatar>
       </div>
-      <div className="col-span-3 space-y-12">
-        <Form {...form}>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-4">
+      <Form {...form}>
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+          <FormInput
+            control={form.control}
+            name="name"
+            label="Name"
+            type="text"
+            placeholder="e.g. John Doe"
+            disabled={isPending}
+          />
+          {!user.isOAuth && (
+            <>
               <FormInput
                 control={form.control}
-                name="name"
-                label="Name"
-                type="text"
-                placeholder="e.g. John Doe"
-                isPending={isPending}
+                name="email"
+                label="Email Address"
+                type="email"
+                placeholder="e.g. johndoe@example.com"
+                disabled={isPending || user.isOAuth}
               />
-              {!user.isOAuth && (
-                <>
-                  <FormInput
-                    control={form.control}
-                    name="email"
-                    label="Email Address"
-                    type="email"
-                    placeholder="e.g. johndoe@example.com"
-                    isPending={isPending}
-                    disabled={user.isOAuth}
-                  />
-                  <FormInput
-                    control={form.control}
-                    name="password"
-                    label="Old Password"
-                    type="password"
-                    placeholder="******"
-                    autoComplete="off"
-                    isPending={isPending}
-                  />
-                  <FormInput
-                    control={form.control}
-                    name="newPassword"
-                    label="New Password"
-                    type="password"
-                    placeholder="******"
-                    autoComplete="off"
-                    isPending={isPending}
-                  />
-                  <FormToggle
-                    control={form.control}
-                    name="isTwoFactorEnabled"
-                    label="Two-Factor Authentication"
-                    description="Protect your account with additional security by enabling two-factor authentication for login. You will be required to enter both your credentials and an authentication code to login."
-                    isPending={isPending}
-                  />
-                </>
-              )}
-            </div>
-            <Button type="submit" disabled={isPending} className="w-full">
-              Update profile
-            </Button>
-          </form>
-        </Form>
-      </div>
-    </>
+              <FormInput
+                control={form.control}
+                name="password"
+                label="Current Password"
+                type="password"
+                placeholder="******"
+                autoComplete="current-password"
+                disabled={isPending}
+              />
+              <FormInput
+                control={form.control}
+                name="newPassword"
+                label="New Password"
+                type="password"
+                placeholder="******"
+                autoComplete="new-password"
+                disabled={isPending}
+              />
+              <FormToggle
+                control={form.control}
+                name="isTwoFactorEnabled"
+                label="Two-Factor Authentication"
+                description="Enable two-factor authentication for enhanced account security."
+                disabled={isPending}
+              />
+            </>
+          )}
+          <Button type="submit" disabled={isPending} className="w-full mt-6">
+            {isPending ? "Updating..." : "Update Profile"}
+          </Button>
+        </form>
+      </Form>
+    </div>
   );
 };

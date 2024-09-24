@@ -11,11 +11,13 @@ export default async function ProfilePage() {
   if (!user) return;
 
   return (
-    <div className="grid grid-cols-7 gap-y-14">
-      <h2 className="text-xl col-span-full col-start-4 font-semibold">
+    <div className="flex justify-center items-center min-h-screen my-16 bg-white">
+    <div className="bg-white rounded-lg shadow-lg shadow-black/40 p-8 max-w-md w-full">
+      <h2 className="text-2xl font-semibold text-center mb-6">
         Profile Settings
       </h2>
-      <ProfileForm user={user} />
+      <ProfileForm user={user}/>
     </div>
+  </div>
   );
 }

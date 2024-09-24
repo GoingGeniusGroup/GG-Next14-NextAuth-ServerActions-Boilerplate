@@ -1,22 +1,22 @@
-import React from "react";
+"use client";
 
-import { Avatar } from "@/components/Avatar";
+import React from "react";
+import { ProfileForm } from "@/components/form/profile-form";
+import { useSession } from "next-auth/react";
 
 export default function ProfileComponent() {
+  const { data: session } = useSession();
+  const user = session?.user;
+
+  if (!user) {
+    return <div>Not authenticated</div>;
+  }
+
   return (
-    <div>
-      <h1>Profile</h1>
-      <div className="relative h-[500px] w-[300px]">
-        <Avatar
-          modelSrc="https://models.readyplayer.me/65bb234c4c8598ef839cdcc2.glb?morphTargets=ARKit,Eyes Extra&textureAtlas=none&lod=0"
-          // shadows
-          animationSrc="/animations/female-animation-catwalk.glb"
-          style={{ background: "rgb(9,20,26)" }}
-          fov={45}
-          effects={{
-            ambientOcclusion: false,
-          }}
-        />
+    <div className="size-full">
+      <h1>Profile Setting </h1>
+      <div className="overflow-y-auto h-[90%]">
+        <ProfileForm user={user} />
       </div>
     </div>
   );

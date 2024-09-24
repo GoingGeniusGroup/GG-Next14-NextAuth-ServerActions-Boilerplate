@@ -28,9 +28,8 @@ export default function SideProfile() {
     <div className="flex h-full flex-col">
       <div className="flex-1">
         {/* {user && ( */}
-        <div className="flex size-full flex-col overflow-hidden">
+        <div className="relative">
           <ProfileComponent />
-          {/* <GallerySidebar username={user ? user.username : ''} /> */}
         </div>
         {/* )} */}
       </div>
