@@ -14,6 +14,7 @@ import { ExtendedUser } from "@/types/next-auth";
 import { FormToggle } from "@/components/auth/form-toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { UserRound } from "lucide-react";
+import AnimatedGradientButton from "@/components/ui/button/animatedGradientButton";
 
 import { profileSchema } from "@/schemas";
 
@@ -49,34 +50,50 @@ export const ProfileForm = ({ user }: ProfileFormProps) => {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-center">
-        <Avatar className="w-24 h-24 sm:w-32 sm:h-32">
+      {/* Avatar Section with Circular Gradient and Hover Animation */}
+      <div className="flex justify-center mb-4">
+        <Avatar className="w-24 h-24 sm:w-32 sm:h-32 relative">
+          <div className="absolute inset-0 rounded-full border-2 border-gradient-to-r from-blue-500 to-purple-600 animate-pulse"></div>
           <AvatarImage src={user.image ?? ""} />
           <AvatarFallback>
-            <UserRound className="w-12 h-12 sm:w-16 sm:h-16" />
+            <UserRound className="w-12 h-12 sm:w-16 sm:h-16 text-gray-500" />
           </AvatarFallback>
         </Avatar>
       </div>
+
       <Form {...form}>
-        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
-          <FormInput
-            control={form.control}
-            name="name"
-            label="Name"
-            type="text"
-            placeholder="e.g. John Doe"
-            disabled={isPending}
-          />
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Only show email and password fields if not an OAuth user */}
           {!user.isOAuth && (
             <>
-              <FormInput
-                control={form.control}
-                name="email"
-                label="Email Address"
-                type="email"
-                placeholder="e.g. johndoe@example.com"
-                disabled={isPending || user.isOAuth}
-              />
+              <div className="relative">
+                <FormInput
+                  control={form.control}
+                  name="name"
+                  label="Name"
+                  type="text"
+                  placeholder="e.g. John Doe"
+                  className="input-with-floating-label"
+                  disabled={isPending}
+                />
+                <label className="absolute top-0 left-2 text-xs text-gray-400 transition-transform duration-300 transform -translate-y-3 scale-75">
+                  Name
+                </label>
+              </div>
+              <div className="relative">
+                <FormInput
+                  control={form.control}
+                  name="email"
+                  label="Email Address"
+                  type="email"
+                  placeholder="e.g. johndoe@example.com"
+                  className="input-with-floating-label"
+                  disabled={isPending}
+                />
+                <label className="absolute top-0 left-2 text-xs text-gray-400 transition-transform duration-300 transform -translate-y-3 scale-75">
+                  Email Address
+                </label>
+              </div>
               <FormInput
                 control={form.control}
                 name="password"
@@ -104,9 +121,34 @@ export const ProfileForm = ({ user }: ProfileFormProps) => {
               />
             </>
           )}
-          <Button type="submit" disabled={isPending} className="w-full mt-6">
+
+          {/* For OAuth users, show email but disable editing */}
+          {user.isOAuth && (
+            <>
+              <FormInput
+                control={form.control}
+                name="name"
+                label="Name"
+                type="text"
+                placeholder="e.g. John Doe"
+                className="input-with-floating-label"
+                disabled={true}
+              />
+              <FormInput
+                control={form.control}
+                name="email"
+                label="Email Address"
+                type="email"
+                placeholder="e.g. johndoe@example.com"
+                disabled={true}
+              />
+            </>
+          )}
+
+          {/* Update Button with Gradient Background */}
+          <AnimatedGradientButton type="submit" isPending={isPending}>
             {isPending ? "Updating..." : "Update Profile"}
-          </Button>
+          </AnimatedGradientButton>
         </form>
       </Form>
     </div>

@@ -14,10 +14,8 @@ export default function ProfileComponent() {
 
   return (
     <div className="size-full">
-      <h1>Profile Setting </h1>
-      <div className="overflow-y-auto h-[90%]">
-        <ProfileForm user={user} />
-      </div>
+      <h1 className="uppercase font-bold text-xl flex justify-center mb-7">Profile Setting </h1>
+      <ProfileForm user={user} />
     </div>
   );
 }

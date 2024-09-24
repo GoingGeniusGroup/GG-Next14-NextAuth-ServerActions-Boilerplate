@@ -70,7 +70,9 @@ const TabContent: React.FC<TabContentProps> = ({
         <FaTimes size={14} />
       </motion.button>
 
-      <div className="relative size-full">{renderMobileViewContent(tab)}</div>
+      <div className="relative size-full overflow-y-auto">
+        {renderMobileViewContent(tab)}
+      </div>
     </motion.div>
   );
 };

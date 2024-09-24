@@ -9,8 +9,6 @@ import { useState } from "react";
 // import { LogosFacebook } from "@/logo/LogosFacebook";
 import ProfileComponent from "./ProfileComponent";
 
-import Link from "next/link";
-
 export default function SideProfile() {
   // const { user } = useUser();
   const [showSignUp, setShowSignUp] = useState(false);
@@ -25,14 +23,8 @@ export default function SideProfile() {
   };
 
   return (
-    <div className="flex h-full flex-col">
-      <div className="flex-1">
-        {/* {user && ( */}
-        <div className="relative">
-          <ProfileComponent />
-        </div>
-        {/* )} */}
-      </div>
+    <div className="flex h-full flex-col px-2">
+      <ProfileComponent />
 
       {/* Show Signup and signin of user is not logged in */}
     </div>
