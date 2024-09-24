@@ -51,6 +51,39 @@ const menu: MenuItem[] = [
   },
   {
     id: 3,
+    name: "order",
+    icon: <MdInventory />,
+    isActive: false,
+    submenu: true,
+    submenuItems: [
+      {
+        subId: 1,
+        name: "order list",
+        link: "/order/orderlist",
+        isActive: false
+      },
+      {
+        subId: 2,
+        name: "add order",
+        link: "/order/addorder",
+        isActive: false
+      },
+      {
+        subId: 3,
+        name: "order category",
+        link: "/order/ordercategory",
+        isActive: false
+      },
+      {
+        subId: 4,
+        name: "bulk order",
+        link: "/order/bulkorder",
+        isActive: false
+      },
+    ],
+  },
+  {
+    id: 4,
     name: "Product",
     icon: <MdOutlineSell />,
     isActive: false,
@@ -89,7 +122,7 @@ const menu: MenuItem[] = [
     ],
   },
   {
-    id: 4,
+    id: 5,
     name: "seller",
     icon: <MdOutlineSell />,
     isActive: false,
@@ -116,7 +149,7 @@ const menu: MenuItem[] = [
     ],
   },
   {
-    id: 5,
+    id: 6,
     name: "Report",
     icon: <HiOutlineDocumentReport />,
     submenu: true,
@@ -144,7 +177,7 @@ const menu: MenuItem[] = [
     ],
   },
   {
-    id: 6,
+    id: 7,
     name: "Customers",
     link: "/dashboard/customers",
     spacing: true,
@@ -153,14 +186,14 @@ const menu: MenuItem[] = [
     isActive: false
   },
   {
-    id: 7,
+    id: 8,
     name: "Settings",
     link: "/dashboard/settings",
     icon: <IoSettingsOutline />,
     isActive: false
   },
   {
-    id: 8,
+    id: 9,
     name: "Logout",
     link: "/dashboard/logout",
     icon: <IoIosLogOut />,
