@@ -1,4 +1,4 @@
-import { Emotion } from 'src/components/Avatar/Avatar.component';
+import { Emotion } from '@/components/Avatar/Avatar.component';
 import { getStoryAssetPath } from './Models.service';
 
 const disableTable = { table: { disable: true } };

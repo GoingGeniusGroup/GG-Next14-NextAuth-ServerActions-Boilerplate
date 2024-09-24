@@ -1,3 +1,5 @@
+import test, { describe } from 'node:test';
+import { expect } from 'expect';
 import { isValidFormat } from './Models.service';
 
 describe('Models service unit tests', () => {
@@ -47,8 +49,10 @@ describe('Models service unit tests', () => {
       }
     ];
 
-    test.each(testCases)('$name', ({ format, expected }): void => {
-      expect(isValidFormat(format)).toBe(expected);
-    });
+    for (const { name, format, expected } of testCases) {
+      test(name, (): void => {
+        expect(isValidFormat(format)).toBe(expected);
+      });
+    }
   });
 });
