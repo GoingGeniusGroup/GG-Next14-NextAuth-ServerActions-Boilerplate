@@ -1,24 +1,18 @@
-
-
 import { Button } from "@/components/ui/button";
-// import PageHeader from "@/components/PageHeader/PageHeader";
 import Link from "next/link";
 import ProductTable from "./_components/ProductTable";
-// import ProductForm from "@/components/form/ProductForm";
-// import ProductModel from "@/components/Model/ProductModel";
+import PageHeader from "@/app/_components/PageHeader";
 
 const page = () => {
   return (
     <>
-      <div className="container mx-auto flex justify-between items-center gap-4">
-        All Products
-        
-        <Button asChild variant={"secondary"}>
+      <div className="container mx-auto flex justify-between items-center gap-4 py-5">
+       <PageHeader>  All Products</PageHeader>
+        <Button asChild className="bg-indigo-500 hover:bg-indigo-700">
           <Link href="/admin/products/new">Add Product</Link>
         </Button>
       </div>
       <ProductTable />
-{/*       <ProductModel/> */}
     </>
   );
 };

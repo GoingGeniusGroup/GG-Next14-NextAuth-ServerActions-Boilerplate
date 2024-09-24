@@ -2,7 +2,6 @@ import React from "react";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -16,8 +15,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-
-
 import { CheckCircle2, MoreVertical, XCircle } from "lucide-react";
 import Link from "next/link";
 import { getProducts } from "@/services/product";
@@ -25,8 +22,8 @@ import { getProducts } from "@/services/product";
 const ProductTable = async () => {
   const products = await getProducts();
 
-
-  if (products?.length === 0) return <p>No products found</p>;
+  if (products?.length === 0) return <h2 className="flex items-center justify-center min-h-screen font-bold">
+    No products found</h2>;
   return (
     <div className='className="container mx-auto mt-8 px-4"'>
       <Table>
@@ -53,7 +50,7 @@ const ProductTable = async () => {
               <TableCell>{product.quantityInStock}</TableCell>
 
               <TableCell>
-                {product?.status === "AVAILABLE" ? (
+                {product?.status ? (
                   <>
                     <span className="sr-only">Available</span>
                     <CheckCircle2 />
@@ -87,14 +84,6 @@ const ProductTable = async () => {
                     </DropdownMenuItem>
 
                     <DropdownMenuSeparator />
-                    {/* <ActiveToggleDropdownItem
-                    id={product.id}
-                    isAvailableForPurchase={product.isAvailableForPurchase}
-                  /> */}
-                    {/* <DeleteDropdownItem
-                    id={product.id}
-                    disabled={product._count.orders > 0}
-                  /> */}
                   </DropdownMenuContent>
                 </DropdownMenu>
               </TableCell>
