@@ -1,72 +1,39 @@
 "use client";
 
-import { productSchema } from "@/src/schemas";
-
+import { productSchema } from "@/schemas";
 import { FormEvent, useEffect, useRef, useState, useTransition } from "react";
-import {
-  useForm,
-  useFieldArray,
-  SubmitHandler,
-  SubmitErrorHandler,
-} from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { z } from "zod";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-
-import FormInput from "./FormInput";
-
+import FormInput from "@/components/form/FormInput";
 import { Spinner } from "@/components/ui/Spinner";
-
+import { addProduct } from "@/actions/product";
 import { SelectModel } from "@/components/ui/select";
-import { addProduct } from "@/src/server-actions/product/product";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import ImageInput from "./ImageInput";
 import { Minus, Plus } from "lucide-react";
-
+import ImageInput from "@/components/form/ImageInput";
+import { useFetchValues } from "@/hooks/useFetchValues";
 import { useSession } from "next-auth/react";
-import { useFetchValues } from "@/src/hooks/useFetchValues";
-import { onChange } from "react-toastify/dist/core/store";
-import { error } from "console";
-import { useFormState } from "react-dom";
+import { Session } from "next-auth/types";
 
-const categories = [
-  { label: "category1", value: "Category 1" },
-  { label: "category2", value: "Category 2" },
-];
-const productstatus = [
-  { label: "Available", value: "AVAILABLE" },
-  { label: "Not Available", value: "NOTAVAILABLE" },
-];
-
-type Supplier = {
-  id: string;
-  supplier: string;
-};
-
-// type SupplierPros = Supplier[];
-const ProductForm: React.FC = () => {
+interface Props {
+  userId: string | undefined;
+}
+const ProductForm: React.FC<Props> = (props) => {
+  const { userId } = props;
   const router = useRouter();
-  const { data: session } = useSession();
-  const { categories, suppliers, isLoading, getValues } = useFetchValues();
-
-  // const [state, action] =  useFormState(addProduct, undefined)
-
-  const userId = session?.user?.id;
+  const { categories, suppliers, getValues } = useFetchValues();
 
   useEffect(() => {
     if (userId) {
-      const fetchValues = async () => {
-        return await getValues();
-      };
-      fetchValues();
+      getValues();
     }
   }, [userId]);
 
   const [isPending, startTransition] = useTransition();
-  const [saving, setSaving] = useState<boolean>(false);
   type productType = z.infer<typeof productSchema>;
   const form = useForm<productType>({
     resolver: zodResolver(productSchema),
@@ -81,7 +48,7 @@ const ProductForm: React.FC = () => {
       discount: "",
       salePrice: undefined,
       margin: "",
-      status: undefined,
+
       category: "",
       suppliers: [{ id: "", supplier: "" }],
     },
@@ -114,14 +81,6 @@ const ProductForm: React.FC = () => {
     }
   };
 
-  // const onSubmit: SubmitHandler<productType> = (data:productType) => {
-  //      setSaving(true);
-  //     console.log("Submitted Data:", data);
-  //   };
-  //   const onInvalid: SubmitErrorHandler<FormData> = (errors) => {
-  //     console.log("Validation Errors:", errors);
-  //   };
-
   const fileToBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -149,7 +108,6 @@ const ProductForm: React.FC = () => {
       }
     }
 
-
     startTransition(async () => {
       await addProduct(formData)
         .then((data) => {
@@ -173,17 +131,11 @@ const ProductForm: React.FC = () => {
     });
   };
 
-  const formRef = useRef<HTMLFormElement>(null);
-
   return (
     <div className="container mx-auto flex items-center justify-center">
       <Form {...form}>
-        <form
-          // ref={formRef}
-          // action={action}
-          onSubmit={form.handleSubmit(onSubmit)}
-        >
-          <fieldset disabled={saving} className="group">
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <fieldset disabled={isPending} className="group">
             <ImageInput
               control={form.control}
               name="image"
@@ -263,16 +215,6 @@ const ProductForm: React.FC = () => {
                 />
               </div>
               <div className="space-y-4">
-                {/* Status Select */}
-
-                <SelectModel
-                  control={form.control}
-                  name="status"
-                  options={productstatus}
-                  isPending={isPending}
-                  label="Status"
-                  defaultValue="Select a status"
-                />
                 {/* Status Category */}
 
                 <SelectModel
@@ -344,7 +286,7 @@ const ProductForm: React.FC = () => {
 
               <Button
                 type="submit"
-                className="inline-flex items-center justify-center rounded bg-indigo-500 px-12 py-4 text-sm font-medium text-white hover:bg-indigo-600 group-disabled:pointer-events-none"
+                className=" w-full inline-flex items-center justify-center rounded bg-indigo-500 px-12 py-4 text-sm font-medium text-white hover:bg-indigo-600 group-disabled:pointer-events-none"
               >
                 <Spinner className="absolute h-4 group-enabled:opacity-0" />
                 <span className="group-disabled:opacity-0">Save</span>

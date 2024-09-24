@@ -1,63 +1,83 @@
 import { create } from "zustand";
-
+import { Product, Supplier } from "@prisma/client";
+import { getProducts } from "../services/product";
+import { getCategories } from "@/actions/category";
+import { getSuppliers } from "@/actions/supplier";
 
 interface Option {
   id: string;
   label: string;
   value: string;
 }
-
-import { Product } from "@prisma/client";
-import { getProducts } from "../services/product";
-
+type ProductType = {
+  category: {
+      categoryName: string;
+  };
+  id: string;
+  name: string;
+  description: string | null;
+  costPrice: number;
+  quantityInStock: number;
+  salePrice: number | null;
+  status: boolean;
+}
 interface ListOptions {
   categories: Option[];
   suppliers: Option[];
-  products: Product[];
+  products: ProductType[];
   getValues: () => void;
   fetchProducts: () => void;
   isLoading: boolean;
 }
 
-//https://chatgpt.com/c/66e7ad37-9600-8003-a4e9-09f30ee60bde ( for optimization)
 export const useFetchValues = create<ListOptions>((set) => ({
-  categories: [],
-  suppliers: [],
+  categories: [{ id: "", label: "", value: "" }],
+  suppliers: [{ id: "", label: "", value: "" }],
   products: [],
   isLoading: false,
-  
   fetchProducts: async () => {
     set({ isLoading: true });
     try {
       const productData = await getProducts();
-
-      // Handle the case where productData might be null and ensure it's an array
-      set({ 
-        products: productData ? productData.map((product: any) => ({
-          id: product.id,
-          name: product.name,
-          description: product.description,
-          image: product.image || null,  // Assuming your product object may have image as null
-          costPrice: product.costPrice,
-          quantityInStock: product.quantityInStock,
-          validity: product.validity || null,  // Add other fields with fallback
-          discount: product.discount || null,
-          salePrice: product.salePrice,
-          margin: product.margin || null,
-          status: product.status,  // Assuming 'status' is of type ProductStatus
-          categoryId: product.categoryId || product.category.id, // Adjust category assignment
-        })) : [],  // Fallback to empty array if productData is null
-
-        isLoading: false 
+      set({
+        products: productData|| [],
+        isLoading: false,
       });
     } catch (error) {
-      console.error("Failed to fetch products:", error);
+      console.error("Failed to fetch values:", error);
       set({ isLoading: false });
     }
   },
-
   getValues: async () => {
-    // ... similar implementation for categories and suppliers
+    set({ isLoading: true });
+    try {
+      const categoriesData = await getCategories();
+      const suppliersData = await getSuppliers();
+
+      set({
+        categories: categoriesData?.map((category: any) =>
+          "categoryName" in category
+            ? {
+                id: category.id,
+                label: category.categoryName,
+                value: category.categoryName.toUpperCase(),
+              }
+            : category
+        ),
+        suppliers: suppliersData?.map((sup: any) =>
+          "supplierName" in sup
+            ? {
+                id: sup.id,
+                label: sup.supplierName,
+                value: sup.supplierName.toUpperCase(),
+              }
+            : sup
+        ),
+        isLoading: false,
+      });
+    } catch (error) {
+      console.error("Failed to fetch values:", error);
+      set({ isLoading: false });
+    }
   },
 }));
-

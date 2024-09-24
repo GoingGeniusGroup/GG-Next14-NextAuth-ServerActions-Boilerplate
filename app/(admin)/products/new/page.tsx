@@ -1,10 +1,20 @@
-import ProductForm from "@/src/components/form/ProductForm";
 import React from "react";
+import ProductForm from "../_components/ProductForm";
 
-const page = () => {
+import { auth } from "@/auth";
+import PageHeader from "@/app/_components/PageHeader";
+
+const page = async () => {
+  const session = await auth();
+  const userId = session?.user.id;
+
   return (
-    <div>
-      <ProductForm />
+    <div className="py-5">
+        <div className="flex justify-center">
+        <PageHeader> Add a Product </PageHeader>
+        </div>
+     
+      <ProductForm userId={userId} />
     </div>
   );
 };
