@@ -1,4 +1,5 @@
-import React from 'react'
+import Image from "next/image";
+import React from "react";
 
 const AddToCart = () => {
   return (
@@ -15,9 +16,18 @@ const AddToCart = () => {
                 <div className="w-full lg:w-1/4 px-2 mb-4 lg:mb-0">
                   {/* Image */}
                   <div className="relative overflow-hidden rounded-lg group">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/12a.webp"
-                      className="w-full" alt="Blue Jeans Jacket" />
-                    <a href="#!" className="absolute inset-0 bg-black bg-opacity-20 transition-opacity duration-300 opacity-0 group-hover:opacity-100"></a>
+                    <Image
+                      src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/12a.webp"
+                      className="w-full"
+                      alt="Blue Jeans Jacket"
+                      height={300}
+                      width={300}
+                      unoptimized
+                    />
+                    <a
+                      href="#!"
+                      className="absolute inset-0 bg-black bg-opacity-20 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+                    ></a>
                   </div>
                   {/* Image */}
                 </div>
@@ -27,12 +37,18 @@ const AddToCart = () => {
                   <p className="font-bold">Blue denim shirt</p>
                   <p>Color: blue</p>
                   <p>Size: M</p>
-                  <button type="button" className="bg-blue-500 text-white px-2 py-1 rounded text-sm mr-1 mb-2 hover:bg-blue-600 transition-colors duration-300"
-                    title="Remove item">
+                  <button
+                    type="button"
+                    className="bg-blue-500 text-white px-2 py-1 rounded text-sm mr-1 mb-2 hover:bg-blue-600 transition-colors duration-300"
+                    title="Remove item"
+                  >
                     <i className="fas fa-trash"></i>
                   </button>
-                  <button type="button" className="bg-red-500 text-white px-2 py-1 rounded text-sm mb-2 hover:bg-red-600 transition-colors duration-300"
-                    title="Move to the wish list">
+                  <button
+                    type="button"
+                    className="bg-red-500 text-white px-2 py-1 rounded text-sm mb-2 hover:bg-red-600 transition-colors duration-300"
+                    title="Move to the wish list"
+                  >
                     <i className="fas fa-heart"></i>
                   </button>
                   {/* Data */}
@@ -46,8 +62,17 @@ const AddToCart = () => {
                     </button>
 
                     <div className="flex-grow">
-                      <input id="form1" min="0" name="quantity" value="1" type="number" className="w-full text-center border-t border-b border-gray-300 py-1" />
-                      <label className="sr-only" htmlFor="form1">Quantity</label>
+                      <input
+                        id="form1"
+                        min="0"
+                        name="quantity"
+                        value="1"
+                        type="number"
+                        className="w-full text-center border-t border-b border-gray-300 py-1"
+                      />
+                      <label className="sr-only" htmlFor="form1">
+                        Quantity
+                      </label>
                     </div>
 
                     <button className="bg-blue-500 text-white px-3 py-1 rounded-r hover:bg-blue-600 transition-colors duration-300">
@@ -72,9 +97,18 @@ const AddToCart = () => {
                 <div className="w-full lg:w-1/4 px-2 mb-4 lg:mb-0">
                   {/* Image */}
                   <div className="relative overflow-hidden rounded-lg group">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/13a.webp"
-                      className="w-full" alt="Red hoodie" />
-                    <a href="#!" className="absolute inset-0 bg-black bg-opacity-20 transition-opacity duration-300 opacity-0 group-hover:opacity-100"></a>
+                    <Image
+                      src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/13a.webp"
+                      className="w-full"
+                      alt="Red hoodie"
+                      height={300}
+                      width={300}
+                      unoptimized
+                    />
+                    <a
+                      href="#!"
+                      className="absolute inset-0 bg-black bg-opacity-20 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+                    ></a>
                   </div>
                   {/* Image */}
                 </div>
@@ -85,12 +119,18 @@ const AddToCart = () => {
                   <p>Color: red</p>
                   <p>Size: M</p>
 
-                  <button type="button" className="bg-blue-500 text-white px-2 py-1 rounded text-sm mr-1 mb-2 hover:bg-blue-600 transition-colors duration-300"
-                    title="Remove item">
+                  <button
+                    type="button"
+                    className="bg-blue-500 text-white px-2 py-1 rounded text-sm mr-1 mb-2 hover:bg-blue-600 transition-colors duration-300"
+                    title="Remove item"
+                  >
                     <i className="fas fa-trash"></i>
                   </button>
-                  <button type="button" className="bg-red-500 text-white px-2 py-1 rounded text-sm mb-2 hover:bg-red-600 transition-colors duration-300"
-                    title="Move to the wish list">
+                  <button
+                    type="button"
+                    className="bg-red-500 text-white px-2 py-1 rounded text-sm mb-2 hover:bg-red-600 transition-colors duration-300"
+                    title="Move to the wish list"
+                  >
                     <i className="fas fa-heart"></i>
                   </button>
                   {/* Data */}
@@ -104,8 +144,17 @@ const AddToCart = () => {
                     </button>
 
                     <div className="flex-grow">
-                      <input id="form1" min="0" name="quantity" value="1" type="number" className="w-full text-center border-t border-b border-gray-300 py-1" />
-                      <label className="sr-only" htmlFor="form1">Quantity</label>
+                      <input
+                        id="form1"
+                        min="0"
+                        name="quantity"
+                        value="1"
+                        type="number"
+                        className="w-full text-center border-t border-b border-gray-300 py-1"
+                      />
+                      <label className="sr-only" htmlFor="form1">
+                        Quantity
+                      </label>
                     </div>
 
                     <button className="bg-blue-500 text-white px-3 py-1 rounded-r hover:bg-blue-600 transition-colors duration-300">
@@ -143,12 +192,17 @@ const AddToCart = () => {
                 <li className="flex justify-between items-center border-t pt-2 mt-2">
                   <div>
                     <strong>Total amount</strong>
-                    <p className="text-sm text-gray-500 mb-0">(including VAT)</p>
+                    <p className="text-sm text-gray-500 mb-0">
+                      (including VAT)
+                    </p>
                   </div>
                   <span className="font-bold">$53.98</span>
                 </li>
               </ul>
-              <button type="button" className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 hover:bg-blue-600 transition-colors duration-300">
+              <button
+                type="button"
+                className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 hover:bg-blue-600 transition-colors duration-300"
+              >
                 Go to checkout
               </button>
             </div>
@@ -162,24 +216,42 @@ const AddToCart = () => {
           <div className="bg-white rounded-lg shadow-md mb-4 lg:mb-0">
             <div className="p-4">
               <p className="font-bold">We accept</p>
-              <img className="mr-2 inline-block" width="45"
+              <Image
+                className="mr-2 inline-block"
                 src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
-                alt="Visa" />
-              <img className="mr-2 inline-block" width="45"
+                alt="Visa"
+                height={45}
+                width={45}
+                unoptimized
+              />
+              <Image
+                className="mr-2 inline-block"
+                width="45"
                 src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
-                alt="American Express" />
-              <img className="mr-2 inline-block" width="45"
+                alt="American Express"
+              />
+              <Image
+                className="mr-2 inline-block"
                 src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
-                alt="Mastercard" />
-              <img className="mr-2 inline-block" width="45"
+                alt="Mastercard"
+                height={45}
+                width={45}
+                unoptimized
+              />
+              <Image
+                className="mr-2 inline-block"
                 src="https://static.vecteezy.com/system/resources/previews/022/100/701/non_2x/paypal-logo-transparent-free-png.png"
-                alt="PayPal acceptance mark" />
+                alt="PayPal acceptance mark"
+                height={45}
+                width={45}
+                unoptimized
+              />
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AddToCart
+export default AddToCart;

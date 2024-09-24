@@ -13,7 +13,10 @@ import { VscClearAll } from "react-icons/vsc";
 import CustomToolTipLeftRight from "../MyComponents/CustomToolTipLeftRight";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { useRightSideHud } from "@/components/rightSideHud/RightSideHudProvider";
+
+// Mobile Views
 import ShopSection from "../shop/ShopSection";
+import SideProfile from "../profile/ProfileMobileView/ProfileMobileSection";
 
 type Tab = "Profile" | "Wallet" | "Shop" | "Emergency" | "Notifications";
 
@@ -59,7 +62,7 @@ const RightSideHud: React.FC = () => {
   const renderMobileViewContent = (tab: Tab) => {
     switch (tab) {
       case "Profile":
-        return <div>HIII</div>;
+        return <SideProfile />;
       case "Wallet":
         return <div>Wall</div>;
       case "Shop":

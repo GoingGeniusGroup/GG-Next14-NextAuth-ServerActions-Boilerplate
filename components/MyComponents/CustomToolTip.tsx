@@ -1,11 +1,16 @@
 interface toolTip {
-  content : String
-  top : String
-  left: String
-  translateY : String
+  content: String;
+  top: String;
+  left: String;
+  translateY: String;
 }
 
-export default function CustomToolTip({ content, top, left, translateY }: toolTip) {
+export default function CustomToolTip({
+  content,
+  top,
+  left,
+  translateY,
+}: toolTip) {
   return (
     <>
       <div
@@ -24,5 +29,5 @@ export default function CustomToolTip({ content, top, left, translateY }: toolTi
         {content}
       </div>
     </>
-  )
+  );
 }
