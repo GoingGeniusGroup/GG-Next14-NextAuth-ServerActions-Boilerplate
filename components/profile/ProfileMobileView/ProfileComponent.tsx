@@ -32,7 +32,7 @@ export default function ProfileComponent() {
   }
 
   return (
-    <div className="size-full">
+    <div className="size-full px-2 overflow-y-auto">
       <h1 className="sticky top-0 uppercase font-bold text-xl flex justify-center mb-7 p-2 z-20 bg-white/40 backdrop-blur-md rounded-md">
         Profile
       </h1>

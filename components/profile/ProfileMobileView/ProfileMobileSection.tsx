@@ -23,7 +23,7 @@ export default function SideProfile() {
   };
 
   return (
-    <div className="flex h-full flex-col px-2">
+    <div className="flex h-full flex-col">
       <ProfileComponent />
 
       {/* Show Signup and signin of user is not logged in */}

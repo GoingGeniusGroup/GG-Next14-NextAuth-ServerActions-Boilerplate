@@ -121,14 +121,17 @@ const ShopSection = ({ isMobile = false }) => {
   return (
     <div
       className={`container mx-auto px-2 pb-4 ${
-        isMobile ? "max-h-full overflow-y-auto" : ""
+        isMobile ? "h-full overflow-y-auto" : ""
       }`}
     >
       <header className="mb-4 p-2 sticky top-0 z-20 bg-white/40 rounded-md backdrop-blur-md">
         {isMobile ? (
-          <div className="flex items-center justify-between mb-2 ">
+          <>
+            <div className="flex items-center justify-center mb-2 ">
+              <h2 className="text-lg font-bold">SHOP</h2>
+            </div>
             <div
-              className="relative cursor-pointer"
+              className="absolute left-2 top-2 cursor-pointer"
               onClick={() => setIsCartOpen(true)}
             >
               <ShoppingCart className="w-6 h-6" />
@@ -141,8 +144,7 @@ const ShopSection = ({ isMobile = false }) => {
                 </Badge>
               )}
             </div>
-            <h2 className="text-lg font-bold">SHOP</h2>
-          </div>
+          </>
         ) : (
           <div className="absolute -top-8 -right-4">
             <div

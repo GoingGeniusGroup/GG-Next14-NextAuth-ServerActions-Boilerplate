@@ -15,8 +15,8 @@ import { UserRound } from "lucide-react";
 
 import { profileSchema } from "@/schemas";
 
-// SpotlightButton
-import SpotlightButton from "../ui/button/spotlightButton";
+// Button
+import { Button } from "@/components/ui/button";
 
 type ProfileFormProps = {
   user: ExtendedUser;
@@ -145,11 +145,20 @@ export const ProfileForm = ({ user, onProfileUpdate }: ProfileFormProps) => {
           )}
 
           <div className="w-full flex justify-center">
-            <SpotlightButton
+            {/* <SpotlightButton
               text={isPending ? "Updating..." : "Update Profile"}
               type="submit"
               isPending={isPending}
-            />
+            /> */}
+            <Button
+              type="submit"
+              className="w-full text-xs"
+              size="sm"
+              variant="black"
+              disabled={isPending}
+            >
+              {isPending ? "Updating..." : "Update Profile"}
+            </Button>
           </div>
         </form>
       </Form>

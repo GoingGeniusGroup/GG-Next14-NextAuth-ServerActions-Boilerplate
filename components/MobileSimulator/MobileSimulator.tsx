@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Smartphone, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import MobileScreen from "./MobileScreen";
-import MobileAppGrid from "./MobileAppGrid";
+import MobileInterface from "./MobileInterface";
 import ProfileComponent from "../profile/ProfileMobileView/ProfileComponent";
 import ShopSection from "../shop/ShopSection";
 
@@ -66,7 +66,7 @@ const MobileSimulator: React.FC = () => {
 
   // Glassmorphic style object
   const glassMorphicStyle = {
-    background: "rgba(255, 255, 255, 0.1)",
+    background: "rgba(255, 255, 255, 0.6)",
     backdropFilter: "blur(10px)",
     border: "1px solid rgba(255, 255, 255, 0.2)",
     boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
@@ -94,14 +94,13 @@ const MobileSimulator: React.FC = () => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: isSmallScreen ? 1 : 0.9 }}
             className={`fixed inset-0 flex items-center justify-end ${
-              isSmallScreen ? "" : "bg-black bg-opacity-75"
+              isSmallScreen ? "" : "bg-black/40"
             } p-4 z-20`}
           >
             <div
-              className={`bg-transparent rounded-3xl overflow-hidden max-w-full max-h-full flex ${
-                isSmallScreen ? "w-full h-full" : ""
+              className={`bg-none rounded-xl border-none overflow-hidden max-w-full max-h-full flex ${
+                isSmallScreen ? "w-full h-full" : "gap-x-4"
               }`}
-              style={glassMorphicStyle}
             >
               {/* Render active screens */}
               <AnimatePresence initial={false} mode="popLayout">
@@ -119,23 +118,23 @@ const MobileSimulator: React.FC = () => {
 
               {/* Main mobile screen with app grid */}
               <motion.div
-                className="relative bg-transparent rounded-3xl overflow-hidden flex-shrink-0 shadow-lg"
+                className="relative rounded-xl overflow-hidden flex-shrink-0 shadow-lg"
                 style={{
-                  width: isSmallScreen ? "100%" : "360px",
-                  height: isSmallScreen ? "100%" : "640px",
+                  width: isSmallScreen ? "100%" : "335px",
+                  height: isSmallScreen ? "100%" : "75vh",
                   ...glassMorphicStyle,
                 }}
               >
                 <Button
                   variant="ghost"
-                  size="icon"
-                  className="absolute top-6 left-4 z-10 text-white hover:text-gray-300"
+                  size="mini"
+                  className="absolute top-2 right-2 text-black hover:text-red-500 z-40 bg-white rounded-full"
                   onClick={() => setShowMobile(false)}
                 >
-                  <X className="h-5 w-5" />
+                  <X className="size-4" />
                 </Button>
 
-                <MobileAppGrid
+                <MobileInterface
                   sections={sections}
                   toggleScreen={toggleScreen}
                   closeAllScreens={closeAllScreens}
