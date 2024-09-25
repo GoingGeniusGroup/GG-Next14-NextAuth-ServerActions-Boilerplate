@@ -43,7 +43,12 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
       </Button>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" size="sm" className="flex items-center" aria-label="Filter By Title">
+          <Button
+            variant="outline"
+            size="sm"
+            className="flex items-center"
+            aria-label="Filter By Title"
+          >
             Filter by Title
             <ChevronDown className="w-4 h-4 ml-2" />
           </Button>

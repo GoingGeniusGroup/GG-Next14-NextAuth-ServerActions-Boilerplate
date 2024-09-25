@@ -5,7 +5,10 @@ type VideoBackgroundProps = {
   isPlaying: boolean;
 };
 
-const VideoBackground: React.FC<VideoBackgroundProps> = ({ src, isPlaying }) => {
+const VideoBackground: React.FC<VideoBackgroundProps> = ({
+  src,
+  isPlaying,
+}) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {

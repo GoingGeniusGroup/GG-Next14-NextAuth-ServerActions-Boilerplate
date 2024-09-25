@@ -10,7 +10,7 @@ import { GiBarbedStar, GiShipWheel } from "react-icons/gi";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { LuLogOut } from "react-icons/lu";
 import { RiEarthFill } from "react-icons/ri";
-import CustomToolTip from "../MyComponents/CustomToolTip";
+import CustomToolTip from "../CustomComponents/CustomToolTip";
 
 interface NavbarClientProps {
   user: ExtendedUser | undefined;

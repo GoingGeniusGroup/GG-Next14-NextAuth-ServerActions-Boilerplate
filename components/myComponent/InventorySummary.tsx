@@ -1,7 +1,7 @@
 import React from "react";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { TbCategory } from "react-icons/tb";
-import type { IconType } from 'react-icons';
+import type { IconType } from "react-icons";
 
 const summaryData = [
   {
@@ -27,7 +27,12 @@ interface InventorySummaryItemProps {
 }
 
 // InventorySummaryItem component with typed props
-const InventorySummaryItem: React.FC<InventorySummaryItemProps> = ({ icon: Icon, value, label, iconColor }) => {
+const InventorySummaryItem: React.FC<InventorySummaryItemProps> = ({
+  icon: Icon,
+  value,
+  label,
+  iconColor,
+}) => {
   return (
     <div className="flex flex-col text-center gap-y-2">
       <div className="flex justify-center">

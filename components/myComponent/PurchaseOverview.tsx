@@ -4,7 +4,6 @@ import { FaRupeeSign } from "react-icons/fa";
 import { TbBasketCancel } from "react-icons/tb";
 import { MdAssignmentReturn } from "react-icons/md";
 
-
 const PurchaseOverview: React.FC = () => {
   return (
     <div className=" bg-gray-300 rounded-md bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-20 border text-white border-gray-100 flex flex-col gap-y-4 p-5 w-7/12">
@@ -23,7 +22,7 @@ const PurchaseOverview: React.FC = () => {
         </div>
         <div className=" flex flex-col items-center gap-3">
           <div>
-          <FaRupeeSign className="text-3xl text-green-600"/>
+            <FaRupeeSign className="text-3xl text-green-600" />
           </div>
           <div className=" flex justify-between items-center gap-3">
             <h4>₹ 13,573</h4>
@@ -32,7 +31,7 @@ const PurchaseOverview: React.FC = () => {
         </div>
         <div className=" flex flex-col items-center gap-3">
           <div>
-          <TbBasketCancel className="text-3xl text-pink-600" />
+            <TbBasketCancel className="text-3xl text-pink-600" />
           </div>
           <div className=" flex justify-between items-center gap-3">
             <h4>5</h4>
@@ -41,7 +40,7 @@ const PurchaseOverview: React.FC = () => {
         </div>
         <div className=" flex flex-col items-center gap-3">
           <div>
-          <MdAssignmentReturn className="text-3xl text-pink-600" />
+            <MdAssignmentReturn className="text-3xl text-pink-600" />
           </div>
           <div className=" flex justify-between items-center gap-3">
             <h4>₹ 17,432</h4>
