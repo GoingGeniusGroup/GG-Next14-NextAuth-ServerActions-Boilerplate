@@ -1,30 +1,40 @@
 import React, { FC, Ref } from "react";
-import { Model } from "@/components/Models/Model";
-import { useEmotion, useFallback, useGltfLoader } from "@/services/avatar";
-import { Group } from "three";
 import { useGraph } from "@react-three/fiber";
+import { Model } from "@/components/AvatarComponents/Models/Model";
+import { Group } from "three";
+import {
+  mutatePose,
+  useEmotion,
+  useFallback,
+  useGltfLoader,
+} from "@/services/avatar";
 import { BaseModelProps } from "@/types/avatar";
 import { Emotion } from "@/components/Avatar/Avatar.component";
 
-export interface StaticModelProps extends BaseModelProps {
+export interface PoseModelProps extends BaseModelProps {
   modelSrc: string | Blob;
+  poseSrc: string | Blob;
   modelRef?: Ref<Group>;
   scale?: number;
   emotion?: Emotion;
 }
 
-export const StaticModel: FC<StaticModelProps> = ({
+export const PoseModel: FC<PoseModelProps> = ({
   modelSrc,
+  poseSrc,
   modelRef,
   scale = 1,
+  emotion,
   setModelFallback,
   onLoaded,
-  emotion,
   bloom,
 }) => {
   const { scene } = useGltfLoader(modelSrc);
   const { nodes } = useGraph(scene);
+  const pose = useGltfLoader(poseSrc);
+  const { nodes: sourceNodes } = useGraph(pose.scene);
 
+  mutatePose(nodes, sourceNodes);
   useEmotion(nodes, emotion);
   useFallback(nodes, setModelFallback);
 

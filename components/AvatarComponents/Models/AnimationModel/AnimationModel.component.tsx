@@ -2,7 +2,7 @@ import React, { useRef, FC, useMemo, useState } from "react";
 import { useFrame, useGraph } from "@react-three/fiber";
 import { AnimationMixer, Group } from "three";
 
-import { Model } from "@/components/Models/Model";
+import { Model } from "@/components/AvatarComponents/Models/Model";
 import {
   useHeadMovement,
   useGltfLoader,

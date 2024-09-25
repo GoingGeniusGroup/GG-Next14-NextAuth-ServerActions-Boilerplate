@@ -1,6 +1,6 @@
 import React, { FC, useRef } from "react";
 import { useFrame, useGraph } from "@react-three/fiber";
-import { Model } from "@/components/Models/Model";
+import { Model } from "@/components/AvatarComponents/Models/Model";
 import { BaseModelProps } from "@/types/avatar";
 import {
   useEmotion,
@@ -10,7 +10,7 @@ import {
   useIdleExpression,
 } from "@/services/avatar";
 import { Group } from "three";
-import { Emotion } from "../../Avatar/Avatar.component";
+import { Emotion } from "../../../Avatar/Avatar.component";
 
 export interface HalfBodyModelProps extends BaseModelProps {
   modelSrc: string | Blob;
