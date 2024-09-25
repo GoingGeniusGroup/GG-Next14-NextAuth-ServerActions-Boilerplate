@@ -22,50 +22,93 @@ const sections: SectionProps[] = [
 
 // Define the backgrounds array
 const backgrounds = [
-  { name: "Default", class: "bg-gradient-to-b from-gray-700 to-gray-900" },
   {
-    name: "Sunrise",
-    class: "bg-gradient-to-b from-yellow-500 to-orange-500 via-red-500",
+    name: "Cosmic Nebula",
+    class:
+      "bg-gradient-to-b from-indigo-600/90 to-purple-600/60 via-pink-500/40 text-white",
   },
   {
-    name: "Neon Dreams",
-    class: "bg-gradient-to-b from-green-500 to-blue-500 via-purple-500",
+    name: "Sunset Haze",
+    class:
+      "bg-gradient-to-b from-orange-400/80 to-red-500/50 via-pink-400/30 text-white",
   },
   {
-    name: "Fireworks",
-    class: "bg-gradient-to-b from-red-500 to-orange-500 via-yellow-500",
+    name: "Cyberpunk City",
+    class:
+      "bg-gradient-to-b from-blue-900/80 to-purple-800/50 via-pink-700/30 text-white",
   },
   {
-    name: "Cosmic",
-    class: "bg-gradient-to-b from-blue-500 to-purple-500 via-pink-500",
+    name: "Emerald Dreams",
+    class:
+      "bg-gradient-to-b from-green-500/60 to-teal-400/40 via-cyan-300/20 text-white",
   },
   {
-    name: "Minty Fresh",
-    class: "bg-gradient-to-b from-green-200 to-blue-200 via-teal-200",
+    name: "Ocean Depth",
+    class:
+      "bg-gradient-to-b from-blue-800/80 to-teal-700/50 via-cyan-600/30 text-white",
   },
   {
-    name: "Retro Wave",
-    class: "bg-gradient-to-b from-pink-500 to-purple-500 via-blue-500",
+    name: "Neon Glitch",
+    class:
+      "bg-gradient-to-b from-green-500/70 to-blue-500/50 via-purple-500/30 text-white",
   },
   {
-    name: "Tropical",
-    class: "bg-gradient-to-b from-green-500 to-yellow-500 via-orange-500",
+    name: "Mystic Forest",
+    class:
+      "bg-gradient-to-b from-green-600/60 to-teal-500/40 via-cyan-400/20 text-white",
   },
   {
-    name: "Deep Space",
-    class: "bg-gradient-to-b from-blue-900 to-purple-900 via-pink-900",
+    name: "Candy Dreams",
+    class:
+      "bg-gradient-to-b from-pink-500/70 to-purple-500/50 via-blue-500/30 text-white",
   },
   {
-    name: "Electric",
-    class: "bg-gradient-to-b from-yellow-500 to-orange-500 via-red-500",
+    name: "Sunrise Over Mountains",
+    class:
+      "bg-gradient-to-b from-yellow-400/70 to-orange-500/50 via-red-500/30 text-white",
   },
   {
-    name: "Aurora",
-    class: "bg-gradient-to-b from-green-500 to-blue-500 via-purple-500",
+    name: "Winter Twilight",
+    class:
+      "bg-gradient-to-b from-blue-600/80 to-purple-600/50 via-pink-500/30 text-white",
   },
   {
-    name: "Glowing Embers",
-    class: "bg-gradient-to-b from-red-500 to-orange-500 via-yellow-500",
+    name: "Lavender Fields",
+    class:
+      "bg-gradient-to-b from-purple-400/80 to-pink-300/50 via-lavender-200/30 text-white",
+  },
+  {
+    name: "Desert Sunset",
+    class:
+      "bg-gradient-to-b from-orange-500/90 to-red-600/60 via-yellow-400/40 text-white",
+  },
+  {
+    name: "Northern Lights",
+    class:
+      "bg-gradient-to-b from-green-500/80 to-blue-500/50 via-purple-500/30 text-white",
+  },
+  {
+    name: "Retro Arcade",
+    class:
+      "bg-gradient-to-b from-pink-500/90 to-blue-500/60 via-purple-500/40 text-white",
+  },
+  {
+    name: "Tropical Breeze",
+    class:
+      "bg-gradient-to-b from-green-400/80 to-yellow-300/50 via-orange-400/30 text-white",
+  },
+  {
+    name: "Glimmering Stars",
+    class:
+      "bg-gradient-to-b from-blue-900/90 to-purple-800/60 via-pink-700/40 text-white",
+  },
+  {
+    name: "Dark Matter",
+    class: "bg-gradient-to-b from-gray-900/80 to-black/95 text-white",
+  },
+  {
+    name: "Snowfall",
+    class: "bg-gradient-to-b from-white/80 to-gray-100/60 text-black",
   },
 ];
 
@@ -172,10 +215,10 @@ const MobileSimulator: React.FC = () => {
                 <Button
                   variant="ghost"
                   size="mini"
-                  className="absolute top-2 right-2 text-black hover:text-red-500 z-40 bg-white rounded-full"
+                  className="absolute top-2 right-2 text-white font-bold hover:text-black z-40 bg-red-500 rounded-full"
                   onClick={() => setShowMobile(false)}
                 >
-                  <X className="size-4" />
+                  <X className="size-3" />
                 </Button>
 
                 <MobileUI

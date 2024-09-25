@@ -38,12 +38,12 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
 }) => {
   return (
     <div
-      className={`text-white p-6 rounded-lg max-w-md mx-auto h-full overflow-y-auto ${currentBackground.class}`}
+      className={`p-3 rounded-lg max-w-md mx-auto h-full overflow-y-auto ${currentBackground.class}`}
     >
       {/* Top bar */}
       <div className="sticky top-0 flex justify-between items-center mb-4 rounded-lg bg-white/20 p-2 backdrop-blur-lg">
         <div>
-          <p className="text-xs text-gray-300">WED</p>
+          <p className="text-xs">WED</p>
           <p className="text-xl font-bold">10:26 AM</p>
         </div>
         <div className="flex items-center cursor-pointer hover:scale-105 transition-transform">
@@ -66,16 +66,12 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
       </div>
 
       {/* Change Schedule */}
-      <div className="bg-white bg-opacity-10 rounded-lg p-2 mb-4">
-        <h3 className="text-white font-bold text-sm mb-2 uppercase">
-          Change Schedule
-        </h3>
+      <div className="bg-white bg-opacity-20 rounded-lg p-2 shadow-md mb-4">
+        <h3 className="font-bold text-sm mb-2 uppercase">Change Schedule</h3>
         <div className="grid grid-cols-7 gap-2">
           {scheduleData.map((day, index) => (
             <div key={index} className="text-center">
-              <p className="text-[10px] font-semibold text-gray-300 mb-1">
-                {day.day}
-              </p>
+              <p className="text-[10px] font-semibold mb-1">{day.day}</p>
               <div className="flex flex-col gap-1">
                 {day.schedule.map((slot, slotIndex) => (
                   <div
@@ -94,17 +90,15 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         {/* "I want to be..." Section */}
         <div className="bg-white bg-opacity-20 rounded-lg p-2 shadow-md">
-          <p className="text-gray-200 text-sm mb-1">I want to be...</p>
-          <p className="text-white text-xl font-semibold">
+          <p className="text-sm mb-1">I want to be...</p>
+          <p className="text-xl font-semibold">
             What will I be when I wake up?
           </p>
         </div>
 
         {/* Background Changer */}
         <div className="bg-white bg-opacity-20 rounded-lg p-2 shadow-md">
-          <h3 className="text-white font-bold text-sm text-center mb-2">
-            CHANGE BG
-          </h3>
+          <h3 className="font-bold text-sm text-center mb-2">CHANGE BG</h3>
           <div className="relative flex flex-wrap gap-1">
             {backgrounds.map((bg, index) => (
               <Button
@@ -125,7 +119,7 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
       </div>
 
       {/* My Location */}
-      <div className="bg-white bg-opacity-10 rounded-lg p-2 mb-16">
+      <div className="bg-white bg-opacity-20 rounded-lg p-2 shadow-md mb-16">
         <h3 className="font-bold mb-2 text-sm">MY LOCATION</h3>
         <div className="h-[150px] rounded-lg overflow-hidden">
           <iframe
@@ -147,7 +141,7 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
             key={section.id}
             variant="ghost"
             size="small"
-            className={`group transition-all bg-black p-2 rounded-full ${
+            className={`group transition-all bg-black text-white p-2 rounded-full ${
               screens.some((screen) => screen.id === section.id)
                 ? "bg-blue-500 bg-opacity-50 hover:bg-blue-600 hover:bg-opacity-70"
                 : "hover:bg-black hover:bg-opacity-30"
@@ -159,19 +153,19 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
             ) : (
               <>
                 {section.title === "Profile" ? (
-                  <GiRamProfile className="group text-gray-200" size={16} />
+                  <GiRamProfile size={16} />
                 ) : section.title === "Shop" ? (
-                  <BsShop className="text-gray-200" size={16} />
+                  <BsShop size={16} />
                 ) : section.title === "Wallet" ? (
-                  <BsWallet2 className="text-gray-200" size={16} />
+                  <BsWallet2 size={16} />
                 ) : section.title === "Notifications" ? (
-                  <BsBellFill className="text-gray-200" size={16} />
+                  <BsBellFill size={16} />
                 ) : section.title === "Message" ? (
-                  <BsChat className="text-gray-200" size={16} />
+                  <BsChat size={16} />
                 ) : section.title === "Emergency" ? (
-                  <MdOutlineEmergency className="text-gray-200" size={16} />
+                  <MdOutlineEmergency size={16} />
                 ) : (
-                  <Edit className="text-gray-200" size={16} />
+                  <Edit size={16} />
                 )}
               </>
             )}
