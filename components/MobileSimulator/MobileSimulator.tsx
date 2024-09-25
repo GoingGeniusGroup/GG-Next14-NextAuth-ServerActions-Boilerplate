@@ -23,9 +23,50 @@ const sections: SectionProps[] = [
 // Define the backgrounds array
 const backgrounds = [
   { name: "Default", class: "bg-gradient-to-b from-gray-700 to-gray-900" },
-  { name: "Sunset", class: "bg-gradient-to-b from-orange-500 to-pink-500" },
-  { name: "Ocean", class: "bg-gradient-to-b from-blue-400 to-blue-800" },
-  { name: "Forest", class: "bg-gradient-to-b from-green-400 to-green-800" },
+  {
+    name: "Sunrise",
+    class: "bg-gradient-to-b from-yellow-500 to-orange-500 via-red-500",
+  },
+  {
+    name: "Neon Dreams",
+    class: "bg-gradient-to-b from-green-500 to-blue-500 via-purple-500",
+  },
+  {
+    name: "Fireworks",
+    class: "bg-gradient-to-b from-red-500 to-orange-500 via-yellow-500",
+  },
+  {
+    name: "Cosmic",
+    class: "bg-gradient-to-b from-blue-500 to-purple-500 via-pink-500",
+  },
+  {
+    name: "Minty Fresh",
+    class: "bg-gradient-to-b from-green-200 to-blue-200 via-teal-200",
+  },
+  {
+    name: "Retro Wave",
+    class: "bg-gradient-to-b from-pink-500 to-purple-500 via-blue-500",
+  },
+  {
+    name: "Tropical",
+    class: "bg-gradient-to-b from-green-500 to-yellow-500 via-orange-500",
+  },
+  {
+    name: "Deep Space",
+    class: "bg-gradient-to-b from-blue-900 to-purple-900 via-pink-900",
+  },
+  {
+    name: "Electric",
+    class: "bg-gradient-to-b from-yellow-500 to-orange-500 via-red-500",
+  },
+  {
+    name: "Aurora",
+    class: "bg-gradient-to-b from-green-500 to-blue-500 via-purple-500",
+  },
+  {
+    name: "Glowing Embers",
+    class: "bg-gradient-to-b from-red-500 to-orange-500 via-yellow-500",
+  },
 ];
 
 const MobileSimulator: React.FC = () => {
@@ -75,14 +116,6 @@ const MobileSimulator: React.FC = () => {
     setCurrentBackground(newBackground);
   };
 
-  // Glassmorphic style object
-  const glassMorphicStyle = {
-    background: "rgba(255, 255, 255, 0.6)",
-    backdropFilter: "blur(10px)",
-    border: "1px solid rgba(255, 255, 255, 0.2)",
-    boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-black to-white p-4 relative overflow-hidden">
       {/* Background image */}
@@ -130,11 +163,10 @@ const MobileSimulator: React.FC = () => {
 
               {/* Main mobile screen with app grid */}
               <motion.div
-                className="relative rounded-xl overflow-hidden flex-shrink-0 shadow-lg"
+                className="relative mr-14 rounded-xl bg-white/20 backdrop-blur-md overflow-hidden flex-shrink-0 shadow-lg"
                 style={{
                   width: isSmallScreen ? "100%" : "335px",
                   height: isSmallScreen ? "100%" : "75vh",
-                  ...glassMorphicStyle,
                 }}
               >
                 <Button

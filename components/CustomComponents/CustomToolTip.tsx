@@ -1,8 +1,8 @@
 interface toolTip {
-  content: String;
-  top: String;
-  left: String;
-  translateY: String;
+  content: string;
+  top: string;
+  left: string;
+  translateY: string;
 }
 
 export default function CustomToolTip({
@@ -18,15 +18,16 @@ export default function CustomToolTip({
           invisible absolute whitespace-nowrap
           rounded-md bg-indigo-100 px-2 py-1
           text-sm text-indigo-800 opacity-20 transition-all
-          group-hover:visible group-hover:translate-x-0 group-hover:opacity-100
-      `}
+          group-hover:visible group-hover:opacity-100
+        `}
         style={{
           top: `${top}px`,
           left: `${left}px`,
-          transform: `translateY(${translateY}px)`,
         }}
       >
-        {content}
+        <span className={`transform group-hover:translate-y-${translateY}px`}>
+          {content}
+        </span>
       </div>
     </>
   );

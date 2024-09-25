@@ -18,11 +18,6 @@ interface MobileScreenProps {
   currentBackground: BackgroundProps; // Include Background
 }
 
-// interface Background {
-//   name: string;
-//   class: string;
-// }
-
 const MobileScreen: React.FC<MobileScreenProps> = ({
   screen,
   index,

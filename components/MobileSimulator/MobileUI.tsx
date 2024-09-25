@@ -1,15 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "@/components/ui/button";
 import {
   Play,
   SkipBack,
   SkipForward,
   Sun,
-  Cloud,
-  CloudRain,
-  Snowflake,
   CheckCircle,
   Edit,
   X,
@@ -39,64 +36,52 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
   currentBackground,
   updateCurrentBackground,
 }) => {
-  const [currentWeather, setCurrentWeather] = useState({ icon: Sun, temp: 21 });
-
-  const changeWeather = () => {
-    const weathers = [
-      { icon: Sun, temp: 28 },
-      { icon: Cloud, temp: 21 },
-      { icon: CloudRain, temp: 18 },
-      { icon: Snowflake, temp: 2 },
-    ];
-    const newWeather = weathers[Math.floor(Math.random() * weathers.length)];
-    setCurrentWeather(newWeather);
-  };
-
   return (
     <div
       className={`text-white p-6 rounded-lg max-w-md mx-auto h-full overflow-y-auto ${currentBackground.class}`}
     >
       {/* Top bar */}
-      <div className="flex justify-between items-center mb-4">
+      <div className="sticky top-0 flex justify-between items-center mb-4 rounded-lg bg-white/20 p-2 backdrop-blur-lg">
         <div>
-          <p className="text-sm text-gray-300">WED</p>
-          <p className="text-2xl font-bold">10:26 AM</p>
+          <p className="text-xs text-gray-300">WED</p>
+          <p className="text-xl font-bold">10:26 AM</p>
         </div>
-        <div
-          className="flex items-center cursor-pointer hover:scale-105 transition-transform"
-          onClick={changeWeather}
-        >
-          <p className="text-xl mr-2">{currentWeather.temp}°C</p>
-          <currentWeather.icon size={24} />
+        <div className="flex items-center cursor-pointer hover:scale-105 transition-transform">
+          <p className="text-lg mr-2">21°C</p>
+          <Sun size={17} />
         </div>
       </div>
 
       {/* Media controls */}
-      <div className="flex justify-center space-x-6 mb-6">
-        <Button variant="ghost" size="icon">
+      <div className="sticky top-1 flex justify-center space-x-4 mb-4 z-20">
+        <Button variant="ghost" size="mini">
           <SkipBack />
         </Button>
-        <Button variant="ghost" size="icon" className="text-green-400">
+        <Button variant="ghost" size="mini" className="text-green-400">
           <Play />
         </Button>
-        <Button variant="ghost" size="icon">
+        <Button variant="ghost" size="mini">
           <SkipForward />
         </Button>
       </div>
 
       {/* Change Schedule */}
-      <div className="bg-white bg-opacity-10 rounded-lg p-4 mb-4">
-        <h3 className="text-red-400 font-semibold mb-3">Change Schedule</h3>
+      <div className="bg-white bg-opacity-10 rounded-lg p-2 mb-4">
+        <h3 className="text-white font-bold text-sm mb-2 uppercase">
+          Change Schedule
+        </h3>
         <div className="grid grid-cols-7 gap-2">
           {scheduleData.map((day, index) => (
             <div key={index} className="text-center">
-              <p className="text-xs font-bold">{day.day}</p>
+              <p className="text-[10px] font-semibold text-gray-300 mb-1">
+                {day.day}
+              </p>
               <div className="flex flex-col gap-1">
                 {day.schedule.map((slot, slotIndex) => (
                   <div
                     key={slotIndex}
-                    className={`h-3 w-full rounded ${
-                      slot ? "bg-green-500" : "bg-gray-600"
+                    className={`h-2 w-full rounded ${
+                      slot ? "bg-green-400" : "bg-black/70"
                     }`}
                   ></div>
                 ))}
@@ -106,32 +91,52 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
         </div>
       </div>
 
-      {/* "I want to be..." Section */}
-      <div className="bg-white bg-opacity-10 rounded-lg p-4 mb-4">
-        <p className="text-gray-300 text-sm">I want to be...</p>
-        <p className="text-lg">What will I be when I wake up?</p>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        {/* "I want to be..." Section */}
+        <div className="bg-white bg-opacity-20 rounded-lg p-2 shadow-md">
+          <p className="text-gray-200 text-sm mb-1">I want to be...</p>
+          <p className="text-white text-xl font-semibold">
+            What will I be when I wake up?
+          </p>
+        </div>
+
+        {/* Background Changer */}
+        <div className="bg-white bg-opacity-20 rounded-lg p-2 shadow-md">
+          <h3 className="text-white font-bold text-sm text-center mb-2">
+            CHANGE BG
+          </h3>
+          <div className="relative flex flex-wrap gap-1">
+            {backgrounds.map((bg, index) => (
+              <Button
+                key={index}
+                variant={currentBackground === bg ? "outline" : "ghost"}
+                className={`group p-1 text-xs transition-transform duration-200 ease-in-out transform hover:scale-105 ${
+                  bg.class
+                } ${
+                  currentBackground === bg
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-700 text-gray-300"
+                } rounded-full shadow-sm`}
+                onClick={() => updateCurrentBackground(bg)} // Update the background when clicked
+              ></Button>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* My Location */}
-      <div className="bg-white bg-opacity-10 rounded-lg p-4 mb-4">
-        <h3 className="font-semibold mb-2">My Location</h3>
-        <div className="bg-blue-300 h-24 rounded-lg"></div>
-      </div>
-
-      {/* Background Changer */}
-      <div className="bg-white bg-opacity-10 rounded-lg p-4 mb-16">
-        <h3 className="font-semibold mb-3">Change Background</h3>
-        <div className="flex flex-wrap gap-2">
-          {backgrounds.map((bg, index) => (
-            <Button
-              key={index}
-              variant={currentBackground === bg ? "default" : "outline"}
-              className="text-xs transition-transform hover:scale-105"
-              onClick={() => updateCurrentBackground(bg)} // Update the background when clicked
-            >
-              {bg.name}
-            </Button>
-          ))}
+      <div className="bg-white bg-opacity-10 rounded-lg p-2 mb-16">
+        <h3 className="font-bold mb-2 text-sm">MY LOCATION</h3>
+        <div className="h-[150px] rounded-lg overflow-hidden">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.73818016624!2d85.33933297611345!3d27.69448592605728!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19c7d1a7a207%3A0x77e34747e9b911e7!2sGoing%20Genius%20Group%20of%20Company%20Pvt%20Ltd!5e0!3m2!1sen!2snp!4v1727263172982!5m2!1sen!2snp"
+            width="310"
+            height="150"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          ></iframe>
         </div>
       </div>
 
