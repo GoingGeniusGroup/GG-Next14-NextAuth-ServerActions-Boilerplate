@@ -1,11 +1,11 @@
-import NextAuth from "next-auth";
 import { authConfig } from "@/auth/config";
-import { PrismaAdapter } from "@auth/prisma-adapter";
 import { db } from "@/lib/db";
-import { getUserById, updateUserById } from "@/services/user";
-import { getTwoFactorConfirmationByUserId } from "@/services/two-factor-confirmation";
 import { isExpired } from "@/lib/utils";
 import { getAccountByUserId } from "@/services/account";
+import { getTwoFactorConfirmationByUserId } from "@/services/two-factor-confirmation";
+import { getUserById, updateUserById } from "@/services/user";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import NextAuth from "next-auth";
 
 export const {
   handlers: { GET, POST },
@@ -87,3 +87,4 @@ export const {
   },
   ...authConfig,
 });
+
