@@ -72,6 +72,7 @@ export default function ProfileHud() {
           alt="profile pic"
           fill={true}
           unoptimized
+          priority // Add the priority attribute here
           className="select-none object-cover transition-transform duration-300 ease-in-out hover:scale-125"
         />
       </Link>

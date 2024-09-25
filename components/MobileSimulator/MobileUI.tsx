@@ -119,7 +119,7 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
       </div>
 
       {/* My Location */}
-      <div className="bg-white w-full bg-opacity-20 rounded-lg p-2 shadow-md mb-16">
+      <div className="bg-white w-full bg-opacity-20 rounded-lg z-10 p-2 shadow-md mb-16">
         <h3 className="font-bold mb-2 text-sm">MY LOCATION</h3>
         <div className="h-[150px] rounded-lg overflow-hidden">
           <iframe
@@ -135,7 +135,7 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
       </div>
 
       {/* Bottom nav bar */}
-      <div className="fixed right-0 left-0 bottom-6 z-30 flex h-[34px] mx-7 select-none justify-between space-x-[6px] rounded-full bg-white px-4 py-[4px] shadow-lg shadow-black/50">
+      <div className="fixed right-0 left-0 bottom-6 z-40 flex h-[34px] mx-7 select-none justify-between space-x-[6px] rounded-full bg-white px-4 py-[4px] shadow-lg shadow-black/50">
         {sections.map((section) => (
           <Button
             key={section.id}

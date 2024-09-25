@@ -161,9 +161,6 @@ const MobileSimulator: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black to-white p-4 relative overflow-hidden">
-      {/* Background image */}
-      <div className="absolute inset-0 bg-[url('/path/to/futuristic-bg.jpg')] bg-cover bg-center opacity-30 z-0"></div>
-
       {/* Toggle button for mobile view */}
       <Button
         onClick={() => setShowMobile(true)}
