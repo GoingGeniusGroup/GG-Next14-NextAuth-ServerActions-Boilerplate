@@ -17,11 +17,11 @@ export const ResendForm = () => {
   const form = useForm<z.infer<typeof resendSchema>>({
     resolver: zodResolver(resendSchema),
     defaultValues: {
-      email: ""
-    }
-  })
+      email: "",
+    },
+  });
 
-  const handleSubmit = form.handleSubmit(values => {
+  const handleSubmit = form.handleSubmit((values) => {
     startTransition(() => {
       resendToken(values).then((data) => {
         if (data.success) {
@@ -29,7 +29,7 @@ export const ResendForm = () => {
         }
         return toast.error(data.error.message);
       });
-    })
+    });
   });
   return (
     <CardWrapper
@@ -48,7 +48,9 @@ export const ResendForm = () => {
             placeholder="e.g. johndoe@example.com"
             isPending={isPending}
           />
-          <Button type="submit" disabled={isPending} className="w-full">Resend</Button>
+          <Button type="submit" disabled={isPending} className="w-full">
+            Resend
+          </Button>
         </form>
       </Form>
     </CardWrapper>

@@ -1,6 +1,6 @@
 "use client";
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useState } from "react";
+import React from "react";
 
 const buttonVariants = {
   initial: { opacity: 0, scale: 0.5 },
@@ -10,7 +10,6 @@ const buttonVariants = {
 };
 
 function Button({ text = "Add Product" }: { text: string }) {
-
   return (
     <AnimatePresence>
       <motion.div {...buttonVariants}>

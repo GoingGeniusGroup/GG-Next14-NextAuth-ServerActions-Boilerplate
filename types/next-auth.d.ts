@@ -23,8 +23,8 @@ declare module "@auth/core/jwt" {
 //   }
 // }
 
-// declare module "next-auth/providers/google" {
-//   interface GoogleProfile {
-//     role: Role;
-//   }
-// }
+declare module "next-auth/providers/google" {
+  interface GoogleProfile {
+    role: Role;
+  }
+}

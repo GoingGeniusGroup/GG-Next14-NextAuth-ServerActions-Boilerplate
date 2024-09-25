@@ -1,4 +1,4 @@
-import ShopSection from "@/components/Huds/SubComponents/ShopSection";
+import ShopSection from "@/components/shop/ShopSection";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

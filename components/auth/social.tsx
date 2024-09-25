@@ -37,4 +37,4 @@ export const Social = () => {
       </Button>
     </div>
   );
-}
+};
