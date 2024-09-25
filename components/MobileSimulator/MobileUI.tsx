@@ -38,7 +38,7 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
 }) => {
   return (
     <div
-      className={`p-3 rounded-lg max-w-md mx-auto h-full overflow-y-auto ${currentBackground.class}`}
+      className={`p-3 rounded-lg w-full mx-auto h-full overflow-y-auto ${currentBackground.class}`}
     >
       {/* Top bar */}
       <div className="sticky top-0 flex justify-between items-center mb-4 rounded-lg bg-white/20 p-2 backdrop-blur-lg">
@@ -119,12 +119,12 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
       </div>
 
       {/* My Location */}
-      <div className="bg-white bg-opacity-20 rounded-lg p-2 shadow-md mb-16">
+      <div className="bg-white w-full bg-opacity-20 rounded-lg p-2 shadow-md mb-16">
         <h3 className="font-bold mb-2 text-sm">MY LOCATION</h3>
         <div className="h-[150px] rounded-lg overflow-hidden">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.73818016624!2d85.33933297611345!3d27.69448592605728!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19c7d1a7a207%3A0x77e34747e9b911e7!2sGoing%20Genius%20Group%20of%20Company%20Pvt%20Ltd!5e0!3m2!1sen!2snp!4v1727263172982!5m2!1sen!2snp"
-            width="310"
+            width="100%"
             height="150"
             style={{ border: 0 }}
             allowFullScreen
