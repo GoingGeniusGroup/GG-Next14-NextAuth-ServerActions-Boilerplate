@@ -6,7 +6,7 @@ import {
   FaUserCircle,
   FaUsers,
 } from "react-icons/fa";
-import CustomToolTipLeftRight from "@/components/MyComponents/CustomToolTipLeftRight";
+import CustomToolTipLeftRight from "@/components/CustomComponents/CustomToolTipLeftRight";
 import { Tab } from "../RightSideHud";
 
 interface TabButtonProps {

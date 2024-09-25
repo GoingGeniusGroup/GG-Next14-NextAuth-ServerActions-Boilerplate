@@ -1,7 +1,7 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { VscClearAll } from "react-icons/vsc";
-import CustomToolTipLeftRight from "@/components/MyComponents/CustomToolTipLeftRight";
+import CustomToolTipLeftRight from "@/components/CustomComponents/CustomToolTipLeftRight";
 
 interface ClearAllButtonProps {
   showClearAll: boolean;

@@ -1,8 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Form } from "@/components/ui/form";
@@ -21,19 +20,20 @@ import SpotlightButton from "../ui/button/spotlightButton";
 
 type ProfileFormProps = {
   user: ExtendedUser;
+  onProfileUpdate: (updatedUser: ExtendedUser) => void;
 };
 
-export const ProfileForm = ({ user }: ProfileFormProps) => {
+export const ProfileForm = ({ user, onProfileUpdate }: ProfileFormProps) => {
   const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof profileSchema>>({
     resolver: zodResolver(profileSchema),
     mode: "onChange",
-    defaultValues: {
-      name: user.name || "",
-      email: user.email || "",
-      password: "",
-      newPassword: "",
-      isTwoFactorEnabled: user.isTwoFactorEnabled || false,
+    values: {
+      name: user.name || undefined,
+      email: user.email || undefined,
+      password: undefined,
+      newPassword: undefined,
+      isTwoFactorEnabled: user.isTwoFactorEnabled || undefined,
     },
   });
 
@@ -41,6 +41,14 @@ export const ProfileForm = ({ user }: ProfileFormProps) => {
     startTransition(() => {
       profile(values).then((data) => {
         if (data.success) {
+          const updatedUser = {
+            ...user,
+            name: values.name,
+            email: values.email,
+            isTwoFactorEnabled: values.isTwoFactorEnabled ?? false,
+          };
+          onProfileUpdate(updatedUser);
+          form.reset(values);
           toast.success(data.message);
         } else {
           toast.error(data.error.message);
@@ -82,17 +90,17 @@ export const ProfileForm = ({ user }: ProfileFormProps) => {
                 label="Email Address"
                 type="email"
                 placeholder="e.g. johndoe@example.com"
-                className="input-with-floating-label"
-                disabled={isPending}
+                isPending={isPending}
+                disabled={user.isOAuth}
               />
               <FormInput
                 control={form.control}
                 name="password"
-                label="Current Password"
+                label="Old Password"
                 type="password"
                 placeholder="******"
-                autoComplete="current-password"
-                disabled={isPending}
+                autoComplete="off"
+                isPending={isPending}
               />
               <FormInput
                 control={form.control}
@@ -100,15 +108,15 @@ export const ProfileForm = ({ user }: ProfileFormProps) => {
                 label="New Password"
                 type="password"
                 placeholder="******"
-                autoComplete="new-password"
-                disabled={isPending}
+                autoComplete="off"
+                isPending={isPending}
               />
               <FormToggle
                 control={form.control}
                 name="isTwoFactorEnabled"
                 label="Two-Factor Authentication"
-                description="Enable two-factor authentication for enhanced account security."
-                disabled={isPending}
+                description="Protect your account with additional security by enabling two-factor authentication for login. You will be required to enter both your credentials and an authentication code to login."
+                isPending={isPending}
               />
             </>
           )}
@@ -136,11 +144,13 @@ export const ProfileForm = ({ user }: ProfileFormProps) => {
             </>
           )}
 
-          <SpotlightButton
-            text={isPending ? "Updating..." : "Update Profile"}
-            type="submit"
-            isPending={isPending}
-          />
+          <div className="w-full flex justify-center">
+            <SpotlightButton
+              text={isPending ? "Updating..." : "Update Profile"}
+              type="submit"
+              isPending={isPending}
+            />
+          </div>
         </form>
       </Form>
     </div>
