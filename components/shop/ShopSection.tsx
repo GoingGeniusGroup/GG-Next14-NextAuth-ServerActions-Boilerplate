@@ -120,13 +120,13 @@ const ShopSection = ({ isMobile = false }) => {
 
   return (
     <div
-      className={`container mx-auto px-2 py-4 ${
+      className={`container mx-auto px-2 pb-4 ${
         isMobile ? "max-h-full overflow-y-auto" : ""
       }`}
     >
-      <header className="relative mb-4">
+      <header className="mb-4 p-2 sticky top-0 z-20 bg-white/40 rounded-md backdrop-blur-md">
         {isMobile ? (
-          <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center justify-between mb-2 ">
             <div
               className="relative cursor-pointer"
               onClick={() => setIsCartOpen(true)}
@@ -141,7 +141,7 @@ const ShopSection = ({ isMobile = false }) => {
                 </Badge>
               )}
             </div>
-            <h2 className="text-lg font-semibold">Shop</h2>
+            <h2 className="text-lg font-bold">SHOP</h2>
           </div>
         ) : (
           <div className="absolute -top-8 -right-4">

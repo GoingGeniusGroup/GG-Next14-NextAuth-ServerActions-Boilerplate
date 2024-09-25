@@ -67,34 +67,24 @@ export const ProfileForm = ({ user }: ProfileFormProps) => {
           {/* Only show email and password fields if not an OAuth user */}
           {!user.isOAuth && (
             <>
-              <div className="relative">
-                <FormInput
-                  control={form.control}
-                  name="name"
-                  label="Name"
-                  type="text"
-                  placeholder="e.g. John Doe"
-                  className="input-with-floating-label"
-                  disabled={isPending}
-                />
-                <label className="absolute top-0 left-2 text-xs text-gray-400 transition-transform duration-300 transform -translate-y-3 scale-75">
-                  Name
-                </label>
-              </div>
-              <div className="relative">
-                <FormInput
-                  control={form.control}
-                  name="email"
-                  label="Email Address"
-                  type="email"
-                  placeholder="e.g. johndoe@example.com"
-                  className="input-with-floating-label"
-                  disabled={isPending}
-                />
-                <label className="absolute top-0 left-2 text-xs text-gray-400 transition-transform duration-300 transform -translate-y-3 scale-75">
-                  Email Address
-                </label>
-              </div>
+              <FormInput
+                control={form.control}
+                name="name"
+                label="Name"
+                type="text"
+                placeholder="e.g. John Doe"
+                className="input-with-floating-label"
+                disabled={isPending}
+              />
+              <FormInput
+                control={form.control}
+                name="email"
+                label="Email Address"
+                type="email"
+                placeholder="e.g. johndoe@example.com"
+                className="input-with-floating-label"
+                disabled={isPending}
+              />
               <FormInput
                 control={form.control}
                 name="password"

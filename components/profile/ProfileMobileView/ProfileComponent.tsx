@@ -14,7 +14,9 @@ export default function ProfileComponent() {
 
   return (
     <div className="size-full">
-      <h1 className="uppercase font-bold text-xl flex justify-center mb-7">Profile Setting </h1>
+      <h1 className="sticky top-0 uppercase font-bold text-xl flex justify-center mb-7 p-2 z-20 bg-white/40 backdrop-blur-md rounded-md">
+        Profile
+      </h1>
       <ProfileForm user={user} />
     </div>
   );
