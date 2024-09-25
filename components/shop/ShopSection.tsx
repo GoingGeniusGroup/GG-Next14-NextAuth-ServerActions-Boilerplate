@@ -173,7 +173,11 @@ const ShopSection = ({ isMobile = false }) => {
                     selectedCategory === category ? "default" : "outline"
                   }
                   size="sm"
-                  className="text-xs whitespace-nowrap"
+                  className={`text-xs whitespace-nowrap ${
+                    selectedCategory === category
+                      ? "font-semibold text-white"
+                      : "text-black"
+                  }`}
                   onClick={() => setSelectedCategory(category)}
                 >
                   {category}
@@ -196,7 +200,7 @@ const ShopSection = ({ isMobile = false }) => {
           {filteredProducts.map((product) => (
             <div
               key={product.id}
-              className="border rounded-lg overflow-hidden bg-white shadow-sm"
+              className="border rounded-lg overflow-hidden bg-white text-black shadow-sm"
             >
               <div
                 className={`relative overflow-hidden ${

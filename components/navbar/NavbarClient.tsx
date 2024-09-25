@@ -1,7 +1,6 @@
 "use client";
 
 import { ExtendedUser } from "@/types/next-auth";
-import Hamburger from "hamburger-react";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -11,6 +10,7 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { LuLogOut } from "react-icons/lu";
 import { RiEarthFill } from "react-icons/ri";
 import CustomToolTip from "../CustomComponents/CustomToolTip";
+import Hamburger from "hamburger-react";
 
 interface NavbarClientProps {
   user: ExtendedUser | undefined;
@@ -43,51 +43,48 @@ const NavbarClient: React.FC<NavbarClientProps> = ({
 
   return (
     <>
-      <div
-        className={`fixed right-0 top-3 z-50 flex items-center rounded-full`}
-      >
+      <div className={`fixed left-0 top-3 z-50 flex items-center rounded-full`}>
         <div className="flex items-center justify-center text-black dark:text-white">
-          {user ? (
-            <>
-              <div className="flex">
-                <button
-                  onClick={logoutAndToggleSidebar}
-                  className="group z-10 hidden items-center justify-end rounded-full hover:scale-105 focus:outline-none lg:flex"
-                  id="user-menu-button"
-                  aria-label="Sign Out"
-                >
-                  <LuLogOut className="mr-4 size-6 text-red-500" />
-                </button>
-                <div className="-mr-2 flex items-center lg:hidden">
-                  <Hamburger
-                    toggled={isOpen}
-                    toggle={setOpen}
-                    color="#4FD1C5"
-                  />
-                </div>
-              </div>
-            </>
-          ) : (
-            <>
-              {!hideTopRightNav && (
-                <div className="flex gap-x-4 text-black dark:text-white">
-                  <div
-                    onClick={() => handleOpenSignIn()}
-                    className="fixed right-[32px] top-[20px] z-50 flex h-[33px] select-none items-center justify-center rounded-full border-2 bg-gray-200 px-[4px] py-[6px] font-bold text-black shadow-lg shadow-black/30 transition-all duration-300 ease-out hover:bg-blue-300 lg:flex"
+          <div className="flex items-center gap-x-4 text-black dark:text-white">
+            <div className="flex items-center lg:hidden">
+              <Hamburger
+                toggled={isOpen}
+                toggle={setOpen}
+                color="#4FD1C5"
+                size={20}
+                duration={0.3}
+                rounded={true}
+                label="Show menu"
+              />
+            </div>
+            {user ? (
+              <>
+                <div className="flex">
+                  <button
+                    onClick={logoutAndToggleSidebar}
+                    className="group z-10 hidden items-center justify-end rounded-full hover:scale-105 focus:outline-none lg:flex"
+                    id="user-menu-button"
+                    aria-label="Sign Out"
                   >
-                    REGISTER
-                  </div>
-                  <div className="flex items-center lg:hidden">
-                    <Hamburger
-                      toggled={isOpen}
-                      toggle={setOpen}
-                      color="#4FD1C5"
-                    />
-                  </div>
+                    <LuLogOut className="mr-4 size-6 text-red-500" />
+                  </button>
                 </div>
-              )}
-            </>
-          )}
+              </>
+            ) : (
+              <>
+                {!hideTopRightNav && (
+                  <div className="flex gap-x-4 text-black dark:text-white">
+                    <div
+                      onClick={() => handleOpenSignIn()}
+                      className="fixed right-[32px] top-[20px] z-50 flex h-[33px] select-none items-center justify-center rounded-full border-2 bg-gray-200 px-[4px] py-[6px] font-bold text-black shadow-lg shadow-black/30 transition-all duration-300 ease-out hover:bg-blue-300 lg:flex"
+                    >
+                      REGISTER
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
         </div>
       </div>
 
