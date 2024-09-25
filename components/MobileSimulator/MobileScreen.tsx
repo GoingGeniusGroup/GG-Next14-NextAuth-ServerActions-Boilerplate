@@ -1,8 +1,10 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scrollarea";
 import { X } from "lucide-react";
 import { motion } from "framer-motion";
+import { BackgroundProps } from "./interface/Background.interface";
 
 interface MobileScreenProps {
   screen: {
@@ -13,15 +15,20 @@ interface MobileScreenProps {
   index: number;
   isSmallScreen: boolean;
   removeScreen: (id: number) => void;
-  glassMorphicStyle: React.CSSProperties;
+  currentBackground: BackgroundProps; // Include Background
 }
+
+// interface Background {
+//   name: string;
+//   class: string;
+// }
 
 const MobileScreen: React.FC<MobileScreenProps> = ({
   screen,
   index,
   isSmallScreen,
   removeScreen,
-  glassMorphicStyle,
+  currentBackground, // Receive currentBackground
 }) => {
   return (
     <motion.div
@@ -30,22 +37,14 @@ const MobileScreen: React.FC<MobileScreenProps> = ({
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: "100%", opacity: 0 }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      className="relative bg-transparent rounded-xl overflow-hidden py-2 flex-shrink-0 z-20"
+      className={`relative ${currentBackground.class} rounded-xl overflow-hidden py-2 flex-shrink-0 z-20 backdrop-blur-md border-1 border-white`} // Apply currentBackground.class
       style={{
         width: isSmallScreen ? "100%" : "335px",
         height: isSmallScreen ? "100%" : "75vh",
         position: isSmallScreen ? "absolute" : "relative",
         right: isSmallScreen ? `${index * 100}%` : "auto",
-        ...glassMorphicStyle,
       }}
     >
-      {/* {!isSmallScreen && (
-        <>
-          <div className="absolute top-0 left-0 right-0 h-6 bg-gray-900 bg-opacity-50 rounded-t-3xl"></div>
-          <div className="absolute bottom-0 left-0 right-0 h-6 bg-gray-900 bg-opacity-50 rounded-b-3xl"></div>
-        </>
-      )} */}
-
       <Button
         variant="ghost"
         size="mini"

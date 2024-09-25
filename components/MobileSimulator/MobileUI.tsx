@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,13 +18,7 @@ import { GiRamProfile } from "react-icons/gi";
 import { BsBellFill, BsChat, BsShop, BsWallet2 } from "react-icons/bs";
 import { MdOutlineEmergency } from "react-icons/md";
 import CustomToolTip from "../CustomComponents/CustomToolTip";
-
-const backgrounds = [
-  { name: "Default", class: "bg-gradient-to-b from-gray-700 to-gray-900" },
-  { name: "Sunset", class: "bg-gradient-to-b from-orange-500 to-pink-500" },
-  { name: "Ocean", class: "bg-gradient-to-b from-blue-400 to-blue-800" },
-  { name: "Forest", class: "bg-gradient-to-b from-green-400 to-green-800" },
-];
+import { MobileInterfaceProps } from "./interface/MobileInterface.interface";
 
 const scheduleData = [
   { day: "S", schedule: [1, 0, 1, 1, 0, 1, 0] },
@@ -34,26 +30,15 @@ const scheduleData = [
   { day: "S", schedule: [0, 0, 1, 1, 0, 1, 1] },
 ];
 
-interface Section {
-  id: number;
-  title: string;
-  content: React.ReactNode;
-}
-
-interface MobileInterfaceProps {
-  sections: Section[];
-  toggleScreen: (section: Section) => void;
-  closeAllScreens: () => void;
-  screens: Section[];
-}
-
-const MobileInterface: React.FC<MobileInterfaceProps> = ({
+const MobileUI: React.FC<MobileInterfaceProps> = ({
   sections,
   toggleScreen,
   closeAllScreens,
+  backgrounds,
   screens,
+  currentBackground,
+  updateCurrentBackground,
 }) => {
-  const [currentBackground, setCurrentBackground] = useState(backgrounds[0]);
   const [currentWeather, setCurrentWeather] = useState({ icon: Sun, temp: 21 });
 
   const changeWeather = () => {
@@ -142,7 +127,7 @@ const MobileInterface: React.FC<MobileInterfaceProps> = ({
               key={index}
               variant={currentBackground === bg ? "default" : "outline"}
               className="text-xs transition-transform hover:scale-105"
-              onClick={() => setCurrentBackground(bg)}
+              onClick={() => updateCurrentBackground(bg)} // Update the background when clicked
             >
               {bg.name}
             </Button>
@@ -201,4 +186,4 @@ const MobileInterface: React.FC<MobileInterfaceProps> = ({
   );
 };
 
-export default MobileInterface;
+export default MobileUI;

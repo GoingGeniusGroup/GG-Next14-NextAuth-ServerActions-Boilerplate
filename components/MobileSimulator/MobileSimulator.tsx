@@ -5,19 +5,14 @@ import { Button } from "@/components/ui/button";
 import { Smartphone, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import MobileScreen from "./MobileScreen";
-import MobileInterface from "./MobileInterface";
+import MobileUI from "./MobileUI";
 import ProfileComponent from "../profile/ProfileMobileView/ProfileComponent";
 import ShopSection from "../shop/ShopSection";
-
-// Define the Section interface
-interface Section {
-  id: number;
-  title: string;
-  content: React.ReactNode;
-}
+import { SectionProps } from "./interface/Section.interface";
+import { BackgroundProps } from "./interface/Background.interface";
 
 // Define the sections array
-const sections: Section[] = [
+const sections: SectionProps[] = [
   { id: 1, title: "Home", content: "Home" },
   { id: 2, title: "Profile", content: <ProfileComponent /> },
   { id: 3, title: "Shop", content: <ShopSection isMobile={true} /> },
@@ -25,10 +20,21 @@ const sections: Section[] = [
   { id: 5, title: "Messages", content: "Check your messages and chats." },
 ];
 
+// Define the backgrounds array
+const backgrounds = [
+  { name: "Default", class: "bg-gradient-to-b from-gray-700 to-gray-900" },
+  { name: "Sunset", class: "bg-gradient-to-b from-orange-500 to-pink-500" },
+  { name: "Ocean", class: "bg-gradient-to-b from-blue-400 to-blue-800" },
+  { name: "Forest", class: "bg-gradient-to-b from-green-400 to-green-800" },
+];
+
 const MobileSimulator: React.FC = () => {
   const [showMobile, setShowMobile] = useState<boolean>(false);
-  const [screens, setScreens] = useState<Section[]>([]);
+  const [screens, setScreens] = useState<SectionProps[]>([]);
   const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false);
+  const [currentBackground, setCurrentBackground] = useState<BackgroundProps>(
+    backgrounds[0]
+  );
 
   // Effect to check and update screen size
   useEffect(() => {
@@ -41,7 +47,7 @@ const MobileSimulator: React.FC = () => {
   }, []);
 
   // Function to toggle screen visibility
-  const toggleScreen = (section: Section) => {
+  const toggleScreen = (section: SectionProps) => {
     setScreens((prevScreens) => {
       const isOpen = prevScreens.some((screen) => screen.id === section.id);
       if (isOpen) {
@@ -62,6 +68,11 @@ const MobileSimulator: React.FC = () => {
   // Function to close all screens
   const closeAllScreens = () => {
     setScreens([]);
+  };
+
+  // Function to update the current background
+  const updateCurrentBackground = (newBackground: BackgroundProps) => {
+    setCurrentBackground(newBackground);
   };
 
   // Glassmorphic style object
@@ -109,9 +120,10 @@ const MobileSimulator: React.FC = () => {
                     key={screen.id}
                     screen={screen}
                     index={index}
+                    // backgrounds={backgrounds}
                     isSmallScreen={isSmallScreen}
                     removeScreen={removeScreen}
-                    glassMorphicStyle={glassMorphicStyle}
+                    currentBackground={currentBackground} // Pass currentBackground
                   />
                 ))}
               </AnimatePresence>
@@ -134,11 +146,14 @@ const MobileSimulator: React.FC = () => {
                   <X className="size-4" />
                 </Button>
 
-                <MobileInterface
+                <MobileUI
                   sections={sections}
                   toggleScreen={toggleScreen}
+                  backgrounds={backgrounds}
                   closeAllScreens={closeAllScreens}
                   screens={screens}
+                  currentBackground={currentBackground}
+                  updateCurrentBackground={updateCurrentBackground}
                 />
               </motion.div>
             </div>
