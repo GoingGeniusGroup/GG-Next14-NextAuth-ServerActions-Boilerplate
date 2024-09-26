@@ -2,18 +2,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button/button";
-import {
-  Play,
-  SkipBack,
-  SkipForward,
-  Sun,
-  CheckCircle,
-  Edit,
-  X,
-} from "lucide-react";
-import { GiRamProfile } from "react-icons/gi";
-import { BsBellFill, BsChat, BsShop, BsWallet2 } from "react-icons/bs";
-import { MdOutlineEmergency } from "react-icons/md";
+import { Play, SkipBack, SkipForward, Sun, CheckCircle } from "lucide-react";
 import CustomToolTip from "../CustomComponents/CustomToolTip";
 import { MobileInterfaceProps } from "./interface/MobileInterface.interface";
 
@@ -151,28 +140,13 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
             }`}
             onClick={() => toggleScreen(section)}
           >
-            {screens.some((screen) => screen.id === section.id) ? (
-              <CheckCircle className="text-black" size={16} />
-            ) : (
-              <>
-                {section.title === "Profile" ? (
-                  <GiRamProfile size={16} />
-                ) : section.title === "Shop" ? (
-                  <BsShop size={16} />
-                ) : section.title === "Wallet" ? (
-                  <BsWallet2 size={16} />
-                ) : section.title === "Notifications" ? (
-                  <BsBellFill size={16} />
-                ) : section.title === "Message" ? (
-                  <BsChat size={16} />
-                ) : section.title === "Emergency" ? (
-                  <MdOutlineEmergency size={16} />
-                ) : (
-                  <Edit size={16} />
-                )}
-              </>
-            )}
-            <CustomToolTip content="HUD" top="10" left="-9" translateY="30" />
+            {section.icon}
+            <CustomToolTip
+              content={section.title}
+              top="-30"
+              left="-20"
+              translateY="0"
+            />
           </Button>
         ))}
       </div>

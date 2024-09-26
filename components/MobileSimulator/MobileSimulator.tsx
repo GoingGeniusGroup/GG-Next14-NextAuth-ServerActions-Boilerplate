@@ -1,22 +1,23 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import {
+  FaUser,
+  FaShoppingCart,
+  FaBell,
+  FaEnvelope,
+  FaSignInAlt,
+  FaUserPlus,
+} from "react-icons/fa"; // Import FontAwesome icons
 import SimulatorToggleButton from "./SimulatorToggleButton";
 import MobileSimulatorContainer from "./MobileSimulatorContainer";
 import { SectionProps } from "./interface/Section.interface";
 import { BackgroundProps } from "./interface/Background.interface";
 import ProfileComponent from "../profile/ProfileMobileView/ProfileComponent";
 import ShopSection from "../shop/ShopSection";
-
-// Define the sections array
-const sections: SectionProps[] = [
-  { id: 1, title: "Home", content: "Home" },
-  { id: 2, title: "Profile", content: <ProfileComponent /> },
-  { id: 3, title: "Shop", content: <ShopSection isMobile={true} /> },
-  { id: 4, title: "Notifications", content: "View your latest notifications." },
-  { id: 5, title: "Messages", content: "Check your messages and chats." },
-];
-
+import { LoginForm } from "../form/login-form";
+import { RegisterForm } from "../form/register-form";
 // Define the backgrounds array
 const backgrounds = [
   {
@@ -118,6 +119,8 @@ const MobileSimulator: React.FC<MobileSimulatorProps> = ({
   showMobile,
   setShowMobile,
 }) => {
+  const { data: session } = useSession();
+  const isLoggedIn = session?.user;
   const [screens, setScreens] = useState<SectionProps[]>([]);
   const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false);
   const [currentBackground, setCurrentBackground] = useState<BackgroundProps>(
@@ -133,13 +136,64 @@ const MobileSimulator: React.FC<MobileSimulatorProps> = ({
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
+  // Define the sections array based on login status with icons
+  const sections: SectionProps[] = [
+    ...(isLoggedIn
+      ? [
+          {
+            id: 1,
+            title: "Profile",
+            icon: <FaUser />,
+            content: <ProfileComponent />,
+          },
+          {
+            id: 2,
+            title: "Shop",
+            icon: <FaShoppingCart />,
+            content: <ShopSection isMobile={true} />,
+          },
+          {
+            id: 3,
+            title: "Notifications",
+            icon: <FaBell />,
+            content: "View your latest notifications.",
+          },
+          {
+            id: 4,
+            title: "Messages",
+            icon: <FaEnvelope />,
+            content: "Check your messages and chats.",
+          },
+        ]
+      : [
+          {
+            id: 1,
+            title: "Login",
+            icon: <FaSignInAlt />,
+            content: <LoginForm />,
+          },
+          {
+            id: 2,
+            title: "Register",
+            icon: <FaUserPlus />,
+            content: <RegisterForm />,
+          },
+          {
+            id: 3,
+            title: "Shop",
+            icon: <FaShoppingCart />,
+            content: <ShopSection isMobile={true} />,
+          },
+        ]),
+  ];
+
   const toggleScreen = (section: SectionProps) => {
     setScreens((prevScreens) => {
       const isOpen = prevScreens.some((screen) => screen.id === section.id);
       if (isOpen) {
         return prevScreens.filter((screen) => screen.id !== section.id);
       } else {
-        return [section, ...prevScreens].slice(0, 3);
+        return [section, ...prevScreens].slice(0, 3); // Show a max of 3 screens at a time
       }
     });
   };
