@@ -59,7 +59,7 @@ const NavbarClient: React.FC<NavbarClientProps> = ({
               <>
                 <div className="flex px-2">
                   <button
-                    // onClick={() => showMobile(true)}
+                    onClick={logoutAndToggleSidebar}
                     className="group z-10 hidden lg:flex text-sm font-bold"
                     id="user-menu-button"
                     aria-label="Sign Out"

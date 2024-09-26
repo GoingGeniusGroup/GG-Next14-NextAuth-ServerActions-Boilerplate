@@ -43,8 +43,8 @@ export default function MobileSimulatorContainer({
             } p-4 z-20`}
           >
             <div
-              className={`bg-none rounded-xl border-none overflow-hidden max-w-full max-h-full flex ${
-                isSmallScreen ? "w-full h-full" : "gap-x-4"
+              className={`bg-none rounded-xl border-none overflow-hidden max-w-full h-full max-h-full flex gap-x-4 items-center ${
+                isSmallScreen ? "size-full" : "gap-x-4"
               }`}
             >
               {/* Render active screens */}

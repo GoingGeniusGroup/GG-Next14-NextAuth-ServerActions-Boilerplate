@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button/button";
 import { Play, SkipBack, SkipForward, Sun, CheckCircle } from "lucide-react";
 import CustomToolTip from "../CustomComponents/CustomToolTip";
@@ -8,6 +8,7 @@ import { MobileInterfaceProps } from "./interface/MobileInterface.interface";
 
 //icon
 import { RxCross2 } from "react-icons/rx";
+import { ColorPicker } from "../CustomComponents/ColorPicker";
 
 const scheduleData = [
   { day: "S", schedule: [1, 0, 1, 1, 0, 1, 0] },
@@ -28,9 +29,33 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
   currentBackground,
   updateCurrentBackground,
 }) => {
+  const handleColorChange = (color: string) => {
+    // Ensure the color is in the correct format (e.g., "#RRGGBB")
+    const formattedColor = color.startsWith("#") ? color : `#${color}`;
+    const newBackground = {
+      class: `bg-[${formattedColor}]`,
+      name: "Custom Color",
+    };
+    updateCurrentBackground(newBackground);
+  };
+
+  // Function to get background style
+  const getBackgroundStyle = () => {
+    if (currentBackground.name === "Custom Color") {
+      // Extract color from the class string
+      const colorMatch = currentBackground.class.match(
+        /bg-\[(#[0-9A-Fa-f]{6})\]/
+      );
+      return colorMatch ? { backgroundColor: colorMatch[1] } : {};
+    }
+    return {}; // For preset backgrounds, we'll use Tailwind classes
+  };
   return (
     <div
-      className={`p-3 rounded-lg w-full mx-auto h-full overflow-y-auto ${currentBackground.class}`}
+      className={`p-3 rounded-lg w-full mx-auto h-full overflow-y-auto ${
+        currentBackground.name !== "Custom Color" ? currentBackground.class : ""
+      }`}
+      style={getBackgroundStyle()}
     >
       {/* Top bar */}
       <div className="sticky top-0 flex justify-between items-center mb-4 rounded-lg bg-white/20 p-2 backdrop-blur-lg">
@@ -90,22 +115,34 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
 
         {/* Background Changer */}
         <div className="bg-white bg-opacity-20 rounded-lg p-2 shadow-md">
-          <h3 className="font-bold text-sm text-center mb-2">CHANGE BG</h3>
+          <h3 className="font-bold text-sm text-center mb-2">THEME</h3>
           <div className="relative flex flex-wrap gap-1">
             {backgrounds.map((bg, index) => (
               <Button
                 key={index}
-                variant={currentBackground === bg ? "outline" : "ghost"}
+                variant={
+                  currentBackground.name === bg.name ? "outline" : "ghost"
+                }
                 className={`group p-1 text-xs transition-transform duration-200 ease-in-out transform hover:scale-105 ${
                   bg.class
                 } ${
-                  currentBackground === bg
-                    ? "bg-blue-600 text-white"
-                    : "bg-gray-700 text-gray-300"
-                } rounded-full shadow-sm`}
-                onClick={() => updateCurrentBackground(bg)} // Update the background when clicked
+                  currentBackground.name === bg.name
+                    ? "bg-blue-600 text-white size-6"
+                    : "bg-gray-700 text-gray-300 size-6"
+                } rounded-xl shadow-sm`}
+                onClick={() => updateCurrentBackground(bg)}
               ></Button>
             ))}
+            <ColorPicker
+              value={
+                currentBackground.name === "Custom Color"
+                  ? currentBackground.class.match(
+                      /bg-\[(#[0-9A-Fa-f]{6})\]/
+                    )?.[1] || ""
+                  : ""
+              }
+              onChange={handleColorChange}
+            />
           </div>
         </div>
       </div>
