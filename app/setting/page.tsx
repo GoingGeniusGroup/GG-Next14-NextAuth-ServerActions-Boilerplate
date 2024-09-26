@@ -1,12 +1,8 @@
 'use client'
 
-import { useState } from 'react'
-import { Bell, Lock, User, ChevronDown } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Switch } from "@/components/ui/switch"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
     Select,
     SelectContent,
@@ -14,6 +10,10 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import { Switch } from "@/components/ui/switch"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Bell, Lock, User } from 'lucide-react'
+import { useState } from 'react'
 
 export default function SettingsPageComponent() {
     const [activeTab, setActiveTab] = useState("account")
@@ -41,6 +41,7 @@ export default function SettingsPageComponent() {
                     </Tabs>
                 </aside>
                 <main className="flex-1">
+                    <Tabs>
                     <TabsContent value="account" className="space-y-6">
                         <div>
                             <h2 className="text-2xl font-semibold mb-4">Account Settings</h2>
@@ -112,6 +113,7 @@ export default function SettingsPageComponent() {
                             </div>
                         </div>
                     </TabsContent>
+                    </Tabs>
                 </main>
             </div>
             <div className="mt-8">
