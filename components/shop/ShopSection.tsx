@@ -146,19 +146,14 @@ const ShopSection = ({ isMobile = false }) => {
             </div>
           </>
         ) : (
-          <div className="absolute -top-8 -right-4">
+          <div className="absolute top-8 right-4 z-20">
             <div
               className="relative cursor-pointer"
               onClick={() => setIsCartOpen(true)}
             >
               <ShoppingCart className="w-6 h-6" />
               {totalItems > 0 && (
-                <Badge
-                  variant="destructive"
-                  className="absolute -top-2 -right-2"
-                >
-                  {totalItems}
-                </Badge>
+                <Badge variant="destructive">{totalItems}</Badge>
               )}
             </div>
           </div>
