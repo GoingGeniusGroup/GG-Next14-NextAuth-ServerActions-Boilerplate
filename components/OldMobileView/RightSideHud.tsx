@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
-import { useRightSideHud } from "@/components/Huds/Context/RightSideHudProvider";
+import { useRightSideHud } from "@/components/OldMobileView/Context/RightSideHudProvider";
 import TabButton from "./SubComponents/TabButton";
 import TabContent from "./SubComponents/TabContent";
 import ClearAllButton from "./SubComponents/ClearAllButton";
