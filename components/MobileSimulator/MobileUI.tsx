@@ -17,6 +17,9 @@ import { MdOutlineEmergency } from "react-icons/md";
 import CustomToolTip from "../CustomComponents/CustomToolTip";
 import { MobileInterfaceProps } from "./interface/MobileInterface.interface";
 
+//icon
+import { RxCross2 } from "react-icons/rx";
+
 const scheduleData = [
   { day: "S", schedule: [1, 0, 1, 1, 0, 1, 0] },
   { day: "M", schedule: [1, 1, 1, 0, 0, 1, 1] },
@@ -174,12 +177,12 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
         ))}
       </div>
       <Button
-        variant="ghost"
+        variant="animated_spin"
         size="small"
         className="absolute bottom-16 right-2 text-white hover:text-black bg-red-500 hover:bg-red-600 rounded-full w-6 h-6"
         onClick={closeAllScreens}
       >
-        <X size={17} />
+        <RxCross2 size={14} />
       </Button>
     </div>
   );

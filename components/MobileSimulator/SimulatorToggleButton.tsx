@@ -1,0 +1,48 @@
+import { motion } from "framer-motion";
+import { Button } from "../ui/button/button";
+import { Smartphone } from "lucide-react";
+import { RxCross2 } from "react-icons/rx";
+
+interface SimulatorToggleButtonProps {
+  showMobile: boolean;
+  setShowMobile: (value: boolean) => void;
+}
+
+export default function SimulatorToggleButton({
+  showMobile,
+  setShowMobile,
+}: SimulatorToggleButtonProps) {
+  return (
+    <motion.div
+      layout
+      className="fixed right-[5px] md:right-[20px] top-1/2 z-50 flex w-[33px] -translate-y-1/2 select-none flex-col items-center space-y-[6px] rounded-full bg-white px-[6px] py-[4px] shadow-lg shadow-black/50 transition-all duration-500 ease-in-out"
+    >
+      {/* Toggle button for mobile view */}
+      <Button
+        onClick={() => setShowMobile(!showMobile)}
+        className="rounded-full size-6 p-0 bg-blue-400 hover:bg-black/40 z-20"
+        size="mini"
+      >
+        <Smartphone className="size-4 text-white" />
+      </Button>
+
+      {showMobile && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.5 }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+        >
+          <Button
+            variant="animated_spin"
+            size="mini"
+            className="text-white font-bold hover:text-black z-40 bg-red-500 rounded-full"
+            onClick={() => setShowMobile(false)}
+          >
+            <RxCross2 size={10} />
+          </Button>
+        </motion.div>
+      )}
+    </motion.div>
+  );
+}

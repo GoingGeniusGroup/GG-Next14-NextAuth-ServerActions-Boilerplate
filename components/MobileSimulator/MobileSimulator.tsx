@@ -1,8 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button/button";
-import { Smartphone, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import MobileScreen from "./MobileScreen";
 import MobileUI from "./MobileUI";
@@ -10,6 +8,11 @@ import ProfileComponent from "../profile/ProfileMobileView/ProfileComponent";
 import ShopSection from "../shop/ShopSection";
 import { SectionProps } from "./interface/Section.interface";
 import { BackgroundProps } from "./interface/Background.interface";
+
+//icons
+import { MobileSimulatorContext } from "./Context/MobileSimulatorContext";
+import SimulatorToggleButton from "./SimulatorToggleButton";
+import MobileSimulatorContainer from "./MobileSimulatorContainer";
 
 // Define the sections array
 const sections: SectionProps[] = [
@@ -161,82 +164,40 @@ const MobileSimulator: React.FC = () => {
 
   return (
     <>
-      <motion.div
-        layout
-        className="fixed right-[5px] md:right-[20px] top-1/2 z-50 flex w-[33px] -translate-y-1/2 select-none flex-col items-center space-y-[6px] rounded-full bg-white px-[6px] py-[4px] shadow-lg shadow-black/50 transition-all duration-300 ease-in-out"
+      <MobileSimulatorContext.Provider
+        value={{
+          showMobile,
+          setShowMobile,
+          isSmallScreen,
+          screens,
+          setScreens,
+          currentBackground,
+          setCurrentBackground,
+          toggleScreen,
+          removeScreen,
+          closeAllScreens,
+          updateCurrentBackground,
+        }}
       >
-        {/* Toggle button for mobile view */}
-        <Button
-          onClick={() => setShowMobile(!showMobile)}
-          className="rounded-full size-6 p-0 bg-blue-400 hover:bg-black/40 z-20"
-          size="mini"
-        >
-          <Smartphone className="size-4 text-white" />
-        </Button>
-      </motion.div>
+        <SimulatorToggleButton
+          showMobile={showMobile}
+          setShowMobile={setShowMobile}
+        />
 
-      {/* Mobile simulator container */}
-      <AnimatePresence>
-        {showMobile && (
-          <motion.div
-            initial={{ opacity: 0, scale: isSmallScreen ? 1 : 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: isSmallScreen ? 1 : 0.9 }}
-            className={`fixed inset-0 flex items-center z-40 justify-end ${
-              isSmallScreen ? "" : "backdrop-blur-md"
-            } p-4 z-20`}
-          >
-            <div
-              className={`bg-none rounded-xl border-none overflow-hidden max-w-full max-h-full flex ${
-                isSmallScreen ? "w-full h-full" : "gap-x-4"
-              }`}
-            >
-              {/* Render active screens */}
-              <AnimatePresence initial={false} mode="popLayout">
-                {screens.map((screen, index) => (
-                  <MobileScreen
-                    key={screen.id}
-                    screen={screen}
-                    index={index}
-                    // backgrounds={backgrounds}
-                    isSmallScreen={isSmallScreen}
-                    removeScreen={removeScreen}
-                    currentBackground={currentBackground} // Pass currentBackground
-                  />
-                ))}
-              </AnimatePresence>
-
-              {/* Main mobile screen with app grid */}
-              <motion.div
-                className="relative mr-14 rounded-xl bg-white/20 backdrop-blur-md overflow-hidden flex-shrink-0 shadow-lg"
-                style={{
-                  width: isSmallScreen ? "100%" : "335px",
-                  height: isSmallScreen ? "100%" : "75vh",
-                }}
-              >
-                <Button
-                  variant="ghost"
-                  size="mini"
-                  className="absolute top-2 right-2 text-white font-bold hover:text-black z-40 bg-red-500 rounded-full"
-                  onClick={() => setShowMobile(false)}
-                >
-                  <X className="size-3" />
-                </Button>
-
-                <MobileUI
-                  sections={sections}
-                  toggleScreen={toggleScreen}
-                  backgrounds={backgrounds}
-                  closeAllScreens={closeAllScreens}
-                  screens={screens}
-                  currentBackground={currentBackground}
-                  updateCurrentBackground={updateCurrentBackground}
-                />
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+        {/* Mobile simulator container */}
+        <MobileSimulatorContainer
+          showMobile={showMobile}
+          isSmallScreen={isSmallScreen}
+          backgrounds={backgrounds}
+          currentBackground={currentBackground}
+          sections={sections}
+          toggleScreen={toggleScreen}
+          screens={screens}
+          removeScreen={removeScreen}
+          closeAllScreens={closeAllScreens}
+          updateCurrentBackground={updateCurrentBackground}
+        />
+      </MobileSimulatorContext.Provider>
     </>
   );
 };
