@@ -9,6 +9,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 
+
 type Product = {
     id: string;
     name: string;
