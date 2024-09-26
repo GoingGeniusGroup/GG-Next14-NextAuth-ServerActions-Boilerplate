@@ -3,6 +3,7 @@ import MobileScreen from "./MobileScreen";
 import MobileUI from "./MobileUI";
 import { BackgroundProps } from "./interface/Background.interface";
 import { SectionProps } from "./interface/Section.interface";
+import { useState } from "react";
 
 interface MobileSimulatorContainerProps {
   showMobile: boolean;
@@ -29,6 +30,7 @@ export default function MobileSimulatorContainer({
   closeAllScreens,
   updateCurrentBackground,
 }: MobileSimulatorContainerProps) {
+  const [textColor, setTextColor] = useState("#ffffff");
   return (
     <>
       {/* Mobile simulator container */}
@@ -47,22 +49,20 @@ export default function MobileSimulatorContainer({
                 isSmallScreen ? "size-full" : "gap-x-4"
               }`}
             >
-              {/* Render active screens */}
               <AnimatePresence initial={false} mode="popLayout">
                 {screens.map((screen, index) => (
                   <MobileScreen
                     key={screen.id}
                     screen={screen}
                     index={index}
-                    // backgrounds={backgrounds}
                     isSmallScreen={isSmallScreen}
                     removeScreen={removeScreen}
                     currentBackground={currentBackground} // Pass currentBackground
+                    textColor={textColor} // Pass textColor
                   />
                 ))}
               </AnimatePresence>
 
-              {/* Main mobile screen with app grid */}
               <motion.div
                 className="relative mr-14 rounded-xl bg-white/20 backdrop-blur-md overflow-hidden flex-shrink-0 shadow-lg"
                 style={{
@@ -78,6 +78,8 @@ export default function MobileSimulatorContainer({
                   screens={screens}
                   currentBackground={currentBackground}
                   updateCurrentBackground={updateCurrentBackground}
+                  textColor={textColor}
+                  setTextColor={setTextColor}
                 />
               </motion.div>
             </div>

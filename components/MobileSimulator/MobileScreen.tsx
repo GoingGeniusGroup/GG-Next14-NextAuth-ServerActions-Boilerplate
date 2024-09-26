@@ -15,7 +15,8 @@ interface MobileScreenProps {
   index: number;
   isSmallScreen: boolean;
   removeScreen: (id: number) => void;
-  currentBackground: BackgroundProps; // Include Background
+  currentBackground: BackgroundProps;
+  textColor: string;
 }
 
 const MobileScreen: React.FC<MobileScreenProps> = ({
@@ -23,8 +24,19 @@ const MobileScreen: React.FC<MobileScreenProps> = ({
   index,
   isSmallScreen,
   removeScreen,
-  currentBackground, // Receive currentBackground
+  currentBackground,
+  textColor,
 }) => {
+  // Check if the background is a custom color and apply it accordingly
+  const backgroundStyle =
+    currentBackground.name === "Custom Color"
+      ? {
+          backgroundColor: currentBackground.class
+            .replace("bg-[", "")
+            .replace("]", ""),
+        }
+      : {};
+
   return (
     <motion.div
       key={screen.id}
@@ -32,8 +44,12 @@ const MobileScreen: React.FC<MobileScreenProps> = ({
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: "100%", opacity: 0 }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      className={`relative ${currentBackground.class} rounded-xl overflow-hidden py-2 flex-shrink-0 z-20 backdrop-blur-md border-1 border-white`} // Apply currentBackground.class
+      className={`relative ${
+        currentBackground.name !== "Custom Color" ? currentBackground.class : ""
+      } rounded-xl overflow-hidden py-2 flex-shrink-0 z-20 backdrop-blur-md border-1 border-white`}
       style={{
+        ...backgroundStyle, // Apply background color here
+        color: textColor, // Apply text color here
         width: isSmallScreen ? "100%" : "335px",
         height: isSmallScreen ? "100%" : "75vh",
         position: isSmallScreen ? "absolute" : "relative",

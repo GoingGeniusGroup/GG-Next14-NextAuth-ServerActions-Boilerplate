@@ -28,9 +28,9 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
   screens,
   currentBackground,
   updateCurrentBackground,
+  textColor,
+  setTextColor,
 }) => {
-  const [textColor, setTextColor] = useState("#ffffff"); // Initial text color
-
   const handleColorChange = (color: string) => {
     const formattedColor = color.startsWith("#") ? color : `#${color}`;
     const newBackground = {
@@ -42,26 +42,19 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
 
   const handleTextColorChange = (color: string) => {
     const formattedColor = color.startsWith("#") ? color : `#${color}`;
-    setTextColor(formattedColor);
-  };
-
-  // Function to get background style
-  const getBackgroundStyle = () => {
-    if (currentBackground.name === "Custom Color") {
-      const colorMatch = currentBackground.class.match(
-        /bg-\[(#[0-9A-Fa-f]{6})\]/
-      );
-      return colorMatch ? { backgroundColor: colorMatch[1] } : {};
-    }
-    return {}; // For preset backgrounds, we'll use Tailwind classes
+    setTextColor(formattedColor); // Set the new text color globally
   };
 
   return (
     <div
-      className={`p-3 rounded-lg w-full mx-auto h-full overflow-y-auto ${
-        currentBackground.name !== "Custom Color" ? currentBackground.class : ""
-      }`}
-      style={{ ...getBackgroundStyle(), color: textColor }} // Apply text color
+      className="p-3 rounded-lg w-full mx-auto h-full overflow-y-auto"
+      style={{
+        color: textColor, // Apply text color
+        backgroundColor:
+          currentBackground.name === "Custom Color"
+            ? currentBackground.class.replace("bg-[", "").replace("]", "") // Inline background color for custom
+            : undefined, // If it's not a custom color, leave undefined
+      }}
     >
       {/* Top bar */}
       <div className="sticky top-0 flex justify-between items-center mb-4 rounded-lg bg-white/20 p-2 backdrop-blur-lg">

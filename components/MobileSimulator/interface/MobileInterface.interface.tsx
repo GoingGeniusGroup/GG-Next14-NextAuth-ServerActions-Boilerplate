@@ -9,4 +9,6 @@ export interface MobileInterfaceProps {
   backgrounds: BackgroundProps[];
   currentBackground: BackgroundProps;
   updateCurrentBackground: (newBackground: BackgroundProps) => void;
+  textColor: string;
+  setTextColor: (color: string) => void;
 }
