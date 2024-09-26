@@ -44,7 +44,7 @@ const ColorPicker = forwardRef<
             onClick={() => {
               setOpen(true);
             }}
-            size="icon"
+            size="small"
             style={{
               backgroundColor: parsedValue,
             }}
@@ -53,8 +53,13 @@ const ColorPicker = forwardRef<
             <div />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-full">
-          <HexColorPicker color={parsedValue} onChange={onChange} />
+        <PopoverContent className="w-[169px]">
+          <HexColorPicker
+            color={parsedValue}
+            onChange={onChange}
+            // Add width and height for smaller size
+            style={{ width: "150px", height: "150px" }}
+          />
           <Input
             maxLength={7}
             onChange={(e) => {

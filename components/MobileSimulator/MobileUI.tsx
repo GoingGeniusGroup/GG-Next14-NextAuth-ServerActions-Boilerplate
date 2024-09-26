@@ -29,8 +29,9 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
   currentBackground,
   updateCurrentBackground,
 }) => {
+  const [textColor, setTextColor] = useState("#ffffff"); // Initial text color
+
   const handleColorChange = (color: string) => {
-    // Ensure the color is in the correct format (e.g., "#RRGGBB")
     const formattedColor = color.startsWith("#") ? color : `#${color}`;
     const newBackground = {
       class: `bg-[${formattedColor}]`,
@@ -39,10 +40,14 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
     updateCurrentBackground(newBackground);
   };
 
+  const handleTextColorChange = (color: string) => {
+    const formattedColor = color.startsWith("#") ? color : `#${color}`;
+    setTextColor(formattedColor);
+  };
+
   // Function to get background style
   const getBackgroundStyle = () => {
     if (currentBackground.name === "Custom Color") {
-      // Extract color from the class string
       const colorMatch = currentBackground.class.match(
         /bg-\[(#[0-9A-Fa-f]{6})\]/
       );
@@ -50,12 +55,13 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
     }
     return {}; // For preset backgrounds, we'll use Tailwind classes
   };
+
   return (
     <div
       className={`p-3 rounded-lg w-full mx-auto h-full overflow-y-auto ${
         currentBackground.name !== "Custom Color" ? currentBackground.class : ""
       }`}
-      style={getBackgroundStyle()}
+      style={{ ...getBackgroundStyle(), color: textColor }} // Apply text color
     >
       {/* Top bar */}
       <div className="sticky top-0 flex justify-between items-center mb-4 rounded-lg bg-white/20 p-2 backdrop-blur-lg">
@@ -116,33 +122,47 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
         {/* Background Changer */}
         <div className="bg-white bg-opacity-20 rounded-lg p-2 shadow-md">
           <h3 className="font-bold text-sm text-center mb-2">THEME</h3>
-          <div className="relative flex flex-wrap gap-1">
-            {backgrounds.map((bg, index) => (
-              <Button
-                key={index}
-                variant={
-                  currentBackground.name === bg.name ? "outline" : "ghost"
-                }
-                className={`group p-1 text-xs transition-transform duration-200 ease-in-out transform hover:scale-105 ${
-                  bg.class
-                } ${
-                  currentBackground.name === bg.name
-                    ? "bg-blue-600 text-white size-6"
-                    : "bg-gray-700 text-gray-300 size-6"
-                } rounded-xl shadow-sm`}
-                onClick={() => updateCurrentBackground(bg)}
-              ></Button>
-            ))}
-            <ColorPicker
-              value={
-                currentBackground.name === "Custom Color"
-                  ? currentBackground.class.match(
-                      /bg-\[(#[0-9A-Fa-f]{6})\]/
-                    )?.[1] || ""
-                  : ""
-              }
-              onChange={handleColorChange}
-            />
+          <div className="relative flex flex-wrap gap-1 justify-center items-center flex-col">
+            <div className="flex gap-x-1 mb-2">
+              {backgrounds.map((bg, index) => (
+                <Button
+                  key={index}
+                  variant={
+                    currentBackground.name === bg.name ? "outline" : "ghost"
+                  }
+                  className={`group p-1 text-xs transition-transform duration-200 ease-in-out transform hover:scale-105 ${
+                    bg.class
+                  } ${
+                    currentBackground.name === bg.name
+                      ? "bg-blue-600 text-white size-5"
+                      : "bg-gray-700 text-gray-300 size-5"
+                  } rounded-xl shadow-sm`}
+                  onClick={() => updateCurrentBackground(bg)}
+                ></Button>
+              ))}
+            </div>
+            <div className="flex justify-evenly w-full">
+              <div className="flex flex-col w-full items-center gap-1">
+                <h1 className="text-[10px] font-bold">THEME</h1>
+                <ColorPicker
+                  value={
+                    currentBackground.name === "Custom Color"
+                      ? currentBackground.class.match(
+                          /bg-\[(#[0-9A-Fa-f]{6})\]/
+                        )?.[1] || ""
+                      : ""
+                  }
+                  onChange={handleColorChange}
+                />
+              </div>
+              <div className="flex flex-col w-full items-center gap-1">
+                <h1 className="text-[10px] font-bold">TEXT</h1>
+                <ColorPicker
+                  value={textColor}
+                  onChange={handleTextColorChange}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
