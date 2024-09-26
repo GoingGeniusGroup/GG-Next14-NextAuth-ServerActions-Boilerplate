@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button/button";
 import {
   Play,
   SkipBack,
@@ -143,8 +143,8 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
             size="small"
             className={`group transition-all bg-black text-white p-2 rounded-full ${
               screens.some((screen) => screen.id === section.id)
-                ? "bg-blue-500 bg-opacity-50 hover:bg-blue-600 hover:bg-opacity-70"
-                : "hover:bg-black hover:bg-opacity-30"
+                ? "bg-blue-400 hover:bg-black/40 hover:bg-opacity-70"
+                : "hover:bg-black/40"
             }`}
             onClick={() => toggleScreen(section)}
           >

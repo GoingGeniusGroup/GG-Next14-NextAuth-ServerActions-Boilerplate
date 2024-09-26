@@ -17,12 +17,6 @@ export default async function Home() {
         </div>
         <nav className="flex flex-col w-full space-y-3">
           <Link
-            href="/simulator"
-            className="text-gray-600 hover:text-blue-600 transition-colors px-4 py-2 rounded-md text-center bg-gray-50 hover:bg-gray-100"
-          >
-            Mobile Simulator
-          </Link>
-          <Link
             href="/shop-test"
             className="text-gray-600 hover:text-blue-600 transition-colors px-4 py-2 rounded-md text-center bg-gray-50 hover:bg-gray-100"
           >

@@ -1,7 +1,6 @@
 import Navbar from "@/app/_components/navbar";
-import { RightSideHudProvider } from "@/components/rightSideHud/RightSideHudProvider";
-import RightSideHud from "@/components/Huds/RightSideHud";
-import ProfileHud from "@/components/profile/ProfileHud";
+import ProfileHud from "@/components/Huds/ProfileHud";
+import MobileSimulator from "@/components/MobileSimulator/MobileSimulator";
 
 export default async function MainLayout({
   children,
@@ -10,12 +9,10 @@ export default async function MainLayout({
 }) {
   return (
     <>
-      <RightSideHudProvider>
-        <RightSideHud />
-        <Navbar />
-        <main>{children}</main>
-        <ProfileHud />
-      </RightSideHudProvider>
+      <MobileSimulator />
+      <Navbar />
+      <main>{children}</main>
+      <ProfileHud />
     </>
   );
 }

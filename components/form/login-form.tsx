@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
 import { z } from "zod";
 import { loginSchema } from "@/schemas";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button/button";
 import { useTransition } from "react";
 import { login } from "@/actions/login";
 import { FormInput } from "@/components/auth/form-input";

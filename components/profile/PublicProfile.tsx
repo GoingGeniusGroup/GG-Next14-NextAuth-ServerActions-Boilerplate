@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { gsap } from "gsap";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button/button";
 
 // Sub-components
 import Header from "./subComponents/Header";

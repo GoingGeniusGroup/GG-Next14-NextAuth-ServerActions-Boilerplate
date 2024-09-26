@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button/button";
 import { Smartphone, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import MobileScreen from "./MobileScreen";
@@ -160,15 +160,20 @@ const MobileSimulator: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black to-white p-4 relative overflow-hidden">
-      {/* Toggle button for mobile view */}
-      <Button
-        onClick={() => setShowMobile(true)}
-        className="fixed top-4 right-4 rounded-full w-12 h-12 p-0 bg-blue-500 hover:bg-blue-600 z-10"
-        size="icon"
+    <>
+      <motion.div
+        layout
+        className="fixed right-[5px] md:right-[20px] top-1/2 z-50 flex w-[33px] -translate-y-1/2 select-none flex-col items-center space-y-[6px] rounded-full bg-white px-[6px] py-[4px] shadow-lg shadow-black/50 transition-all duration-300 ease-in-out"
       >
-        <Smartphone className="w-6 h-6 text-white" />
-      </Button>
+        {/* Toggle button for mobile view */}
+        <Button
+          onClick={() => setShowMobile(!showMobile)}
+          className="rounded-full size-6 p-0 bg-blue-400 hover:bg-black/40 z-20"
+          size="mini"
+        >
+          <Smartphone className="size-4 text-white" />
+        </Button>
+      </motion.div>
 
       {/* Mobile simulator container */}
       <AnimatePresence>
@@ -177,8 +182,8 @@ const MobileSimulator: React.FC = () => {
             initial={{ opacity: 0, scale: isSmallScreen ? 1 : 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: isSmallScreen ? 1 : 0.9 }}
-            className={`fixed inset-0 flex items-center justify-end ${
-              isSmallScreen ? "" : "bg-black/40"
+            className={`fixed inset-0 flex items-center z-40 justify-end ${
+              isSmallScreen ? "" : "backdrop-blur-md"
             } p-4 z-20`}
           >
             <div
@@ -232,7 +237,7 @@ const MobileSimulator: React.FC = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </>
   );
 };
 

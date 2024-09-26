@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import { FormInput } from "@/components/auth/form-input";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button/button";
 import { useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { resendTwoFactor, twoFactor } from "@/actions/two-factor";
