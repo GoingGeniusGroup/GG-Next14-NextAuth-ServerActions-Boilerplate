@@ -16,7 +16,7 @@ import { UserRound } from "lucide-react";
 import { profileSchema } from "@/schemas";
 
 // Button
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button/button";
 
 type ProfileFormProps = {
   user: ExtendedUser;

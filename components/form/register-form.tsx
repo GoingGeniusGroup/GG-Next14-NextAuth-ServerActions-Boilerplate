@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { FormInput } from "@/components/auth/form-input";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button/button";
 import { useTransition } from "react";
 import { register } from "@/actions/register";
 import { toast } from "sonner";
@@ -39,6 +39,7 @@ export const RegisterForm = () => {
 
   return (
     <CardWrapper
+      isMobile={true}
       headerTitle="Register"
       headerDescription="Register your account by filling out the form below, make sure the data you enter is correct."
       backButtonLabel="Already have an account? Login"

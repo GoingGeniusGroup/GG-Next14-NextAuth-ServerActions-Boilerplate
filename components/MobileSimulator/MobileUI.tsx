@@ -1,21 +1,14 @@
 "use client";
 
-import React from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Play,
-  SkipBack,
-  SkipForward,
-  Sun,
-  CheckCircle,
-  Edit,
-  X,
-} from "lucide-react";
-import { GiRamProfile } from "react-icons/gi";
-import { BsBellFill, BsChat, BsShop, BsWallet2 } from "react-icons/bs";
-import { MdOutlineEmergency } from "react-icons/md";
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button/button";
+import { Play, SkipBack, SkipForward, Sun, CheckCircle } from "lucide-react";
 import CustomToolTip from "../CustomComponents/CustomToolTip";
 import { MobileInterfaceProps } from "./interface/MobileInterface.interface";
+
+//icon
+import { RxCross2 } from "react-icons/rx";
+import { ColorPicker } from "../CustomComponents/ColorPicker";
 
 const scheduleData = [
   { day: "S", schedule: [1, 0, 1, 1, 0, 1, 0] },
@@ -35,10 +28,42 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
   screens,
   currentBackground,
   updateCurrentBackground,
+  textColor,
+  setTextColor,
 }) => {
+  const handleColorChange = (color: string) => {
+    const formattedColor = color.startsWith("#") ? color : `#${color}`;
+    const newBackground = {
+      class: `bg-[${formattedColor}]`,
+      name: "Custom Color",
+    };
+    updateCurrentBackground(newBackground);
+  };
+
+  const handleTextColorChange = (color: string) => {
+    const formattedColor = color.startsWith("#") ? color : `#${color}`;
+    setTextColor(formattedColor); // Set the new text color globally
+  };
+
+  // Check if the background is a custom color and apply it accordingly
+  const backgroundStyle =
+    currentBackground.name === "Custom Color"
+      ? {
+          backgroundColor: currentBackground.class
+            .replace("bg-[", "")
+            .replace("]", ""),
+        }
+      : {};
+
   return (
     <div
-      className={`p-3 rounded-lg w-full mx-auto h-full overflow-y-auto ${currentBackground.class}`}
+      className={`p-3 rounded-lg w-full mx-auto h-full overflow-y-auto ${
+        currentBackground.name !== "Custom Color" ? currentBackground.class : ""
+      } border-1 border-white`}
+      style={{
+        ...backgroundStyle, // Apply background color here
+        color: textColor, // Apply text color
+      }}
     >
       {/* Top bar */}
       <div className="sticky top-0 flex justify-between items-center mb-4 rounded-lg bg-white/20 p-2 backdrop-blur-lg">
@@ -98,22 +123,48 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
 
         {/* Background Changer */}
         <div className="bg-white bg-opacity-20 rounded-lg p-2 shadow-md">
-          <h3 className="font-bold text-sm text-center mb-2">CHANGE BG</h3>
-          <div className="relative flex flex-wrap gap-1">
-            {backgrounds.map((bg, index) => (
-              <Button
-                key={index}
-                variant={currentBackground === bg ? "outline" : "ghost"}
-                className={`group p-1 text-xs transition-transform duration-200 ease-in-out transform hover:scale-105 ${
-                  bg.class
-                } ${
-                  currentBackground === bg
-                    ? "bg-blue-600 text-white"
-                    : "bg-gray-700 text-gray-300"
-                } rounded-full shadow-sm`}
-                onClick={() => updateCurrentBackground(bg)} // Update the background when clicked
-              ></Button>
-            ))}
+          <h3 className="font-bold text-sm text-center mb-2">THEME</h3>
+          <div className="relative flex flex-wrap gap-1 justify-center items-center flex-col">
+            <div className="flex gap-x-1 mb-2">
+              {backgrounds.map((bg, index) => (
+                <Button
+                  key={index}
+                  variant={
+                    currentBackground.name === bg.name ? "outline" : "ghost"
+                  }
+                  className={`group p-1 text-xs transition-transform duration-200 ease-in-out transform hover:scale-105 ${
+                    bg.class
+                  } ${
+                    currentBackground.name === bg.name
+                      ? "bg-blue-600 text-white size-5"
+                      : "bg-gray-700 text-gray-300 size-5"
+                  } rounded-xl shadow-sm`}
+                  onClick={() => updateCurrentBackground(bg)}
+                ></Button>
+              ))}
+            </div>
+            <div className="flex justify-evenly w-full">
+              <div className="flex flex-col w-full items-center gap-1">
+                <h1 className="text-[10px] font-bold">THEME</h1>
+                <ColorPicker
+                  value={
+                    currentBackground.name === "Custom Color"
+                      ? currentBackground.class.match(
+                          /bg-\[(#[0-9A-Fa-f]{6})\]/
+                        )?.[1] || ""
+                      : ""
+                  }
+                  onChange={handleColorChange}
+                />
+              </div>
+              <div className="flex flex-col w-full items-center gap-1">
+                <h1 className="text-[10px] font-bold">TEXT</h1>
+                <ColorPicker
+                  value={textColor}
+                  onChange={handleTextColorChange}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -143,43 +194,28 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
             size="small"
             className={`group transition-all bg-black text-white p-2 rounded-full ${
               screens.some((screen) => screen.id === section.id)
-                ? "bg-blue-500 bg-opacity-50 hover:bg-blue-600 hover:bg-opacity-70"
-                : "hover:bg-black hover:bg-opacity-30"
+                ? "bg-blue-400 hover:bg-black/40 hover:bg-opacity-70"
+                : "hover:bg-black/40"
             }`}
             onClick={() => toggleScreen(section)}
           >
-            {screens.some((screen) => screen.id === section.id) ? (
-              <CheckCircle className="text-black" size={16} />
-            ) : (
-              <>
-                {section.title === "Profile" ? (
-                  <GiRamProfile size={16} />
-                ) : section.title === "Shop" ? (
-                  <BsShop size={16} />
-                ) : section.title === "Wallet" ? (
-                  <BsWallet2 size={16} />
-                ) : section.title === "Notifications" ? (
-                  <BsBellFill size={16} />
-                ) : section.title === "Message" ? (
-                  <BsChat size={16} />
-                ) : section.title === "Emergency" ? (
-                  <MdOutlineEmergency size={16} />
-                ) : (
-                  <Edit size={16} />
-                )}
-              </>
-            )}
-            <CustomToolTip content="HUD" top="10" left="-9" translateY="30" />
+            {section.icon}
+            <CustomToolTip
+              content={section.title}
+              top="-30"
+              left="-20"
+              translateY="0"
+            />
           </Button>
         ))}
       </div>
       <Button
-        variant="ghost"
+        variant="animated_spin"
         size="small"
         className="absolute bottom-16 right-2 text-white hover:text-black bg-red-500 hover:bg-red-600 rounded-full w-6 h-6"
         onClick={closeAllScreens}
       >
-        <X size={17} />
+        <RxCross2 size={14} />
       </Button>
     </div>
   );

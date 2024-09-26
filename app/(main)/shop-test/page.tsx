@@ -5,11 +5,10 @@ export const metadata: Metadata = {
   title: "Shop",
 };
 
-export default function ProfilePage() {
+export default function Shop() {
   return (
-    <div>
-      <h2 className="text-xl col-span-full col-start-4 font-semibold">Shop</h2>
-      <ShopSection />
+    <div className="pt-20">
+      <ShopSection />;
     </div>
   );
 }
