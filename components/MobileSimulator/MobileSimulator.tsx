@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button/button";
 import { Smartphone, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import MobileScreen from "./MobileScreen";
@@ -168,7 +168,7 @@ const MobileSimulator: React.FC = () => {
         {/* Toggle button for mobile view */}
         <Button
           onClick={() => setShowMobile(!showMobile)}
-          className="rounded-full size-6 p-0 bg-blue-500 hover:bg-blue-600 z-10"
+          className="rounded-full size-6 p-0 bg-blue-400 hover:bg-black/40 z-20"
           size="mini"
         >
           <Smartphone className="size-4 text-white" />

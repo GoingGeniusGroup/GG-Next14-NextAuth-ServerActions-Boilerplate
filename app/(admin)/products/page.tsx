@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button/button";
 // import PageHeader from "@/components/PageHeader/PageHeader";
 import Link from "next/link";
 // import ProductTable from "./_components/ProductTable";

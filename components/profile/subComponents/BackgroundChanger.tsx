@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button/button";
 // import { SkipForwardIcon, UploadIcon } from "lucide-react";
 import { CiImageOn } from "react-icons/ci";
 import {

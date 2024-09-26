@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button/button";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { IoLogoGithub } from "react-icons/io5";

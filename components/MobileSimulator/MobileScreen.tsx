@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button/button";
 import { X } from "lucide-react";
 import { motion } from "framer-motion";
 import { BackgroundProps } from "./interface/Background.interface";

@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { resetPasswordSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button/button";
 import { resetPassword } from "@/actions/reset-password";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
