@@ -93,7 +93,7 @@ export default function ProfileHud({
           className={`flex size-[26px] items-center justify-center rounded-full shadow-black drop-shadow-lg hover:bg-black/40 ${
             selectedTab === tab
               ? "bg-yellow-500 text-black"
-              : "bg-blue-400 text-white"
+              : "bg-gray-400 text-white"
           }`}
         >
           {tab === "Cart" ? (

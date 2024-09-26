@@ -45,15 +45,24 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
     setTextColor(formattedColor); // Set the new text color globally
   };
 
+  // Check if the background is a custom color and apply it accordingly
+  const backgroundStyle =
+    currentBackground.name === "Custom Color"
+      ? {
+          backgroundColor: currentBackground.class
+            .replace("bg-[", "")
+            .replace("]", ""),
+        }
+      : {};
+
   return (
     <div
-      className="p-3 rounded-lg w-full mx-auto h-full overflow-y-auto"
+      className={`p-3 rounded-lg w-full mx-auto h-full overflow-y-auto ${
+        currentBackground.name !== "Custom Color" ? currentBackground.class : ""
+      } border-1 border-white`}
       style={{
+        ...backgroundStyle, // Apply background color here
         color: textColor, // Apply text color
-        backgroundColor:
-          currentBackground.name === "Custom Color"
-            ? currentBackground.class.replace("bg-[", "").replace("]", "") // Inline background color for custom
-            : undefined, // If it's not a custom color, leave undefined
       }}
     >
       {/* Top bar */}

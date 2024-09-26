@@ -39,6 +39,7 @@ export const RegisterForm = () => {
 
   return (
     <CardWrapper
+      isMobile={true}
       headerTitle="Register"
       headerDescription="Register your account by filling out the form below, make sure the data you enter is correct."
       backButtonLabel="Already have an account? Login"

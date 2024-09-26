@@ -42,6 +42,7 @@ export const LoginForm = () => {
 
   return (
     <CardWrapper
+      isMobile={true}
       headerTitle="Login"
       headerDescription="Welcome back! Please fill out the form below before logging in to the website."
       backButtonLabel="Don't have an account? Register"
@@ -70,8 +71,8 @@ export const LoginForm = () => {
               />
               <Button
                 size="sm"
-                variant="link"
-                className="-mt-6 p-0 text-xs text-blue-500 w-full justify-end"
+                variant="anylink"
+                className={`-mt-6 p-0 text-xs w-full justify-end`}
                 asChild
               >
                 <Link href="/reset">Forgot password?</Link>

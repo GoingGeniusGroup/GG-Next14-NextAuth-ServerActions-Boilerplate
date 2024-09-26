@@ -30,7 +30,7 @@ export default function MobileSimulatorContainer({
   closeAllScreens,
   updateCurrentBackground,
 }: MobileSimulatorContainerProps) {
-  const [textColor, setTextColor] = useState("#ffffff");
+  const [textColor, setTextColor] = useState("#000000");
   return (
     <>
       {/* Mobile simulator container */}

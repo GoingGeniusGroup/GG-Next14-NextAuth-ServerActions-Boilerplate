@@ -13,6 +13,7 @@ import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 
 type CardWrapperProps = React.HTMLAttributes<HTMLDivElement> & {
+  isMobile?: boolean;
   headerTitle: string;
   headerDescription: string;
   backButtonLabel: string;
@@ -30,11 +31,12 @@ export const CardWrapper = (props: CardWrapperProps) => {
     backButtonHref,
     showSocial,
     children,
+    isMobile,
     ...rest
   } = props;
 
   return (
-    <Card className="w-[400px] shadow mx-4 md:mx-0" {...rest}>
+    <Card className={` ${isMobile ? "w-full" : "w-[400px]"}`} {...rest}>
       {heroImage ? (
         <div className="w-1/4 relative pt-6 mx-auto">
           <Image
@@ -65,7 +67,12 @@ export const CardWrapper = (props: CardWrapperProps) => {
       ) : null}
       <Separator />
       <CardFooter className="py-3">
-        <Button variant="link" className="font-normal w-full" size="sm" asChild>
+        <Button
+          variant="anylink"
+          className="font-normal w-full"
+          size="sm"
+          asChild
+        >
           <Link href={backButtonHref}>{backButtonLabel}</Link>
         </Button>
       </CardFooter>

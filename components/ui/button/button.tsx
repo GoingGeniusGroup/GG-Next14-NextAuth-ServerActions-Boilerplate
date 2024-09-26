@@ -18,6 +18,7 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        anylink: "underline-offset-4 hover:underline",
         black: "bg-black hover:bg-black/80 text-white",
         animated_spin:
           "bg-primary hover:rotate-180 transition-all duration-500 ease-in-out transform",

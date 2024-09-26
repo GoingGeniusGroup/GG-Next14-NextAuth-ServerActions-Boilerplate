@@ -20,7 +20,7 @@ export default function SimulatorToggleButton({
       {/* Toggle button for mobile view */}
       <Button
         onClick={() => setShowMobile(!showMobile)}
-        className="rounded-full size-6 p-0 bg-blue-400 hover:bg-black/40 z-20"
+        className="rounded-full size-6 p-0 bg-gray-400 hover:bg-black/40 z-20"
         size="mini"
       >
         <Smartphone className="size-4 text-white" />

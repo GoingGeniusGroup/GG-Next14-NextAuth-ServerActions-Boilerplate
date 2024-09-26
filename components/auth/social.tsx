@@ -29,7 +29,7 @@ export const Social = () => {
       </Button>
       <Button
         size="lg"
-        className="w-full text-2xl"
+        className="w-full text-2xl text-black"
         variant="outline"
         onClick={() => onClick("github")}
       >
