@@ -10,7 +10,6 @@ import { SectionProps } from "./interface/Section.interface";
 import { BackgroundProps } from "./interface/Background.interface";
 
 //icons
-import { MobileSimulatorContext } from "./Context/MobileSimulatorContext";
 import SimulatorToggleButton from "./SimulatorToggleButton";
 import MobileSimulatorContainer from "./MobileSimulatorContainer";
 
@@ -164,40 +163,24 @@ const MobileSimulator: React.FC = () => {
 
   return (
     <>
-      <MobileSimulatorContext.Provider
-        value={{
-          showMobile,
-          setShowMobile,
-          isSmallScreen,
-          screens,
-          setScreens,
-          currentBackground,
-          setCurrentBackground,
-          toggleScreen,
-          removeScreen,
-          closeAllScreens,
-          updateCurrentBackground,
-        }}
-      >
-        <SimulatorToggleButton
-          showMobile={showMobile}
-          setShowMobile={setShowMobile}
-        />
+      <SimulatorToggleButton
+        showMobile={showMobile}
+        setShowMobile={setShowMobile}
+      />
 
-        {/* Mobile simulator container */}
-        <MobileSimulatorContainer
-          showMobile={showMobile}
-          isSmallScreen={isSmallScreen}
-          backgrounds={backgrounds}
-          currentBackground={currentBackground}
-          sections={sections}
-          toggleScreen={toggleScreen}
-          screens={screens}
-          removeScreen={removeScreen}
-          closeAllScreens={closeAllScreens}
-          updateCurrentBackground={updateCurrentBackground}
-        />
-      </MobileSimulatorContext.Provider>
+      {/* Mobile simulator container */}
+      <MobileSimulatorContainer
+        showMobile={showMobile}
+        isSmallScreen={isSmallScreen}
+        backgrounds={backgrounds}
+        currentBackground={currentBackground}
+        sections={sections}
+        toggleScreen={toggleScreen}
+        screens={screens}
+        removeScreen={removeScreen}
+        closeAllScreens={closeAllScreens}
+        updateCurrentBackground={updateCurrentBackground}
+      />
     </>
   );
 };
