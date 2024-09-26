@@ -26,7 +26,7 @@ export default function ProfileHud({
   const { data: session } = useSession();
   const user = session?.user as ExtendedUser; // Type assertion for safety
 
-  const [selectedTab, setSelectedTab] = useState("Cart");
+  const [selectedTab, setSelectedTab] = useState("Mobile");
   const profilePic = user?.image || undefined;
 
   const handleTabClick = (tab: SetStateAction<string>) => {
@@ -39,6 +39,7 @@ export default function ProfileHud({
 
   const handleMobileButtonClick = () => {
     setShowMobile((prevState) => !prevState); // Toggles the mobile view
+    handleTabClick("Mobile");
   };
 
   const username = "loggedin-user";

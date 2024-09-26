@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { FaTimes } from "react-icons/fa";
 import { Tab } from "../RightSideHud";
 import ShopSection from "@/components/shop/ShopSection";
-import SideProfile from "@/components/profile/ProfileMobileView/ProfileMobileSection";
+import ProfileComponent from "@/components/profile/ProfileMobileView/ProfileComponent";
 
 interface TabContentProps {
   tab: Tab;
@@ -15,7 +15,7 @@ interface TabContentProps {
 const renderMobileViewContent = (tab: Tab) => {
   switch (tab) {
     case "Profile":
-      return <SideProfile />;
+      return <ProfileComponent />;
     case "Wallet":
       return <div>Wallet Content</div>;
     case "Shop":

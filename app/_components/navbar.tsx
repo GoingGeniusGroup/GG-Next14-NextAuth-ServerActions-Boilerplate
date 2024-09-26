@@ -11,16 +11,5 @@ export default async function Navbar() {
     await signOut();
   }
 
-  async function handleOpenSignIn() {
-    "use server";
-    // Implement your server-side logic here
-  }
-
-  return (
-    <NavbarClient
-      user={user}
-      handleServerSignOut={handleServerSignOut}
-      handleOpenSignIn={handleOpenSignIn}
-    />
-  );
+  return <NavbarClient user={user} handleServerSignOut={handleServerSignOut} />;
 }
