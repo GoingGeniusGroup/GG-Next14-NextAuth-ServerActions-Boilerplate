@@ -15,7 +15,7 @@ export default function SimulatorToggleButton({
   return (
     <motion.div
       layout
-      className="fixed right-[5px] md:right-[20px] top-1/2 z-50 flex w-[33px] -translate-y-1/2 select-none flex-col items-center space-y-[6px] rounded-full bg-white px-[6px] py-[4px] shadow-lg shadow-black/50 transition-all duration-500 ease-in-out"
+      className="fixed right-[5px] md:right-[20px] z-50 flex w-[33px] top-[47%] select-none flex-col items-center space-y-[6px] rounded-full bg-white px-[6px] py-[4px] shadow-lg shadow-black/50 transition-all duration-500 ease-in-out"
     >
       {/* Toggle button for mobile view */}
       <Button

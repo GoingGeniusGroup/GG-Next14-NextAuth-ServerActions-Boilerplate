@@ -1,17 +1,12 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import MobileScreen from "./MobileScreen";
-import MobileUI from "./MobileUI";
-import ProfileComponent from "../profile/ProfileMobileView/ProfileComponent";
-import ShopSection from "../shop/ShopSection";
-import { SectionProps } from "./interface/Section.interface";
-import { BackgroundProps } from "./interface/Background.interface";
-
-//icons
+import React, { useEffect, useState } from "react";
 import SimulatorToggleButton from "./SimulatorToggleButton";
 import MobileSimulatorContainer from "./MobileSimulatorContainer";
+import { SectionProps } from "./interface/Section.interface";
+import { BackgroundProps } from "./interface/Background.interface";
+import ProfileComponent from "../profile/ProfileMobileView/ProfileComponent";
+import ShopSection from "../shop/ShopSection";
 
 // Define the sections array
 const sections: SectionProps[] = [
@@ -114,15 +109,21 @@ const backgrounds = [
   },
 ];
 
-const MobileSimulator: React.FC = () => {
-  const [showMobile, setShowMobile] = useState<boolean>(false);
+interface MobileSimulatorProps {
+  showMobile: boolean;
+  setShowMobile: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const MobileSimulator: React.FC<MobileSimulatorProps> = ({
+  showMobile,
+  setShowMobile,
+}) => {
   const [screens, setScreens] = useState<SectionProps[]>([]);
   const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false);
   const [currentBackground, setCurrentBackground] = useState<BackgroundProps>(
     backgrounds[0]
   );
 
-  // Effect to check and update screen size
   useEffect(() => {
     const checkScreenSize = () => {
       setIsSmallScreen(window.innerWidth < 768);
@@ -132,7 +133,6 @@ const MobileSimulator: React.FC = () => {
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
-  // Function to toggle screen visibility
   const toggleScreen = (section: SectionProps) => {
     setScreens((prevScreens) => {
       const isOpen = prevScreens.some((screen) => screen.id === section.id);
@@ -144,19 +144,16 @@ const MobileSimulator: React.FC = () => {
     });
   };
 
-  // Function to remove a specific screen
   const removeScreen = (id: number) => {
     setScreens((prevScreens) =>
       prevScreens.filter((screen) => screen.id !== id)
     );
   };
 
-  // Function to close all screens
   const closeAllScreens = () => {
     setScreens([]);
   };
 
-  // Function to update the current background
   const updateCurrentBackground = (newBackground: BackgroundProps) => {
     setCurrentBackground(newBackground);
   };
@@ -168,7 +165,6 @@ const MobileSimulator: React.FC = () => {
         setShowMobile={setShowMobile}
       />
 
-      {/* Mobile simulator container */}
       <MobileSimulatorContainer
         showMobile={showMobile}
         isSmallScreen={isSmallScreen}

@@ -6,5 +6,9 @@ export const metadata: Metadata = {
 };
 
 export default function Shop() {
-  return <ShopSection />;
+  return (
+    <div className="pt-20">
+      <ShopSection />;
+    </div>
+  );
 }
