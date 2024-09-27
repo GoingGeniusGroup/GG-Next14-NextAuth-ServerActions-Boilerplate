@@ -9,7 +9,7 @@ const page = () => {
       <div className="container mx-auto flex justify-between items-center gap-4 py-5">
        <PageHeader>  All Products</PageHeader>
         <Button asChild className="bg-indigo-500 hover:bg-indigo-700">
-          <Link href="/admin/products/new">Add Product</Link>
+          <Link href="/products/new">Add Product</Link>
         </Button>
       </div>
       <ProductTable />
