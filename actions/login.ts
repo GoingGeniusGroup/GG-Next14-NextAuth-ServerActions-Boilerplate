@@ -1,20 +1,19 @@
 "use server";
 
 import { signIn } from "@/auth";
+import { isExpired, response, signJwt } from "@/lib/utils";
 import { loginSchema } from "@/schemas";
-import { z } from "zod";
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
-import { AuthError } from "next-auth";
+import { sendTwoFactorEmail } from "@/services/mail";
+import {
+  deleteTwoFactorConfirmationById,
+  getTwoFactorConfirmationByUserId,
+} from "@/services/two-factor-confirmation";
+import { generateTwoFactorToken } from "@/services/two-factor-token";
 import { getUserByEmail } from "@/services/user";
 import bcrypt from "bcryptjs";
-import { generateTwoFactorToken } from "@/services/two-factor-token";
-import { sendTwoFactorEmail } from "@/services/mail";
+import { AuthError } from "next-auth";
 import { cookies } from "next/headers";
-import {
-  getTwoFactorConfirmationByUserId,
-  deleteTwoFactorConfirmationById,
-} from "@/services/two-factor-confirmation";
-import { isExpired, response, signJwt } from "@/lib/utils";
+import { z } from "zod";
 
 export const login = async (payload: z.infer<typeof loginSchema>) => {
   // Check if user input is not valid, then return an error.
@@ -55,17 +54,6 @@ export const login = async (payload: z.infer<typeof loginSchema>) => {
     });
   }
 
-  // Check if user email isn't verified yet, then return an error.
-  if (!existingUser.emailVerified) {
-    return response({
-      success: false,
-      error: {
-        code: 401,
-        message: "Your email address is not verified yet. Please check your email.",
-      },
-    });
-  }
-
   // Check if user's 2FA are enabled
   if (existingUser.isTwoFactorEnabled && existingUser.email) {
     const existingTwoFactorConfirmation = await getTwoFactorConfirmationByUserId(existingUser.id);
@@ -100,10 +88,26 @@ export const login = async (payload: z.infer<typeof loginSchema>) => {
 // Sign in credentials from next-auth
 export const signInCredentials = async (email: string, password: string) => {
   try {
-    await signIn("credentials", {
+    const result = await signIn("credentials", {
       email,
       password,
-      redirectTo: DEFAULT_LOGIN_REDIRECT,
+      redirect: false,
+    });
+
+    if (result?.error) {
+      return response({
+        success: false,
+        error: {
+          code: 401,
+          message: "Invalid credentials.",
+        },
+      });
+    }
+
+    return response({
+      success: true,
+      code: 200,
+      message: "Login successful.",
     });
   } catch (error) {
     if (error instanceof AuthError) {
@@ -116,46 +120,25 @@ export const signInCredentials = async (email: string, password: string) => {
               message: "Invalid credentials.",
             },
           });
-
-        case "OAuthAccountNotLinked":
-          return response({
-            success: false,
-            error: {
-              code: 403,
-              message:
-                "Another account already registered with the same Email Address. Please login the different one.",
-            },
-          });
-
-        case "Verification":
-          return response({
-            success: false,
-            error: {
-              code: 422,
-              message: "Verification failed. Please try again.",
-            },
-          });
-
-        case "AuthorizedCallbackError":
-          return response({
-            success: false,
-            error: {
-              code: 422,
-              message: "Authorization failed. Please try again.",
-            },
-          });
-
+        // ... other cases ...
         default:
+          console.error(error);
           return response({
             success: false,
             error: {
               code: 500,
-              message: "Something went wrong.",
+              message: "An unexpected error occurred.",
             },
           });
       }
     }
-
-    throw error;
+    console.error(error);
+    return response({
+      success: false,
+      error: {
+        code: 500,
+        message: "An unexpected error occurred.",
+      },
+    });
   }
 };

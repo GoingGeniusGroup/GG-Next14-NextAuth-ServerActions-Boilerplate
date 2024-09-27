@@ -3,6 +3,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { MdOutlineMail } from "react-icons/md";
+import Button from "./Button";
 import { useState } from 'react'
 // import Button from './Button'
 
@@ -21,6 +22,7 @@ interface Product {
   productImage: string;
 }
 
+interface NavbarProps {}
 
 // Navbar component with typed props
 const Navbar: React.FC<NavbarProps> = () => {
@@ -55,7 +57,7 @@ const Navbar: React.FC<NavbarProps> = () => {
           </span>
           <Image
             className="border-solid border-2 border-slate-200 bg-yellow-500 rounded-full"
-            src='/logo/logo.svg'
+            src="/logo/logo.svg"
             height={40}
             width={41.8}
             alt="logo"
