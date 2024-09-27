@@ -168,4 +168,15 @@ export const profileSchema = z
   
   });
   
+const PHONE_SCHEMA = z
+  .string()
+  .regex(/^\d{10}$/, { message: 'Phone number must be exactly 10 digits.' })
+  .trim()
+
+export const supplierSchema = z.object({
+    suppliername: z.string().min(1,"suppliername is required"),
+    email: EMAIL_SCHEMA,
+    phone: PHONE_SCHEMA.optional(),
+    address: z.string().optional(),
+  })
   

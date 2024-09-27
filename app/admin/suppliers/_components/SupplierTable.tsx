@@ -1,7 +1,3 @@
-import {
-  deleteSupplier,
-  getSuppliers,
-} from "@/src/server-actions/supplier/supplier";
 
 import {
   Table,
@@ -12,17 +8,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { MoreVertical } from "lucide-react";
-import {
   DeleteDropdownItem,
   DropDownTable,
   EditDropdownItem,
 } from "@/src/components/DropDown/Actions";
+import { deleteSupplier, getSuppliers } from "@/actions/supplier";
 
 const SupplierTable = async () => {
   const suppliers = await getSuppliers();
@@ -50,7 +40,7 @@ const SupplierTable = async () => {
               <TableCell>{supplier.phone}</TableCell>
               <TableCell>{supplier._count?.products}</TableCell>
               <TableCell>
-               <DropDownTable supplier={supplier}/>
+                <DropDownTable supplier={supplier} />
               </TableCell>
             </TableRow>
           ))}

@@ -2,7 +2,7 @@
 import { cache } from "@/lib/cache";
 import { db } from "@/lib/db";
 import { response } from "@/lib/utils";
-import { supplierSchema } from "@/src/schemas";
+import { supplierSchema } from "@/schemas";
 import { revalidatePath } from "next/cache";
 import { notFound, redirect } from "next/navigation";
 
@@ -46,7 +46,7 @@ export const addSupplier = async (payload: FormData) => {
   const validatedFields = supplierSchema.safeParse(
     Object.fromEntries(payload.entries())
   );
-  console.log(validatedFields?.error);
+
 
   if (!validatedFields.success) {
     return response({
