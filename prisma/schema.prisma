@@ -49,7 +49,7 @@ model User {
   twoFactorConfirmation TwoFactorConfirmation?
   Cart                  Cart[]
   Order                 Order[]
-  UserPaymentMethod UserPaymentMethod[]
+  UserPaymentMethod     UserPaymentMethod[]
 }
 
 model VerificationToken {
@@ -85,13 +85,14 @@ model TwoFactorConfirmation {
   expires DateTime
   user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+
 enum ProductStatus {
   AVAILABLE
   NOTAVAILABLE
 }
 
 model Product {
-  id              String  @id @default(cuid())
+  id              String   @id @default(cuid())
   name            String
   description     String?
   image           String?
@@ -110,10 +111,12 @@ model Product {
   categoryId String
   category   Category @relation(fields: [categoryId], references: [id])
 
-  suppliers Supplier[] 
-  orders    Order[]    @relation("ProductOrders")
+  suppliers Supplier[]
+  orders    Order[]          @relation("ProductOrders")
   carts     Cart[]
   Variants  ProductVariant[]
+  Tax       Tax?             @relation(fields: [taxId], references: [id])
+  taxId     String?
 }
 
 enum CartStatus {
@@ -136,8 +139,7 @@ model Cart {
   orderId String?
   order   Order?  @relation(fields: [orderId], references: [id], name: "OrderCarts")
 
-  variants         ProductVariant[]
- 
+  variants ProductVariant[]
 }
 
 model ProductVariant {
@@ -160,16 +162,16 @@ model ProductVariant {
   carts Cart[]
 }
 
-
 //eg: size, color
 model Variant {
   id   String @id @default(uuid())
-  name String 
+  name String
 
   status         Boolean          @default(true)
   options        VariantOption[]
   ProductVariant ProductVariant[]
 }
+
 // Size ( variant) => [ md, lg, sm]
 model VariantOption {
   id             String           @id @default(uuid())
@@ -210,29 +212,34 @@ model Supplier {
 
   products Product[]
 }
+
 enum OrderStatus {
-   PENDING
-   SHIPPED
-   DELIVERED
-   CANCELLED
+  PENDING
+  SHIPPED
+  DELIVERED
+  CANCELLED
 }
 
 model Order {
-  id            String      @id @default(cuid())
-  orderDate     DateTime    @default(now())
+  id            String       @id @default(cuid())
+  orderDate     DateTime     @default(now())
   quantity      Int
   deliveryDate  DateTime?
+  amount        Float?
   streetAddress String
   state         String
   city          String
-  status        OrderStatus @default(PENDING)
+  status        OrderStatus  @default(PENDING)
+  paymentStatus Boolean      @default(false)
+  paymentId     String?
+  paymentType   PaymentType? @relation(fields: [paymentId], references: [id])
 
-  products Product[] @relation("ProductOrders") 
+  products Product[] @relation("ProductOrders")
 
   userId String
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
- 
+  saleinvoice SalesInvoice?
 
   carts Cart[] @relation("OrderCarts")
 }
@@ -242,6 +249,7 @@ model PaymentType {
   paymentType String
 
   UserPaymentMethod UserPaymentMethod[]
+  Order             Order[]
 }
 
 model UserPaymentMethod {
@@ -254,4 +262,24 @@ model UserPaymentMethod {
   account_number String?
   expiry_date    DateTime?
   is_default     Boolean     @default(true)
+}
+
+model SalesInvoice {
+  id          String   @id @default(cuid())
+  invoiceDate DateTime @default(now())
+  InvoiceId   String   @unique
+  tax         Tax[]
+  totalAmount Float?
+  orderId     String   @unique
+  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+model Tax {
+  id          String  @id @default(cuid())
+  name        String
+  rate        Float
+  description String?
+
+  SalesInvoice SalesInvoice[]
+  Product      Product[]
 }

@@ -84,6 +84,7 @@ export const addSupplier = async (payload: FormData) => {
         supplierName: data.suppliername,
         email: data.email,
         phone: data.phone,
+        address: data.address
       },
     });
     if (supplier) {
@@ -139,6 +140,7 @@ export const updateSupplier = async (id: string, payload: FormData) => {
         supplierName: data.suppliername,
         email: data.email,
         phone: data.phone,
+        address: data.address,
       },
     });
 

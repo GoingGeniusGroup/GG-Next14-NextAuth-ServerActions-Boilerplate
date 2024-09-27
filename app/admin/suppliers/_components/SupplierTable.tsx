@@ -56,9 +56,9 @@ const SupplierTable = async () => {
             !isSupplierClient(supplier) ? (
               <TableRow key={supplier.id}>
                 <TableCell>{supplier.supplierName}</TableCell>
-                <TableCell>{supplier.email}</TableCell>
-                <TableCell>{supplier.phone}</TableCell>
-                <TableCell>{supplier.address}</TableCell>
+                <TableCell>{supplier?.email}</TableCell>
+                <TableCell>{supplier?.phone}</TableCell>
+                <TableCell>{supplier?.address}</TableCell>
                 <TableCell>{supplier._count?.products}</TableCell>
                 <TableCell>
                   <DropDownTable supplier={supplier} />
