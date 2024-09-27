@@ -51,14 +51,12 @@ export const getAllOrders = cache(
     revalidate: 2,
   }
 );
-export async function deleteOrder(formData: FormData): Promise<any> {
+export async function deleteOrder(id: string): Promise<any> {
   try {
-    const data = {
-      id: formData.get("id"),
-    };
+    
     await db.order.delete({
       where: {
-        id: data?.id as string,
+        id:id as string,
       },
     });
 
@@ -90,7 +88,7 @@ export const getAOrder = cache(
               quantity: true,
               amount:true,
               product: {
-                select: {
+                select: {s
                   id: true,
                   name: true,
                   salePrice: true,

@@ -76,6 +76,23 @@ export function convertToCapitalized(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
 
+/**
+ * Function to format the date to day month and year
+ * @param exp date in string form
+ * @return converts to readale date format
+ */
+
+export const formatOrderDate = (dateString: string | undefined) => {
+  if (!dateString) return ''; 
+  
+  const date = new Date(dateString);
+  
+  return date.toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+};
 
 
 // Overload for response status in server action

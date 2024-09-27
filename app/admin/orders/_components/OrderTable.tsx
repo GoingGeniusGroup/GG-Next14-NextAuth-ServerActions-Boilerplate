@@ -14,10 +14,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {  MoreVertical } from "lucide-react";
+import { MoreVertical } from "lucide-react";
 import Link from "next/link";
 import OrderStatusCell from "./OrderStatus";
-import { getAllOrders } from "@/actions/order";
+import { deleteOrder, getAllOrders } from "@/actions/order";
+import { DeleteDropdownItem } from "@/components/DropDown/Actions";
 
 const OrderTable = async () => {
   const orders = await getAllOrders();
@@ -83,30 +84,22 @@ const OrderTable = async () => {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
                     <DropdownMenuItem asChild>
-                      <Link download href={`/admin/orders/${order.id}/download`}>
+                      <Link
+                        download
+                        href={`/admin/orders/${order.id}/download`}
+                      >
                         Download
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link href={`/admin/orders/${order.id}/edit`}>
-                        Edit
-                      </Link>
+                      <Link href={`/admin/orders/${order.id}/edit`}>Edit</Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link href={`/admin/orders/view/${order.id}`}>
-                        View
-                      </Link>
+                      <Link href={`/admin/orders/view/${order.id}`}>View</Link>
                     </DropdownMenuItem>
 
                     <DropdownMenuSeparator />
-                    {/* <ActiveToggleDropdownItem
-                    id={product.id}
-                    isAvailableForPurchase={product.isAvailableForPurchase}
-                  /> */}
-                    {/* <DeleteDropdownItem
-                    id={product.id}
-                    disabled={product._count.orders > 0}
-                  /> */}
+                    <DeleteDropdownItem id={order.id} deleteFun={deleteOrder} />
                   </DropdownMenuContent>
                 </DropdownMenu>
               </TableCell>
