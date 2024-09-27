@@ -18,7 +18,7 @@ const AddToCart = () => {
                   <div className="relative overflow-hidden rounded-lg group">
                     <Image src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/12a.webp"
                       className="w-full" alt="Blue Jeans Jacket" />
-                    <a href="#!" className="absolute inset-0 bg-black bg-opacity-20 transition-opacity duration-300 opacity-0 group-hover:opacity-100"></a>
+                    <a href="#!" className="absolute inset-0 bg-black bg-opacity-20 transition-opacity duration-300 opacity-0 group-hover:opacity-100"> c</a>
                   </div>
                   {/* Image */}
                 </div>

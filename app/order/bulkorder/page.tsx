@@ -15,7 +15,7 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { toast } from "@/hooks/use-toast"
+// import { toast } from "@/hooks/use-toast"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
@@ -63,16 +63,16 @@ export default function BulkOrderUploadComponent() {
             try {
                 const data = await processExcelData(file)
                 setFileData(data)
-                toast({
-                    title: "File processed successfully",
-                    description: `${data.length} items found in the spreadsheet.`,
-                })
+                // toast({
+                //     title: "File processed successfully",
+                //     description: `${data.length} items found in the spreadsheet.`,
+                // })
             } catch (error) {
-                toast({
-                    title: "Error processing file",
-                    description: "There was an error processing the Excel file. Please try again.",
-                    variant: "destructive",
-                })
+                // toast({
+                //     title: "Error processing file",
+                //     description: "There was an error processing the Excel file. Please try again.",
+                //     variant: "destructive",
+                // })
             } finally {
                 setIsProcessing(false)
             }
@@ -81,11 +81,11 @@ export default function BulkOrderUploadComponent() {
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         if (!fileData) {
-            toast({
-                title: "No data to submit",
-                description: "Please upload and process an Excel file before submitting.",
-                variant: "destructive",
-            })
+            // toast({
+            //     title: "No data to submit",
+            //     description: "Please upload and process an Excel file before submitting.",
+            //     variant: "destructive",
+            // })
             return
         }
 
@@ -93,10 +93,10 @@ export default function BulkOrderUploadComponent() {
         // Simulate API call
         setTimeout(() => {
             console.log('Submitting order:', { supplier: values.supplierName, orders: fileData })
-            toast({
-                title: "Bulk order submitted",
-                description: `${fileData.length} orders have been submitted to ${values.supplierName}.`,
-            })
+            // toast({
+            //     title: "Bulk order submitted",
+            //     description: `${fileData.length} orders have been submitted to ${values.supplierName}.`,
+            // })
             setIsSubmitting(false)
             setFileData(null)
             form.reset()

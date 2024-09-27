@@ -129,7 +129,7 @@ const Card: React.FC = () => {
                 })} placeholder="Enter security code" />
               </div>
 
-              <p className={`text-red-500 text-xs ${errorsCode.security ? 'bg-black/40 rounded-md mt-2 inline-block p-1.5' : ''}`}> {errorsCode.security?.message} </p>
+              <p className={`text-red-500 text-xs ${errorsCode.security ? 'bg-black/60 rounded-md mt-2 inline-block p-1.5' : ''}`}> {errorsCode.security?.message} </p>
               <div className="flex justify-between mt-4">
                 <button className="bg-blue-500 text-white p-2.5 rounded-md w-full"  >Top-up</button>
               </div>

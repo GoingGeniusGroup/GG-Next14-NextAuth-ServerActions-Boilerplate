@@ -184,7 +184,7 @@ export default function ShopSection() {
                   onClick={() => addToCart(product.id)}
                   className="w-full text-xs sm:text-sm"
                   size="sm"
-                  variant="black"
+                  // variant="black"
                 >
                   Add to Cart
                   {cart[product.id] && (

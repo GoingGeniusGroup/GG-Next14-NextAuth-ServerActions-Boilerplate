@@ -12,7 +12,7 @@ import TopSelling from '@/components/myComponent/TopSelling'
 const page = () => {
     return (
         <>
-            <div className="flex md:flex-row px-8 pt-8 pb-4 bg-cover bg-no-repeat bg-center min-h-dvh"
+            {/* <div className="flex md:flex-row px-8 pt-8 pb-4 bg-cover bg-no-repeat bg-center min-h-dvh"
                 style={{ backgroundImage: `url(${BG.src})` }}>
                 <div className='min-h-dvh' >
                     <Sidebar2 />
@@ -20,7 +20,7 @@ const page = () => {
                 <div className=" flex flex-col w-full h-full">
                     <div>
                         <Navbar />
-                    </div>
+                    </div> */}
                     <div className='pl-5 pt-5'>
                         <div className='flex gap-x-4 mb-4 w-full'>
                             <SalesOverview />
@@ -39,8 +39,8 @@ const page = () => {
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                {/* </div>
+            </div> */}
         </>
     )
 }

@@ -23,7 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { toast } from "@/hooks/use-toast"
+// import { toast } from "@/hooks/use-toast"
 
 const formSchema = z.object({
   customerName: z.string().min(2, {
@@ -70,10 +70,10 @@ export function OrderAddFormComponent() {
     // Simulate API call
     setTimeout(() => {
       console.log(values)
-      toast({
-        title: "Order submitted",
-        description: "The order has been successfully added to the system.",
-      })
+      // toast({
+      //   title: "Order submitted",
+      //   description: "The order has been successfully added to the system.",
+      // })
       setIsSubmitting(false)
       form.reset()
     }, 2000)

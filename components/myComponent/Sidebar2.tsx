@@ -123,27 +123,27 @@ const menu: MenuItem[] = [
   },
   {
     id: 5,
-    name: "seller",
+    name: "supplier",
     icon: <MdOutlineSell />,
     isActive: false,
     submenu: true,
     submenuItems: [
       {
         subId: 1,
-        name: "seller list",
-        link: "/seller/sellerlist",
+        name: "supplier list",
+        link: "/supplier/supplierlist",
         isActive: false
       },
       {
         subId: 2,
-        name: "add seller",
-        link: "/seller/addseller",
+        name: "add supplier",
+        link: "/supplier/addsupplier",
         isActive: false
       },
       {
         subId: 3,
-        name: "seller category",
-        link: "/seller/sellercategory",
+        name: "supplier category",
+        link: "/supplier/suppliercategory",
         isActive: false
       },
     ],
