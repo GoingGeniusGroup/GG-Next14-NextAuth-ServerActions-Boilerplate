@@ -2,7 +2,6 @@ import React from "react";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -15,13 +14,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-import { getProducts } from "@/src/services/product";
-
-import { CheckCircle2, MoreVertical, XCircle } from "lucide-react";
+import {  MoreVertical } from "lucide-react";
 import Link from "next/link";
-import { getAllOrders } from "@/src/server-actions/order/order";
 import OrderStatusCell from "./OrderStatus";
+import { getAllOrders } from "@/actions/order";
 
 const OrderTable = async () => {
   const orders = await getAllOrders();

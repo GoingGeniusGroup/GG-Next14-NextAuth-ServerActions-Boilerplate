@@ -56,7 +56,7 @@ export async function deleteOrder(formData: FormData): Promise<any> {
     const data = {
       id: formData.get("id"),
     };
-    const order = await db.order.delete({
+    await db.order.delete({
       where: {
         id: data?.id as string,
       },
