@@ -4,10 +4,28 @@ import { db } from "@/lib/db";
 import { response } from "@/lib/utils";
 import { supplierSchema } from "@/schemas";
 import { revalidatePath } from "next/cache";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
+
+type Supplier = {
+  id: string;
+  supplierName: string;
+  email: string | null;
+  phone: string | null;
+  address: string | null;
+  _count: {
+    products: number;
+  };
+};
+
+type SupplierClient = {
+  id: string;
+  label: string;
+  value: string;
+};
+
 
 export const getSuppliers = cache(
-  async (fromClient: boolean = false) => {
+  async (fromClient: boolean = false): Promise<Supplier[] | SupplierClient[]> => {
     try {
       const suppliers = await db.supplier.findMany({
         select: {
@@ -15,6 +33,7 @@ export const getSuppliers = cache(
           supplierName: true,
           email: true,
           phone: true,
+          address: true,
           _count: {
             select: {
               products: true,
@@ -34,13 +53,13 @@ export const getSuppliers = cache(
       return suppliers;
     } catch (error) {
       console.log(error);
-
-      return null;
+      return [];
     }
   },
   ["admin/suppliers", "getSuppliers"],
   { revalidate: 24 * 60 * 60 }
 );
+
 
 export const addSupplier = async (payload: FormData) => {
   const validatedFields = supplierSchema.safeParse(

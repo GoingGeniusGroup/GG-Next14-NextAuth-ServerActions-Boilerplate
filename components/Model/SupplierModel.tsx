@@ -1,9 +1,10 @@
 "use client";
 
-import Modal from "@/components/ui/model";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Supplier } from "@prisma/client";
+import Modal from "../ui/model";
+import SupplierForm from "../supplier/SupplierForm";
 
 const SupplierModel = ({
   edit = false,
