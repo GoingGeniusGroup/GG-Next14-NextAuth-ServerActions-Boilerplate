@@ -1,24 +1,23 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { useFetchValues } from "@/src/hooks/useFetchValues";
 import DOMPurify from "isomorphic-dompurify";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React from "react";
 
 interface Product {
   
     name: string;
     id: string;
-    category: {
+    category?: {
         categoryName: string;
     };
     description: string | null;
-    costPrice: number;
+    costPrice: number | null;
     quantityInStock: number;
     salePrice: number | null;
     status: boolean;
+    image: string | null
 
 }
 const ProductList = ({
@@ -27,15 +26,7 @@ const ProductList = ({
   products: Product[] | null
 }) => {
 
-  // const { data: session } = useSession();
-  // const userId = session?.user?.id;
-  // const { fetchProducts, products } = useFetchValues();
-  // useEffect(() => {
-  //   if (userId) {
-  //     fetchProducts();
-  //   }
-  // }, [userId]);
-  // console.log(products);
+
 
   return (
     <>

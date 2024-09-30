@@ -1,6 +1,6 @@
-import ProductList from "@/src/components/Product/ProductList";
-import { ProductCardSkeleton } from "@/src/components/Product/ProductSkeleton";
-import { getProducts } from "@/src/services/product";
+import ProductList from "@/components/Product/ProductList";
+import { ProductCardSkeleton } from "@/components/Product/ProductSkeleton";
+import { getProducts } from "@/actions/product";
 import React, { Suspense } from "react";
 
 const page = async () => {

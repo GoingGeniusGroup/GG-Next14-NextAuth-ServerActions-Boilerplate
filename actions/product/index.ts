@@ -30,7 +30,7 @@ export const addProduct = async (payload: FormData) => {
   }
 
   const validatedFields = productSchema.safeParse(payloadObject);
-  console.log(payloadObject, validatedFields.error);
+
   if (!validatedFields.success) {
     return response({
       success: false,
@@ -111,6 +111,7 @@ export const getProducts = cache(
 
           description: true,
           quantityInStock: true,
+          image:true,
 
           salePrice: true,
           costPrice: true,

@@ -55,6 +55,7 @@
     "framer-motion": "^11.5.4",
     "hamburger-react": "^2.5.1",
     "html2canvas": "^1.4.1",
+    "isomorphic-dompurify": "^2.16.0",
     "jsonwebtoken": "^9.0.2",
     "jspdf": "^2.5.2",
     "lucide-react": "^0.303.0",
