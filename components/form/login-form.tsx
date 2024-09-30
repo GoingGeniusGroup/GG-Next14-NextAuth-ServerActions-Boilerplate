@@ -34,6 +34,7 @@ export const LoginForm = ({ isMobile }: { isMobile: boolean }) => {
           if (!data.success) {
             return toast.error(data.error.message);
           }
+          toast.success(data.message);
           return router.push("/two-factor");
         })
         .catch(() => toast.error("Something went wrong."));

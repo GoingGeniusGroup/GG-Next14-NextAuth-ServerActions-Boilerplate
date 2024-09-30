@@ -153,7 +153,8 @@ const MobileSimulator: React.FC<MobileSimulatorProps> = ({
       if (isOpen) {
         return prevScreens.filter((screen) => screen.id !== section.id);
       } else {
-        return [section, ...prevScreens].slice(0, 3);
+        // Number of screen to show in the simulator
+        return [section, ...prevScreens].slice(0, 2);
       }
     });
   }, []);
@@ -166,7 +167,7 @@ const MobileSimulator: React.FC<MobileSimulatorProps> = ({
         return updatedSection || screen;
       });
     });
-  }, [sections]);
+  }, [sections, isLoggedIn]);
 
   return (
     <>

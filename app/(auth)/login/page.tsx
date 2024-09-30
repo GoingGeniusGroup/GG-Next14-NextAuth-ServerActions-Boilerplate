@@ -12,5 +12,9 @@ export default async function LoginPage({
   searchParams: { error: string };
 }) {
   if (searchParams.error) redirect(`/error?message=${searchParams.error}`);
-  return <div className="flex max-w-screen-md">{/* <LoginForm /> */}</div>;
+  return (
+    <div className="flex max-w-screen-md">
+      <LoginForm isMobile={false} />
+    </div>
+  );
 }
