@@ -174,3 +174,78 @@ export const getUserOrder = cache(
 
   { revalidate: 2 }
 );
+
+
+
+export const getInvoice = async (orderId: string) => {
+  try {
+    const invoice = await db.salesInvoice.findUnique({
+      where: {
+        orderId: orderId,
+      },
+      select: {
+        InvoiceId: true,
+        invoiceDate: true,
+        totalAmount: true,
+        order: {
+          include: {
+            user: {
+              select: {
+                name: true,
+                email: true,
+              },
+            },
+            carts: {
+              include: {
+                product: {
+                  select: {
+                    salePrice: true,
+                    discount: true,
+                    taxId: true,
+                    tax: {
+                      select:{
+                        rate:true
+                      }
+                    },
+                    name:true
+                  },
+                },
+                variants: {
+                  select: {
+                    discount: true,
+                    salePrice: true,
+                    variant: true,
+                    option: {
+                      select: {
+                        value: true,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+    const Invoicedata = {
+      id: invoice?.order.id,
+      state: invoice?.order.state,
+      orderDate: invoice?.order.orderDate,
+      streetAddress: invoice?.order.streetAddress,
+      city: invoice?.order.city,
+      user: {
+        email:invoice?.order.user.email,
+         name: invoice?.order.user.name,
+      },
+      carts: invoice?.order.carts,
+      InvoiceId: invoice?.InvoiceId,
+      invoiceDate: invoice?.invoiceDate
+    };
+ 
+
+    return  Invoicedata
+  } catch (error) {
+    return null; 
+  }
+};

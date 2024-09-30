@@ -158,7 +158,7 @@ model ProductVariant {
   status          Boolean @default(true)
   priceDifference Float?
   costPrice       Float?
-  discount        String?
+  discount        Float?
 
   carts Cart[]
 }
