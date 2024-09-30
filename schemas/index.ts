@@ -91,6 +91,10 @@ export const profileSchema = z
   );
 
 
+
+
+  // Product Schema
+
   const MAX_FILE_SIZE = 5000000;
   const imageSchema = z
     .instanceof(File)
@@ -105,58 +109,74 @@ export const profileSchema = z
       (file) => file.size <= MAX_FILE_SIZE,
       "File size should be less than 5MB."
     );
+  
+  
+  export const productSchema = z.object({
+    name: z.string().min(1, "Name is required"),
+    image: imageSchema,
+    description: z.string().optional(),
+    costPrice: z
+    .preprocess((value) => {
+      if (typeof value === "string") {
+        return parseFloat(value);
+      }
+      return value;
+    }, z.number({
+      required_error: "Cost price is required",
+    })),
+  
+    quantityInStock: z
+    .preprocess((value) => {
+      if (typeof value === "string") {
+        return parseFloat(value);
+      }
+      return value;
+    }, z.number({
+      required_error: "quantity  is required",
+    })),
+    validity: z.string().optional(),
+    discount: z.preprocess((value) => {
+      if (typeof value === "string") {
+        return parseFloat(value);
+      }
+      return value;
+    }, z.number()).optional(),
+    
+    salePrice: z.preprocess((value) => {
+      if (typeof value === "string") {
+        return parseFloat(value);
+      }
+      return value;
+    }, z.number({
+      required_error: "Sale price is required",
+    })),
+    margin: z.string().optional(),
+  
+   
+    category: z.string().refine((val) => val !== "", {
+      message: "Please select a valid category",
+    }),
+  
+    suppliers: z
+    .array(
+      z.object({
+        id: z.string().min(1, { message: "Supplier is required" }),
+        supplier: z.string().min(1, { message: "Supplier is required" }),
+      })
+    )
+    .nonempty({ message: "At least one supplier is required" }),
+  
+  });
+  
+const PHONE_SCHEMA = z
+  .string()
+  .regex(/^\d{10}$/, { message: 'Phone number must be exactly 10 digits.' })
+  .trim()
 
-    export const productSchema = z.object({
-      name: z.string().min(1, "Name is required"),
-      image: imageSchema, // Assuming `imageSchema` is defined elsewhere
-      description: z.string().optional(),
-      
-      costPrice: z.preprocess((value) => {
-        if (typeof value === "string") {
-          return parseFloat(value);
-        }
-        return value;
-      }, z.number({
-        required_error: "Cost price is required",
-      })),
-    
-      quantityInStock: z.preprocess((value) => {
-        if (typeof value === "string") {
-          return parseFloat(value);
-        }
-        return value;
-      }, z.number({
-        required_error: "Quantity is required",
-      })),
-    
-      validity: z.string().optional(),
-      discount: z.string().optional(),
-    
-      salePrice: z.preprocess((value) => {
-        if (typeof value === "string") {
-          return parseFloat(value);
-        }
-        return value;
-      }, z.number({
-        required_error: "Sale price is required",
-      })),
-    
-      margin: z.string().optional(),
-    
-      // Updated status field with correct error message handling
-      status: z.enum(["AVAILABLE", "NOTAVAILABLE"], {
-        required_error: "Status is required",
-      }),
-    
-      category: z.string().refine((val) => val !== "", {
-        message: "Please select a valid category",
-      }),
-    
-      suppliers: z.array(
-        z.object({
-          id: z.string().min(1, { message: "Supplier ID is required" }),
-          supplier: z.string().min(1, { message: "Supplier name is required" }),
-        })
-      ).nonempty({ message: "At least one supplier is required" }),
-    });
+export const supplierSchema = z.object({
+    suppliername: z.string().min(1,"suppliername is required"),
+    email: EMAIL_SCHEMA,
+    phone: PHONE_SCHEMA.optional(),
+    address: z.string().optional(),
+  })
   
