@@ -23,8 +23,9 @@ const ProductList: React.FC<ProductListProps> = ({
         isMobile ? "grid-cols-2" : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
       } gap-2 sm:gap-4`}
     >
-      {products.map((product) => (
+      {(products || []).map((product) => (
         <ProductCard
+          isMobile={isMobile}
           key={product.id}
           product={product}
           cartQuantity={cart[product.id] || 0}

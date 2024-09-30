@@ -108,7 +108,7 @@ const ShopSection: React.FC<ShopProps> = ({
         <nav className="w-full">
           <ScrollArea className="w-full">
             <div className="flex space-x-2 pb-2 pt-4">
-              {categories.map((category) => (
+              {(categories || []).map((category) => (
                 <Button
                   key={category}
                   variant={

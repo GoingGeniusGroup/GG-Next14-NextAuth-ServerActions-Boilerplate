@@ -6,6 +6,7 @@ import { Product } from "./types";
 
 interface ProductCardProps {
   product: Product;
+  isMobile: boolean;
   cartQuantity: number;
   onAddToCart: (productId: number) => void;
   onSelectProduct?: (product: Product) => void;
@@ -13,13 +14,16 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({
   product,
+  isMobile,
   cartQuantity,
   onAddToCart,
   onSelectProduct,
 }) => {
   return (
     <div
-      className="border border-gray-200/30 rounded-lg bg-white text-black shadow-sm cursor-pointer h-[300px] flex flex-col"
+      className={`border border-gray-200/30 rounded-lg bg-white text-black shadow-sm cursor-pointer ${
+        isMobile ? "h-[220px]" : "h-[300px]"
+      } flex flex-col`}
       onClick={onSelectProduct ? () => onSelectProduct(product) : () => {}}
     >
       <div className="relative overflow-hidden h-[222px]">
