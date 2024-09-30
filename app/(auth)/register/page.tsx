@@ -6,9 +6,5 @@ export const metadata: Metadata = {
 };
 
 export default function RegisterPage() {
-  return (
-    <div className="flex max-w-screen-md">
-      <RegisterForm />
-    </div>
-  );
+  return <div className="flex max-w-screen-md">{/* <RegisterForm /> */}</div>;
 }

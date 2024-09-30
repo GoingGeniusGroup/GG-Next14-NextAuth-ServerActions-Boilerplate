@@ -13,11 +13,11 @@ import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 
 type CardWrapperProps = React.HTMLAttributes<HTMLDivElement> & {
-  isMobile?: boolean;
   headerTitle: string;
   headerDescription: string;
   backButtonLabel: string;
-  backButtonHref: string;
+  backButtonHref?: string;
+  isMobile?: boolean;
   showSocial?: boolean;
   heroImage?: string;
 };
@@ -29,9 +29,9 @@ export const CardWrapper = (props: CardWrapperProps) => {
     headerDescription,
     backButtonLabel,
     backButtonHref,
+    isMobile,
     showSocial,
     children,
-    isMobile,
     ...rest
   } = props;
 
@@ -65,17 +65,23 @@ export const CardWrapper = (props: CardWrapperProps) => {
           </CardFooter>
         </>
       ) : null}
-      <Separator />
-      <CardFooter className="py-3">
-        <Button
-          variant="anylink"
-          className="font-normal w-full"
-          size="sm"
-          asChild
-        >
-          <Link href={backButtonHref}>{backButtonLabel}</Link>
-        </Button>
-      </CardFooter>
+      {!isMobile && (
+        <>
+          <Separator />
+          <CardFooter className="py-3">
+            <Button
+              variant="anylink"
+              className="font-normal w-full"
+              size="sm"
+              asChild
+            >
+              {backButtonHref && (
+                <Link href={backButtonHref}>{backButtonLabel}</Link>
+              )}
+            </Button>
+          </CardFooter>
+        </>
+      )}
     </Card>
   );
 };

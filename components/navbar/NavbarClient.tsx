@@ -103,7 +103,7 @@ const NavbarClient: React.FC<NavbarClientProps> = ({
               </Link>
 
               <Link
-                href="#"
+                href="/"
                 className={`group ${
                   pathname === "/discover"
                     ? "scale-110 py-2 text-2xl font-bold  text-pink-700 drop-shadow"
