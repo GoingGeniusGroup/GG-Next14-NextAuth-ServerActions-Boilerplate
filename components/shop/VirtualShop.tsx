@@ -19,7 +19,7 @@ interface VirtualShopProps {
 const VirtualShop: React.FC<VirtualShopProps> = ({
   products,
   categories,
-  isMobile = false,
+  isMobile,
 }) => {
   const [cart, setCart] = useState<Record<number, number>>({});
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -63,7 +63,7 @@ const VirtualShop: React.FC<VirtualShopProps> = ({
       : products.filter((product) => product.category === selectedCategory);
 
   return (
-    <div className={`mx-auto px-2 pb-4 pt-20 ${isMobile ? "h-full" : ""}`}>
+    <div className={`mx-auto px-2 pb-4 ${isMobile ? "h-full" : ""}`}>
       <header className="mb-4 p-2 sticky top-0 z-20 bg-white/40 rounded-md backdrop-blur-md">
         {isMobile ? (
           <>
@@ -86,21 +86,26 @@ const VirtualShop: React.FC<VirtualShopProps> = ({
             </div>
           </>
         ) : (
-          <div className="absolute top-8 right-4 z-20">
+          <div className="absolute top-5 right-4 z-20">
             <div
               className="relative cursor-pointer"
               onClick={() => setIsCartOpen(true)}
             >
               <ShoppingCart className="w-6 h-6" />
               {totalItems > 0 && (
-                <Badge variant="destructive">{totalItems}</Badge>
+                <Badge
+                  variant="destructive"
+                  className="absolute -top-2 right-[-1px] size-4 p-1 flex justify-center"
+                >
+                  {totalItems}
+                </Badge>
               )}
             </div>
           </div>
         )}
         <nav className="w-full">
           <ScrollArea className="w-full">
-            <div className="flex space-x-2 pb-2">
+            <div className="flex space-x-2 pb-2 pt-4">
               {categories.map((category) => (
                 <Button
                   key={category}
@@ -131,10 +136,10 @@ const VirtualShop: React.FC<VirtualShopProps> = ({
             cart={cart}
             onAddToCart={addToCart}
             onSelectProduct={setSelectedProduct}
-            isMobile={isMobile}
+            isMobile={isMobile || false}
           />
         </div>
-        <div className="w-[30%] p-4 sticky top-[80px] h-[calc(100vh-120px)] overflow-y-auto">
+        <div className="w-[30%] px-4 py-2 sticky top-[80px] h-[calc(100vh-120px)] overflow-y-auto">
           <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200/30">
             <ProductDetail product={selectedProduct} onAddToCart={addToCart} />
           </div>
@@ -148,7 +153,7 @@ const VirtualShop: React.FC<VirtualShopProps> = ({
         onAddToCart={addToCart}
         onRemoveFromCart={removeFromCart}
         totalPrice={totalPrice}
-        isMobile={isMobile}
+        isMobile={isMobile || false}
       />
     </div>
   );

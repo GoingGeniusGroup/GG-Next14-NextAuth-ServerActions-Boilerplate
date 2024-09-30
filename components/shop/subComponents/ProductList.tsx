@@ -6,7 +6,7 @@ interface ProductListProps {
   products: Product[];
   cart: Record<number, number>;
   onAddToCart: (productId: number) => void;
-  onSelectProduct: (product: Product) => void;
+  onSelectProduct?: (product: Product) => void;
   isMobile: boolean;
 }
 

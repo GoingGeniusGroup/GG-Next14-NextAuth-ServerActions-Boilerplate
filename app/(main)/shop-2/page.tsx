@@ -16,10 +16,6 @@ const ProductSchema = z.object({
   description: z.string(),
 });
 
-const CartItemSchema = ProductSchema.extend({
-  quantity: z.number(),
-});
-
 type Product = z.infer<typeof ProductSchema>;
 
 // Updated mock data for products with multiple images
