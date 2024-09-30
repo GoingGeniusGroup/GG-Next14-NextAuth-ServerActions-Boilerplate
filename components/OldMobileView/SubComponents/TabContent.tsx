@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaTimes } from "react-icons/fa";
 import { Tab } from "../RightSideHud";
-import ShopSection from "@/components/shop/ShopSection";
+// import ShopSection from "@/components/shop/ShopSection";
 import ProfileComponent from "@/components/profile/ProfileMobileView/ProfileComponent";
 
 interface TabContentProps {
@@ -19,7 +19,8 @@ const renderMobileViewContent = (tab: Tab) => {
     case "Wallet":
       return <div>Wallet Content</div>;
     case "Shop":
-      return <ShopSection isMobile={true} />;
+      // return <ShopSection isMobile={true} />;
+      return <div>Shop</div>;
     case "Emergency":
       return <div>Emergency Content</div>;
     case "Notifications":
