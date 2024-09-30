@@ -1,4 +1,5 @@
 "use server";
+import { cache } from "@/lib/cache";
 import { db } from "@/lib/db";
 import { response, convertToCapitalized } from "@/lib/utils";
 import { productSchema } from "@/schemas";
@@ -98,3 +99,37 @@ export const addProduct = async (payload: FormData) => {
     });
   }
 };
+
+
+export const getProducts = cache(
+  async () => {
+    try {
+      const products = await db.product.findMany({
+        select: {
+          id: true,
+          name: true,
+
+          description: true,
+          quantityInStock: true,
+
+          salePrice: true,
+          costPrice: true,
+          status: true,
+          category: {
+            select: {
+              categoryName: true,
+            },
+          },
+        },
+      });
+
+      return products;
+    } catch (error) {
+      console.log(error);
+
+      return null;
+    }
+  },
+  ["/admin/products", "getProducts"],
+  { revalidate: 2 }
+);

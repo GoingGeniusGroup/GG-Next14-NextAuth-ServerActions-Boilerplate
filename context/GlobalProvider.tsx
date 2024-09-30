@@ -10,7 +10,7 @@ import React, {
   RefObject,
   useContext,
 } from "react";
-import { sendInvoiceEmail } from "../lib/mail";
+import { sendInvoiceEmail } from "@/lib/mail";
 import { toast } from "react-toastify";
 import { arrayBufferToBase64 } from "../lib/utils";
 import { useCartStore } from "../hooks/useCartStore";

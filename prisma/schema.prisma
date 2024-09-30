@@ -115,7 +115,7 @@ model Product {
   orders    Order[]          @relation("ProductOrders")
   carts     Cart[]
   Variants  ProductVariant[]
-  Tax       Tax?             @relation(fields: [taxId], references: [id])
+  tax       Tax?             @relation(fields: [taxId], references: [id])
   taxId     String?
 }
 
