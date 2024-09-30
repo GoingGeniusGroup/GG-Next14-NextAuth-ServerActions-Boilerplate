@@ -88,7 +88,7 @@ export const getAOrder = cache(
               quantity: true,
               amount:true,
               product: {
-                select: {s
+                select: {
                   id: true,
                   name: true,
                   salePrice: true,

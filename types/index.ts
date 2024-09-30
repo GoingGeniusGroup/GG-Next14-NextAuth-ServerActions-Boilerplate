@@ -58,3 +58,5 @@ export type ResponseSuccess<T> =
   | ResponseError;
 
 export type Response<T = boolean> = T extends object ? ResponseSuccess<T> : ResponseWithMessage;
+
+
