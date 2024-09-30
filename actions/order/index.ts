@@ -48,7 +48,7 @@ export const getAllOrders = cache(
   ["/admin/orders", "getAllOrders"],
 
   {
-    revalidate: 2,
+    revalidate: 2*60,
   }
 );
 export async function deleteOrder(id: string): Promise<any> {
@@ -60,7 +60,7 @@ export async function deleteOrder(id: string): Promise<any> {
       },
     });
 
-    revalidatePath("/");
+    revalidatePath("/admin/orders");
   } catch (error) {
     return {
       error: " There was an error on deleting",
@@ -124,12 +124,10 @@ export const getAOrder = cache(
 );
 export const getUserOrder = cache(
   async (userId: string | undefined) => {
-    
-    
     try {
       if (userId === undefined) return null;
       console.log(userId);
-      
+
       const orders = await db.order.findMany({
         where: {
           userId: userId as string,
@@ -138,6 +136,7 @@ export const getUserOrder = cache(
           carts: {
             select: {
               quantity: true,
+              amount: true,
               product: {
                 select: {
                   id: true,
@@ -148,6 +147,7 @@ export const getUserOrder = cache(
               variants: {
                 select: {
                   salePrice: true,
+                  variant: true,
                   option: {
                     select: {
                       value: true,
@@ -160,7 +160,7 @@ export const getUserOrder = cache(
         },
       });
 
-
+     
 
       if (orders == null) return notFound();
       return orders;
@@ -172,5 +172,5 @@ export const getUserOrder = cache(
   },
   ["/order", "getUserOrder"],
 
-  { revalidate: 2}
+  { revalidate: 2 }
 );

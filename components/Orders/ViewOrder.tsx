@@ -2,7 +2,7 @@
 import { formatOrderDate } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
-import { OrderType } from "@/types/ordertype";
+import { OrderType } from "@/types/orderType";
 
 const ViewOrder = ({ order }: { order: OrderType }) => {
   const totalamount = order?.carts.reduce((total, cart) => {
