@@ -95,6 +95,17 @@ export const formatOrderDate = (dateString: string | undefined) => {
 };
 
 
+export const arrayBufferToBase64 = (buffer: ArrayBuffer) => {
+  let binary = '';
+  const bytes = new Uint8Array(buffer);
+  const len = bytes.byteLength;
+  for (let i = 0; i < len; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return window.btoa(binary);
+};
+
+
 // Overload for response status in server action
 export function response(response: ResponseWithMessage): Response;
 export function response<T extends Record<string, unknown>>(response: Response<T>): Response<T>;

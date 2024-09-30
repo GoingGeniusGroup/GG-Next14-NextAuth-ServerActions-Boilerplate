@@ -15,8 +15,8 @@ import {
 } from "@/components/ui/table";
 import useGloabalContext from "@/src/context/GlobalProvider";
 
-import { InvoiceType } from "@/src/types";
-import { formatOrderDate } from "@/src/lib/utils";
+import { InvoiceType } from "@/types/orderType";
+import { formatOrderDate } from "@/lib/utils";
 interface SalesInvoiceProps {
   hidden: boolean;
   invoiceProp?: InvoiceType;
