@@ -1,6 +1,7 @@
 'use client';
 import React, { useEffect, useState, useMemo } from 'react';
 import Button from '../../../components/myComponent/Button';
+import Image from 'next/image';
 
 // Define Product type once, outside of any function
 type Product = {
@@ -43,9 +44,10 @@ function Product() {
             <div key={product.id} className="bg-white-400 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-gray-100 m-2 rounded-xl shadow w-72  flex flex-col justify-between overflow-hidden">
                 <ul className="border flex flex-col gap-2 p-5 rounded-lg shadow-xl h-full">
                     <li className="flex justify-center">
-                        <img src={product.image} alt={product.title} className="h-52 w-auto object-contain" />
+                        <Image src={product.image} alt={product.title} className="h-52 w-auto object-contain" width={100} height={100} />
                     </li>
                     <li className="font-semibold text-xl line-clamp-1">{product.title}</li>
+
                     <li className="font-bold text-base">Price: ${product.price}</li>
                     <li className="line-clamp-3 text-sm">Description: {product.description}</li>
                     <li className="mt-auto">
@@ -63,9 +65,9 @@ function Product() {
     if (error) return <div>Error: {error}</div>;
 
     return (
-        <div className='flex flex-col gap-2'>
-            <div className='container flex justify-end'>
-                <Button text='Add Product'/>
+        <div className='flex flex-col gap-2 bg-gray-300 rounded-md bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-20 border border-gray-100'>
+            <div className='container flex justify-end mt-4'>
+                <Button text='Add Product' />
             </div>
 
             <div className="container flex flex-col gap-2">

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button/button";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { IoLogoGithub } from "react-icons/io5";
@@ -29,7 +29,7 @@ export const Social = () => {
       </Button>
       <Button
         size="lg"
-        className="w-full text-2xl"
+        className="w-full text-2xl text-black"
         variant="outline"
         onClick={() => onClick("github")}
       >
@@ -37,4 +37,4 @@ export const Social = () => {
       </Button>
     </div>
   );
-}
+};

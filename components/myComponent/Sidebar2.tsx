@@ -13,30 +13,27 @@ import Image from "next/image";
 
 // Type for submenu items
 interface SubmenuItem {
-  subId: number;
-  name: string;
-  link: string;
-  isActive?: boolean;
+  subId: number;      // Unique ID for the submenu item
+  name: string;       // Name of the submenu item
+  link: string;       // Link for the submenu item
+  isActive?: boolean; // Optional active state for the submenu item
 }
 
 // Type for main menu items
 interface MenuItem {
-  id: number;
-  name: string;
-  link?: string;
-  icon: React.ReactNode; // Icons as React elements
-  isActive?: boolean;
-  submenu?: boolean;
-  submenuItems?: SubmenuItem[]; // Optional submenu items array
-  spacing?: boolean;
-  onClick?: () => void;
-  hr?: JSX.Element;
+  id: number;                  // Unique ID for the main menu item
+  name: string;                // Name of the main menu item
+  link?: string;               // Optional link for the main menu item
+  icon: React.ReactNode;       // Icon for the main menu item (React component)
+  isActive?: boolean;          // Optional active state for the main menu item
+  submenu?: boolean;           // Boolean flag indicating if it has a submenu
+  submenuItems?: SubmenuItem[];// Optional array of submenu items
+  spacing?: boolean;           // Optional spacing flag
+  onClick?: () => void;        // Optional click handler
+  hr?: boolean;            // Optional horizontal rule element for separation
 }
 
-// Sidebar2 component
-// ... existing imports ...
-
-// Move menu array declaration here, before the component
+// The data array for the sidebar
 const menu: MenuItem[] = [
   {
     id: 1,
@@ -54,8 +51,40 @@ const menu: MenuItem[] = [
   },
   {
     id: 3,
+    name: "order",
+    icon: <MdInventory />,
+    isActive: false,
+    submenu: true,
+    submenuItems: [
+      {
+        subId: 1,
+        name: "order list",
+        link: "/order/orderlist",
+        isActive: false
+      },
+      {
+        subId: 2,
+        name: "add order",
+        link: "/order/addorder",
+        isActive: false
+      },
+      {
+        subId: 3,
+        name: "order category",
+        link: "/order/ordercategory",
+        isActive: false
+      },
+      {
+        subId: 4,
+        name: "bulk order",
+        link: "/order/bulkorder",
+        isActive: false
+      },
+    ],
+  },
+  {
+    id: 4,
     name: "Product",
-    link: "/product",
     icon: <MdOutlineSell />,
     isActive: false,
     submenu: true,
@@ -64,21 +93,63 @@ const menu: MenuItem[] = [
         subId: 1,
         name: "add product",
         link: "/product/addproduct",
+        isActive: false
       },
       {
         subId: 2,
         name: "product list",
         link: "/product/productlist",
+        isActive: false
       },
       {
         subId: 3,
         name: "product category",
         link: "/product/productcategory",
+        isActive: false
+      },
+      {
+        subId: 4,
+        name: "product card",
+        link: "/product/productcard",
+        isActive: false
+      },
+      {
+        subId: 5,
+        name: "product view",
+        link: "/product/productview",
+        isActive: false
       },
     ],
   },
   {
-    id: 4,
+    id: 5,
+    name: "seller",
+    icon: <MdOutlineSell />,
+    isActive: false,
+    submenu: true,
+    submenuItems: [
+      {
+        subId: 1,
+        name: "seller list",
+        link: "/seller/sellerlist",
+        isActive: false
+      },
+      {
+        subId: 2,
+        name: "add seller",
+        link: "/seller/addseller",
+        isActive: false
+      },
+      {
+        subId: 3,
+        name: "seller category",
+        link: "/seller/sellercategory",
+        isActive: false
+      },
+    ],
+  },
+  {
+    id: 6,
     name: "Report",
     icon: <HiOutlineDocumentReport />,
     submenu: true,
@@ -87,46 +158,48 @@ const menu: MenuItem[] = [
       {
         subId: 1,
         name: "Product Summary",
-        link: "/dashboard/report/product-summary",
+        link: "/report/productsummary",
+        isActive: false
       },
       {
         subId: 2,
         name: "Purchase",
-        link: "/dashboard/report/purchase",
+        link: "/report/purchase",
+        isActive: false
       },
+
       {
         subId: 3,
         name: "Sales",
-        link: "/dashboard/report/sales",
+        link: "/report/sales",
+        isActive: false
       },
     ],
   },
   {
-    id: 5,
+    id: 7,
     name: "Customers",
     link: "/dashboard/customers",
     spacing: true,
-    hr: <hr className="border border-emerald-300 rounded-lg text-center" />,
+    hr: true,
     icon: <PiUserFocusThin />,
     isActive: false
   },
   {
-    id: 6,
+    id: 8,
     name: "Settings",
     link: "/dashboard/settings",
     icon: <IoSettingsOutline />,
     isActive: false
   },
   {
-    id: 7,
+    id: 9,
     name: "Logout",
     link: "/dashboard/logout",
     icon: <IoIosLogOut />,
     isActive: false
   },
 ];
-
-
 
 const Sidebar2: React.FC = () => {
   const [active, setActive] = useState<boolean>(true);
@@ -139,6 +212,10 @@ const Sidebar2: React.FC = () => {
       isActive: item.id === id ? true : false
     }));
     setMenuItems(updatedMenu);
+  };
+
+  const toggleSubmenu = (id: number) => {
+    setOpen(open === id ? null : id); // Toggle open/close for submenu
   };
 
   return (
@@ -201,25 +278,15 @@ const Sidebar2: React.FC = () => {
                 <a
                   href={menuItem.link}
                   className={`text-white text-base font-medium flex-1 duration-500 ${!active && "hidden"
-                    }`
-                  }
-                  onClick={() => setOpen(open === menuItem.id ? null : menuItem.id)}
+                    }`}
+                  onClick={() => toggleSubmenu(menuItem.id)} // Toggle submenu on click
                 >
                   {menuItem.name}
                 </a>
                 {
-                  menuItem.id === 3 && active && (
+                  menuItem.submenu && active && (
                     <MdKeyboardArrowDown
-                      // onClick={() => setOpen(open === menuItem.id ? null : menuItem.id)} // Toggle submenu
-                      className={`${open === menuItem.id && "rotate-180"} text-2xl text-white`}
-                    />
-                  )
-                }
-                {
-                  menuItem.id === 4 && active && (
-                    <MdKeyboardArrowDown
-                      // onClick={() => setOpen(open === menuItem.id ? null : menuItem.id)} // Toggle submenu
-                      className={`${open === menuItem.id && "rotate-180"} text-2xl text-white`}
+                      className={`${open === menuItem.id ? "rotate-180" : ""} text-2xl text-white`}
                     />
                   )
                 }
@@ -227,7 +294,7 @@ const Sidebar2: React.FC = () => {
 
               {/* Submenu Items */}
               {
-                menuItem.submenu && open && active && (
+                menuItem.submenu && open === menuItem.id && active && (
                   <ul className="text-white text-sm cursor-pointer p-2 rounded-md ml-3 bg-transparent">
                     {menuItem.submenuItems?.map((submenuItem) => (
                       <li

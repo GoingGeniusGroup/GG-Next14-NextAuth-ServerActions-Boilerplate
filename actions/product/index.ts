@@ -116,6 +116,7 @@ export const getProducts = cache(
           salePrice: true,
           costPrice: true,
           status: true,
+          discount:true,
           category: {
             select: {
               categoryName: true,

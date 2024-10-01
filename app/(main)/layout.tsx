@@ -1,6 +1,5 @@
 import Navbar from "@/app/_components/navbar";
-import { RightSideHudProvider } from "@/components/dom/RightSideHudProvider";
-import RightSideHud from '@/components/Huds/RightSideHud';
+import { Layout } from "@/components/dom/Layout";
 
 export default async function MainLayout({
   children,
@@ -9,11 +8,10 @@ export default async function MainLayout({
 }) {
   return (
     <>
-      <RightSideHudProvider>
-        <RightSideHud />
+      <Layout>
         <Navbar />
-        <main className="mx-12 mt-12">{children}</main>
-      </RightSideHudProvider>
+        <main>{children}</main>
+      </Layout>
     </>
   );
 }

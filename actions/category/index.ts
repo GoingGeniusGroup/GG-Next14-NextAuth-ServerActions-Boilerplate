@@ -3,8 +3,6 @@
 import { cache } from "@/lib/cache";
 import { db } from "@/lib/db";
 
-
-
 export const getCategories = cache(
     async (fromClient:boolean= false) => {
      try {
@@ -34,6 +32,6 @@ export const getCategories = cache(
 
        
 },
-["admin/categories", "getCategories"],
+["/", "getCategories"],
   { revalidate: 60 * 60 * 24 }
 )

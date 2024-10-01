@@ -19,19 +19,26 @@ export default async function TwoFactorPage() {
     redirect("/");
   }
 
-  const verifyToken = verifyJwtToken<z.infer<typeof loginSchema>>(credentials.value);
+  const verifyToken = verifyJwtToken<z.infer<typeof loginSchema>>(
+    credentials.value
+  );
   if (!verifyToken.valid || !verifyToken.decoded) {
     redirect("/");
   }
 
-  const existingToken = await getTwoFactorTokenByEmail(verifyToken.decoded.email);
+  const existingToken = await getTwoFactorTokenByEmail(
+    verifyToken.decoded.email
+  );
   if (!existingToken) {
     redirect("/");
   }
 
   return (
     <TwoFactorForm
-      payload={{ email: existingToken.email, password: verifyToken.decoded.password }}
+      payload={{
+        email: existingToken.email,
+        password: verifyToken.decoded.password,
+      }}
     />
   );
 }

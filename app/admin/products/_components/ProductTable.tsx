@@ -95,4 +95,4 @@ const ProductTable = async () => {
   );
 };
 
-export default ProductTable;
+ export default ProductTable;

@@ -6,13 +6,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button/button";
 import Link from "next/link";
 import { Social } from "@/components/auth/social";
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 
 type CardWrapperProps = React.HTMLAttributes<HTMLDivElement> & {
+  isMobile?: boolean;
   headerTitle: string;
   headerDescription: string;
   backButtonLabel: string;
@@ -30,14 +31,21 @@ export const CardWrapper = (props: CardWrapperProps) => {
     backButtonHref,
     showSocial,
     children,
+    isMobile,
     ...rest
   } = props;
 
   return (
-    <Card className="w-[400px] shadow mx-4 md:mx-0" {...rest}>
+    <Card className={` ${isMobile ? "w-full" : "w-[400px]"}`} {...rest}>
       {heroImage ? (
         <div className="w-1/4 relative pt-6 mx-auto">
-          <Image src={heroImage} alt="Hero Image" width={24} height={24} className="relative w-full h-full max-w-md select-none" />
+          <Image
+            src={heroImage}
+            alt="Hero Image"
+            width={24}
+            height={24}
+            className="relative w-full h-full max-w-md select-none"
+          />
         </div>
       ) : null}
       <CardHeader className="text-center">
@@ -59,7 +67,12 @@ export const CardWrapper = (props: CardWrapperProps) => {
       ) : null}
       <Separator />
       <CardFooter className="py-3">
-        <Button variant="link" className="font-normal w-full" size="sm" asChild>
+        <Button
+          variant="anylink"
+          className="font-normal w-full"
+          size="sm"
+          asChild
+        >
           <Link href={backButtonHref}>{backButtonLabel}</Link>
         </Button>
       </CardFooter>

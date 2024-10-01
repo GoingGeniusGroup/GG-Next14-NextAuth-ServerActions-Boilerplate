@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import React from 'react'
 
 const AddToCart = () => {
@@ -15,7 +16,7 @@ const AddToCart = () => {
                 <div className="w-full lg:w-1/4 px-2 mb-4 lg:mb-0">
                   {/* Image */}
                   <div className="relative overflow-hidden rounded-lg group">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/12a.webp"
+                    <Image src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/12a.webp"
                       className="w-full" alt="Blue Jeans Jacket" />
                     <a href="#!" className="absolute inset-0 bg-black bg-opacity-20 transition-opacity duration-300 opacity-0 group-hover:opacity-100"></a>
                   </div>
@@ -72,7 +73,7 @@ const AddToCart = () => {
                 <div className="w-full lg:w-1/4 px-2 mb-4 lg:mb-0">
                   {/* Image */}
                   <div className="relative overflow-hidden rounded-lg group">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/13a.webp"
+                    <Image src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/13a.webp"
                       className="w-full" alt="Red hoodie" />
                     <a href="#!" className="absolute inset-0 bg-black bg-opacity-20 transition-opacity duration-300 opacity-0 group-hover:opacity-100"></a>
                   </div>
@@ -162,16 +163,16 @@ const AddToCart = () => {
           <div className="bg-white rounded-lg shadow-md mb-4 lg:mb-0">
             <div className="p-4">
               <p className="font-bold">We accept</p>
-              <img className="mr-2 inline-block" width="45"
+              <Image className="mr-2 inline-block" width="45"
                 src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
                 alt="Visa" />
-              <img className="mr-2 inline-block" width="45"
+              <Image className="mr-2 inline-block" width="45"
                 src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
                 alt="American Express" />
-              <img className="mr-2 inline-block" width="45"
+              <Image className="mr-2 inline-block" width="45"
                 src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
                 alt="Mastercard" />
-              <img className="mr-2 inline-block" width="45"
+              <Image className="mr-2 inline-block" width="45"
                 src="https://static.vecteezy.com/system/resources/previews/022/100/701/non_2x/paypal-logo-transparent-free-png.png"
                 alt="PayPal acceptance mark" />
             </div>

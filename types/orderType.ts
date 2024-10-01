@@ -1,13 +1,16 @@
 // type for Product
-type Product = {
-    salePrice: number;
-    discount?: number | null;
-    taxId?: string | null;
-    tax?:{
-      rate: number
-    };
-    name: string
-  };
+// type Product = {
+//     salePrice: number;
+//     image: string | null;
+//     description: string | null;
+//     discount?: number | null;
+//     taxId?: string | null;
+//     tax?:{
+//       rate: number
+//     };
+//     name: string
+//   };
+import { productType } from "./productType";
   
   // type for Variant Option
   type VariantOption= {
@@ -32,11 +35,12 @@ type Product = {
   }
   
   // type for Cart Item
-  type CartItem =  {
+export type CartItem =  {
     quantity: number;
-    amount: number;
-    product: Product;
-    variants: Variant[] ;
+    product: productType;
+    amount?: number;
+
+    variants?: Variant[] ;
   }
   
   // type for Order

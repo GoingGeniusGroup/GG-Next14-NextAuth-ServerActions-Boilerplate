@@ -2,6 +2,7 @@
 import "@/styles/globals.css";
 import { Toaster } from "@/ui/sonner";
 import type { Metadata } from "next";
+import Providers from "@/app/providers/SessionProvider";
 import { Inter } from "next/font/google";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -24,12 +25,19 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+
         {/* <Layout> */}
         <Toaster position="bottom-left" richColors theme="light" />
+        <Providers>
+
+      
         {children}
+        </Providers>
         <ToastContainer/>
         {/* </Layout> */}
       </body>
     </html>
   );
 }
+
+
