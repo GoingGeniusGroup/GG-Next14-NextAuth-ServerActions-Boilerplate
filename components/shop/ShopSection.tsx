@@ -9,35 +9,40 @@ import ProductList from "./subComponents/ProductList";
 import { Product, CartItem } from "./subComponents/types";
 import CartSheet from "./subComponents/CartSheet";
 
-interface ShopProps {
-  products: Product[];
-  categories: string[];
-  isMobile?: boolean;
-}
+import physicalProducts from "@/core/data/physicalProduct";
 
-const ShopSection: React.FC<ShopProps> = ({
-  products,
-  categories,
-  isMobile,
-}) => {
-  const [cart, setCart] = useState<Record<number, number>>({});
+const ShopSection = ({ isMobile }: { isMobile: boolean }) => {
+  const [cart, setCart] = useState<Record<string, number>>({});
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("All");
 
+  // Get products based on the physical view
+  const products = physicalProducts;
+
+  // Dynamically extract categories from the products
+  const categories = [
+    "All",
+    ...new Set(products.map((product) => product.category)),
+  ];
+
   const addToCart = (productId: number) => {
+    const productType = "physical";
+    const cartKey = `${productType}-${productId}`;
     setCart((prevCart) => ({
       ...prevCart,
-      [productId]: (prevCart[productId] || 0) + 1,
+      [cartKey]: (prevCart[cartKey] || 0) + 1,
     }));
   };
 
   const removeFromCart = (productId: number) => {
+    const productType = "physical";
+    const cartKey = `${productType}-${productId}`;
     setCart((prevCart) => {
       const newCart = { ...prevCart };
-      if (newCart[productId] > 1) {
-        newCart[productId]--;
+      if (newCart[cartKey] > 1) {
+        newCart[cartKey]--;
       } else {
-        delete newCart[productId];
+        delete newCart[cartKey];
       }
       return newCart;
     });
@@ -45,9 +50,10 @@ const ShopSection: React.FC<ShopProps> = ({
 
   const totalItems = Object.values(cart).reduce((sum, count) => sum + count, 0);
 
-  const cartItems: CartItem[] = Object.entries(cart).map(([id, quantity]) => {
-    const product = products.find((p) => p.id === parseInt(id));
-    return { ...product!, quantity };
+  const cartItems: CartItem[] = Object.entries(cart).map(([key, quantity]) => {
+    const [productType, productId] = key.split("-");
+    const product = physicalProducts.find((p) => p.id === parseInt(productId));
+    return { ...product!, quantity, productType };
   });
 
   const totalPrice = cartItems.reduce(
@@ -55,6 +61,7 @@ const ShopSection: React.FC<ShopProps> = ({
     0
   );
 
+  // Filter the products based on the selected category
   const filteredProducts =
     selectedCategory === "All"
       ? products

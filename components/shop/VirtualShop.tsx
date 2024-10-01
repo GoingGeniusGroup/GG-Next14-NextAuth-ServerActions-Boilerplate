@@ -61,6 +61,7 @@ const VirtualShop = () => {
       return newCart;
     });
   };
+
   const totalItems = Object.values(cart).reduce((sum, count) => sum + count, 0);
 
   const cartItems: CartItem[] = Object.entries(cart).map(([key, quantity]) => {
