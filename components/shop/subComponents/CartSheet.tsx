@@ -53,7 +53,10 @@ const CartSheet: React.FC<CartSheetProps> = ({
           ) : (
             <div className="space-y-4">
               {cartItems.map((item) => (
-                <div key={item.id} className="flex items-center space-x-4">
+                <div
+                  key={`${item.productType}-${item.id}`}
+                  className="flex items-center space-x-4"
+                >
                   <Image
                     src={item.images[0]}
                     alt={item.name}
@@ -70,6 +73,10 @@ const CartSheet: React.FC<CartSheetProps> = ({
                     </p>
                     <p className="text-sm font-semibold">
                       Total: ${(item.price * item.quantity).toFixed(2)}
+                    </p>
+                    <p className="text-xs text-gray-400">
+                      Type:{" "}
+                      {item.productType === "physical" ? "Physical" : "Virtual"}
                     </p>
                   </div>
                   <div className="flex items-center space-x-2">

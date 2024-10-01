@@ -4,7 +4,7 @@ import { Product } from "./types";
 
 interface ProductListProps {
   products: Product[];
-  cart: Record<number, number>;
+  cart: Record<string, number>;
   onAddToCart: (productId: number) => void;
   onSelectProduct?: (product: Product) => void;
   isMobile: boolean;
@@ -28,9 +28,10 @@ const ProductList: React.FC<ProductListProps> = ({
           isMobile={isMobile}
           key={product.id}
           product={product}
-          cartQuantity={cart[product.id] || 0}
+          cartQuantity={cart[`physical-${product.id}`] || 0}
           onAddToCart={onAddToCart}
           onSelectProduct={onSelectProduct}
+          productType="physical"
         />
       ))}
     </div>

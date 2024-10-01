@@ -1,13 +1,13 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import { FC, useEffect, useRef } from "react";
 import { clamp, lerp } from "@/services/avatar";
-import { Camera, Vector3 } from "three";
+import { Camera, Object3D, Vector3 } from "three";
 import { OrbitControls } from "three-stdlib";
 
 type CameraControlsProps = {
   // eslint-disable-next-line react/no-unused-prop-types
-  fullBody?: boolean;
-  headScale?: number;
+  // fullBody?: boolean;
+  // headScale?: number;
   cameraTarget?: number;
   cameraInitialDistance?: number;
   /**
@@ -20,9 +20,13 @@ type CameraControlsProps = {
    * Enables camera moving on Y-axis while zooming in-out.
    */
   updateCameraTargetOnZoom?: boolean;
+  /**
+   * Updates camera position based on the target position.
+   */
+  modelRef?: React.RefObject<Object3D>;
+  followModel?: boolean;
 };
-
-let controls: any;
+let controls: OrbitControls;
 let progress = Number.POSITIVE_INFINITY;
 
 const updateCameraFocus = (camera: Camera, delta: number, target?: Vector3) => {
@@ -52,15 +56,15 @@ export const CameraControls: FC<CameraControlsProps> = ({
   cameraTarget,
   cameraInitialDistance,
   cameraZoomTarget,
-  headScale = 1,
   controlsMinDistance = 0.4,
   controlsMaxDistance = 2.5,
   updateCameraTargetOnZoom = false,
+  followModel = false,
+  modelRef,
 }) => {
   const cameraZoomTargetRef = useRef(cameraZoomTarget);
   const { camera, gl } = useThree();
-  const fallbackCameraTarget = cameraTarget || 1.475 + headScale / 10;
-  const headScaleAdjustedMinDistance = controlsMinDistance + headScale / 10;
+  const fallbackCameraTarget = cameraTarget || 1.475;
 
   useEffect(() => {
     if (
@@ -76,7 +80,7 @@ export const CameraControls: FC<CameraControlsProps> = ({
     controls.enableRotate = true;
     controls.enablePan = false;
 
-    controls.minDistance = headScaleAdjustedMinDistance;
+    controls.minDistance = controlsMinDistance;
     controls.maxDistance = controlsMaxDistance;
     controls.minPolarAngle = 1.4;
     controls.maxPolarAngle = 1.4;
@@ -84,7 +88,6 @@ export const CameraControls: FC<CameraControlsProps> = ({
     controls.target.set(0, fallbackCameraTarget, 0);
     controls.update();
 
-    // TODO: Look for a better distance initialiser, without progress value check it conflicts with cameraZoomTarget which also can update camera position.z
     if (cameraInitialDistance && progress === Number.POSITIVE_INFINITY) {
       camera.position.z = cameraInitialDistance;
       controls.update();
@@ -100,23 +103,24 @@ export const CameraControls: FC<CameraControlsProps> = ({
     controlsMaxDistance,
     fallbackCameraTarget,
     gl.domElement,
-    headScaleAdjustedMinDistance,
     cameraZoomTarget,
   ]);
 
   useFrame((_, delta) => {
-    if (updateCameraTargetOnZoom) {
+    if (followModel && modelRef?.current) {
+      const modelPosition = modelRef.current.position;
+      controls.target.copy(modelPosition);
+      controls.update();
+    } else if (updateCameraTargetOnZoom) {
       updateCameraTarget(
         camera,
         fallbackCameraTarget,
-        headScaleAdjustedMinDistance,
+        controlsMinDistance,
         controlsMaxDistance
       );
     }
     updateCameraFocus(camera, delta, cameraZoomTarget);
-    if (controls) {
-      controls.update();
-    }
+    controls.update();
   });
 
   return null;

@@ -9,6 +9,7 @@ import {
   Suspense,
   useEffect,
   useMemo,
+  useRef,
 } from "react";
 import { BackgroundColor } from "@/components/AvatarComponents/Background";
 import {
@@ -39,7 +40,7 @@ import {
   LightingProps,
   SpawnState,
 } from "@/types/avatar";
-import { Vector3 } from "three";
+import { Object3D, Vector3 } from "three";
 import { spawnState } from "@/state/spawnAtom";
 
 export const CAMERA = {
@@ -168,6 +169,10 @@ export interface AvatarProps
    */
   effects?: EffectConfiguration;
   /**
+   * Enable camera to follow the model.
+   */
+  followModel?: boolean;
+  /**
    * Use any three.js(fiber, post-processing) compatible components to render in the scene.
    */
   children?: ReactNode;
@@ -212,7 +217,10 @@ const Avatar: FC<AvatarProps> = ({
   backLightPosition,
   lightTarget,
   fov = 50,
+  followModel = false,
 }) => {
+  // Create a ref for the model
+  const modelRef = useRef<Object3D>(null);
   const setSpawnState = useSetAtom(spawnState);
 
   useEffect(() => {
@@ -224,17 +232,23 @@ const Avatar: FC<AvatarProps> = ({
       return null;
     }
 
+    // Common props for all model types
+    const commonProps = {
+      ref: modelRef, // Add the ref to all model types
+      emotion,
+      modelSrc,
+      scale,
+      onLoaded,
+      bloom: effects?.bloom,
+    };
+
     if (!!animationSrc && !halfBody && isValidFormat(animationSrc)) {
       return (
         <AnimationModel
-          emotion={emotion}
-          modelSrc={modelSrc}
+          {...commonProps}
           animationSrc={animationSrc}
-          scale={scale}
           idleRotation={idleRotation}
-          onLoaded={onLoaded}
           headMovement={headMovement}
-          bloom={effects?.bloom}
         />
       );
     }
@@ -242,39 +256,18 @@ const Avatar: FC<AvatarProps> = ({
     if (!halfBody) {
       return (
         <HalfBodyModel
-          emotion={emotion}
-          modelSrc={modelSrc}
-          scale={scale}
+          {...commonProps}
           idleRotation={idleRotation}
-          onLoaded={onLoaded}
           headMovement={headMovement}
-          bloom={effects?.bloom}
         />
       );
     }
 
     if (isValidFormat(poseSrc)) {
-      return (
-        <PoseModel
-          emotion={emotion}
-          modelSrc={modelSrc}
-          scale={scale}
-          poseSrc={poseSrc!}
-          onLoaded={onLoaded}
-          bloom={effects?.bloom}
-        />
-      );
+      return <PoseModel {...commonProps} poseSrc={poseSrc!} />;
     }
 
-    return (
-      <StaticModel
-        modelSrc={modelSrc}
-        scale={scale}
-        onLoaded={onLoaded}
-        emotion={emotion}
-        bloom={effects?.bloom}
-      />
-    );
+    return <StaticModel {...commonProps} />;
   }, [
     halfBody,
     animationSrc,
@@ -317,6 +310,8 @@ const Avatar: FC<AvatarProps> = ({
             : CAMERA.CONTROLS.FULL_BODY.MAX_DISTANCE
         }
         updateCameraTargetOnZoom={!halfBody}
+        followModel={followModel} // Pass the followModel prop
+        modelRef={modelRef} // Pass the modelRef
       />
       {AvatarModel}
       {children}
