@@ -3,9 +3,15 @@
 import React, { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Play, Pause } from "lucide-react";
+import { ChevronLeft, ChevronRight, Play, Pause, Repeat } from "lucide-react";
 import { gsap } from "gsap";
 import { Product } from "./types";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip/tooltip";
+import { Label } from "@/components/ui/label";
 
 interface ProductDetailProps {
   product: Product | null;
@@ -18,6 +24,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
 }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isLooping, setIsLooping] = useState(false);
   const imageRef = useRef<HTMLImageElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -31,18 +38,17 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
       );
     }
 
-    // Reset audio and playing state when product changes
     setIsPlaying(false);
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current = null;
     }
 
-    // Create new audio element for the new product
     if (product && product.type === "sound" && product.src) {
       audioRef.current = new Audio(`/soundboard/${product.src}`);
+      audioRef.current.loop = isLooping;
     }
-  }, [product]);
+  }, [product, isLooping]);
 
   useEffect(() => {
     if (imageRef.current) {
@@ -55,7 +61,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
   }, [currentImageIndex]);
 
   useEffect(() => {
-    // Clean up audio when component unmounts
     return () => {
       if (audioRef.current) {
         audioRef.current.pause();
@@ -88,6 +93,13 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
     }
 
     setIsPlaying(!isPlaying);
+  };
+
+  const toggleLoop = () => {
+    if (audioRef.current) {
+      audioRef.current.loop = !isLooping;
+    }
+    setIsLooping(!isLooping);
   };
 
   if (!product) {
@@ -132,24 +144,52 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
           <ChevronRight className="h-6 w-6" />
         </Button>
       </div>
-      <p className="text-lg font-semibold mb-2">${product.price.toFixed(2)}</p>
-      <p className="mb-4">{product.description}</p>
       {product.type === "sound" && (
-        <Button
-          onClick={togglePlay}
-          variant="outline"
-          className="w-full mb-4"
-          size="lg"
-        >
-          {isPlaying ? <Pause className="mr-2" /> : <Play className="mr-2" />}
-          {isPlaying ? "Pause" : "Play"} Sound
-        </Button>
+        <div className="flex gap-x-2 justify-end -mt-1">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                onClick={togglePlay}
+                variant="black"
+                className="flex justify-center items-center rounded-full size-7 p-0 hover:text-blue-600 transition-colors duration-200 shadow-md"
+              >
+                {isPlaying ? (
+                  <Pause className="size-4" />
+                ) : (
+                  <Play className="size-4" />
+                )}
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{isPlaying ? "Play" : "Pause"}</p>
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                onClick={toggleLoop}
+                variant="black"
+                className={`flex justify-center border-2 items-center rounded-full hover:border-green-400 transition-colors duration-200 size-7 p-0 shadow-md ${
+                  isLooping
+                    ? "shadow-green-400/50 text-green-600 border-green-400"
+                    : ""
+                }`}
+              >
+                <Repeat className="size-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Loop</p>
+            </TooltipContent>
+          </Tooltip>
+        </div>
       )}
+      <p className="text-lg font-semibold mb-2">${product.price.toFixed(2)}</p>
+      <p className="mb-2">{product.description}</p>
       <Button
         onClick={() => onAddToCart(product.id)}
         variant="black"
         className="w-full"
-        size="lg"
       >
         Add to Cart
       </Button>
