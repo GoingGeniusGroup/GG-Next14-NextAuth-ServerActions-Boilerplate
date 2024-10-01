@@ -67,7 +67,7 @@ export default async function Home() {
             href="/shop-2"
             className="text-white/60 hover:text-white transition-colors px-4 py-2 rounded-md text-center bg-black hover:bg-black/70"
           >
-            Shop2
+            Shop Virtual
           </Link>
           <Link
             href="/avatar"

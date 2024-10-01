@@ -84,6 +84,11 @@ const VirtualShop = () => {
       ? products
       : products.filter((product) => product.category === selectedCategory);
 
+  const handleViewChange = () => {
+    setIsPhysicalView(!isPhysicalView);
+    setSelectedCategory("All");
+  };
+
   return (
     <div className={`mx-auto px-2 pb-4`}>
       <header className="mb-4 p-2 sticky top-0 z-20 bg-white/40 rounded-md backdrop-blur-md">
@@ -122,7 +127,7 @@ const VirtualShop = () => {
               <Switch
                 id="switch-view"
                 className="data-[state=unchecked]:bg-black data-[state=checked]:bg-black"
-                onCheckedChange={(checked) => setIsPhysicalView(!checked)} // Update state based on the switch
+                onCheckedChange={handleViewChange} // Update state based on the switch
               />
 
               <Tooltip>
