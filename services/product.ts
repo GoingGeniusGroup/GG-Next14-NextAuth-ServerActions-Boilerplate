@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
-
-export const getProducts = async () => {
+import { cache } from "@/lib/cache";
+import { notFound } from "next/navigation";
+export const getProducts = cache (async () => {
   try {
     const products = await db.product.findMany({
       select: {
@@ -27,4 +28,30 @@ export const getProducts = async () => {
 
     return null;
   }
-};
+},
+['/','getProducts'],
+{
+  revalidate: 30*60
+}
+
+)
+
+export const getAproduct = cache (async( id:string ) => {
+
+  try {
+    const product = await db.product.findUnique({
+      where: {
+        id: id
+      }
+    })
+    if(!product) return notFound()
+    return product
+    
+    
+  } catch (error) {
+    return null
+  }
+
+},['/','getAproduct'],{
+  revalidate: 30*60
+})

@@ -15,8 +15,10 @@ import {
 import { ScrollArea, ScrollBar } from "@/components/ui/scrollarea";
 import { z } from "zod";
 import Image from "next/image";
-import {  productType  } from "@/types/productType";
+import { productType } from "@/types/productType";
 import { CartItem } from "@/types/orderType";
+import Link from "next/link";
+
 
 // Zod schemas
 const ProductSchema = z.object({
@@ -30,8 +32,6 @@ const ProductSchema = z.object({
 const CartItemSchema = ProductSchema.extend({
   quantity: z.number(),
 });
-
-
 
 // Mock data for products
 // const products: Product[] = [
@@ -76,24 +76,22 @@ const CartItemSchema = ProductSchema.extend({
 //   },
 // ];
 
-
 type ShopSectionProps = {
   isMobile?: boolean;
   products: productType[];
-  categories: string[]
+  categories: string[];
 };
-const ShopSection = ({ isMobile = false , products, categories}:ShopSectionProps) => {
-
-
-  
-
+const ShopSection = ({
+  isMobile = false,
+  products,
+  categories,
+}: ShopSectionProps) => {
   const [cart, setCart] = useState<Record<string, number>>(() => {
-    const carts =  localStorage.getItem("cartItems")
-    if(carts) {
-      return JSON.parse(carts)
-    }
-    else{
-      return {}
+    const carts = localStorage.getItem("cartItems");
+    if (carts) {
+      return JSON.parse(carts);
+    } else {
+      return {};
     }
   });
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -101,24 +99,24 @@ const ShopSection = ({ isMobile = false , products, categories}:ShopSectionProps
 
   useEffect(() => {
     if (cart) {
-
       localStorage.setItem("cartItems", JSON.stringify(cart));
     }
   }, [cart]);
   const addToCart = (productId: string | undefined) => {
-    if(!productId){
-      return
+    if (!productId) {
+      return;
     }
     setCart((prevCart) => {
       const prevCarts = { ...prevCart };
-      const updatedCarts = { ...prevCarts, [productId]: (prevCarts[productId]|| 0) + 1}
+      const updatedCarts = {
+        ...prevCarts,
+        [productId]: (prevCarts[productId] || 0) + 1,
+      };
 
       // localStorage.setItem("cartItems", JSON.stringify(updatedCarts))
 
-      return updatedCarts
-
-
-  });
+      return updatedCarts;
+    });
   };
 
   const removeFromCart = (productId: string) => {
@@ -136,25 +134,25 @@ const ShopSection = ({ isMobile = false , products, categories}:ShopSectionProps
   const totalItems = Object.values(cart).reduce((sum, count) => sum + count, 0);
 
   const cartItems: CartItem[] = Object.entries(cart).map(([id, quantity]) => {
-
     const product = products?.find((p) => p?.id === id);
-    return { product:{...product}, quantity };
+    return { product: { ...product }, quantity };
   });
- 
+
   const totalPrice = cartItems.reduce((sum, item) => {
-    const productPrice =  item.variants && item.variants?.length > 0
-      ? item.variants.find((var_p) => var_p.variant.name === "Size")?.salePrice ||
-        item.product.salePrice
-      : item.product.salePrice;
-     return sum + item.quantity * (productPrice ?? 0)
-    },
-    0
-  );
+    const productPrice =
+      item.variants && item.variants?.length > 0
+        ? item.variants.find((var_p) => var_p.variant.name === "Size")
+            ?.salePrice || item.product.salePrice
+        : item.product.salePrice;
+    return sum + item.quantity * (productPrice ?? 0);
+  }, 0);
 
   const filteredProducts =
     selectedCategory === "All"
       ? products
-      : products?.filter((product) => product?.category.categoryName === selectedCategory);
+      : products?.filter(
+          (product) => product?.category.categoryName === selectedCategory
+        );
 
   return (
     <div
@@ -181,7 +179,6 @@ const ShopSection = ({ isMobile = false , products, categories}:ShopSectionProps
                 </Badge>
               )}
               <ShoppingCart className="w-6 h-6" />
-              
             </div>
           </>
         ) : (
@@ -232,89 +229,92 @@ const ShopSection = ({ isMobile = false , products, categories}:ShopSectionProps
           } gap-2 sm:gap-4`}
         >
           {filteredProducts?.map((product) => {
-           
-               const productPrice = product.salePrice?? 0
-              const discount = product.discount ?  product.discount : 0
+            const productPrice = product.salePrice ?? 0;
+            const discount = product.discount ? product.discount : 0;
 
-  
-           const finalPrice = discount > 0 ? (productPrice - (discount/100 * productPrice) ).toFixed(2) : productPrice.toFixed(2)
+            const finalPrice =
+              discount > 0
+                ? (productPrice - (discount / 100) * productPrice).toFixed(2)
+                : productPrice.toFixed(2);
 
-            return  (<div
-              key={product?.id}
-              className="border rounded-lg overflow-hidden bg-white text-black shadow-sm "
-            >
+            return (
               <div
-                className={`relative overflow-hidden ${
-                  isMobile ? "h-24" : "sm:h-48 h-40"
-                }`}
+                key={product?.id}
+                className="border rounded-lg overflow-hidden bg-white text-black shadow-sm "
               >
-                { product?.image && 
-                <Image
-                  src={product?.image}
-                  alt={product.name}
-                  fill
-                  className="hover:scale-110 transition-transform duration-300 object-contain"
-                  unoptimized
-                  loading="lazy"
-                />
-                }
-              </div>
-              <div className="p-2 flex flex-col gap-2">
-                <h3 className="font-semibold text-lg sm:text-sm mb-1 truncate">
-                  {product?.name}
-                </h3>
-             <div className="flex gap-2 ">
-
-            
-                <p className={`text-gray-600 text-sm mb-1 ${discount> 0 ? "line-through": ''}`}>
-                  ${product?.salePrice && product?.salePrice.toFixed(2)}
-                </p>
-                
-                {discount && discount > 0 ?
-               <div className="flex  flex-grow">
-               <p className="text-gray-600 text-sm mb-1 flex ">
-                 ${finalPrice}                
-                 <span className="text-gray-500 text-sm font-semibold ml-2">%{discount} off </span>
-               </p>
-
-               </div>  
-               
-               : ""
-               }
-                </div>
-
-                
-
-                <div className="flex gap-4">
-                <Button
-                  
-                  className="w-full text-xs bg-indigo-500 text-white hover:bg-indigo-700 hover:text-white"
-                  size="sm"
-                  variant="ghost"
+                <div
+                  className={`relative overflow-hidden ${
+                    isMobile ? "h-24" : "sm:h-48 h-40"
+                  }`}
                 >
-                  Buy Now
-        
-                </Button>
-
-                <Button
-                  onClick={() => addToCart(product?.id)}
-                  className="w-full text-xs"
-                  size="sm"
-                  variant="black"
-                >
-                  Add to Cart
-                  {cart[product.id] && (
-                    <Badge variant="cool" className="ml-1 text-xs">
-                      {cart[product?.id]}
-                    </Badge>
+                  {product?.image && (
+                    <Image
+                      src={product?.image}
+                      alt={product.name}
+                      fill
+                      className="hover:scale-110 transition-transform duration-300 object-contain"
+                      unoptimized
+                      loading="lazy"
+                    />
                   )}
-                </Button>
                 </div>
-               
+                <div className="p-2 flex flex-col gap-2">
+                  <h3 className="font-semibold text-lg sm:text-sm mb-1 truncate">
+                    {product?.name}
+                  </h3>
+                  <div className="flex gap-2 ">
+                    <p
+                      className={`text-gray-600 text-sm mb-1 ${
+                        discount > 0 ? "line-through" : ""
+                      }`}
+                    >
+                      ${product?.salePrice && product?.salePrice.toFixed(2)}
+                    </p>
+
+                    {discount && discount > 0 ? (
+                      <div className="flex  flex-grow">
+                        <p className="text-gray-600 text-sm mb-1 flex ">
+                          ${finalPrice}
+                          <span className="text-gray-500 text-sm font-semibold ml-2">
+                            %{discount} off{" "}
+                          </span>
+                        </p>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+
+                  <div className="flex gap-4">
+                    <Button
+                      className="w-full text-xs bg-indigo-500 text-white hover:bg-indigo-700 hover:text-white"
+                      size="sm"
+                      variant="ghost"
+                    >
+                      <Link href={`/buy-now/${product.id}`}>
+                      Buy Now
+                      </Link>
+                     
+                    </Button>
+
+                    <Button
+                      onClick={() => addToCart(product?.id)}
+                      className="w-full text-xs"
+                      size="sm"
+                      variant="black"
+                    >
+                      Add to Cart
+                      {cart[product.id] && (
+                        <Badge variant="cool" className="ml-1 text-xs">
+                          {cart[product?.id]}
+                        </Badge>
+                      )}
+                    </Button>
+                  </div>
+                </div>
               </div>
-            </div>)
-                
-})}
+            );
+          })}
         </div>
       </main>
 
@@ -339,24 +339,33 @@ const ShopSection = ({ isMobile = false , products, categories}:ShopSectionProps
             ) : (
               <div className="space-y-4">
                 {cartItems.map((item) => (
-                  <div key={item.product.id} className="flex items-center space-x-4">
-                    { item.product?.image && 
-                    <Image
-                      src={item.product?.image}
-                      alt={item.product.name}
-                      width={64}
-                      height={64}
-                      className="object-cover rounded"
-                      unoptimized
-                      loading="lazy"
-                    />}
+                  <div
+                    key={item.product.id}
+                    className="flex items-center space-x-4"
+                  >
+                    {item.product?.image && (
+                      <Image
+                        src={item.product?.image}
+                        alt={item.product.name}
+                        width={64}
+                        height={64}
+                        className="object-cover rounded"
+                        unoptimized
+                        loading="lazy"
+                      />
+                    )}
                     <div className="flex-grow">
                       <h4 className="font-semibold">{item.product.name}</h4>
                       <p className="text-sm text-gray-500">
-                        ${ item.product?.salePrice && item.product?.salePrice.toFixed(2)} x {item.quantity}
+                        $
+                        {item.product?.salePrice &&
+                          item.product?.salePrice.toFixed(2)}{" "}
+                        x {item.quantity}
                       </p>
                       <p className="text-sm font-semibold">
-                        Total: ${item.product?.salePrice && ( item.product?.salePrice * item.quantity).toFixed(2)}
+                        Total: $
+                        {item.product?.salePrice &&
+                          (item.product?.salePrice * item.quantity).toFixed(2)}
                       </p>
                     </div>
                     <div className="flex items-center space-x-2">
