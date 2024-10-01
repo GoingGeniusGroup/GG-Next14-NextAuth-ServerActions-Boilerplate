@@ -84,66 +84,58 @@ const MobileSimulator: React.FC<MobileSimulatorProps> = ({
 
   // Define sections array based on login status
   const sections: SectionProps[] = useMemo(
-    () =>
-      isLoggedIn
-        ? [
-            {
-              id: 1,
-              title: "Profile",
-              icon: <FaUser />,
-              content: <ProfileComponent />,
-            },
-            {
-              id: 2,
-              title: "Shop",
-              icon: <FaShoppingCart />,
-              content: <ShopSection isMobile={true} />,
-            },
-            {
-              id: 3,
-              title: "Notifications",
-              icon: <FaBell />,
-              content: "View your latest notifications.",
-            },
-            {
-              id: 4,
-              title: "Messages",
-              icon: <FaEnvelope />,
-              content: "Check your messages and chats.",
-            },
-          ]
-        : [
-            {
-              id: 1,
-              title: showLogin ? "Login" : "Register",
-              icon: showLogin ? <FaSignInAlt /> : <FaUserPlus />,
-              content: showLogin ? (
-                <>
-                  <LoginForm isMobile={true} />
-                  <div className="flex w-full justify-center">
-                    <Button variant="black" onClick={handleToggleAuth}>
-                      Register Here
-                    </Button>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <RegisterForm isMobile={true} />
-                  <div className="flex w-full justify-center">
-                    <Button variant="black" onClick={handleToggleAuth}>
-                      Login Here
-                    </Button>
-                  </div>
-                </>
-              ),
-            },
-            {
-              id: 2,
-              title: "Shop",
-              icon: <FaShoppingCart />,
-              content: <ShopSection isMobile={true} />,
-            },
-          ],
+    () => [
+      {
+        id: 1,
+        title: isLoggedIn ? "Profile" : showLogin ? "Login" : "Register",
+        icon: isLoggedIn ? (
+          <FaUser />
+        ) : showLogin ? (
+          <FaSignInAlt />
+        ) : (
+          <FaUserPlus />
+        ),
+        content: isLoggedIn ? (
+          <ProfileComponent />
+        ) : showLogin ? (
+          <>
+            <LoginForm isMobile={true} />
+            <div className="flex w-full justify-center">
+              <Button variant="black" onClick={handleToggleAuth}>
+                Register Here
+              </Button>
+            </div>
+          </>
+        ) : (
+          <>
+            <RegisterForm isMobile={true} />
+            <div className="flex w-full justify-center">
+              <Button variant="black" onClick={handleToggleAuth}>
+                Login Here
+              </Button>
+            </div>
+          </>
+        ),
+      },
+      {
+        id: 2,
+        title: "Shop",
+        icon: <FaShoppingCart />,
+        content: <ShopSection isMobile={true} />,
+      },
+      {
+        id: 3,
+        title: "Notifications",
+        icon: <FaBell />,
+        content: "View your latest notifications.",
+      },
+      {
+        id: 4,
+        title: "Messages",
+        icon: <FaEnvelope />,
+        content: "Check your messages and chats.",
+      },
+    ],
     [isLoggedIn, showLogin, handleToggleAuth]
   );
 
