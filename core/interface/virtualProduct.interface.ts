@@ -8,4 +8,5 @@ export interface VirtualProduct {
     description: string;
     subCategory?: string[];
     src?: string;
+    animation?: string;
 }

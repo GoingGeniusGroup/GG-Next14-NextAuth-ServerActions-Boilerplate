@@ -7,6 +7,7 @@ export interface Product {
     category: string;
     description: string;
     src?: string;
+    animation?: string;
   }
   
   export interface CartItem extends Product {

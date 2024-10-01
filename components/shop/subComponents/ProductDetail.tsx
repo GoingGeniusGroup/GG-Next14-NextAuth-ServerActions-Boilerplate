@@ -12,6 +12,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip/tooltip";
 import { Label } from "@/components/ui/label";
+import { Avatar } from "@/components/Avatar";
 
 interface ProductDetailProps {
   product: Product | null;
@@ -113,37 +114,55 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
   return (
     <>
       <h2 className="text-2xl font-bold mb-4">{product.name}</h2>
-      <div ref={sliderRef} className="relative h-64 mb-4">
-        <Image
-          ref={imageRef}
-          src={product.images[currentImageIndex]}
-          alt={product.name}
-          fill
-          className="object-contain"
-          unoptimized
-          loading="lazy"
-        />
-        <Button
-          size="icon"
-          variant="ghost"
-          className={`absolute left-0 top-1/2 transform -translate-y-1/2 ${
-            product.images.length === 1 ? "hidden" : ""
-          }`}
-          onClick={prevImage}
-        >
-          <ChevronLeft className="h-6 w-6" />
-        </Button>
-        <Button
-          size="icon"
-          variant="ghost"
-          className={`absolute right-0 top-1/2 transform -translate-y-1/2 ${
-            product.images.length === 1 ? "hidden" : ""
-          }`}
-          onClick={nextImage}
-        >
-          <ChevronRight className="h-6 w-6" />
-        </Button>
-      </div>
+
+      {product.type === "emote" ? (
+        <div className="relative h-[256px] w-full">
+          <Avatar
+            modelSrc="https://models.readyplayer.me/66fbd22e36a151e549ea8397.glb"
+            animationSrc={product.animation}
+            style={{ background: "rgb(9,20,26)" }}
+            fov={35}
+            cameraTarget={0}
+            cameraInitialDistance={20}
+            effects={{
+              ambientOcclusion: true,
+            }}
+            followModel={true}
+          />
+        </div>
+      ) : (
+        <div ref={sliderRef} className="relative h-64 mb-4">
+          <Image
+            ref={imageRef}
+            src={product.images[currentImageIndex]}
+            alt={product.name}
+            fill
+            className="object-contain"
+            unoptimized
+            loading="lazy"
+          />
+          <Button
+            size="icon"
+            variant="ghost"
+            className={`absolute left-0 top-1/2 transform -translate-y-1/2 ${
+              product.images.length === 1 ? "hidden" : ""
+            }`}
+            onClick={prevImage}
+          >
+            <ChevronLeft className="h-6 w-6" />
+          </Button>
+          <Button
+            size="icon"
+            variant="ghost"
+            className={`absolute right-0 top-1/2 transform -translate-y-1/2 ${
+              product.images.length === 1 ? "hidden" : ""
+            }`}
+            onClick={nextImage}
+          >
+            <ChevronRight className="h-6 w-6" />
+          </Button>
+        </div>
+      )}
       {product.type === "sound" && (
         <div className="flex gap-x-2 justify-end -mt-1">
           <Tooltip>
