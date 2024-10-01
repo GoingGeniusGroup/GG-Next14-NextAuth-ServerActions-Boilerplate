@@ -47,6 +47,8 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
       );
     }
 
+    // Reset play state and stop any playing audio when product changes
+    setIsPlaying(false);
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current = null;
