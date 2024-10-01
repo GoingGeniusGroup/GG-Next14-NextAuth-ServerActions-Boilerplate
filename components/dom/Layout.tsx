@@ -2,7 +2,7 @@
 import React, { ReactNode, useState } from "react";
 import ProfileHud from "../Huds/ProfileHud";
 import MobileSimulator from "../MobileSimulator/MobileSimulator";
-import CartHud from "../Huds/CartHud";
+// import CartHud from "../Huds/CartHud";
 
 interface LayoutProps {
   children: ReactNode;
@@ -14,7 +14,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <>
       <ProfileHud showMobile={showMobile} setShowMobile={setShowMobile} />
-      <CartHud />
+      {/* <CartHud /> */}
       <MobileSimulator showMobile={showMobile} setShowMobile={setShowMobile} />
       {children}
     </>

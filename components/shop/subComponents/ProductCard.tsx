@@ -8,8 +8,9 @@ interface ProductCardProps {
   product: Product;
   isMobile: boolean;
   cartQuantity: number;
-  onAddToCart: (productId: number) => void;
+  onAddToCart: (productId: number, productType: string) => void;
   onSelectProduct?: (product: Product) => void;
+  productType: "physical" | "virtual";
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -18,6 +19,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   cartQuantity,
   onAddToCart,
   onSelectProduct,
+  productType,
 }) => {
   return (
     <div
@@ -43,7 +45,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <Button
           onClick={(e) => {
             e.stopPropagation();
-            onAddToCart(product.id);
+            onAddToCart(product.id, productType);
           }}
           className="w-full relative text-xs"
           size="sm"

@@ -5,37 +5,34 @@ import { Product } from "./types";
 interface ProductListProps {
   products: Product[];
   cart: Record<string, number>;
-  onAddToCart: (productId: number) => void;
+  onAddToCart: (productId: number, productType: string) => void;
   onSelectProduct?: (product: Product) => void;
-  isMobile: boolean;
 }
 
-const ProductList: React.FC<ProductListProps> = ({
+const VirtualProductList: React.FC<ProductListProps> = ({
   products,
   cart,
   onAddToCart,
   onSelectProduct,
-  isMobile,
 }) => {
   return (
     <div
-      className={`grid ${
-        isMobile ? "grid-cols-2" : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-      } gap-2 sm:gap-4`}
+      className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4
+      gap-2 sm:gap-4`}
     >
       {(products || []).map((product) => (
         <ProductCard
-          isMobile={isMobile}
+          isMobile={false}
           key={product.id}
           product={product}
-          cartQuantity={cart[`physical-${product.id}`] || 0}
+          cartQuantity={cart[`virtual-${product.id}`] || 0}
           onAddToCart={onAddToCart}
           onSelectProduct={onSelectProduct}
-          productType="physical"
+          productType="virtual"
         />
       ))}
     </div>
   );
 };
 
-export default ProductList;
+export default VirtualProductList;
