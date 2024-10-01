@@ -204,7 +204,7 @@ export default function PublicProfile({ username }: { username: string }) {
 
         <div
           ref={containerRef}
-          className={`bg-white/20 rounded-xl backdrop-blur-md p-4 transition-all duration-500 relative overflow-hidden h-[70vh] max-h-[70vh] min-h-[50vh]`}
+          className={`bg-white/20 rounded-xl overflow-auto backdrop-blur-md p-4 transition-all duration-500 relative h-[70vh] max-h-[70vh] min-h-[50vh]`}
         >
           {/* Posts Grid */}
           <div ref={postGridRef} className="transition-all duration-500">

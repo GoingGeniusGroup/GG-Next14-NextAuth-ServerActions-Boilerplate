@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useSession } from "next-auth/react";
 import {
   FaUser,
@@ -9,7 +9,7 @@ import {
   FaEnvelope,
   FaSignInAlt,
   FaUserPlus,
-} from "react-icons/fa"; // Import FontAwesome icons
+} from "react-icons/fa";
 import SimulatorToggleButton from "./SimulatorToggleButton";
 import MobileSimulatorContainer from "./MobileSimulatorContainer";
 import { SectionProps } from "./interface/Section.interface";
@@ -18,6 +18,8 @@ import ProfileComponent from "../profile/ProfileMobileView/ProfileComponent";
 import ShopSection from "../shop/ShopSection";
 import { LoginForm } from "../form/login-form";
 import { RegisterForm } from "../form/register-form";
+import { Button } from "../ui/button/button";
+
 // Define the backgrounds array
 const backgrounds = [
   {
@@ -54,13 +56,14 @@ const MobileSimulator: React.FC<MobileSimulatorProps> = ({
   showMobile,
   setShowMobile,
 }) => {
-  const { data: session } = useSession();
-  const isLoggedIn = session?.user;
+  const { data: session, status } = useSession();
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [screens, setScreens] = useState<SectionProps[]>([]);
   const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false);
   const [currentBackground, setCurrentBackground] = useState<BackgroundProps>(
     backgrounds[0]
   );
+  const [showLogin, setShowLogin] = useState<boolean>(true);
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -71,81 +74,92 @@ const MobileSimulator: React.FC<MobileSimulatorProps> = ({
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
-  // Define the sections array based on login status with icons
-  const sections: SectionProps[] = [
-    ...(isLoggedIn
-      ? [
-          {
-            id: 1,
-            title: "Profile",
-            icon: <FaUser />,
-            content: <ProfileComponent />,
-          },
-          {
-            id: 2,
-            title: "Shop",
-            icon: <FaShoppingCart />,
-            content: <ShopSection isMobile={true} />,
-          },
-          {
-            id: 3,
-            title: "Notifications",
-            icon: <FaBell />,
-            content: "View your latest notifications.",
-          },
-          {
-            id: 4,
-            title: "Messages",
-            icon: <FaEnvelope />,
-            content: "Check your messages and chats.",
-          },
-        ]
-      : [
-          {
-            id: 1,
-            title: "Login",
-            icon: <FaSignInAlt />,
-            content: <LoginForm />,
-          },
-          {
-            id: 2,
-            title: "Register",
-            icon: <FaUserPlus />,
-            content: <RegisterForm />,
-          },
-          {
-            id: 3,
-            title: "Shop",
-            icon: <FaShoppingCart />,
-            content: <ShopSection isMobile={true} />,
-          },
-        ]),
-  ];
+  useEffect(() => {
+    setIsLoggedIn(status === "authenticated");
+  }, [status]);
 
-  const toggleScreen = (section: SectionProps) => {
+  const handleToggleAuth = useCallback(() => {
+    setShowLogin((prevShowLogin) => !prevShowLogin);
+  }, []);
+
+  // Define sections array based on login status
+  const sections: SectionProps[] = useMemo(
+    () => [
+      {
+        id: 1,
+        title: isLoggedIn ? "Profile" : showLogin ? "Login" : "Register",
+        icon: isLoggedIn ? (
+          <FaUser />
+        ) : showLogin ? (
+          <FaSignInAlt />
+        ) : (
+          <FaUserPlus />
+        ),
+        content: isLoggedIn ? (
+          <ProfileComponent />
+        ) : showLogin ? (
+          <>
+            <LoginForm isMobile={true} />
+            <div className="flex w-full justify-center">
+              <Button variant="black" onClick={handleToggleAuth}>
+                Register Here
+              </Button>
+            </div>
+          </>
+        ) : (
+          <>
+            <RegisterForm isMobile={true} />
+            <div className="flex w-full justify-center">
+              <Button variant="black" onClick={handleToggleAuth}>
+                Login Here
+              </Button>
+            </div>
+          </>
+        ),
+      },
+      {
+        id: 2,
+        title: "Shop",
+        icon: <FaShoppingCart />,
+        content: <ShopSection isMobile={true} />,
+      },
+      {
+        id: 3,
+        title: "Notifications",
+        icon: <FaBell />,
+        content: "View your latest notifications.",
+      },
+      {
+        id: 4,
+        title: "Messages",
+        icon: <FaEnvelope />,
+        content: "Check your messages and chats.",
+      },
+    ],
+    [isLoggedIn, showLogin, handleToggleAuth]
+  );
+
+  const toggleScreen = useCallback((section: SectionProps) => {
     setScreens((prevScreens) => {
       const isOpen = prevScreens.some((screen) => screen.id === section.id);
       if (isOpen) {
         return prevScreens.filter((screen) => screen.id !== section.id);
       } else {
-        return [section, ...prevScreens].slice(0, 3); // Show a max of 3 screens at a time
+        // Number of screen to show in the simulator
+        return [section, ...prevScreens].slice(0, 2);
       }
     });
-  };
+  }, []);
 
-  const removeScreen = (id: number) => {
-    setScreens((prevScreens) =>
-      prevScreens.filter((screen) => screen.id !== id)
-    );
-  };
-
-  const closeAllScreens = () => {
-    setScreens([]);
-  };
-
-  const updateCurrentBackground = (newBackground: BackgroundProps) => {
-    setCurrentBackground(newBackground);
-  };
+  useEffect(() => {
+    // Update screens when sections change
+    setScreens((prevScreens) => {
+      return prevScreens.map((screen) => {
+        const updatedSection = sections.find((s) => s.id === screen.id);
+        return updatedSection || screen;
+      });
+    });
+  }, [sections, isLoggedIn]);
 
   return (
     <>
@@ -162,9 +176,13 @@ const MobileSimulator: React.FC<MobileSimulatorProps> = ({
         sections={sections}
         toggleScreen={toggleScreen}
         screens={screens}
-        removeScreen={removeScreen}
-        closeAllScreens={closeAllScreens}
-        updateCurrentBackground={updateCurrentBackground}
+        removeScreen={(id) =>
+          setScreens((prevScreens) =>
+            prevScreens.filter((screen) => screen.id !== id)
+          )
+        }
+        closeAllScreens={() => setScreens([])}
+        updateCurrentBackground={setCurrentBackground}
       />
     </>
   );

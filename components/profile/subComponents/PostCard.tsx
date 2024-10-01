@@ -16,7 +16,7 @@ type PostCardProps = {
 
 export const PostCard: React.FC<PostCardProps> = ({ post, layout }) => {
   return (
-    <Card className="overflow-hidden hover:shadow-md transition-shadow duration-300">
+    <Card className="overflow-hidden rounded-md bg-white hover:shadow-md transition-shadow duration-300">
       <CardContent className="p-0">
         {(layout === "full" || layout === "gap") && (
           <div

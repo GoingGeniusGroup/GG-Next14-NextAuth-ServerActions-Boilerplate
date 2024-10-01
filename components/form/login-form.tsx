@@ -14,7 +14,7 @@ import { toast } from "sonner";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-export const LoginForm = () => {
+export const LoginForm = ({ isMobile }: { isMobile: boolean }) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -34,6 +34,7 @@ export const LoginForm = () => {
           if (!data.success) {
             return toast.error(data.error.message);
           }
+          toast.success(data.message);
           return router.push("/two-factor");
         })
         .catch(() => toast.error("Something went wrong."));
@@ -42,11 +43,11 @@ export const LoginForm = () => {
 
   return (
     <CardWrapper
-      isMobile={true}
       headerTitle="Login"
       headerDescription="Welcome back! Please fill out the form below before logging in to the website."
       backButtonLabel="Don't have an account? Register"
       backButtonHref="/register"
+      isMobile={isMobile}
       showSocial
     >
       <Form {...form}>

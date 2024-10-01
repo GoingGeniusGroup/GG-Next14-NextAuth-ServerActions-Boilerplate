@@ -6,9 +6,5 @@ export const metadata: Metadata = {
 };
 
 export default function Shop() {
-  return (
-    <div className="pt-20">
-      <ShopSection />;
-    </div>
-  );
+  return <ShopSection isMobile={false} />;
 }
