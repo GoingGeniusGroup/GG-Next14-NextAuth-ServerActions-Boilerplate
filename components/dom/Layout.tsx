@@ -6,14 +6,19 @@ import MobileSimulator from "../MobileSimulator/MobileSimulator";
 
 interface LayoutProps {
   children: ReactNode;
+  handleServerSignOut: () => Promise<void>;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout: React.FC<LayoutProps> = ({ children, handleServerSignOut }) => {
   const [showMobile, setShowMobile] = useState(false);
 
   return (
     <>
-      <ProfileHud showMobile={showMobile} setShowMobile={setShowMobile} />
+      <ProfileHud
+        showMobile={showMobile}
+        setShowMobile={setShowMobile}
+        handleServerSignOut={handleServerSignOut}
+      />
       {/* <CartHud /> */}
       <MobileSimulator showMobile={showMobile} setShowMobile={setShowMobile} />
       {children}
@@ -21,8 +26,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   );
 };
 
-const LayoutWithProvider: React.FC<LayoutProps> = ({ children }) => {
-  return <Layout>{children}</Layout>;
+const LayoutWithProvider: React.FC<LayoutProps> = ({
+  children,
+  handleServerSignOut,
+}) => {
+  return <Layout handleServerSignOut={handleServerSignOut}>{children}</Layout>;
 };
 
 export { LayoutWithProvider as Layout };

@@ -1,7 +1,7 @@
 "use client";
 
 import { SetStateAction, useState } from "react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { IoCart, IoDiamondSharp } from "react-icons/io5";
 import { FaCreditCard, FaMobile } from "react-icons/fa6";
 import { HiMiniWallet } from "react-icons/hi2";
@@ -9,19 +9,29 @@ import Link from "next/link";
 import { MdOutlineDarkMode } from "react-icons/md";
 import { GiCash } from "react-icons/gi";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
-import { UserRound } from "lucide-react";
+import { LogOut, Settings, UserRound } from "lucide-react";
+import { toast } from "react-toastify";
 import { ExtendedUser } from "@/types/next-auth";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import router from "next/router";
 
 interface ProfileHudProps {
   setShowMobile: React.Dispatch<React.SetStateAction<boolean>>;
   showMobile: boolean;
+  handleServerSignOut: () => Promise<void>;
 }
 
-const tabs = [".", "Mobile", "Cart", "Edit", "Wallet"];
+const tabs = ["Settings", "Mobile", "Cart", "Edit", "Wallet"];
 
 export default function ProfileHud({
   setShowMobile,
   showMobile,
+  handleServerSignOut,
 }: ProfileHudProps) {
   const { data: session } = useSession();
   const user = session?.user as ExtendedUser; // Type assertion for safety
@@ -43,6 +53,13 @@ export default function ProfileHud({
   };
 
   const username = "loggedin-user";
+
+  const logoutAndToggleSidebar = async () => {
+    await handleServerSignOut();
+    await signOut({ redirect: false });
+    toast.success("You have been logged out.");
+    router.push("/");
+  };
 
   return (
     <div className="fixed bottom-[20px] right-[32px] z-50 flex h-[33px] select-none items-center space-x-[6px] rounded-full bg-white py-[6px] pl-[0px] pr-[50px] shadow-lg shadow-black/50">
@@ -104,6 +121,18 @@ export default function ProfileHud({
             <HiMiniWallet size={16} />
           ) : tab === "Mobile" ? (
             <FaMobile size={16} />
+          ) : tab === "Settings" ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <Settings size={16} />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem onClick={logoutAndToggleSidebar}>
+                  <LogOut className="mr-2 size-4" />
+                  <span>Logout</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           ) : null}
         </div>
       ))}
