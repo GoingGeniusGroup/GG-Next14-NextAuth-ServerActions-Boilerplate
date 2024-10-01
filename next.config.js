@@ -15,7 +15,8 @@ const nextConfig = {
         hostname: "fakestoreapi.com",
       },
     ],
+    domains: ['media.steampowered.com'],
   },
 };
 
-module.exports = nextConfig;
+module.exports = nextConfig
