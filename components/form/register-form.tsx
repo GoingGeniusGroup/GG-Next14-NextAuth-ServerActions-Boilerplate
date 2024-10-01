@@ -13,7 +13,7 @@ import { register } from "@/actions/register";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
-export const RegisterForm = () => {
+export const RegisterForm = ({ isMobile }: { isMobile: boolean }) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -39,11 +39,11 @@ export const RegisterForm = () => {
 
   return (
     <CardWrapper
-      isMobile={true}
       headerTitle="Register"
       headerDescription="Register your account by filling out the form below, make sure the data you enter is correct."
       backButtonLabel="Already have an account? Login"
       backButtonHref="/login"
+      isMobile={isMobile}
     >
       <Form {...form}>
         <form onSubmit={handleSubmit} className="space-y-6">

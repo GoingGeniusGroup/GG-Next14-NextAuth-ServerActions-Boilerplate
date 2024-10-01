@@ -1,4 +1,4 @@
-import ShopSection from "@/components/shop/ShopSection";
+import VirtualShop from "@/components/shop/VirtualShop";
 import { Metadata } from "next";
 import { z } from "zod";
 
@@ -82,6 +82,6 @@ const categories = ["All", "Clothing", "Shoes", "Accessories"];
 
 export default function Shop() {
   return (
-    <ShopSection isMobile={false} products={products} categories={categories} />
+    <VirtualShop isMobile={false} products={products} categories={categories} />
   );
 }

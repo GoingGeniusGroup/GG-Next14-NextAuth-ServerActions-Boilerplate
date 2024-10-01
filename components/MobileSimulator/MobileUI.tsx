@@ -189,7 +189,7 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
       <div className="fixed right-0 left-0 bottom-6 z-40 flex h-[34px] mx-7 select-none justify-between space-x-[6px] rounded-full bg-white px-4 py-[4px] shadow-lg shadow-black/50">
         {sections.map((section) => (
           <Button
-            key={section.id}
+            key={`${section.id}-${section.title}`}
             variant="ghost"
             size="small"
             className={`group transition-all bg-black text-white p-2 rounded-full ${

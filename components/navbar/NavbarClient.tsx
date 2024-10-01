@@ -11,6 +11,7 @@ import { RiEarthFill } from "react-icons/ri";
 import CustomToolTip from "../CustomComponents/CustomToolTip";
 import Hamburger from "hamburger-react";
 import { TbLogout2 } from "react-icons/tb";
+import { toast } from "sonner";
 
 interface NavbarClientProps {
   user: ExtendedUser | undefined;
@@ -36,6 +37,7 @@ const NavbarClient: React.FC<NavbarClientProps> = ({
   const logoutAndToggleSidebar = async () => {
     await handleServerSignOut();
     await signOut({ redirect: false });
+    toast.success("You have been logged out.");
     router.push("/");
   };
 
@@ -103,7 +105,7 @@ const NavbarClient: React.FC<NavbarClientProps> = ({
               </Link>
 
               <Link
-                href="#"
+                href="/"
                 className={`group ${
                   pathname === "/discover"
                     ? "scale-110 py-2 text-2xl font-bold  text-pink-700 drop-shadow"

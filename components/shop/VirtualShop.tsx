@@ -2,20 +2,21 @@
 
 import React, { useState } from "react";
 import { ShoppingCart } from "lucide-react";
-import { Button } from "@/components/ui/button/button";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea, ScrollBar } from "@/components/ui/scrollarea";
 import ProductList from "./subComponents/ProductList";
-import { Product, CartItem } from "./subComponents/types";
+import ProductDetail from "./subComponents/ProductDetail";
 import CartSheet from "./subComponents/CartSheet";
+import { Product, CartItem } from "./subComponents/types";
 
-interface ShopProps {
+interface VirtualShopProps {
   products: Product[];
   categories: string[];
   isMobile?: boolean;
 }
 
-const ShopSection: React.FC<ShopProps> = ({
+const VirtualShop: React.FC<VirtualShopProps> = ({
   products,
   categories,
   isMobile,
@@ -23,6 +24,7 @@ const ShopSection: React.FC<ShopProps> = ({
   const [cart, setCart] = useState<Record<number, number>>({});
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   const addToCart = (productId: number) => {
     setCart((prevCart) => ({
@@ -61,12 +63,8 @@ const ShopSection: React.FC<ShopProps> = ({
       : products.filter((product) => product.category === selectedCategory);
 
   return (
-    <div
-      className={`container mx-auto px-2 pb-4 ${
-        isMobile ? "h-full overflow-y-auto" : ""
-      }`}
-    >
-      <header className="mb-4 p-2 z-20 bg-white/40 rounded-md backdrop-blur-md">
+    <div className={`mx-auto px-2 pb-4 ${isMobile ? "h-full" : ""}`}>
+      <header className="mb-4 p-2 sticky top-0 z-20 bg-white/40 rounded-md backdrop-blur-md">
         {isMobile ? (
           <>
             <div className="flex items-center justify-center mb-2 ">
@@ -108,7 +106,7 @@ const ShopSection: React.FC<ShopProps> = ({
         <nav className="w-full">
           <ScrollArea className="w-full">
             <div className="flex space-x-2 pb-2 pt-4">
-              {(categories || []).map((category) => (
+              {categories.map((category) => (
                 <Button
                   key={category}
                   variant={
@@ -132,17 +130,22 @@ const ShopSection: React.FC<ShopProps> = ({
       </header>
 
       <div className="flex h-[calc(100vh-120px)]">
-        <div className={`w-full p-2 overflow-y-auto`}>
+        <div className={`w-[70%] p-2 overflow-y-auto`}>
           <ProductList
             products={filteredProducts}
             cart={cart}
             onAddToCart={addToCart}
+            onSelectProduct={setSelectedProduct}
             isMobile={isMobile || false}
           />
         </div>
+        <div className="w-[30%] px-4 py-2 sticky top-[80px] h-[calc(100vh-120px)] overflow-y-auto">
+          <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200/30">
+            <ProductDetail product={selectedProduct} onAddToCart={addToCart} />
+          </div>
+        </div>
       </div>
 
-      {/* Cart sheet */}
       <CartSheet
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
@@ -156,4 +159,4 @@ const ShopSection: React.FC<ShopProps> = ({
   );
 };
 
-export default ShopSection;
+export default VirtualShop;

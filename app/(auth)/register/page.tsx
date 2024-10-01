@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 export default function RegisterPage() {
   return (
     <div className="flex max-w-screen-md">
-      <RegisterForm />
+      <RegisterForm isMobile={false} />
     </div>
   );
 }
