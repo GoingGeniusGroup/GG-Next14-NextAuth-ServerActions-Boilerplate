@@ -1,7 +1,9 @@
+"use client";
+
 import React, { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Play, Pause } from "lucide-react";
 import { gsap } from "gsap";
 import { Product } from "./types";
 
@@ -15,8 +17,10 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
   onAddToCart,
 }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
   const imageRef = useRef<HTMLImageElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     if (product && sliderRef.current) {
@@ -25,6 +29,18 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
         { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }
       );
+    }
+
+    // Reset audio and playing state when product changes
+    setIsPlaying(false);
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
+    }
+
+    // Create new audio element for the new product
+    if (product && product.type === "sound" && product.src) {
+      audioRef.current = new Audio(`/soundboard/${product.src}`);
     }
   }, [product]);
 
@@ -38,6 +54,16 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
     }
   }, [currentImageIndex]);
 
+  useEffect(() => {
+    // Clean up audio when component unmounts
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, []);
+
   const nextImage = () => {
     if (product) {
       setCurrentImageIndex((prev) => (prev + 1) % product.images.length);
@@ -50,6 +76,18 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
         (prev) => (prev - 1 + product.images.length) % product.images.length
       );
     }
+  };
+
+  const togglePlay = () => {
+    if (!audioRef.current) return;
+
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
+
+    setIsPlaying(!isPlaying);
   };
 
   if (!product) {
@@ -96,6 +134,17 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
       </div>
       <p className="text-lg font-semibold mb-2">${product.price.toFixed(2)}</p>
       <p className="mb-4">{product.description}</p>
+      {product.type === "sound" && (
+        <Button
+          onClick={togglePlay}
+          variant="outline"
+          className="w-full mb-4"
+          size="lg"
+        >
+          {isPlaying ? <Pause className="mr-2" /> : <Play className="mr-2" />}
+          {isPlaying ? "Pause" : "Play"} Sound
+        </Button>
+      )}
       <Button
         onClick={() => onAddToCart(product.id)}
         variant="black"

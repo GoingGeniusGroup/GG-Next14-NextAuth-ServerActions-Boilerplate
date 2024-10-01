@@ -12,7 +12,7 @@ const virtualProducts: VirtualProduct[] =
       "https://png.pngtree.com/png-vector/20240822/ourmid/pngtree-smiling-businessman-cartoon-character-with-briefcase-3d-illustration-png-image_13590737.png"
     ],
     "category": "Emotes",
-    "description": "A cheerful emote to express happiness."
+    "description": "An emote to express being busy."
   },
   {
     "id": 2,
@@ -23,7 +23,7 @@ const virtualProducts: VirtualProduct[] =
       "https://png.pngtree.com/png-vector/20240421/ourmid/pngtree-d-cartoon-style-young-business-man-taking-selfie-on-a-transparent-png-image_12305634.png"
     ],
     "category": "Emotes",
-    "description": "An emote to show sadness or disappointment."
+    "description": "An emote to represent taking a selfie."
   },
   {
     "id": 3,
@@ -34,7 +34,7 @@ const virtualProducts: VirtualProduct[] =
       "https://png.pngtree.com/png-clipart/20231016/original/pngtree-celebration-of-businessman-wearing-long-shirt-and-blue-tie-3d-businessman-png-image_13321680.png"
     ],
     "category": "Emotes",
-    "description": "An emote to express anger or frustration."
+    "description": "An emote to express excitement or celebration."
   },
   {
     "id": 4,
@@ -45,7 +45,7 @@ const virtualProducts: VirtualProduct[] =
       "https://png.pngtree.com/png-vector/20230906/ourmid/pngtree-businessman-in-gray-vest-suit-pointing-with-thumb-aside-looking-at-png-image_10001780.png"
     ],
     "category": "Emotes",
-    "description": "An emote to convey surprise or shock."
+    "description": "An emote to point at someone or something."
   },
   {
     "id": 5,
@@ -56,65 +56,23 @@ const virtualProducts: VirtualProduct[] =
       "https://static.vecteezy.com/system/resources/thumbnails/038/368/301/small/ai-generated-3d-a-businessman-sitting-on-a-floor-with-smiling-face-on-isolated-transparent-background-generated-with-ai-png.png"
     ],
     "category": "Emotes",
-    "description": "An emote to express love or affection."
+    "description": "An emote to represent sitting down."
   },
   {
     "id": 6,
-    "name": "Funny Sound",
-    "price": 0.99,
-    "type": "sound",
-    "images": [
-      "https://png.pngtree.com/png-vector/20220622/ourmid/pngtree-radio-wave-or-sound-wave-icon-vector-isolated-png-image_5219473.png"
-    ],
-    "category": "Sounds",
-    "description": "A funny sound effect for your soundboard."
-  },
-  {
-    "id": 7,
-    "name": "Scary Sound",
-    "price": 0.99,
-    "type": "sound",
-    "images": [
-      "https://png.pngtree.com/png-clipart/20230922/original/pngtree-sound-wave-logo-vector-icon-bar-icon-line-vector-png-image_12522730.png"
-    ],
-    "category": "Sounds",
-    "description": "A spooky sound effect to give you chills."
-  },
-  {
-    "id": 8,
-    "name": "Cool Sound",
-    "price": 0.99,
-    "type": "sound",
-    "images": [
-      "https://png.pngtree.com/png-vector/20220622/ourmid/pngtree-radio-wave-or-sound-wave-icon-vector-isolated-png-image_5219473.png"
-    ],
-    "category": "Sounds",
-    "description": "A cool and trendy sound effect."
-  },
-  {
-    "id": 9,
-    "name": "Motivational Sound",
-    "price": 0.99,
-    "type": "sound",
-    "images": [
-      "https://png.pngtree.com/png-clipart/20230922/original/pngtree-sound-wave-logo-vector-icon-bar-icon-line-vector-png-image_12522730.png"
-    ],
-    "category": "Sounds",
-    "description": "A motivational sound to boost your spirits."
-  },
-  {
-    "id": 10,
-    "name": "Classic Sound",
+    "name": "Bruh",
     "price": 0.99,
     "type": "sound",
     "images": [
       "https://png.pngtree.com/png-vector/20220622/ourmid/pngtree-radio-wave-or-sound-wave-icon-vector-isolated-png-image_5219475.png"
     ],
     "category": "Sounds",
-    "description": "A classic and timeless sound effect."
+    "subCategory": ["Meme"],
+    "description": "The classic 'Bruh' sound effect.",
+    "src": "bruh.mp3"
   },
   {
-    "id": 11,
+    "id": 7,
     "name": "100 Coins",
     "price": 4.99,
     "type": "coin",
@@ -125,7 +83,7 @@ const virtualProducts: VirtualProduct[] =
     "description": "A pack of 100 in-game coins."
   },
   {
-    "id": 12,
+    "id": 8,
     "name": "500 Coins",
     "price": 19.99,
     "type": "coin",
@@ -136,7 +94,7 @@ const virtualProducts: VirtualProduct[] =
     "description": "A pack of 500 in-game coins."
   },
   {
-    "id": 13,
+    "id": 9,
     "name": "1000 Coins",
     "price": 39.99,
     "type": "coin",
@@ -147,7 +105,7 @@ const virtualProducts: VirtualProduct[] =
     "description": "A pack of 1000 in-game coins."
   },
   {
-    "id": 14,
+    "id": 10,
     "name": "2500 Coins",
     "price": 89.99,
     "type": "coin",
@@ -158,7 +116,7 @@ const virtualProducts: VirtualProduct[] =
     "description": "A pack of 2500 in-game coins."
   },
   {
-    "id": 15,
+    "id": 11,
     "name": "5000 Coins",
     "price": 149.99,
     "type": "coin",
@@ -169,7 +127,7 @@ const virtualProducts: VirtualProduct[] =
     "description": "A pack of 5000 in-game coins."
   },
   {
-    "id": 16,
+    "id": 12,
     "name": "Extremely Happy",
     "price": 1.99,
     "type": "emote",
@@ -177,10 +135,10 @@ const virtualProducts: VirtualProduct[] =
       "https://png.pngtree.com/png-clipart/20231116/original/pngtree-craft-a-humorous-businessman-cartoon-character-illustrating-the-ups-and-downs-png-image_13572497.png"
     ],
     "category": "Emotes",
-    "description": "A playful wink emote."
+    "description": "An emote to express extreme happiness."
   },
   {
-    "id": 17,
+    "id": 13,
     "name": "Thumbsup",
     "price": 1.99,
     "type": "emote",
@@ -188,43 +146,49 @@ const virtualProducts: VirtualProduct[] =
       "https://png.pngtree.com/png-vector/20240824/ourmid/pngtree-a-happy-3d-business-man-on-transparent-white-background-png-image_13604288.png"
     ],
     "category": "Emotes",
-    "description": "An emote to show contemplation or thought."
+    "description": "An emote to give a thumbs up."
   },
   {
-    "id": 18,
-    "name": "Party Sound",
+    "id": 14,
+    "name": "Mii Channel Music",
     "price": 0.99,
     "type": "sound",
     "images": [
       "https://png.pngtree.com/png-vector/20220622/ourmid/pngtree-radio-wave-or-sound-wave-icon-vector-isolated-png-image_5219475.png"
     ],
     "category": "Sounds",
-    "description": "A lively party sound effect."
+    "subCategory": ["Music"],
+    "description": "The nostalgic Mii Channel background music.",
+    "src": "mii-channel-music.mp3"
   },
   {
-    "id": 19,
-    "name": "Romantic Sound",
+    "id": 15,
+    "name": "Oh Hell Nouaa",
     "price": 0.99,
     "type": "sound",
     "images": [
       "https://png.pngtree.com/png-clipart/20230922/original/pngtree-sound-wave-logo-template-vector-icon-red-spectrum-frequency-vector-png-image_12517825.png"
     ],
     "category": "Sounds",
-    "description": "A romantic and soothing sound effect."
+    "subCategory": ["Meme"],
+    "description": "The hilarious 'Oh Hell Nouaa' meme sound.",
+    "src": "oh-hell-nouaa.mp3"
   },
   {
-    "id": 20,
-    "name": "Epic Sound",
+    "id": 16,
+    "name": "Anime Song",
     "price": 0.99,
     "type": "sound",
     "images": [
       "https://png.pngtree.com/png-clipart/20230815/original/pngtree-sound-wave-vector-icon-digital-abstract-audio-vector-picture-image_10796636.png"
     ],
     "category": "Sounds",
-    "description": "An epic and dramatic sound effect."
+    "subCategory": ["Anime, Song"],
+    "description": "A popular anime theme song.",
+    "src": "tmpdbnm_5a3.mp3"
   },
   {
-    "id": 21,
+    "id": 17,
     "name": "10000 Coins",
     "price": 199.99,
     "type": "coin",
@@ -235,7 +199,7 @@ const virtualProducts: VirtualProduct[] =
     "description": "A large pack of 10000 in-game coins."
   },
   {
-    "id": 22,
+    "id": 18,
     "name": "Working",
     "price": 1.99,
     "type": "emote",
@@ -243,10 +207,10 @@ const virtualProducts: VirtualProduct[] =
       "https://png.pngtree.com/png-vector/20240509/ourmid/pngtree-3d-illustration-of-a-happy-business-man-with-cartoon-png-image_12384195.png"
     ],
     "category": "Emotes",
-    "description": "A cool and stylish emote."
+    "description": "An emote to represent working."
   },
   {
-    "id": 23,
+    "id": 19,
     "name": "Thinking",
     "price": 1.99,
     "type": "emote",
@@ -254,10 +218,10 @@ const virtualProducts: VirtualProduct[] =
       "https://png.pngtree.com/png-vector/20230831/ourmid/pngtree-businessman-is-thinking-and-wondering-character-3d-character-illustration-png-image_9200930.png"
     ],
     "category": "Emotes",
-    "description": "A confident and stylish emote."
+    "description": "An emote to represent thinking."
   },
   {
-    "id": 24,
+    "id": 20,
     "name": "Kachau",
     "price": 1.99,
     "type": "emote",
@@ -265,10 +229,10 @@ const virtualProducts: VirtualProduct[] =
       "https://png.pngtree.com/png-vector/20240202/ourmid/pngtree-3d-cartoon-character-with-glasses-png-image_11531995.png"
     ],
     "category": "Emotes",
-    "description": "A humorous and entertaining emote."
+    "description": "An emote to represent sneezing."
   },
   {
-    "id": 25,
+    "id": 21,
     "name": "Cute",
     "price": 1.99,
     "type": "emote",
@@ -276,62 +240,72 @@ const virtualProducts: VirtualProduct[] =
       "https://png.pngtree.com/png-vector/20231015/ourmid/pngtree-3d-character-illustrator-standing-pose-png-image_10161392.png"
     ],
     "category": "Emotes",
-    "description": "A cute and adorable emote."
+    "description": "An emote to represent being cute."
   },
   {
-    "id": 26,
-    "name": "Dramatic Sound",
+    "id": 22,
+    "name": "Spiderman Meme Song",
     "price": 0.99,
     "type": "sound",
     "images": [
       "https://png.pngtree.com/png-clipart/20230922/original/pngtree-sound-wave-logo-template-vector-icon-red-spectrum-frequency-vector-png-image_12517825.png"
     ],
     "category": "Sounds",
-    "description": "A dramatic and suspenseful sound effect."
+    "subCategory": ["Song, Meme"],
+    "description": "The iconic Spiderman meme song.",
+    "src": "spiderman-meme-song.mp3"
   },
   {
-    "id": 27,
-    "name": "Upbeat Sound",
+    "id": 23,
+    "name": "Pedro Pedro Pedro",
     "price": 0.99,
     "type": "sound",
     "images": [
       "https://png.pngtree.com/png-clipart/20230815/original/pngtree-sound-wave-vector-icon-digital-abstract-audio-vector-picture-image_10796636.png"
     ],
     "category": "Sounds",
-    "description": "An upbeat and cheerful sound effect."
+    'subCategory': ["Song", "Funny"],
+    "description": "The catchy 'Pedro Pedro Pedro' song.",
+    "src": "pedro-song.mp3"
   },
   {
-    "id": 28,
-    "name": "Nostalgic Sound",
+    "id": 24,
+    "name": "Rizz",
     "price": 0.99,
     "type": "sound",
     "images": [
       "https://png.pngtree.com/png-clipart/20230815/original/pngtree-sound-wave-vector-icon-digital-abstract-audio-vector-picture-image_10796636.png"
     ],
     "category": "Sounds",
-    "description": "A nostalgic and sentimental sound effect."
+    'subCategory': ["Song", "Rizz"],
+    "description": "A collection of smooth 'rizz' sound effects.",
+    "src": "rizz-sounds.mp3"
   },
   {
-    "id": 29,
-    "name": "Surprise Sound",
+    "id": 25,
+    "name": "Anime Wow",
     "price": 0.99,
     "type": "sound",
     "images": [
       "https://png.pngtree.com/png-clipart/20230815/original/pngtree-sound-wave-vector-icon-digital-abstract-audio-vector-picture-image_10796636.png"
     ],
     "category": "Sounds",
-    "description": "A surprising and unexpected sound effect."
+    'subCategory': ["Anime"],
+    "description": "An exaggerated 'wow' sound effect commonly used in anime.",
+    "src": "anime-wow.mp3"
   },
   {
-    "id": 30,
-    "name": "Victory Sound",
+    "id": 26,
+    "name": "Dry Fart",
     "price": 0.99,
     "type": "sound",
     "images": [
       "https://png.pngtree.com/png-clipart/20230815/original/pngtree-sound-wave-vector-icon-digital-abstract-audio-vector-picture-image_10796636.png"
     ],
     "category": "Sounds",
-    "description": "A triumphant victory sound effect."
+    'subCategory': ["Funny", "Fart"],
+    "description": "A classic dry fart sound effect.",
+    "src": "dry-fart.mp3"
   }
 ];
 

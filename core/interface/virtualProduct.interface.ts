@@ -6,4 +6,6 @@ export interface VirtualProduct {
     images: string[];
     category: string;
     description: string;
+    subCategory?: string[];
+    src?: string;
 }
