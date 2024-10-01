@@ -127,9 +127,9 @@ export default function ProfileHud({
                 <Settings size={16} />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem onClick={logoutAndToggleSidebar}>
+                <DropdownMenuItem onClick={user && logoutAndToggleSidebar}>
                   <LogOut className="mr-2 size-4" />
-                  <span>Logout</span>
+                  <span>{user ? "Logout" : "---"}</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
