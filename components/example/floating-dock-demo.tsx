@@ -1,12 +1,11 @@
-import React from "react";
 import { FloatingDock } from "@/components/ui/floating-dock";
 import {
   IconBrandGithub,
+  IconBrandSteam,
   IconBrandX,
   IconExchange,
-  IconHome,
   IconNewSection,
-  IconTerminal2,
+  IconShoppingBag
 } from "@tabler/icons-react";
 import Image from "next/image";
 
@@ -15,17 +14,17 @@ export default function FloatingDockDemo() {
     {
       title: "Home",
       icon: (
-        <IconHome className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+        <IconShoppingBag className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "#",
+      href: "/shop-test",
     },
 
     {
       title: "Products",
       icon: (
-        <IconTerminal2 className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+        <IconBrandSteam className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "#",
+      href: "/steam",
     },
     {
       title: "Components",
