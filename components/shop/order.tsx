@@ -1,3 +1,6 @@
+"use client"
+
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -7,17 +10,42 @@ import { ShoppingCart } from "lucide-react"
 import ProductCard from "./Item"
 import { productType } from "@/types/productType"
 
+export type product = productType & {
+  discountV:number,
+  finalPrice:number,
+  productPrice: number
+
+
+}
+
 export default function CheckoutPage({product} : {
     product: productType
 }) {
-  const cartItems = [
-    { name: "Product 1", price: 19.99, quantity: 2 },
-    { name: "Product 2", price: 29.99, quantity: 1 },
-  ]
+ 
 
-  const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0)
-  const shipping = 5.99
-  const total = subtotal + shipping
+  const [quantity, setQuantity] = useState<number>(1)
+
+
+
+
+
+  const productPrice = product.salePrice ?? 0;
+  const discount = product.discount ? product.discount : 0;
+
+  const finalPrice =
+    discount > 0
+      ? (productPrice - (discount / 100) * productPrice).toFixed(2)
+      : productPrice.toFixed(2);
+
+    const finalProduct:product = {
+        ...product,
+        discountV: discount,
+        finalPrice: parseFloat(finalPrice),
+        productPrice: productPrice,
+      }
+
+      const shipping = 5.99
+      const total = parseFloat(finalPrice)* quantity + shipping
 
   return (
     <div className="container mx-auto p-4">
@@ -41,6 +69,7 @@ export default function CheckoutPage({product} : {
                   <Label htmlFor="lastName">Last Name</Label>
                   <Input id="lastName" placeholder="Doe" />
                 </div>
+                
               </div>
               <div className="space-y-2">
                 <Label htmlFor="address">Address</Label>
@@ -67,7 +96,7 @@ export default function CheckoutPage({product} : {
           </CardFooter>
           </div>
       <h1 className="text-2xl font-bold mb-6">Packages</h1>
-          <ProductCard product= { product} />
+          <ProductCard product={finalProduct} setQuantity={setQuantity} quantity={quantity}/>
        
         </Card>
 
@@ -76,20 +105,23 @@ export default function CheckoutPage({product} : {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <ShoppingCart className="h-5 w-5" />
-              Cart Summary
+              Order Summary
             </CardTitle>
           </CardHeader>
           <CardContent>
-            {cartItems.map((item, index) => (
-              <div key={index} className="flex justify-between items-center mb-2">
-                <span>{item.name} x {item.quantity}</span>
-                <span>${(item.price * item.quantity).toFixed(2)}</span>
+            
+              <div className="flex justify-between items-center mb-2">
+                <span> 
+                  
+                    {product.name}  <span className="text-sm font-bold ">  X {quantity} 
+                    </span> </span>
+                <span>${(parseFloat(finalPrice) * quantity).toFixed(2)}</span>
               </div>
-            ))}
+            
             <Separator className="my-4" />
             <div className="flex justify-between items-center mb-2">
               <span>Subtotal</span>
-              <span>${subtotal.toFixed(2)}</span>
+              <span>${(parseFloat(finalPrice)* quantity).toFixed(2)}</span>
             </div>
             <div className="flex justify-between items-center mb-2">
               <span>Shipping</span>

@@ -4,23 +4,21 @@ import Image from 'next/image'
 import { Minus, Plus } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { productType } from '@/types/productType'
 
-export default function ProductCard({ product} : {
-    product: productType
+import { product } from './order'
+
+export default function ProductCard({ product,quantity, setQuantity} : {
+    product: product
+    quantity:number;
+    setQuantity: (value: number | ((prev: number) => number)) => void;
+   
 }
 ) {
-  const [quantity, setQuantity] = useState(1)
+
 
   const incrementQuantity = () => setQuantity(prev => prev + 1)
   const decrementQuantity = () => setQuantity(prev => Math.max(1, prev - 1))
-  const productPrice = product.salePrice ?? 0;
-  const discount = product.discount ? product.discount : 0;
-
-  const finalPrice =
-    discount > 0
-      ? (productPrice - (discount / 100) * productPrice).toFixed(2)
-      : productPrice.toFixed(2);
+ 
 
   return (
     <Card className="p-4 shadow-sm  ">
@@ -43,9 +41,9 @@ export default function ProductCard({ product} : {
               </p>
             </div>
             <div className="text-right">
-              <div className="text-2xl font-bold text-gray-900">${discount> 0 ?finalPrice:productPrice  }</div>
-              { discount > 0 && <div className={`text-sm text-gray-500 ${discount> 0 ?'line-through':''}`}>${productPrice}</div>}
-              <div className="text-sm font-medium text-green-600">{discount}% OFF</div>
+              <div className="text-2xl font-bold text-gray-900">${product.discountV > 0 ?product.finalPrice: product.productPrice  }</div>
+              { product.discountV > 0 && <div className={`text-sm text-gray-500 ${product.discountV > 0 ?'line-through':''}`}>${product.productPrice }</div>}
+              <div className="text-sm font-medium text-green-600">{product.discountV}% OFF</div>
             </div>
           </div>
           <div className="mt-4 flex justify-between items-center">
