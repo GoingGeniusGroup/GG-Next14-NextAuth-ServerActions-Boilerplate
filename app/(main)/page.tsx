@@ -105,6 +105,12 @@ export default async function Home() {
           >
             Card Hover Effect
           </Link>
+          <Link
+            href="/bento-grid"
+            className="text-white/60 hover:text-white transition-colors px-4 py-2 rounded-md text-center bg-black hover:bg-black/70"
+          >
+            Bento Grid
+          </Link>
         </nav>
       </div>
     </div>
