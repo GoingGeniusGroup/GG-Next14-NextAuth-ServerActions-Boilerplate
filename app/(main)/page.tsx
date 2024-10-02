@@ -81,6 +81,12 @@ export default async function Home() {
           >
             Profile
           </Link>
+          <Link
+            href="/steam"
+            className="text-gray-600 hover:text-blue-600 transition-colors px-4 py-2 rounded-md text-center bg-gray-50 hover:bg-gray-100"
+          >
+            Steam
+          </Link>
         </nav>
       </div>
     </div>
