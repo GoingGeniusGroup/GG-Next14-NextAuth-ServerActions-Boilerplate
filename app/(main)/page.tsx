@@ -93,6 +93,18 @@ export default async function Home() {
           >
             Floating Dock
           </Link>
+          <Link
+            href="/focus-cards"
+            className="text-white/60 hover:text-white transition-colors px-4 py-2 rounded-md text-center bg-black hover:bg-black/70"
+          >
+            Focus Cards
+          </Link>
+          <Link
+            href="/card-hover-effect"
+            className="text-white/60 hover:text-white transition-colors px-4 py-2 rounded-md text-center bg-black hover:bg-black/70"
+          >
+            Card Hover Effect
+          </Link>
         </nav>
       </div>
     </div>

@@ -72,12 +72,10 @@ export function FloatingDockDemo() {
     },
   ];
   return (
-    <div className="flex items-end justify-center size-full">
-      <FloatingDock
-        items={links}
-        desktopClassName="bg-white/30"
-        mobileClassName="bg-transparent"
-      />
-    </div>
+    <FloatingDock
+      items={links}
+      desktopClassName="bg-white/30"
+      mobileClassName="bg-transparent"
+    />
   );
 }

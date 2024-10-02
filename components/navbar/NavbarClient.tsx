@@ -44,10 +44,10 @@ const NavbarClient = () => {
 
       {!hideMiddleNav && (
         <div
-          className={`fixed left-1/2 top-0 z-50 mx-auto flex -translate-x-1/2 items-center justify-between rounded-full px-6 py-3`}
+          className={`fixed left-0 top-0 z-50 mx-auto flex items-center justify-between rounded-lg p-3`}
         >
           <div className="hidden text-black/70 lg:flex">
-            <div className="flex h-10 items-center justify-center gap-2 rounded-full bg-white px-12 shadow-lg backdrop-blur-md  md:gap-x-7 lg:gap-x-14">
+            <div className="flex h-10 items-center justify-center gap-2 rounded-full bg-white px-6 shadow-lg backdrop-blur-md  md:gap-x-7 lg:gap-x-7">
               <Link
                 href="#"
                 className={`group ${
