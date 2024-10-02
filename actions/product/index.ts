@@ -30,7 +30,7 @@ export const addProduct = async (payload: FormData) => {
   }
 
   const validatedFields = productSchema.safeParse(payloadObject);
-
+  console.log(validatedFields.error,payloadObject )
   if (!validatedFields.success) {
     return response({
       success: false,
@@ -43,7 +43,10 @@ export const addProduct = async (payload: FormData) => {
 
   try {
     const data = validatedFields.data;
-    const imagepath = await writeImageToDisk(data.image);
+ 
+    const imagepath = data.image?  await writeImageToDisk(data.image) : null
+    const imageUrl = imagepath ? imagepath : data.imageUrl
+
     const supplierIds = data.suppliers.map((sup) => sup.id);
 
     const categoryId = (
@@ -51,11 +54,19 @@ export const addProduct = async (payload: FormData) => {
         where: { categoryName: convertToCapitalized(data.category as string) },
       })
     )?.id!;
+    
+    const taxLabel = data.taxRate ? data.taxRate : data.tax
+    const taxName = taxLabel && taxLabel.split("_")[0].trim();
+    const taxId = (
+      await db.tax.findFirst({
+        where: { name: taxName?.toLowerCase()  },
+      })
+    )?.id!;
 
     const product = await db.product.create({
       data: {
         name: data.name,
-        image: imagepath,
+        image: imageUrl,
         costPrice: data.costPrice,
         quantityInStock: data.quantityInStock,
         categoryId: categoryId,
@@ -64,6 +75,7 @@ export const addProduct = async (payload: FormData) => {
         discount: data.discount || null,
         salePrice: data.salePrice,
         margin: data.margin || null,
+        taxId: taxId,
         suppliers: {
           connect: supplierIds.map((id) => ({ id })),
         },

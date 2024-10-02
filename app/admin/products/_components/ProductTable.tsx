@@ -25,7 +25,7 @@ const ProductTable = async () => {
   if (products?.length === 0) return <h2 className="flex items-center justify-center min-h-screen font-bold">
     No products found</h2>;
   return (
-    <div className='className="container mx-auto mt-8 px-4"'>
+    <div className="container mx-auto mt-8 px-4">
       <Table>
         <TableHeader>
           <TableRow>

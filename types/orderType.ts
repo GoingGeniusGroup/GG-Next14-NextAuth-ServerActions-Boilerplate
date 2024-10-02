@@ -68,3 +68,11 @@ export type CartItem =  {
     totalAmount: number; 
     
   };
+
+
+  export type SelectType= {
+    id: string;
+    label: string;
+    value: string ;
+
+  }

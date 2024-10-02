@@ -1,8 +1,8 @@
 "use client";
 
 import { productSchema } from "@/schemas";
-import {  useEffect,  useTransition } from "react";
-import { useForm, useFieldArray } from "react-hook-form";
+import { useEffect, useState, useTransition } from "react";
+import { useForm, useFieldArray,SubmitErrorHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
@@ -10,29 +10,48 @@ import { Button } from "@/components/ui/button";
 import FormInput from "@/components/form/FormInput";
 import { Spinner } from "@/components/ui/Spinner";
 import { addProduct } from "@/actions/product";
-import { SelectModel } from "@/components/ui/select";
+import { SelectModel } from "@/components/Model/SelectModel";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import { Minus, Plus } from "lucide-react";
 import ImageInput from "@/components/form/ImageInput";
-import { useFetchValues } from "@/hooks/useFetchValues";
+
+import { SelectType } from "@/types/orderType";
+import TaxModel from "@/components/Model/TaxModel";
 
 interface Props {
   userId: string | undefined;
+  categories: SelectType[];
+  suppliers: SelectType[];
+  taxs: SelectType[];
 }
 const ProductForm: React.FC<Props> = (props) => {
-  const { userId } = props;
- 
-  
+  const { userId, categories, suppliers, taxs } = props;
+
   const router = useRouter();
-  const { categories, suppliers, getValues } = useFetchValues();
-  
-  useEffect(() => {
-    if (userId) {
-      getValues();
+  // const { categories, suppliers, getValues } = useFetchValues();
+
+  // useEffect(() => {
+  //   if (userId) {
+  //     getValues();
+  //   }
+  // }, [userId]);
+  const [tax, setTax] = useState<SelectType | null>(() => {
+    const taxs = localStorage.getItem("tax");
+    if (taxs) {
+      return JSON.parse(taxs);
+    } else {
+      return null;
     }
-  }, [userId]);
+  });
+
+  useEffect(() => {
+    if (tax) {
+      localStorage.setItem("tax", JSON.stringify(tax));
+    }
+  }, [tax]);
+
 
   const [isPending, startTransition] = useTransition();
   type productType = z.infer<typeof productSchema>;
@@ -49,18 +68,32 @@ const ProductForm: React.FC<Props> = (props) => {
       discount: undefined,
       salePrice: undefined,
       margin: "",
-
+      tax: "",
+      taxRate: tax?.label || "",
+      imageUrl:"",
       category: "",
       suppliers: [{ id: "", supplier: "" }],
     },
   });
+
   const { control, setValue } = form;
   const { fields, append, remove } = useFieldArray({
     name: "suppliers",
     control,
   });
-  const selectedSuppliers = form.watch("suppliers") || [];
 
+
+  useEffect(() => {
+    if(tax){
+      setValue('taxRate', tax.label)
+    }
+    
+  }, [tax])
+
+  const selectedSuppliers = form.watch("suppliers") || [];
+  const imageUrl = form.watch("imageUrl") || null
+
+  
   const getAvailableSuppliers = (index: string | number) => {
     const selectedSupplierIds = selectedSuppliers
       .filter((_, i) => i !== index)
@@ -82,12 +115,12 @@ const ProductForm: React.FC<Props> = (props) => {
     }
   };
 
-
-
   const onSubmit = async (values: productType) => {
     const formData = new FormData();
     if (values.image) {
       formData.append("image", values.image);
+    }else{
+      formData.append("image", '')
     }
 
     // Append other form fields
@@ -99,8 +132,7 @@ const ProductForm: React.FC<Props> = (props) => {
         formData.append(key, JSON.stringify(value));
       }
     }
- 
-     
+
     startTransition(async () => {
       await addProduct(formData)
         .then((data) => {
@@ -112,7 +144,7 @@ const ProductForm: React.FC<Props> = (props) => {
             autoClose: 2000,
           });
 
-          return router.push("/products");
+          return router.push("/admin/products");
         })
         .catch((error) => {
           console.log(error);
@@ -124,17 +156,41 @@ const ProductForm: React.FC<Props> = (props) => {
     });
   };
 
+  const onError: SubmitErrorHandler<productType> = (error: FieldErrors) => {
+    console.log('====================================');
+    console.log(error);
+    console.log('====================================');
+  }
   return (
     <div className="container mx-auto flex items-center justify-center">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={form.handleSubmit(onSubmit,onError)}>
           <fieldset disabled={isPending} className="group">
-            <ImageInput
-              control={form.control}
-              name="image"
-              label="Image"
-              isPending={isPending}
-            />
+            <div className="flex gap-4 items-center">
+             {!imageUrl ?
+                <>
+             
+             <ImageInput
+                control={form.control}
+                name="image"
+                label="Image"
+                isPending={isPending}
+              />
+              <p className="text-gray-600"> OR </p>
+              </>:
+              " "
+             }
+              <div className="flex-grow">
+                <FormInput
+                  control={form.control}
+                  name="imageUrl"
+                  label="Image URL"
+                  type="text"
+                  placeholder="Enter image url"
+                  isPending={isPending}
+                />
+              </div>
+            </div>
 
             <div className="flex flex-col md:flex-row space-y-6 gap-4">
               <div className="space-y-4 ">
@@ -206,8 +262,40 @@ const ProductForm: React.FC<Props> = (props) => {
                   placeholder="Enter margin"
                   isPending={isPending}
                 />
+
+                <div className="flex flex-col gap-2 ">
+                  {
+                    !tax? <SelectModel
+                    control={form.control}
+                    name="tax"
+                    options={taxs}
+                    isPending={isPending}
+                    label="Tax"
+                    defaultValue="Select a Tax"
+                  /> : ""
+
+                  }
+                  
+
+                  {tax ? (
+                    <FormInput
+                      control={form.control}
+                      name="taxRate"
+                      label="Tax Rate"
+                      type="text"
+                      value={tax.label}
+                      isPending={isPending}
+                    />
+                  ) : (
+                    <>
+                      <p className="text-gray-600 text-center"> or </p>
+
+                      <TaxModel setTax={setTax} />
+                    </>
+                  )}
+                </div>
               </div>
-              <div className="space-y-4">
+              <div className="space-y-4 ">
                 {/* Status Category */}
 
                 <SelectModel
@@ -264,7 +352,7 @@ const ProductForm: React.FC<Props> = (props) => {
                     >
                       <div className="flex cursor-pointer text-indigo-500 hover:text-indigo-700">
                         <Plus className="mr-2 h-4 w-4 " />
-                        Add new supplier
+                        Add another supplier
                       </div>
                     </Button>
                   )}
