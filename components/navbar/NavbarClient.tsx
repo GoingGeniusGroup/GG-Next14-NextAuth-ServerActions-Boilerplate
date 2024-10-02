@@ -1,7 +1,5 @@
 "use client";
 
-import { ExtendedUser } from "@/types/next-auth";
-import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -10,36 +8,19 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { RiEarthFill } from "react-icons/ri";
 import CustomToolTip from "../CustomComponents/CustomToolTip";
 import Hamburger from "hamburger-react";
-import { TbLogout2 } from "react-icons/tb";
-import { toast } from "sonner";
 
-interface NavbarClientProps {
-  user: ExtendedUser | undefined;
-  handleServerSignOut: () => Promise<void>;
-}
-
-const NavbarClient: React.FC<NavbarClientProps> = ({
-  user,
-  handleServerSignOut,
-}) => {
+const NavbarClient = () => {
   const [isOpen, setOpen] = useState(false);
   const closeMenu = () => setOpen(false);
-  const router = useRouter();
 
   const pathname = usePathname();
+  // Hide middle nav
   const [hideMiddleNav, setHideMiddleNav] = useState(true);
-  const [hideTopRightNav] = useState(false);
 
+  // Hide middle nav on slider page
   useEffect(() => {
     setHideMiddleNav(pathname === "/slider");
   }, [pathname]);
-
-  const logoutAndToggleSidebar = async () => {
-    await handleServerSignOut();
-    await signOut({ redirect: false });
-    toast.success("You have been logged out.");
-    router.push("/");
-  };
 
   return (
     <>
@@ -57,36 +38,16 @@ const NavbarClient: React.FC<NavbarClientProps> = ({
                 label="Show menu"
               />
             </div>
-            {user && (
-              <>
-                <div className="flex px-2">
-                  <button
-                    onClick={logoutAndToggleSidebar}
-                    className="group z-10 hidden lg:flex text-sm font-bold"
-                    id="user-menu-button"
-                    aria-label="Sign Out"
-                  >
-                    <TbLogout2 className="size-6 text-red-500" />
-                    <CustomToolTip
-                      content="Logout"
-                      top="30"
-                      left="5"
-                      translateY="30"
-                    />
-                  </button>
-                </div>
-              </>
-            )}
           </div>
         </div>
       </div>
 
       {!hideMiddleNav && (
         <div
-          className={`fixed left-1/2 top-0 z-50 mx-auto flex -translate-x-1/2 items-center justify-between rounded-full px-6 py-3`}
+          className={`fixed left-0 top-0 z-50 mx-auto flex items-center justify-between rounded-lg p-3`}
         >
           <div className="hidden text-black/70 lg:flex">
-            <div className="flex h-10 items-center justify-center gap-2 rounded-full bg-white px-12 shadow-lg backdrop-blur-md  md:gap-x-7 lg:gap-x-14">
+            <div className="flex h-10 items-center justify-center gap-2 rounded-full bg-white px-6 shadow-lg backdrop-blur-md  md:gap-x-7 lg:gap-x-7">
               <Link
                 href="#"
                 className={`group ${
@@ -192,28 +153,6 @@ const NavbarClient: React.FC<NavbarClientProps> = ({
               >
                 REGIONS
               </Link>
-            </li>
-
-            {user && (
-              <li>
-                <p
-                  className="hover:text-violet-400"
-                  // onClick={() => showMobile(true)}
-                >
-                  PROFILE
-                </p>
-              </li>
-            )}
-            <li className="fixed bottom-5 left-10 cursor-pointer ">
-              {user && (
-                <button
-                  onClick={logoutAndToggleSidebar}
-                  className="py-4 text-red-500 hover:text-fuchsia-300"
-                  aria-label="Sign Out"
-                >
-                  Logout
-                </button>
-              )}
             </li>
           </ul>
         </div>

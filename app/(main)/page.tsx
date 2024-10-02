@@ -83,9 +83,33 @@ export default async function Home() {
           </Link>
           <Link
             href="/steam"
-            className="text-gray-600 hover:text-blue-600 transition-colors px-4 py-2 rounded-md text-center bg-gray-50 hover:bg-gray-100"
+            className="text-white/60 hover:text-white transition-colors px-4 py-2 rounded-md text-center bg-black hover:bg-black/70"
           >
             Steam
+          </Link>
+          <Link
+            href="/floating-dock"
+            className="text-white/60 hover:text-white transition-colors px-4 py-2 rounded-md text-center bg-black hover:bg-black/70"
+          >
+            Floating Dock
+          </Link>
+          <Link
+            href="/focus-cards"
+            className="text-white/60 hover:text-white transition-colors px-4 py-2 rounded-md text-center bg-black hover:bg-black/70"
+          >
+            Focus Cards
+          </Link>
+          <Link
+            href="/card-hover-effect"
+            className="text-white/60 hover:text-white transition-colors px-4 py-2 rounded-md text-center bg-black hover:bg-black/70"
+          >
+            Card Hover Effect
+          </Link>
+          <Link
+            href="/bento-grid"
+            className="text-white/60 hover:text-white transition-colors px-4 py-2 rounded-md text-center bg-black hover:bg-black/70"
+          >
+            Bento Grid
           </Link>
         </nav>
       </div>
