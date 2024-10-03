@@ -1,9 +1,7 @@
 import React from 'react'
 
-export default function page() {
-    return (
-        <div>
-            <h1>Order Category</h1>
-        </div>
-    )
-}
+const Page = () => {
+    return <div>Your content here</div>;
+};
+
+export default Page; // Ensure you have this line
