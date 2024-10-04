@@ -46,7 +46,7 @@ export default async function Home() {
           </div>
         </div>
       </div>
-      <div className="absolute bottom-4 left-4 bg-gradient-to-b bg-white/70 to-gray-100/30 p-6 rounded-lg shadow-sm flex flex-col items-center max-w-sm w-full">
+      <div className="absolute bottom-4 left-20 bg-gradient-to-b bg-white/70 to-gray-100/30 p-6 rounded-lg shadow-sm flex flex-col items-center max-w-xs w-full">
         <div className="text-xl  flex gap-2 font-semibold text-gray-800 mb-6">
           <Avatar className="size-7 relative rounded-full border border-white/50 overflow-hidden">
             <AvatarImage src={profilePic} />
