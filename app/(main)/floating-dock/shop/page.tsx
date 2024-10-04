@@ -1,14 +1,6 @@
 import { HorizontalHoverEffect } from "@/components/ui/card-hover-effect/card-horizontal-hover-effect";
 
-export default function Shop() {
-  return (
-    <div className="max-w-5xl mx-auto px-8">
-      <HorizontalHoverEffect items={projects} />
-    </div>
-  );
-}
-
-export const projects = [
+const projects = [
   {
     title: "Stripe",
     description:
@@ -46,3 +38,11 @@ export const projects = [
     link: "https://microsoft.com",
   },
 ];
+
+export default function Shop() {
+  return (
+    <div className="max-w-5xl mx-auto px-8">
+      <HorizontalHoverEffect items={projects} />
+    </div>
+  );
+}
