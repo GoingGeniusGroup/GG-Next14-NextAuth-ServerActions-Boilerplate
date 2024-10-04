@@ -1,5 +1,5 @@
 import React from "react";
-import { FloatingDock } from "@/components/ui/floating-dock/floating-dock";
+import { FloatingDockConsole } from "../ui/floating-dock/floating-dock-console";
 import {
   IconBrandGithub,
   IconBrandX,
@@ -10,7 +10,11 @@ import {
 } from "@tabler/icons-react";
 import Image from "next/image";
 
-export function FloatingDockDemo() {
+export function FloatingDockDemo({
+  handleBgColor,
+}: {
+  handleBgColor: (color: string) => void;
+}) {
   const links = [
     {
       title: "Home",
@@ -18,14 +22,15 @@ export function FloatingDockDemo() {
         <IconHome className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
       href: "#",
+      bgColor: "bg-blue-500 dark:bg-blue-700",
     },
-
     {
       title: "Products",
       icon: (
         <IconTerminal2 className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
       href: "#",
+      bgColor: "bg-green-500 dark:bg-green-700",
     },
     {
       title: "Components",
@@ -33,6 +38,7 @@ export function FloatingDockDemo() {
         <IconNewSection className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
       href: "#",
+      bgColor: "bg-yellow-500 dark:bg-yellow-700",
     },
     {
       title: "Aceternity UI",
@@ -47,6 +53,7 @@ export function FloatingDockDemo() {
         />
       ),
       href: "#",
+      bgColor: "bg-purple-500 dark:bg-purple-700",
     },
     {
       title: "Changelog",
@@ -54,14 +61,15 @@ export function FloatingDockDemo() {
         <IconExchange className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
       href: "#",
+      bgColor: "bg-red-500 dark:bg-red-700",
     },
-
     {
       title: "Twitter",
       icon: (
         <IconBrandX className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
       href: "#",
+      bgColor: "bg-cyan-500 dark:bg-cyan-700",
     },
     {
       title: "GitHub",
@@ -69,13 +77,15 @@ export function FloatingDockDemo() {
         <IconBrandGithub className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
       href: "#",
+      bgColor: "bg-gray-500 dark:bg-gray-700",
     },
   ];
+
   return (
-    <FloatingDock
+    <FloatingDockConsole
       items={links}
-      desktopClassName="bg-white/30"
-      mobileClassName="bg-transparent"
+      desktopClassName="bg-transparent"
+      onIconSelect={handleBgColor}
     />
   );
 }

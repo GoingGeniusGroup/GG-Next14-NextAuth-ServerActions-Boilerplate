@@ -6,8 +6,8 @@ import { useEffect, useState } from "react";
 import { GiBarbedStar, GiShipWheel } from "react-icons/gi";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { RiEarthFill } from "react-icons/ri";
-import CustomToolTip from "../CustomComponents/CustomToolTip";
 import Hamburger from "hamburger-react";
+import CustomToolTipLeftRight from "../CustomComponents/CustomToolTipLeftRight";
 
 const NavbarClient = () => {
   const [isOpen, setOpen] = useState(false);
@@ -43,11 +43,9 @@ const NavbarClient = () => {
       </div>
 
       {!hideMiddleNav && (
-        <div
-          className={`fixed left-0 top-0 z-50 mx-auto flex items-center justify-between rounded-lg p-3`}
-        >
+        <div className="fixed left-[5px] md:left-[20px] z-50 flex w-[33px] top-1/2 -translate-y-1/2 select-none flex-col items-center space-y-[6px] rounded-full px-[6px] py-[4px] transition-all duration-500 ease-in-out">
           <div className="hidden text-black/70 lg:flex">
-            <div className="flex h-10 items-center justify-center gap-2 rounded-full bg-white px-6 shadow-lg backdrop-blur-md  md:gap-x-7 lg:gap-x-7">
+            <div className="flex flex-col w-10 items-center justify-center gap-2 rounded-full bg-white py-1 shadow-lg backdrop-blur-md  md:gap-y-3">
               <Link
                 href="#"
                 className={`group ${
@@ -57,11 +55,11 @@ const NavbarClient = () => {
                 }`}
               >
                 <GiShipWheel size={25} className="drop-shadow" />
-                <CustomToolTip
+                <CustomToolTipLeftRight
                   content="HUD"
-                  top="40"
-                  left="-9"
-                  translateY="30"
+                  top="0"
+                  left={29}
+                  translateY="10"
                 />
               </Link>
 
@@ -74,11 +72,11 @@ const NavbarClient = () => {
                 }`}
               >
                 <GiBarbedStar size={30} className="drop-shadow" />
-                <CustomToolTip
+                <CustomToolTipLeftRight
                   content="DISCOVER"
-                  top="40"
-                  left="-26"
-                  translateY="30"
+                  top="0"
+                  left={29}
+                  translateY="10"
                 />
               </Link>
 
@@ -91,11 +89,11 @@ const NavbarClient = () => {
                 }`}
               >
                 <RiEarthFill size={25} className="drop-shadow" />
-                <CustomToolTip
+                <CustomToolTipLeftRight
                   content="REGIONS"
-                  top="40"
-                  left="-25"
-                  translateY="30"
+                  top="0"
+                  left={29}
+                  translateY="10"
                 />
               </Link>
             </div>
