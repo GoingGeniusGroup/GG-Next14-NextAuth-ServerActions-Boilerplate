@@ -18,25 +18,19 @@ export function FloatingDockDemo({
   const links = [
     {
       title: "Home",
-      icon: (
-        <IconHome className="h-full w-full text-neutral-500 dark:text-neutral-300" />
-      ),
-      href: "#",
+      icon: <IconHome className="h-full w-full" />,
+      href: "/floating-dock/home",
       bgColor: "bg-blue-500 dark:bg-blue-700",
     },
     {
-      title: "Products",
-      icon: (
-        <IconTerminal2 className="h-full w-full text-neutral-500 dark:text-neutral-300" />
-      ),
-      href: "#",
+      title: "Shop",
+      icon: <IconTerminal2 className="h-full w-full " />,
+      href: "/floating-dock/shop",
       bgColor: "bg-green-500 dark:bg-green-700",
     },
     {
-      title: "Components",
-      icon: (
-        <IconNewSection className="h-full w-full text-neutral-500 dark:text-neutral-300" />
-      ),
+      title: "Virtual Shop",
+      icon: <IconNewSection className="h-full w-full " />,
       href: "#",
       bgColor: "bg-yellow-500 dark:bg-yellow-700",
     },
@@ -57,25 +51,19 @@ export function FloatingDockDemo({
     },
     {
       title: "Changelog",
-      icon: (
-        <IconExchange className="h-full w-full text-neutral-500 dark:text-neutral-300" />
-      ),
+      icon: <IconExchange className="h-full w-full " />,
       href: "#",
       bgColor: "bg-red-500 dark:bg-red-700",
     },
     {
       title: "Twitter",
-      icon: (
-        <IconBrandX className="h-full w-full text-neutral-500 dark:text-neutral-300" />
-      ),
+      icon: <IconBrandX className="h-full w-full" />,
       href: "#",
       bgColor: "bg-cyan-500 dark:bg-cyan-700",
     },
     {
       title: "GitHub",
-      icon: (
-        <IconBrandGithub className="h-full w-full text-neutral-500 dark:text-neutral-300" />
-      ),
+      icon: <IconBrandGithub className="h-full w-full" />,
       href: "#",
       bgColor: "bg-gray-500 dark:bg-gray-700",
     },

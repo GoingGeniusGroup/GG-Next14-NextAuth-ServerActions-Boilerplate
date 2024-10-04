@@ -59,7 +59,7 @@ const FloatingDockDesktop = ({
       onMouseMove={(e) => mouseX.set(e.pageX)}
       onMouseLeave={() => mouseX.set(Infinity)}
       className={cn(
-        "mx-auto hidden md:flex h-20 gap-4 items-end rounded-2xl bg-gray-50 dark:bg-neutral-900 px-4 pb-3",
+        "mx-auto hidden md:flex h-20 gap-2 items-end rounded-2xl bg-gray-50 dark:bg-neutral-900 px-4 pb-3",
         className
       )}
     >
@@ -124,12 +124,12 @@ function IconContainer({
     damping: 12,
   });
 
-  let widthIcon = useSpring(isSelected ? 40 : widthTransformIcon, {
+  let widthIcon = useSpring(widthTransformIcon, {
     mass: 0.1,
     stiffness: 150,
     damping: 12,
   });
-  let heightIcon = useSpring(isSelected ? 40 : heightTransformIcon, {
+  let heightIcon = useSpring(heightTransformIcon, {
     mass: 0.1,
     stiffness: 150,
     damping: 12,
@@ -165,7 +165,9 @@ function IconContainer({
         </AnimatePresence>
         <motion.div
           style={{ width: widthIcon, height: heightIcon }}
-          className="flex items-center justify-center"
+          className={`flex items-center justify-center ${
+            hovered ? "text-white" : "text-black"
+          }`}
         >
           {icon}
         </motion.div>
