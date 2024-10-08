@@ -139,42 +139,34 @@ const SteamProfile = forwardRef<HTMLDivElement, SteamProfileProps>((props, ref) 
       )}
 
       {ownedGames && (
-        <Card className="mb-6">
-          <CardHeader>
-            <CardTitle>Owned Games ({ownedGames.game_count})</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {ownedGames.games.slice(0, 12).map((game) => (
-                <div key={game.appid} className="flex flex-col items-center text-center">
-                  {game.img_icon_url ? (
-                    <Image
-                      src={`http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`}
-                      alt={game.name}
-                      width={128}
-                      height={64}
-                      className="w-32 h-16 object-cover mb-2 cursor-pointer"
-                      onClick={() => handleGameSelect(game.appid)}
-                    />
-                  ) : (
-                    <div className="w-32 h-16 bg-gray-200 flex items-center justify-center mb-2 cursor-pointer" onClick={() => handleGameSelect(game.appid)}>
-                      <span className="text-gray-500">No image</span>
-                    </div>
-                  )}
-                  <p className="font-semibold">{game.name}</p>
-                  <p className="text-sm text-muted-foreground">
-                    {Math.round(game.playtime_forever / 60)} hours played
-                  </p>
-                </div>
-              ))}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {ownedGames.games.slice(0, 12).map((game) => (
+          <div key={game.appid} className="relative aspect-[3/4] overflow-hidden rounded-lg shadow-lg group">
+            <Image
+              src={game.img_icon_url 
+                ? `http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`
+                : '/placeholder-game.jpg'
+              }
+              alt={game.name}
+              layout="fill"
+              objectFit="cover"
+              className="transition-transform duration-300 group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black opacity-70" />
+            <div className="absolute inset-0 flex flex-col justify-between p-4 text-white">
+              <div className="text-sm font-semibold">
+                {Math.round(game.playtime_forever / 60)} hours played
+              </div>
+              <h2 className="text-xl font-bold self-end">{game.name}</h2>
             </div>
-            {ownedGames.game_count > 12 && (
-              <p className="mt-4 text-center text-muted-foreground">
-                Showing 12 of {ownedGames.game_count} games
-              </p>
-            )}
-          </CardContent>
-        </Card>
+            <button
+              onClick={() => handleGameSelect(game.appid)}
+              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              aria-label={`Select ${game.name}`}
+            />
+          </div>
+        ))}
+      </div>
       )}
 
       {selectedGameStats && (

@@ -1,6 +1,5 @@
 ''
 import FloatingDockDemo from "@/components/example/floating-dock-demo"
-
 export const metadata = {
   title: 'Steam Profile Lookup',
   description: 'Look up Steam user profiles using their Steam ID',

@@ -58,6 +58,7 @@
     "lucide-react": "^0.303.0",
     "next": "14.0.4",
     "next-auth": "^5.0.0-beta.4",
+    "next-auth-steam": "^0.3.0",
     "next-themes": "^0.2.1",
     "qrcode": "^1.5.4",
     "r3f-perf": "^7.2.1",

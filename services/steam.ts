@@ -128,3 +128,15 @@ export const getUserStatsForGame = async (steamId: string, appId: number): Promi
     return null;
   }
 };
+
+export const getImageForGame = async (appId: number) => {
+  const url = `http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=${appId}`;
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error("Error fetching game data:", error);
+    return null;
+  }
+};
