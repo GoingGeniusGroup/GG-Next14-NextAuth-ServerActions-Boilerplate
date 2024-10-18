@@ -1,17 +1,17 @@
 "use client";
 
-import React, { useTransition } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { Form } from "@/components/ui/form";
-import { FormInput } from "@/components/auth/form-input";
 import { profile } from "@/actions/profile";
-import { toast } from "sonner";
-import { ExtendedUser } from "@/types/next-auth";
+import { FormInput } from "@/components/auth/form-input";
 import { FormToggle } from "@/components/auth/form-toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Form } from "@/components/ui/form";
+import { ExtendedUser } from "@/types/next-auth";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { UserRound } from "lucide-react";
+import { useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
 
 import { profileSchema } from "@/schemas";
 
@@ -29,7 +29,7 @@ export const ProfileForm = ({ user, onProfileUpdate }: ProfileFormProps) => {
     resolver: zodResolver(profileSchema),
     mode: "onChange",
     values: {
-      name: user.name || undefined,
+      username: user.name || undefined,
       email: user.email || undefined,
       password: undefined,
       newPassword: undefined,
@@ -43,7 +43,7 @@ export const ProfileForm = ({ user, onProfileUpdate }: ProfileFormProps) => {
         if (data.success) {
           const updatedUser = {
             ...user,
-            name: values.name,
+            username: values.username,
             email: values.email,
             isTwoFactorEnabled: values.isTwoFactorEnabled ?? false,
           };
@@ -77,7 +77,7 @@ export const ProfileForm = ({ user, onProfileUpdate }: ProfileFormProps) => {
             <>
               <FormInput
                 control={form.control}
-                name="name"
+                name="username"
                 label="Name"
                 type="text"
                 placeholder="e.g. John Doe"
@@ -126,7 +126,7 @@ export const ProfileForm = ({ user, onProfileUpdate }: ProfileFormProps) => {
             <>
               <FormInput
                 control={form.control}
-                name="name"
+                name="username"
                 label="Name"
                 type="text"
                 placeholder="e.g. John Doe"
