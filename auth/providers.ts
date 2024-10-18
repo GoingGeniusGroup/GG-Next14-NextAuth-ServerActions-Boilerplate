@@ -20,8 +20,8 @@ export const CredentialsProvider = Credentials({
 
       if (passwordsMatch) {
         return {
-          id: user.id,
-          name: user.name,
+          id: user.gg_id,
+          name: user.username,
           email: user.email,
           role: user.role,
           isTwoFactorEnabled: user.isTwoFactorEnabled,
@@ -56,7 +56,7 @@ export const GoogleProvider = Google({
   profile(profile) {
     return {
       id: profile.sub,
-      name: profile.name,
+      name: profile.username,
       email: profile.email,
       image: profile.picture,
       role: UserRole.User,

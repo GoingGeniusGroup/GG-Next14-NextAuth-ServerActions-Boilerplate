@@ -19,7 +19,7 @@ export const RegisterForm = ({ isMobile }: { isMobile: boolean }) => {
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      name: "",
+      username: "",
       email: "",
       password: "",
     },
@@ -50,8 +50,8 @@ export const RegisterForm = ({ isMobile }: { isMobile: boolean }) => {
           <div className="space-y-4">
             <FormInput
               control={form.control}
-              name="name"
-              label="Name"
+              name="username"
+              label="Username"
               type="text"
               placeholder="e.g. John Doe"
               isPending={isPending}

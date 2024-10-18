@@ -57,7 +57,7 @@ export const newPassword = async (payload: z.infer<typeof newPasswordSchema>, to
   const hashedPassword = await hashPassword(password);
 
   // Replace the old password with the new one.
-  await updateUserById(existingUser.id, {
+  await updateUserById(existingUser.gg_id, {
     password: hashedPassword,
   });
   // Delete reset password token.

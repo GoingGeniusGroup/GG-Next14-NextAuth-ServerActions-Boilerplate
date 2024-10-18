@@ -8,8 +8,8 @@ export const getUserByEmail = async (email: string) => {
     const user = await db.user.findUnique({
       where: { email },
       select: {
-        id: true,
-        name: true,
+        gg_id: true,
+        username: true,
         email: true,
         password: true,
         role: true,
@@ -24,9 +24,9 @@ export const getUserByEmail = async (email: string) => {
   }
 };
 
-export const getUserById = async (id: string) => {
+export const getUserById = async (gg_id: string) => {
   try {
-    const user = await db.user.findUnique({ where: { id } });
+    const user = await db.user.findUnique({ where: { gg_id } });
 
     return user;
   } catch {
@@ -45,10 +45,10 @@ export const createUser = async (payload: z.infer<typeof registerSchema>) => {
 };
 
 type UpdateUserType = Prisma.Args<typeof db.user, "update">["data"];
-export const updateUserById = async (id: string, payload: UpdateUserType) => {
+export const updateUserById = async (gg_id: string, payload: UpdateUserType) => {
   try {
     return await db.user.update({
-      where: { id },
+      where: { gg_id },
       data: payload,
     });
   } catch {

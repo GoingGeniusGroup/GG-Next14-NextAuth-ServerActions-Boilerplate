@@ -24,7 +24,7 @@ export const profile = async (payload: z.infer<typeof profileSchema>) => {
     });
   }
 
-  let { name, email, password, newPassword, isTwoFactorEnabled } = validatedFields.data;
+  let { username, email, password, newPassword, isTwoFactorEnabled } = validatedFields.data;
 
   // Check if current user does not exist, then return an error.
   const user = await currentUser();
@@ -62,7 +62,7 @@ export const profile = async (payload: z.infer<typeof profileSchema>) => {
   if (email && email !== user.email) {
     // Check if email already in use from another user and make sure that email doesn't same as current user.
     const existingEmail = await getUserByEmail(email);
-    if (existingEmail && user.id !== existingEmail.id) {
+    if (existingEmail && user.id !== existingEmail.gg_id) {
       return response({
         success: false,
         error: {
@@ -109,12 +109,11 @@ export const profile = async (payload: z.infer<typeof profileSchema>) => {
 
   // Check if user disabled 2fa, then delete two factor confirmation
   if (!isTwoFactorEnabled) {
-    await deleteTwoFactorConfirmationByUserId(existingUser.id);
+    await deleteTwoFactorConfirmationByUserId(existingUser.gg_id);
   }
 
   // Update current user
-  const updatedUser = await updateUserById(existingUser.id, {
-    name,
+  const updatedUser = await updateUserById(existingUser.gg_id, {
     email,
     password,
     isTwoFactorEnabled,

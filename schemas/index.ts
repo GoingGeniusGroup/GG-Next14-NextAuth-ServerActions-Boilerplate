@@ -12,7 +12,7 @@ export const loginSchema = z.object({
 
 export const registerSchema = z.object({
   email: EMAIL_SCHEMA,
-  name: z
+  username: z
     .string()
     .min(1, {
       message: "Name is required.",
@@ -55,7 +55,7 @@ export const twoFactorSchema = z.object({
 
 export const profileSchema = z
   .object({
-    name: z.optional(
+    username: z.optional(
       z
         .string()
         .min(1, {

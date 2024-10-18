@@ -10,7 +10,7 @@ import NextAuth from "next-auth";
 
 export const {
   handlers: { GET, POST },
-  auth,
+  auth, 
   signIn,
   signOut,
   update
@@ -34,7 +34,7 @@ export const {
       if (user) {
         token.id = user.id;
         token.email = user.email;
-        token.name = user.name;
+        token.username = user.name;
         token.isOAuth = !!account;
       }
 
@@ -43,9 +43,9 @@ export const {
       const existingUser = await getUserById(token.sub);
       if (!existingUser) return token;
 
-      const existingAccount = await getAccountByUserId(existingUser.id);
+      const existingAccount = await getAccountByUserId(existingUser.gg_id);
 
-      token.name = existingUser.name;
+      token.username = existingUser.username;
       token.email = existingUser.email;
       token.role = existingUser.role;
       token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
@@ -72,7 +72,7 @@ export const {
       
       if (existingUser?.isTwoFactorEnabled) {
         const existingTwoFactorConfirmation = await getTwoFactorConfirmationByUserId(
-          existingUser.id
+          existingUser.gg_id
         );
         if (!existingTwoFactorConfirmation) return false;
         const hasExpired = isExpired(existingTwoFactorConfirmation.expires);
