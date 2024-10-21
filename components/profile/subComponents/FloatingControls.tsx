@@ -5,13 +5,11 @@ import { PauseIcon, PlayIcon } from "lucide-react";
 type FloatingControlsProps = {
   isPlaying: boolean;
   togglePlayPause: () => void;
-  username: string;
 };
 
 const FloatingControls: React.FC<FloatingControlsProps> = ({
   isPlaying,
   togglePlayPause,
-  username,
 }) => (
   <div className="fixed bottom-28 right-4 z-20 flex flex-col items-end space-y-2">
     <Button

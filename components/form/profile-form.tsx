@@ -155,7 +155,7 @@ export const ProfileForm = ({ user, onProfileUpdate }: ProfileFormProps) => {
               className="w-full text-xs"
               size="sm"
               variant="black"
-              disabled={isPending}
+              disabled={user.isOAuth ? true : isPending}
             >
               {isPending ? "Updating..." : "Update Profile"}
             </Button>

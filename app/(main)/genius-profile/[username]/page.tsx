@@ -2,7 +2,15 @@ import AboutSection from "@/components/layouts/console/AboutSection";
 import BottomSection from "@/components/layouts/console/BottomSection";
 import GeniusUserAvatar from "@/components/layouts/GeniusUserProfile/GeniusUserAvatar";
 
-export default function GeniusProfilePage() {
+interface ProfileViewProps {
+  params: {
+    username: string;
+  };
+}
+
+export default function GeniusProfilePage({ params }: ProfileViewProps) {
+  const username = params.username;
+
   const newsItems = [
     {
       title: "Project 1",
@@ -39,7 +47,7 @@ export default function GeniusProfilePage() {
   ];
 
   const aboutGenius = {
-    name: "Ramen Genius",
+    name: username,
     description:
       "Stay up to date with the latest Ram news, updates, and item shop releases. Get information about upcoming collaborations and special events. Stay up to date with the latest Fortnite news, updates, and item shop releases. Get information about upcoming collaborations and special events.",
     guild: "VAJRA",
