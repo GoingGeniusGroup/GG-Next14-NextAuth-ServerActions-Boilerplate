@@ -54,7 +54,7 @@ export default async function RootLayout({
                     </div>
 
                     {/* Content section */}
-                    <div className="flex-1 px-8 py-4 overflow-auto">
+                    <div className="flex-1 px-8 pb-4 overflow-auto">
                       {children}
                     </div>
                   </div>

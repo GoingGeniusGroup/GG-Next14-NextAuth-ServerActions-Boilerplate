@@ -217,7 +217,6 @@ export default function PublicProfile({ username }: { username: string }) {
       <FloatingControls
         isPlaying={isPlaying}
         togglePlayPause={togglePlayPause}
-        username={username}
       />
 
       {/* Background Video Changer */}

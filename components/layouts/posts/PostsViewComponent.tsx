@@ -161,17 +161,20 @@ export default function PostsViewComponent() {
   );
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      {/* Video Background */}
-      <VideoBackground src={videos[currentVideo]} isPlaying={isPlaying} />
+    <div className="h-full relative overflow-hidden">
+      {/* Video Background Layer */}
+      <div className="fixed inset-0 z-0">
+        <VideoBackground src={videos[currentVideo]} isPlaying={isPlaying} />
+        <div className="absolute inset-0 bg-black bg-opacity-30" />
+      </div>
 
       {/* Black Opacity */}
-      <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-30" />
+      <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-30 rounded-xl" />
 
       {/* Header with Layout Dropdown */}
       <Header changeLayout={changeLayout} />
 
-      <main
+      <div
         className={`relative z-10 container mx-auto w-[85%] px-4 py-8 ${
           layout === "gap" ? "mt-16" : ""
         }`}
@@ -211,7 +214,7 @@ export default function PostsViewComponent() {
             <PostsGrid posts={filteredPosts} layout={layout} />
           </div>
         </div>
-      </main>
+      </div>
 
       {/* Floating Controls */}
       <FloatingControls
