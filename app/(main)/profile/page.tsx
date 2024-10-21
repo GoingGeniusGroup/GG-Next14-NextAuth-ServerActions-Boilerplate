@@ -29,9 +29,9 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="flex justify-center">
+    <div className="relative flex justify-center">
       <div className="border rounded-lg shadow-lg shadow-black/40 p-8 max-w-md w-full">
-        <h2 className="text-2xl font-semibold text-center mb-6">
+        <h2 className="text-2xl font-semibold text-center mb-6 dark:text-white text-black">
           Profile Settings
         </h2>
         <ProfileForm user={user} onProfileUpdate={handleProfileUpdate} />

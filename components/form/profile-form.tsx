@@ -58,7 +58,7 @@ export const ProfileForm = ({ user, onProfileUpdate }: ProfileFormProps) => {
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 dark:text-white text-black">
       {/* Avatar Section with Circular Gradient and Hover Animation */}
       <div className="flex justify-center mb-4">
         <Avatar className="w-24 h-24 sm:w-32 sm:h-32 relative">
