@@ -73,7 +73,7 @@ const ShopSection = ({ isMobile }: { isMobile: boolean }) => {
         isMobile ? "h-full overflow-y-auto" : ""
       }`}
     >
-      <header className="mb-4 p-2 z-20 bg-white/40 rounded-md backdrop-blur-md">
+      <header className="sticky -top-4 mb-4 p-2 z-20 bg-white/40 dark:text-white text-black rounded-md backdrop-blur-md">
         {isMobile ? (
           <>
             <div className="flex items-center justify-center mb-2 ">
@@ -100,7 +100,7 @@ const ShopSection = ({ isMobile }: { isMobile: boolean }) => {
               className="relative cursor-pointer"
               onClick={() => setIsCartOpen(true)}
             >
-              <ShoppingCart className="w-6 h-6" />
+              <ShoppingCart className="w-6 h-6 text-black" />
               {totalItems > 0 && (
                 <Badge
                   variant="destructive"
@@ -114,7 +114,7 @@ const ShopSection = ({ isMobile }: { isMobile: boolean }) => {
         )}
         <nav className="w-full">
           <ScrollArea className="w-full">
-            <div className="flex space-x-2 pb-2 pt-4">
+            <div className="flex space-x-2 p-1">
               {(categories || []).map((category) => (
                 <Button
                   key={category}
@@ -124,8 +124,8 @@ const ShopSection = ({ isMobile }: { isMobile: boolean }) => {
                   size="sm"
                   className={`text-xs whitespace-nowrap ${
                     selectedCategory === category
-                      ? "font-semibold text-white"
-                      : "text-black"
+                      ? "font-semibold dark:text-black text-white"
+                      : "dark:text-white text-black"
                   }`}
                   onClick={() => setSelectedCategory(category)}
                 >
@@ -138,8 +138,8 @@ const ShopSection = ({ isMobile }: { isMobile: boolean }) => {
         </nav>
       </header>
 
-      <div className="flex h-[calc(100vh-120px)]">
-        <div className={`w-full p-2 overflow-y-auto`}>
+      <div className="flex">
+        <div className={`w-full p-2`}>
           <ProductList
             products={filteredProducts}
             cart={cart}

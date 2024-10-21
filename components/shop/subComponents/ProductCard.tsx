@@ -55,7 +55,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
           {product.price.toFixed(2)}
           <span className="absolute right-2">
             {cartQuantity > 0 && (
-              <Badge variant="cool" className="ml-1 text-xs rounded-md">
+              <Badge
+                variant="cool"
+                className="ml-1 text-xs rounded-md dark:text-black"
+              >
                 {cartQuantity}
               </Badge>
             )}
