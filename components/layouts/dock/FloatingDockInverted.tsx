@@ -8,6 +8,7 @@ import {
   IconHome,
   IconShoppingBag,
   IconShoppingBagHeart,
+  IconSlash,
   IconUser,
 } from "@tabler/icons-react";
 
@@ -49,6 +50,11 @@ export default function FloatingDockInvertedComponent() {
       title: "Bento Grid",
       icon: <IconGridPattern className="size-full" />,
       href: "/bento-grid",
+    },
+    {
+      title: "Tabs",
+      icon: <IconSlash className="size-full" />,
+      href: "/tabs",
     },
     {
       title: "Profile",
