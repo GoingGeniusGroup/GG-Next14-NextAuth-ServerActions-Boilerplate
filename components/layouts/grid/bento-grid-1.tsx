@@ -10,7 +10,7 @@ import {
   IconTableColumn,
 } from "@tabler/icons-react";
 
-export default function BentoGridDemo() {
+export default function BentoGridComponent() {
   return (
     <BentoGrid className="max-w-4xl mx-auto">
       {items.map((item, i) => (

@@ -1,6 +1,11 @@
 import AboutSection from "@/components/layouts/console/AboutSection";
 import BottomSection from "@/components/layouts/console/BottomSection";
 import GeniusUserAvatar from "@/components/layouts/GeniusUserProfile/GeniusUserAvatar";
+import GeniusUserHome from "@/components/layouts/GeniusUserProfile/GeniusUserHome";
+import BentoGridComponent from "@/components/layouts/grid/bento-grid-1";
+import { CollapsibleSidebarTabs } from "@/components/ui/tabs/custom-tabs";
+import { ChevronRight } from "lucide-react";
+import Image from "next/image";
 
 interface ProfileViewProps {
   params: {
@@ -8,60 +13,76 @@ interface ProfileViewProps {
   };
 }
 
+type Tab = {
+  title: string;
+  value: string;
+  content?: string | React.ReactNode | any;
+  icon: React.ReactNode;
+};
+
 export default function GeniusProfilePage({ params }: ProfileViewProps) {
   const username = params.username;
 
-  const newsItems = [
+  const tabs: Tab[] = [
     {
-      title: "Project 1",
-      image:
-        "https://www.simplilearn.com/ice9/free_resources_article_thumb/project_management_coursefees.jpg",
-      description:
-        "A technology company that builds economic infrastructure for the internet.",
-      link: "#",
+      title: "Home",
+      value: "home",
+      icon: <ChevronRight size={24} />,
+      content: (
+        <div>
+          <GeniusUserHome username={username} />
+        </div>
+      ),
     },
     {
-      title: "Project 2",
-      image:
-        "https://www.shutterstock.com/image-photo/project-manager-working-on-computer-600nw-2002388855.jpg",
-      description:
-        "A technology company that builds economic infrastructure for the internet.",
-      link: "#",
+      title: "Gallery",
+      value: "gallery",
+      icon: <ChevronRight size={24} />,
+      content: (
+        <div>
+          <DummyContent />
+        </div>
+      ),
     },
     {
-      title: "Project 3",
-      image:
-        "https://www.michaelpage.com.au/sites/michaelpage.com.au/files/2022-06/IT%20Project%20Manager.jpg",
-      description:
-        "A technology company that builds economic infrastructure for the internet.",
-      link: "#",
+      title: "Projects",
+      value: "projects",
+      icon: <ChevronRight size={24} />,
+      content: (
+        <div>
+          <BentoGridComponent />
+        </div>
+      ),
     },
     {
-      title: "Project 4",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1qLr3cR3-yr-1UaLFYoIKDw3gl5FJbBjCxA&s",
-      description:
-        "A technology company that builds economic infrastructure for the internet.",
-      link: "#",
+      title: "Experience",
+      value: "experience",
+      icon: <ChevronRight size={24} />,
+      content: (
+        <div>
+          <BentoGridComponent />
+        </div>
+      ),
     },
   ];
 
-  const aboutGenius = {
-    name: username,
-    description:
-      "Stay up to date with the latest Ram news, updates, and item shop releases. Get information about upcoming collaborations and special events. Stay up to date with the latest Fortnite news, updates, and item shop releases. Get information about upcoming collaborations and special events.",
-    guild: "VAJRA",
-    age: 25,
-  };
-
   return (
-    <div className="relative mt-5">
-      <AboutSection aboutUser={aboutGenius} />
-      <div className="absolute top-[-70px] right-6">
-        <GeniusUserAvatar />
-      </div>
-      {/* News Grid */}
-      <BottomSection items={newsItems} />
+    <div className="relative size-full">
+      {/* Tabs */}
+      <CollapsibleSidebarTabs tabs={tabs} />
     </div>
   );
 }
+
+const DummyContent = () => {
+  return (
+    <Image
+      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQOmWaUAEICbwQ6IZFTNvszqzxitoRog0MQw&s"
+      alt="dummy image"
+      width="1000"
+      height="1000"
+      className="object-cover object-left-top h-[60%]  md:h-[90%] absolute -bottom-10 inset-x-0 w-[90%] rounded-xl mx-auto"
+      unoptimized
+    />
+  );
+};
