@@ -14,7 +14,7 @@ export default function BentoGrid() {
   };
 
   return (
-    <div className="flex justify-end mb-4 gap-x-2">
+    <div className="relative flex justify-end mb-4 gap-x-2">
       <Button
         variant="black"
         className={`${selected === "BentoGridDemo" && "bg-white text-black"}`}
