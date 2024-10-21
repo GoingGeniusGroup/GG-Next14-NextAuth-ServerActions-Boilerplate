@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-function-type */
 import React, { useEffect } from "react";
 
 export const useOutsideClick = (
@@ -6,7 +5,6 @@ export const useOutsideClick = (
   callback: Function
 ) => {
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const listener = (event: any) => {
       if (!ref.current || ref.current.contains(event.target)) {
         return;

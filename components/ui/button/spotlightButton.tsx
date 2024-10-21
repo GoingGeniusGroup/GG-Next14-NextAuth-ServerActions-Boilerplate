@@ -28,6 +28,7 @@ const SpotlightButton = ({ text, isPending, type }: ButtonProps) => {
 
     return () => {
       btnRef?.current?.removeEventListener("mousemove", handleMouseMove);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       btnRef?.current?.removeEventListener("mouseleave", handleMouseLeave);
     };
   }, []);
