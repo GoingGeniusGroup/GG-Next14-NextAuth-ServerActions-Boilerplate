@@ -192,7 +192,7 @@ export default function PostsViewComponent() {
           <Button
             onClick={toggleMinimize}
             variant="outline"
-            className="px-3 py-1"
+            className="px-3 py-1 dark:text-white text-black"
             aria-label="Maximize Minimize"
           >
             {isMinimized ? (
@@ -210,7 +210,7 @@ export default function PostsViewComponent() {
           className={`bg-white/20 rounded-xl overflow-auto backdrop-blur-md p-4 transition-all duration-500 relative h-[70vh] max-h-[70vh] min-h-[50vh]`}
         >
           {/* Posts Grid */}
-          <div ref={postGridRef} className="transition-all duration-500">
+          <div ref={postGridRef} className="transition-all duration-500 ">
             <PostsGrid posts={filteredPosts} layout={layout} />
           </div>
         </div>
