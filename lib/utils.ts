@@ -37,7 +37,10 @@ export function setTokenExpiration(exp: number = 60 * 60) {
  * @return The token generated
  */
 
-export function signJwt(payload: Record<string, unknown>, options?: SignOptions) {
+export function signJwt(
+  payload: Record<string, unknown>,
+  options?: SignOptions
+) {
   return sign(payload, process.env.JWT_SECRET as Secret, {
     ...options,
     algorithm: "HS256",
@@ -72,7 +75,9 @@ export const fileToBase64 = (file: File): Promise<string> => {
 
 // Overload for response status in server action
 export function response(response: ResponseWithMessage): Response;
-export function response<T extends Record<string, unknown>>(response: Response<T>): Response<T>;
+export function response<T extends Record<string, unknown>>(
+  response: Response<T>
+): Response<T>;
 export function response<T extends object>(response: T): T {
   return response;
 }

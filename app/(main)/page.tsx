@@ -13,7 +13,7 @@ export default async function Home() {
   const user = await currentUser();
   const profilePic = user?.image || undefined;
   return (
-    <div className="flex justify-center items-center bg-black">
+    <div className="flex justify-center items-center">
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <div className="w-[800px]">
           <h1 className="text-center text-2xl font-bold leading-10 text-black dark:text-white lg:text-6xl">
