@@ -2,6 +2,7 @@ import AboutSection from "@/components/layouts/console/AboutSection";
 import BottomSection from "@/components/layouts/console/BottomSection";
 import GeniusUserAvatar from "@/components/layouts/GeniusUserProfile/GeniusUserAvatar";
 import GeniusUserHome from "@/components/layouts/GeniusUserProfile/GeniusUserHome";
+import GeniusUserProjectsComponent from "@/components/layouts/GeniusUserProfile/GeniusUserProjectsComponent";
 import BentoGridComponent from "@/components/layouts/grid/bento-grid-1";
 import { CollapsibleSidebarTabs } from "@/components/ui/tabs/custom-tabs";
 import { ChevronRight } from "lucide-react";
@@ -50,7 +51,7 @@ export default function GeniusProfilePage({ params }: ProfileViewProps) {
       icon: <ChevronRight size={24} />,
       content: (
         <div>
-          <BentoGridComponent />
+          <GeniusUserProjectsComponent />
         </div>
       ),
     },
