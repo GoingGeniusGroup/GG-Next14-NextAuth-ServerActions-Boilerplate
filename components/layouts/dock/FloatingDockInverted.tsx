@@ -2,6 +2,7 @@ import React from "react";
 import { FloatingDockInverted } from "@/components/ui/dock/floating-dock-inverted";
 import {
   IconBrandPushover,
+  IconCoinEuroFilled,
   IconDeviceGamepad2,
   IconFocus,
   IconGridPattern,
@@ -10,6 +11,7 @@ import {
   IconShoppingBagHeart,
   IconSlash,
   IconUser,
+  IconUserBitcoin,
 } from "@tabler/icons-react";
 
 export default function FloatingDockInvertedComponent() {
@@ -55,6 +57,16 @@ export default function FloatingDockInvertedComponent() {
       title: "Tabs",
       icon: <IconSlash className="size-full" />,
       href: "/tabs",
+    },
+    {
+      title: "Console",
+      icon: <IconCoinEuroFilled className="size-full" />,
+      href: "/console",
+    },
+    {
+      title: "Genius Profile",
+      icon: <IconUserBitcoin className="size-full" />,
+      href: "/genius-profile/ram",
     },
     {
       title: "Profile",

@@ -1,9 +1,12 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { Lens } from "../lens/lens";
+import { usePathname } from "next/navigation";
 
 export const HoverEffect = ({
   items,
@@ -19,6 +22,7 @@ export const HoverEffect = ({
 }) => {
   // eslint-disable-next-line prefer-const
   let [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const pathname = usePathname();
 
   return (
     <div
@@ -51,7 +55,9 @@ export const HoverEffect = ({
                 d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"
               />
             </svg>
-            Your News
+            {pathname.startsWith("/genius-profile")
+              ? "View Project"
+              : "Your News"}
           </Link>
           <AnimatePresence>
             {hoveredIndex === idx && (
