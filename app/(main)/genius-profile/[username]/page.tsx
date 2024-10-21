@@ -5,33 +5,33 @@ import GeniusUserAvatar from "@/components/layouts/GeniusUserProfile/GeniusUserA
 export default function GeniusProfilePage() {
   const newsItems = [
     {
-      title: "Spider-Man No Way Home",
+      title: "Project 1",
       image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTc9APxkj0xClmrU3PpMZglHQkx446nQPG6lA&s",
+        "https://www.simplilearn.com/ice9/free_resources_article_thumb/project_management_coursefees.jpg",
       description:
         "A technology company that builds economic infrastructure for the internet.",
       link: "#",
     },
     {
-      title: "Fortnite Festival",
+      title: "Project 2",
       image:
-        "https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg",
+        "https://www.shutterstock.com/image-photo/project-manager-working-on-computer-600nw-2002388855.jpg",
       description:
         "A technology company that builds economic infrastructure for the internet.",
       link: "#",
     },
     {
-      title: "New Battle Pass",
+      title: "Project 3",
       image:
-        "https://cms.imgworlds.com/assets/a5366382-0c26-4726-9873-45d69d24f819.jpg?key=home-gallery",
+        "https://www.michaelpage.com.au/sites/michaelpage.com.au/files/2022-06/IT%20Project%20Manager.jpg",
       description:
         "A technology company that builds economic infrastructure for the internet.",
       link: "#",
     },
     {
-      title: "Rocket Racing",
+      title: "Project 4",
       image:
-        "https://img.freepik.com/free-photo/abstract-autumn-beauty-multi-colored-leaf-vein-pattern-generated-by-ai_188544-9871.jpg",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1qLr3cR3-yr-1UaLFYoIKDw3gl5FJbBjCxA&s",
       description:
         "A technology company that builds economic infrastructure for the internet.",
       link: "#",
@@ -39,10 +39,11 @@ export default function GeniusProfilePage() {
   ];
 
   const aboutGenius = {
-    name: "Official Ramen Genius",
+    name: "Ramen Genius",
     description:
       "Stay up to date with the latest Ram news, updates, and item shop releases. Get information about upcoming collaborations and special events. Stay up to date with the latest Fortnite news, updates, and item shop releases. Get information about upcoming collaborations and special events.",
-    updatedAt: "14 hours ago",
+    guild: "VAJRA",
+    age: 25,
   };
 
   return (
