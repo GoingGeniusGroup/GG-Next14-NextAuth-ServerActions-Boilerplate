@@ -170,7 +170,7 @@ export default function GeniusUserProjectsComponent() {
   );
 }
 
-export const CloseIcon = () => {
+const CloseIcon = () => {
   return (
     <motion.svg
       initial={{
