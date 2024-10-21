@@ -66,7 +66,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
         audioRef.current = null;
       }
     };
-  }, [product, isLooping]);
+  }, [product, isLooping, volume]);
 
   useEffect(() => {
     if (audioRef.current) {
