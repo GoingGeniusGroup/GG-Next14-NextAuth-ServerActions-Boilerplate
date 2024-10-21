@@ -14,34 +14,32 @@ export default function BentoGrid() {
   };
 
   return (
-    <div className="bg-gradient-to-br h-screen p-8 overflow-y-auto from-black to-white">
-      <div className="flex justify-end mb-4 gap-x-2">
-        <Button
-          variant="black"
-          className={`${selected === "BentoGridDemo" && "bg-white text-black"}`}
-          onClick={() => handleSelect("BentoGridDemo")}
-        >
-          Demo 1
-        </Button>
-        <Button
-          variant="black"
-          className={`${
-            selected === "BentoGridSecondDemo" && "bg-white text-black"
-          }`}
-          onClick={() => handleSelect("BentoGridSecondDemo")}
-        >
-          Demo 2
-        </Button>
-        <Button
-          variant="black"
-          className={`${
-            selected === "BentoGridThirdDemo" && "bg-white text-black"
-          }`}
-          onClick={() => handleSelect("BentoGridThirdDemo")}
-        >
-          Demo 2
-        </Button>
-      </div>
+    <div className="relative flex justify-end mb-4 gap-x-2">
+      <Button
+        variant="black"
+        className={`${selected === "BentoGridDemo" && "bg-white text-black"}`}
+        onClick={() => handleSelect("BentoGridDemo")}
+      >
+        Demo 1
+      </Button>
+      <Button
+        variant="black"
+        className={`${
+          selected === "BentoGridSecondDemo" && "bg-white text-black"
+        }`}
+        onClick={() => handleSelect("BentoGridSecondDemo")}
+      >
+        Demo 2
+      </Button>
+      <Button
+        variant="black"
+        className={`${
+          selected === "BentoGridThirdDemo" && "bg-white text-black"
+        }`}
+        onClick={() => handleSelect("BentoGridThirdDemo")}
+      >
+        Demo 2
+      </Button>
 
       {/* Render the selected demo */}
       {selected === "BentoGridDemo" && <BentoGridDemo />}

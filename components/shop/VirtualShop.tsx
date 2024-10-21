@@ -91,13 +91,13 @@ const VirtualShop = () => {
 
   return (
     <div className={`mx-auto px-2 pb-4`}>
-      <header className="mb-4 p-2 sticky top-0 z-20 bg-white/40 rounded-md backdrop-blur-md">
+      <header className="mb-4 p-2 sticky -top-4 z-20 bg-white/40 dark:text-white text-black rounded-md backdrop-blur-md">
         <div className="absolute top-5 right-4 z-20">
           <div
             className="relative cursor-pointer"
             onClick={() => setIsCartOpen(true)}
           >
-            <ShoppingCart className="w-6 h-6" />
+            <ShoppingCart className="w-6 h-6 text-black hover:text-yellow-600" />
             {totalItems > 0 && (
               <Badge
                 variant="destructive"
@@ -126,7 +126,7 @@ const VirtualShop = () => {
               </Tooltip>
               <Switch
                 id="switch-view"
-                className="data-[state=unchecked]:bg-black data-[state=checked]:bg-black"
+                className="data-[state=unchecked]:bg-black data-[state=checked]:bg-black "
                 onCheckedChange={handleViewChange} // Update state based on the switch
               />
 
@@ -146,7 +146,7 @@ const VirtualShop = () => {
           </div>
           {/* SubFilters */}
           <ScrollArea className={`md:w-[70%] w-full`}>
-            <div className="flex space-x-2 pb-2 pt-4">
+            <div className="flex space-x-2 p-1">
               {categories.map((category) => (
                 <Button
                   key={category}
@@ -156,8 +156,8 @@ const VirtualShop = () => {
                   size="sm"
                   className={`text-xs whitespace-nowrap ${
                     selectedCategory === category
-                      ? "font-semibold text-white"
-                      : "text-black"
+                      ? "font-semibold dark:text-black  text-white"
+                      : "text-black dark:text-white "
                   }`}
                   onClick={() => setSelectedCategory(category)}
                 >
@@ -190,7 +190,7 @@ const VirtualShop = () => {
           )}
         </div>
         <div className="md:w-[30%] px-4 py-2 md:sticky md:right-0 md:top-[80px] md:h-[calc(100vh-120px)] overflow-y-auto fixed top-30 right-10 size-[250px]">
-          <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200/30">
+          <div className="bg-white dark:bg-transparent rounded-lg shadow-lg p-6 border border-gray-200/30">
             <ProductDetail product={selectedProduct} onAddToCart={addToCart} />
           </div>
         </div>

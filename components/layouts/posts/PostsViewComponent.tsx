@@ -5,12 +5,12 @@ import { gsap } from "gsap";
 import { Button } from "@/components/ui/button/button";
 
 // Sub-components
-import Header from "./subComponents/Header";
-import VideoBackground from "./subComponents/VideoBackground";
-import SearchBar from "./subComponents/SearchBar";
-import PostsGrid from "./subComponents/PostGrids";
-import FloatingControls from "./subComponents/FloatingControls";
-import BackgroundChanger from "./subComponents/BackgroundChanger";
+import Header from "@/components/profile/subComponents/Header";
+import VideoBackground from "@/components/profile/subComponents/VideoBackground";
+import SearchBar from "@/components/profile/subComponents/SearchBar";
+import PostsGrid from "@/components/profile/subComponents/PostGrids";
+import FloatingControls from "@/components/profile/subComponents/FloatingControls";
+import BackgroundChanger from "@/components/profile/subComponents/BackgroundChanger";
 
 //icons
 import { FiMaximize2, FiMinimize2 } from "react-icons/fi";
@@ -68,7 +68,7 @@ const posts = [
 
 type Layout = "full" | "headings" | "compact" | "gap";
 
-export default function PublicProfile({ username }: { username: string }) {
+export default function PostsViewComponent() {
   const [currentVideo, setCurrentVideo] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [layout, setLayout] = useState<Layout>("full");
@@ -161,17 +161,20 @@ export default function PublicProfile({ username }: { username: string }) {
   );
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      {/* Video Background */}
-      <VideoBackground src={videos[currentVideo]} isPlaying={isPlaying} />
+    <div className="h-full relative overflow-hidden">
+      {/* Video Background Layer */}
+      <div className="fixed inset-0 z-0">
+        <VideoBackground src={videos[currentVideo]} isPlaying={isPlaying} />
+        <div className="absolute inset-0 bg-black bg-opacity-30" />
+      </div>
 
       {/* Black Opacity */}
-      <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-30" />
+      <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-30 rounded-xl" />
 
       {/* Header with Layout Dropdown */}
       <Header changeLayout={changeLayout} />
 
-      <main
+      <div
         className={`relative z-10 container mx-auto w-[85%] px-4 py-8 ${
           layout === "gap" ? "mt-16" : ""
         }`}
@@ -189,7 +192,7 @@ export default function PublicProfile({ username }: { username: string }) {
           <Button
             onClick={toggleMinimize}
             variant="outline"
-            className="px-3 py-1"
+            className="px-3 py-1 dark:text-white text-black"
             aria-label="Maximize Minimize"
           >
             {isMinimized ? (
@@ -207,11 +210,11 @@ export default function PublicProfile({ username }: { username: string }) {
           className={`bg-white/20 rounded-xl overflow-auto backdrop-blur-md p-4 transition-all duration-500 relative h-[70vh] max-h-[70vh] min-h-[50vh]`}
         >
           {/* Posts Grid */}
-          <div ref={postGridRef} className="transition-all duration-500">
+          <div ref={postGridRef} className="transition-all duration-500 ">
             <PostsGrid posts={filteredPosts} layout={layout} />
           </div>
         </div>
-      </main>
+      </div>
 
       {/* Floating Controls */}
       <FloatingControls

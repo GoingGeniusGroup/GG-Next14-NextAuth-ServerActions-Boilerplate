@@ -7,6 +7,7 @@ import {
   IconFocus,
   IconGridPattern,
   IconHome,
+  IconPhotoStar,
   IconShoppingBag,
   IconShoppingBagHeart,
   IconSlash,
@@ -67,6 +68,11 @@ export default function FloatingDockInvertedComponent() {
       title: "Genius Profile",
       icon: <IconUserBitcoin className="size-full" />,
       href: "/genius-profile/ram",
+    },
+    {
+      title: "Posts",
+      icon: <IconPhotoStar className="size-full" />,
+      href: "/posts",
     },
     {
       title: "Profile",

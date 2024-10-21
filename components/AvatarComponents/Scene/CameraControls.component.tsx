@@ -5,51 +5,47 @@ import { Camera, Object3D, Vector3 } from "three";
 import { OrbitControls } from "three-stdlib";
 
 type CameraControlsProps = {
-  // eslint-disable-next-line react/no-unused-prop-types
-  // fullBody?: boolean;
-  // headScale?: number;
   cameraTarget?: number;
   cameraInitialDistance?: number;
-  /**
-   * Handles camera movement on the Z-axis.
-   */
   cameraZoomTarget?: Vector3;
   controlsMinDistance?: number;
   controlsMaxDistance?: number;
-  /**
-   * Enables camera moving on Y-axis while zooming in-out.
-   */
   updateCameraTargetOnZoom?: boolean;
-  /**
-   * Updates camera position based on the target position.
-   */
   modelRef?: React.RefObject<Object3D>;
   followModel?: boolean;
 };
-let controls: OrbitControls;
-let progress = Number.POSITIVE_INFINITY;
 
-const updateCameraFocus = (camera: Camera, delta: number, target?: Vector3) => {
-  if (target && progress <= 1) {
-    camera.position.setX(lerp(camera.position.x, target.x, progress));
-    camera.position.setZ(lerp(camera.position.z, target.z, progress));
-    progress += delta;
+const updateCameraFocus = (
+  camera: Camera,
+  delta: number,
+  target: Vector3 | undefined,
+  progressRef: { current: number }
+) => {
+  if (target && progressRef.current <= 1) {
+    camera.position.setX(
+      lerp(camera.position.x, target.x, progressRef.current)
+    );
+    camera.position.setZ(
+      lerp(camera.position.z, target.z, progressRef.current)
+    );
+    progressRef.current += delta;
   }
 };
 
 const updateCameraTarget = (
+  controls: OrbitControls,
   camera: Camera,
   target: number,
   minDistance: number,
   maxDistance: number
 ) => {
-  if (controls) {
-    let distance = controls.target.distanceTo(camera.position);
-    distance = clamp(distance, maxDistance, minDistance);
-    const pivot = (distance - minDistance) / (maxDistance - minDistance);
-
-    controls.target.set(0, target - 0.6 * pivot, 0);
-  }
+  const distance = clamp(
+    controls.target.distanceTo(camera.position),
+    maxDistance,
+    minDistance
+  );
+  const pivot = (distance - minDistance) / (maxDistance - minDistance);
+  controls.target.set(0, target - 0.6 * pivot, 0);
 };
 
 export const CameraControls: FC<CameraControlsProps> = ({
@@ -62,64 +58,77 @@ export const CameraControls: FC<CameraControlsProps> = ({
   followModel = false,
   modelRef,
 }) => {
-  const cameraZoomTargetRef = useRef(cameraZoomTarget);
   const { camera, gl } = useThree();
+  const controlsRef = useRef<OrbitControls | null>(null);
+  const progressRef = useRef(Number.POSITIVE_INFINITY);
+  const cameraZoomTargetRef = useRef(cameraZoomTarget);
   const fallbackCameraTarget = cameraTarget || 1.475;
 
   useEffect(() => {
+    // Handle camera zoom target updates
     if (
       cameraZoomTargetRef.current?.x !== cameraZoomTarget?.x ||
       cameraZoomTargetRef.current?.y !== cameraZoomTarget?.y ||
       cameraZoomTargetRef.current?.z !== cameraZoomTarget?.z
     ) {
       cameraZoomTargetRef.current = cameraZoomTarget;
-      progress = 0;
+      progressRef.current = 0;
     }
 
-    controls = new OrbitControls(camera, gl.domElement);
+    // Initialize controls
+    const controls = new OrbitControls(camera, gl.domElement);
+    controlsRef.current = controls;
+
+    // Configure controls
     controls.enableRotate = true;
     controls.enablePan = false;
-
     controls.minDistance = controlsMinDistance;
     controls.maxDistance = controlsMaxDistance;
     controls.minPolarAngle = 1.4;
     controls.maxPolarAngle = 1.4;
-
     controls.target.set(0, fallbackCameraTarget, 0);
-    controls.update();
 
-    if (cameraInitialDistance && progress === Number.POSITIVE_INFINITY) {
+    // Set initial camera position if specified
+    if (
+      cameraInitialDistance &&
+      progressRef.current === Number.POSITIVE_INFINITY
+    ) {
       camera.position.z = cameraInitialDistance;
-      controls.update();
     }
+
+    controls.update();
 
     return () => {
       controls.dispose();
+      controlsRef.current = null;
     };
   }, [
-    cameraInitialDistance,
     camera,
+    gl.domElement,
+    cameraInitialDistance,
     controlsMinDistance,
     controlsMaxDistance,
     fallbackCameraTarget,
-    gl.domElement,
     cameraZoomTarget,
   ]);
 
   useFrame((_, delta) => {
+    const controls = controlsRef.current;
+    if (!controls) return;
+
     if (followModel && modelRef?.current) {
-      const modelPosition = modelRef.current.position;
-      controls.target.copy(modelPosition);
-      controls.update();
+      controls.target.copy(modelRef.current.position);
     } else if (updateCameraTargetOnZoom) {
       updateCameraTarget(
+        controls,
         camera,
         fallbackCameraTarget,
         controlsMinDistance,
         controlsMaxDistance
       );
     }
-    updateCameraFocus(camera, delta, cameraZoomTarget);
+
+    updateCameraFocus(camera, delta, cameraZoomTarget, progressRef);
     controls.update();
   });
 

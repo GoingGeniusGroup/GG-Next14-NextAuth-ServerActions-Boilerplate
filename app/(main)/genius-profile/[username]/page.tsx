@@ -1,58 +1,95 @@
 import AboutSection from "@/components/layouts/console/AboutSection";
 import BottomSection from "@/components/layouts/console/BottomSection";
 import GeniusUserAvatar from "@/components/layouts/GeniusUserProfile/GeniusUserAvatar";
+import GeniusUserHome from "@/components/layouts/GeniusUserProfile/GeniusUserHome";
+import GeniusUserProjectsComponent from "@/components/layouts/GeniusUserProfile/GeniusUserProjectsComponent";
+import BentoGridComponent from "@/components/layouts/grid/bento-grid-1";
+import { CollapsibleSidebarTabs } from "@/components/ui/tabs/custom-tabs";
+import {
+  IconExposure,
+  IconHome,
+  IconPhoto,
+  IconTool,
+} from "@tabler/icons-react";
+import { ChevronRight } from "lucide-react";
+import Image from "next/image";
 
-export default function GeniusProfilePage() {
-  const newsItems = [
+interface ProfileViewProps {
+  params: {
+    username: string;
+  };
+}
+
+type Tab = {
+  title: string;
+  value: string;
+  content?: string | React.ReactNode | any;
+  icon: React.ReactNode;
+};
+
+export default function GeniusProfilePage({ params }: ProfileViewProps) {
+  const username = params.username;
+
+  const tabs: Tab[] = [
     {
-      title: "Spider-Man No Way Home",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTc9APxkj0xClmrU3PpMZglHQkx446nQPG6lA&s",
-      description:
-        "A technology company that builds economic infrastructure for the internet.",
-      link: "#",
+      title: "Home",
+      value: "home",
+      icon: <IconHome size={24} />,
+      content: (
+        <div>
+          <GeniusUserHome username={username} />
+        </div>
+      ),
     },
     {
-      title: "Fortnite Festival",
-      image:
-        "https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg",
-      description:
-        "A technology company that builds economic infrastructure for the internet.",
-      link: "#",
+      title: "Gallery",
+      value: "gallery",
+      icon: <IconPhoto size={24} />,
+      content: (
+        <div>
+          <DummyContent />
+        </div>
+      ),
     },
     {
-      title: "New Battle Pass",
-      image:
-        "https://cms.imgworlds.com/assets/a5366382-0c26-4726-9873-45d69d24f819.jpg?key=home-gallery",
-      description:
-        "A technology company that builds economic infrastructure for the internet.",
-      link: "#",
+      title: "Projects",
+      value: "projects",
+      icon: <IconTool size={24} />,
+      content: (
+        <div>
+          <GeniusUserProjectsComponent />
+        </div>
+      ),
     },
     {
-      title: "Rocket Racing",
-      image:
-        "https://img.freepik.com/free-photo/abstract-autumn-beauty-multi-colored-leaf-vein-pattern-generated-by-ai_188544-9871.jpg",
-      description:
-        "A technology company that builds economic infrastructure for the internet.",
-      link: "#",
+      title: "Experience",
+      value: "experience",
+      icon: <IconExposure size={24} />,
+      content: (
+        <div>
+          <BentoGridComponent />
+        </div>
+      ),
     },
   ];
 
-  const aboutGenius = {
-    name: "Official Ramen Genius",
-    description:
-      "Stay up to date with the latest Ram news, updates, and item shop releases. Get information about upcoming collaborations and special events. Stay up to date with the latest Fortnite news, updates, and item shop releases. Get information about upcoming collaborations and special events.",
-    updatedAt: "14 hours ago",
-  };
-
   return (
-    <div className="relative mt-5">
-      <AboutSection aboutUser={aboutGenius} />
-      <div className="absolute top-[-70px] right-6">
-        <GeniusUserAvatar />
-      </div>
-      {/* News Grid */}
-      <BottomSection items={newsItems} />
+    <div className="relative size-full">
+      {/* Tabs */}
+      <CollapsibleSidebarTabs tabs={tabs} />
     </div>
   );
 }
+
+const DummyContent = () => {
+  return (
+    <Image
+      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQOmWaUAEICbwQ6IZFTNvszqzxitoRog0MQw&s"
+      alt="dummy image"
+      width="1000"
+      height="1000"
+      className="object-cover object-left-top h-[60%]  md:h-[90%] absolute -bottom-10 inset-x-0 w-[90%] rounded-xl mx-auto"
+      unoptimized
+    />
+  );
+};

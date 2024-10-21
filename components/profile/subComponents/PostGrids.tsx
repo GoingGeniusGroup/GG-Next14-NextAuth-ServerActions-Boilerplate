@@ -54,7 +54,7 @@ const PostsGrid: React.FC<PostsGridProps> = ({ posts, layout }) => {
 
   return (
     <div className="relative space-y-6">
-      <div className="sticky top-0 w-full bg-white/30 backdrop-blur-md z-20 rounded-lg p-1">
+      <div className="sticky top-0 w-full bg-white/30 dark:text-white text-black backdrop-blur-md z-20 rounded-lg p-1">
         <ControlPanel
           onShuffle={handleShuffle}
           onSort={handleSort}

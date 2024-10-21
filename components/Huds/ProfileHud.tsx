@@ -64,7 +64,7 @@ export default function ProfileHud({
   return (
     <div className="fixed bottom-[20px] right-[32px] z-50 flex h-[33px] select-none items-center space-x-[6px] rounded-full bg-white py-[6px] pl-[0px] pr-[50px] shadow-lg shadow-black/50">
       <Link
-        href={`/profile-page/${username}`}
+        href={`/genius-profile/${username}`}
         className="absolute -right-3 -top-9 size-[62px] overflow-hidden rounded-full border-2 bg-white/60"
       >
         <Avatar className="size-14 relative">
