@@ -16,10 +16,7 @@ export default async function MainLayout({
   return (
     <>
       <Layout handleServerSignOut={handleServerSignOut}>
-        <TooltipProvider>
-          {/* <Navbar /> */}
-          {children}
-        </TooltipProvider>
+        <TooltipProvider>{children}</TooltipProvider>
       </Layout>
     </>
   );

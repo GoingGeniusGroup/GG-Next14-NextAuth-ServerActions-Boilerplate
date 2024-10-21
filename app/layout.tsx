@@ -43,7 +43,9 @@ export default function RootLayout({
               </div>
 
               {/* Content section */}
-              <div className="flex-1 px-8 pb-4 overflow-auto">{children}</div>
+              <div className="flex-1 px-8 py-4 w-full overflow-auto">
+                {children}
+              </div>
             </AuroraBackground>
           </ThemeProvider>
         </Providers>
