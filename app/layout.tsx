@@ -5,6 +5,11 @@ import type { Metadata } from "next";
 import Providers from "@/app/providers/SessionProvider";
 import { Inter } from "next/font/google";
 // import { Providers } from "./store/provider";
+import "./globals.css";
+import { AuroraBackground } from "@/components/ui/background/aurora-background";
+import { ThemeSwitcher } from "@/components/layouts/ThemeToggler/ThemeSwitcher";
+import { ThemeProvider } from "next-themes";
+import FloatingDockInvertedComponent from "@/components/layouts/dock/FloatingDockInverted";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,11 +31,40 @@ export default async function RootLayout({
       <body className={inter.className}>
         {/* <Layout> */}
         <Toaster position="bottom-left" richColors theme="light" />
-        <Providers>{children}</Providers>
+        <Providers>
+          <html lang="en" className="h-full">
+            <body className="h-full">
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+              >
+                <AuroraBackground>
+                  <div className="min-h-screen z-10 w-full flex flex-col">
+                    {/* Theme switcher */}
+                    <div className="absolute top-2 right-2 z-50">
+                      <ThemeSwitcher />
+                    </div>
+
+                    {/* Dock section */}
+                    <div className="w-full z-40">
+                      <div className="p-4">
+                        <FloatingDockInvertedComponent />
+                      </div>
+                    </div>
+
+                    {/* Content section */}
+                    <div className="flex-1 px-8 py-4 overflow-auto">
+                      {children}
+                    </div>
+                  </div>
+                </AuroraBackground>
+              </ThemeProvider>
+            </body>
+          </html>
+        </Providers>
         {/* </Layout> */}
       </body>
     </html>
   );
 }
-
-
