@@ -7,11 +7,11 @@ export const metadata = {
 
 export default function SteamProfilePage() {
   return (
-    <main className="container mx-auto pb-8 pt-16">
-      <h1 className="text-3xl font-bold mb-6 text-center">
+    <div className="relative z-10 mx-auto pb-8">
+      <h1 className="text-3xl font-bold mb-6 text-center cursor-pointer text-black dark:text-white">
         Steam Profile Lookup
       </h1>
       <SteamProfile />
-    </main>
+    </div>
   );
 }
