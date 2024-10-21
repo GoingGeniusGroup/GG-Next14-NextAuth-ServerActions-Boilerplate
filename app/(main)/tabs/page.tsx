@@ -67,11 +67,12 @@ export default function TabsDemo() {
 const DummyContent = () => {
   return (
     <Image
-      src="/linear.webp"
+      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQOmWaUAEICbwQ6IZFTNvszqzxitoRog0MQw&s"
       alt="dummy image"
       width="1000"
       height="1000"
       className="object-cover object-left-top h-[60%]  md:h-[90%] absolute -bottom-10 inset-x-0 w-[90%] rounded-xl mx-auto"
+      unoptimized
     />
   );
 };
