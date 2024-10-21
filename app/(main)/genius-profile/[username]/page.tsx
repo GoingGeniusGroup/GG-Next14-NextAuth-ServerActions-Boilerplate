@@ -5,6 +5,12 @@ import GeniusUserHome from "@/components/layouts/GeniusUserProfile/GeniusUserHom
 import GeniusUserProjectsComponent from "@/components/layouts/GeniusUserProfile/GeniusUserProjectsComponent";
 import BentoGridComponent from "@/components/layouts/grid/bento-grid-1";
 import { CollapsibleSidebarTabs } from "@/components/ui/tabs/custom-tabs";
+import {
+  IconExposure,
+  IconHome,
+  IconPhoto,
+  IconTool,
+} from "@tabler/icons-react";
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 
@@ -28,7 +34,7 @@ export default function GeniusProfilePage({ params }: ProfileViewProps) {
     {
       title: "Home",
       value: "home",
-      icon: <ChevronRight size={24} />,
+      icon: <IconHome size={24} />,
       content: (
         <div>
           <GeniusUserHome username={username} />
@@ -38,7 +44,7 @@ export default function GeniusProfilePage({ params }: ProfileViewProps) {
     {
       title: "Gallery",
       value: "gallery",
-      icon: <ChevronRight size={24} />,
+      icon: <IconPhoto size={24} />,
       content: (
         <div>
           <DummyContent />
@@ -48,7 +54,7 @@ export default function GeniusProfilePage({ params }: ProfileViewProps) {
     {
       title: "Projects",
       value: "projects",
-      icon: <ChevronRight size={24} />,
+      icon: <IconTool size={24} />,
       content: (
         <div>
           <GeniusUserProjectsComponent />
@@ -58,7 +64,7 @@ export default function GeniusProfilePage({ params }: ProfileViewProps) {
     {
       title: "Experience",
       value: "experience",
-      icon: <ChevronRight size={24} />,
+      icon: <IconExposure size={24} />,
       content: (
         <div>
           <BentoGridComponent />
