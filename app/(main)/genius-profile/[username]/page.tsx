@@ -1,10 +1,9 @@
-import AboutSection from "@/components/layouts/console/AboutSection";
-import BottomSection from "@/components/layouts/console/BottomSection";
 import CustomGalleryComponent from "@/components/layouts/gallery/CustomGalleryComponent";
-import GeniusUserAvatar from "@/components/layouts/GeniusUserProfile/GeniusUserAvatar";
+import ParallexGridScroll1 from "@/components/layouts/gallery/ParallexGridScroll1";
+import ParallexGridScroll2 from "@/components/layouts/gallery/ParallexGridScroll2";
+import GeniusUserExperience from "@/components/layouts/GeniusUserProfile/GeniusUserExperience";
 import GeniusUserHome from "@/components/layouts/GeniusUserProfile/GeniusUserHome";
 import GeniusUserProjectsComponent from "@/components/layouts/GeniusUserProfile/GeniusUserProjectsComponent";
-import BentoGridComponent from "@/components/layouts/grid/bento-grid-1";
 import { CollapsibleSidebarTabs } from "@/components/ui/tabs/custom-tabs";
 import {
   IconArrowWaveRightUp,
@@ -19,8 +18,6 @@ import {
   IconTableColumn,
   IconTool,
 } from "@tabler/icons-react";
-import { ChevronRight } from "lucide-react";
-import Image from "next/image";
 
 interface ProfileViewProps {
   params: {
@@ -128,7 +125,27 @@ export default function GeniusProfilePage({ params }: ProfileViewProps) {
       icon: <IconExposure size={24} />,
       content: (
         <div>
-          <BentoGridComponent />
+          <GeniusUserExperience />
+        </div>
+      ),
+    },
+    {
+      title: "Parallex Grid Scroll 1",
+      value: "pgs1",
+      icon: <IconExposure size={24} />,
+      content: (
+        <div>
+          <ParallexGridScroll1 />
+        </div>
+      ),
+    },
+    {
+      title: "Parallex Grid Scroll 2",
+      value: "pgs2",
+      icon: <IconExposure size={24} />,
+      content: (
+        <div>
+          <ParallexGridScroll2 />
         </div>
       ),
     },
