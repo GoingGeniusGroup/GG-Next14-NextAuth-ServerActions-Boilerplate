@@ -65,7 +65,7 @@ export default function GeniusProfilePage({ params }: ProfileViewProps) {
       description:
         "Understand the impact of effective communication in our lives.",
       image:
-        "https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg",
+        "https://media.macphun.com/img/uploads/customer/how-to/608/15542038745ca344e267fb80.28757312.jpg?q=85&w=1340",
       icon: <IconTableColumn className="h-4 w-4 text-neutral-500" />,
     },
     {
@@ -76,18 +76,18 @@ export default function GeniusProfilePage({ params }: ProfileViewProps) {
       icon: <IconArrowWaveRightUp className="h-4 w-4 text-neutral-500" />,
     },
     {
-      title: "The Joy of Creation",
-      description: "Experience the thrill of bringing ideas to life.",
-      image:
-        "https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg",
-      icon: <IconBoxAlignTopLeft className="h-4 w-4 text-neutral-500" />,
-    },
-    {
       title: "The Spirit of Adventure",
       description: "Embark on exciting journeys and thrilling discoveries.",
       image:
-        "https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsIz4qZKTOplGKCIt860B8HP3mTBMZGACNFg&s",
       icon: <IconBoxAlignRightFilled className="h-4 w-4 text-neutral-500" />,
+    },
+    {
+      title: "The Joy of Creation",
+      description: "Experience the thrill of bringing ideas to life.",
+      image:
+        "https://media.macphun.com/img/uploads/customer/how-to/608/15542038745ca344e267fb80.28757312.jpg?q=85&w=1340",
+      icon: <IconBoxAlignTopLeft className="h-4 w-4 text-neutral-500" />,
     },
   ];
 
