@@ -6,9 +6,11 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Lens } from "../lens/lens";
+import { CardSpotlight } from "@/components/layouts/card/CardSpotlight";
 
 interface ImageData {
   src: string;
+  title: string;
   description: string;
 }
 
@@ -37,15 +39,16 @@ export const ParallaxScroll = ({
   const secondPart = images.slice(third, 2 * third);
   const thirdPart = images.slice(2 * third);
 
+  const handleBackButtonClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent the click from bubbling up to the card
+    setFlippedIndex(null);
+  };
+
   const getGlobalIndex = (columnIndex: number, idx: number) => {
     if (columnIndex === 1) return idx;
     if (columnIndex === 2) return third + idx;
     if (columnIndex === 3) return 2 * third + idx;
     return -1;
-  };
-
-  const handleClick = (index: number) => {
-    setFlippedIndex(flippedIndex === index ? null : index);
   };
 
   const renderCard = (
@@ -57,19 +60,17 @@ export const ParallaxScroll = ({
     const globalIndex = getGlobalIndex(columnIndex, idx);
     const isFlipped = flippedIndex === globalIndex;
 
-    console.log(el.src); // Check the image URL
-
     return (
       <motion.div
         style={{ y: translateY }}
         key={`grid-${columnIndex}-${idx}`}
-        className="relative group h-80 w-full perspective-1000"
+        className="relative group h-80 w-full perspective-1000 p-2"
         onMouseEnter={() => setHoveredIndex(globalIndex)}
         onMouseLeave={() => setHoveredIndex(null)}
-        onClick={() => handleClick(globalIndex)}
+        onClick={() => setFlippedIndex(globalIndex)}
       >
         <AnimatePresence>
-          {hoveredIndex === globalIndex && !isFlipped && (
+          {hoveredIndex === globalIndex && (
             <motion.span
               className="absolute inset-0 h-full w-full bg-zinc-400 dark:bg-zinc-600/[0.8] block rounded-xl"
               layoutId="hoverBackground"
@@ -93,12 +94,12 @@ export const ParallaxScroll = ({
           }}
         >
           {/* Front face */}
-          <div className="absolute w-full h-full backface-hidden rounded-lg overflow-hidden">
+          <div className="absolute size-full backface-hidden rounded-lg overflow-hidden">
             <Lens>
               <Image
-                src="https://images.unsplash.com/photo-1505765050516-f72dcac9c60e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3540&q=80"
+                src={el.src}
                 alt="thumbnail"
-                className="object-cover"
+                className="h-80 w-full object-cover object-left-top rounded-lg gap-10 !m-0 !p-0"
                 quality={90}
                 priority={idx < 4}
                 height={400}
@@ -108,12 +109,25 @@ export const ParallaxScroll = ({
             </Lens>
           </div>
 
-          {/* Back face */}
+          {/* Back face (description only) */}
           <div
-            className="absolute w-full h-full backface-hidden bg-zinc-800 text-white p-4 rounded-lg flex items-center justify-center"
-            style={{ transform: "rotateY(180deg)" }}
+            className="absolute size-full backface-hidden z-20 bg-black/95 text-white p-2 rounded-lg flex items-center justify-center"
+            style={{
+              transform: "rotateY(180deg)",
+              backfaceVisibility: "hidden",
+            }}
           >
-            <p className="text-center">{el.description}</p>
+            <CardSpotlight
+              item={{
+                title: el.title,
+                image: el.src,
+                description: el.description,
+              }}
+            />
+            <button
+              onClick={handleBackButtonClick} // Flip back button
+              className="size-3 rounded-full bg-red-500 text-white absolute top-3 right-3 z-20"
+            ></button>
           </div>
         </motion.div>
       </motion.div>
