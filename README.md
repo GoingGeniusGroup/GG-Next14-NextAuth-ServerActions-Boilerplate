@@ -41,7 +41,7 @@ virtualshop == /shop-2
 avatar-test == /avatar
 steam == /steam
 profile == /profile
-user'sprofile == /profile-page/username
+user'sprofile == /genius-profile/username
 
 _Aceternity UI example routes_
 floating-dock == /floating-dock
