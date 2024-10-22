@@ -63,8 +63,8 @@ export default function GeniusUserProjectsPage() {
     },
   ];
   return (
-    <div>
+    <>
       <GeniusUserProjects items={images} />
-    </div>
+    </>
   );
 }

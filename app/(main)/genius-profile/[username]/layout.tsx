@@ -53,7 +53,7 @@ export default function ProfileLayout({ params, children }: ProfileViewProps) {
     },
   ];
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   const handleIsOpen = () => {
     setIsOpen(!isOpen);

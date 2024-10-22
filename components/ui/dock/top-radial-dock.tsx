@@ -18,8 +18,9 @@ const TopFloatingDock = ({
   handleIsOpen: () => void;
   className?: string;
 }) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const pathname = usePathname();
+  const [activeIconTitle, setActiveIconTitle] = useState<string>("Home");
   const [activeIcon, setActiveIcon] = useState<React.ReactNode>(<IconHome />); // Default is Home icon
 
   useEffect(() => {
@@ -27,6 +28,7 @@ const TopFloatingDock = ({
     const activeItem = items.find((item) => item.link === pathname);
     if (activeItem) {
       setActiveIcon(activeItem.icon);
+      setActiveIconTitle(activeItem.title);
     }
   }, [pathname, items]);
 
@@ -39,11 +41,20 @@ const TopFloatingDock = ({
     <div className={cn("fixed top-[92px] left-8 z-30", className)}>
       <button
         onClick={handleOpen}
-        className="h-10 w-10 rounded-full bg-white border-2 dark:bg-neutral-800 flex items-center justify-center shadow-lg"
+        className="h-10 relative w-10 rounded-full bg-white border-2 dark:bg-neutral-800 flex items-center justify-center shadow-lg"
       >
         {/* Show the active icon in the button, default is the Home icon */}
         {activeIcon}
       </button>
+      <div
+        className={`absolute ${
+          open
+            ? "left-[68px] dark:text-sky-600/70 text-black"
+            : "left-[48px] dark:text-white/70 text-black/70"
+        } top-[9px]  uppercase transition-all duration-300 ease-in-out font-bold `}
+      >
+        {activeIconTitle}
+      </div>
 
       <AnimatePresence>
         {open && (
