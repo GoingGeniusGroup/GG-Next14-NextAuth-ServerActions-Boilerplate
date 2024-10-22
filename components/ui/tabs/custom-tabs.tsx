@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { ChevronRight, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 
 type Tab = {
   title: string;

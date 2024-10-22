@@ -1,6 +1,7 @@
-import { ParallaxScroll } from "@/components/ui/grids/parallax-scroll";
-export default function GeniusUserExperience() {
-  return <ParallaxScroll images={images} />;
+import { ParallaxScrollSecond } from "@/components/ui/grids/parallax-scroll-2";
+
+export default function Parallax() {
+  return <ParallaxScrollSecond images={images} />;
 }
 
 const images = [

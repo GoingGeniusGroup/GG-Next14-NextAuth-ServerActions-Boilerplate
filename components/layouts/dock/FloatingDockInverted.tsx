@@ -1,6 +1,7 @@
 import React from "react";
 import { FloatingDockInverted } from "@/components/ui/dock/floating-dock-inverted";
 import {
+  Icon24Hours,
   IconBrandPushover,
   IconCoinEuroFilled,
   IconDeviceGamepad2,
