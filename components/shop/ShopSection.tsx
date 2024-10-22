@@ -115,9 +115,9 @@ const ShopSection = ({ isMobile }: { isMobile: boolean }) => {
         <nav className="w-full">
           <ScrollArea className="w-full">
             <div className="flex space-x-2 p-1">
-              {(categories || []).map((category) => (
+              {(categories || []).map((category, idx) => (
                 <Button
-                  key={category}
+                  key={idx}
                   variant={
                     selectedCategory === category ? "default" : "outline"
                   }

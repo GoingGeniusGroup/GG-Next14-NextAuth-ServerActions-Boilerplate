@@ -28,7 +28,7 @@ export const HorizontalHoverEffect = ({
       {items.map((item, idx) => (
         <Link
           href={item?.link}
-          key={item?.link}
+          key={idx}
           target="_blank"
           className="relative group  block p-2 h-full w-full"
           onMouseEnter={() => setHoveredIndex(idx)}

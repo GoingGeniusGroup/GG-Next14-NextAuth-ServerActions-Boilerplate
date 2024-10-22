@@ -54,8 +54,8 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          {["A", "B", "C"].map((letter) => (
-            <DropdownMenuItem key={letter} onClick={() => onFilter(letter)}>
+          {["A", "B", "C"].map((letter, idx) => (
+            <DropdownMenuItem key={idx} onClick={() => onFilter(letter)}>
               Starts with {letter}
             </DropdownMenuItem>
           ))}

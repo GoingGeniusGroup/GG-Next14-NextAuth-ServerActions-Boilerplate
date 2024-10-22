@@ -131,10 +131,10 @@ export default function GeniusUserProjectsComponent() {
         ) : null}
       </AnimatePresence>
       <ul className="px-6 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-start gap-4">
-        {cards.map((card) => (
+        {cards.map((card, idx) => (
           <motion.div
             layoutId={`card-${card.title}-${id}`}
-            key={card.title}
+            key={idx}
             onClick={() => setActive(card)}
             className="p-4 flex flex-col  hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-xl cursor-pointer"
           >

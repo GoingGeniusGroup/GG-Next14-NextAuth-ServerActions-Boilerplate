@@ -54,7 +54,7 @@ const FloatingDockMobile = ({
           >
             {items.map((item, idx) => (
               <motion.div
-                key={item.title}
+                key={idx}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{
                   opacity: 1,
@@ -71,7 +71,7 @@ const FloatingDockMobile = ({
               >
                 <Link
                   href={item.href}
-                  key={item.title}
+                  key={idx}
                   className="h-10 w-10 rounded-full bg-gray-50 dark:bg-neutral-900 flex items-center justify-center"
                 >
                   <div className="h-4 w-4">{item.icon}</div>
@@ -108,8 +108,8 @@ const FloatingDockDesktop = ({
         className
       )}
     >
-      {items.map((item) => (
-        <IconContainer mouseX={mouseX} key={item.title} {...item} />
+      {items.map((item, idx) => (
+        <IconContainer mouseX={mouseX} key={idx} {...item} />
       ))}
     </motion.div>
   );

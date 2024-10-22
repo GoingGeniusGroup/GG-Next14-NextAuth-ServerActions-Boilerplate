@@ -315,14 +315,14 @@ function buildFallback(
 ): JSX.Element {
   return (
     <group>
-      {Object.keys(nodes).map((key) => {
+      {Object.keys(nodes).map((key, idx) => {
         const node = nodes[key] as CustomNode;
         if (node.type === "SkinnedMesh") {
           return (
             <skinnedMesh
               castShadow
               receiveShadow
-              key={node.name}
+              key={idx}
               scale={transform.scale}
               position={transform.position}
               rotation={transform.rotation}
@@ -339,7 +339,7 @@ function buildFallback(
             <mesh
               castShadow
               receiveShadow
-              key={node.name}
+              key={idx}
               scale={transform.scale}
               position={transform.position}
               rotation={transform.rotation}

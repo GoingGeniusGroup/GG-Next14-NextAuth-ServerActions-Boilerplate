@@ -63,10 +63,10 @@ const FloatingDockDesktop = ({
         className
       )}
     >
-      {items.map((item) => (
+      {items.map((item, idx) => (
         <IconContainer
           mouseX={mouseX}
-          key={item.title}
+          key={idx}
           {...item}
           isSelected={selectedItem === item.title}
           onSelect={() => {

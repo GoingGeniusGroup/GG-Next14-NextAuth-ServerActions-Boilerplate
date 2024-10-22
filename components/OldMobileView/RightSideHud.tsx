@@ -70,7 +70,7 @@ const RightSideHud: React.FC = () => {
           <AnimatePresence mode="popLayout">
             {visibleTabs.map((tab, index) => (
               <TabContent
-                key={tab}
+                key={index}
                 tab={tab}
                 index={index}
                 removingTab={removingTab}

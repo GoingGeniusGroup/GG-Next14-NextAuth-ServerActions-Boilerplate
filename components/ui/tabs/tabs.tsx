@@ -46,7 +46,7 @@ export const Tabs = ({
       >
         {propTabs.map((tab, idx) => (
           <button
-            key={tab.title}
+            key={idx}
             onClick={() => {
               moveSelectedTabToTop(idx);
             }}
@@ -103,7 +103,7 @@ export const FadeInDiv = ({
     <div className="relative w-full h-full">
       {tabs.map((tab, idx) => (
         <motion.div
-          key={tab.value}
+          key={idx}
           layoutId={tab.value}
           style={{
             scale: 1 - idx * 0.1,
