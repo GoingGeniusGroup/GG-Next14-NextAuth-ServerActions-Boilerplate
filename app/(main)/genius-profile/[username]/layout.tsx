@@ -46,32 +46,32 @@ export default function ProfileLayout({ params, children }: ProfileViewProps) {
     {
       title: "Home",
       value: "home",
-      icon: <IconHome size={24} />,
-      link: `/pro/${username}`,
+      icon: <IconHome size={14} />,
+      link: `/genius-profile/${username}`,
     },
     {
       title: "Gallery",
       value: "gallery",
-      icon: <IconPhoto size={24} />,
-      link: `/pro/${username}/gallery`,
+      icon: <IconPhoto size={14} />,
+      link: `/genius-profile/${username}/gallery`,
     },
     {
       title: "Projects",
       value: "projects",
-      icon: <IconTool size={24} />,
-      link: `/pro/${username}/projects`,
+      icon: <IconTool size={14} />,
+      link: `/genius-profile/${username}/projects`,
     },
     {
       title: "Experience",
       value: "experience",
-      icon: <IconExposure size={24} />,
-      link: `/pro/${username}/experience`,
+      icon: <IconExposure size={14} />,
+      link: `/genius-profile/${username}/experience`,
     },
     {
       title: "Parallex",
       value: "pgs1",
-      icon: <IconExposure size={24} />,
-      link: `/pro/${username}/parallex`,
+      icon: <IconExposure size={14} />,
+      link: `/genius-profile/${username}/parallex`,
     },
   ];
 
