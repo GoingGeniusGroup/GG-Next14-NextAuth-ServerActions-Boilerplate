@@ -38,13 +38,14 @@ export default function GeniusUserProjectsComponent() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/20 h-full w-full z-10"
+            className="bg-black/50 h-full w-full z-10"
           />
         )}
       </AnimatePresence>
+
       <AnimatePresence>
         {active && typeof active === "object" ? (
-          <div className="fixed inset-0  grid place-items-center z-[100]">
+          <div className="fixed inset-0 grid place-items-center z-[100]">
             <motion.button
               key={`button-${active.title}-${id}`}
               layout
@@ -78,13 +79,13 @@ export default function GeniusUserProjectsComponent() {
                   src={active.src}
                   alt={active.title}
                   unoptimized
-                  className="w-full h-80 lg:h-80 sm:rounded-tr-lg sm:rounded-tl-lg object-cover object-top"
+                  className="w-full h-60 lg:h-80 sm:rounded-tr-lg sm:rounded-tl-lg object-cover object-top"
                 />
               </motion.div>
 
               <div>
                 <div className="flex justify-between items-start p-4">
-                  <div className="">
+                  <div>
                     <motion.h3
                       layoutId={`title-${active.title}-${id}`}
                       className="font-medium text-neutral-700 dark:text-neutral-200 text-base"
@@ -111,13 +112,13 @@ export default function GeniusUserProjectsComponent() {
                     {active.ctaText}
                   </motion.a>
                 </div>
-                <div className="pt-4 relative px-4">
+                <div className="pt-4 relative px-4 h-[120px] overflow-auto">
                   <motion.div
                     layout
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="text-neutral-600 text-xs md:text-sm lg:text-base h-40 md:h-fit pb-10 flex flex-col items-start gap-4 overflow-auto dark:text-neutral-400 [mask:linear-gradient(to_bottom,white,white,transparent)] [scrollbar-width:none] [-ms-overflow-style:none] [-webkit-overflow-scrolling:touch]"
+                    className="text-neutral-600 text-xs md:text-sm lg:text-base h-40 md:h-fit pb-10 flex flex-col items-start gap-4 dark:text-neutral-400 [mask:linear-gradient(to_bottom,white,white,transparent)] [scrollbar-width:none] [-ms-overflow-style:none] [-webkit-overflow-scrolling:touch]"
                   >
                     {typeof active.content === "function"
                       ? active.content()
@@ -129,11 +130,11 @@ export default function GeniusUserProjectsComponent() {
           </div>
         ) : null}
       </AnimatePresence>
-      <ul className="max-w-2xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 items-start gap-4">
-        {cards.map((card) => (
+      <ul className="px-6 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-start gap-4">
+        {cards.map((card, idx) => (
           <motion.div
             layoutId={`card-${card.title}-${id}`}
-            key={card.title}
+            key={idx}
             onClick={() => setActive(card)}
             className="p-4 flex flex-col  hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-xl cursor-pointer"
           >

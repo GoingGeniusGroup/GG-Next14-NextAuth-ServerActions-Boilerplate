@@ -52,11 +52,8 @@ const CartSheet: React.FC<CartSheetProps> = ({
             <p className="text-center text-gray-500">Your cart is empty.</p>
           ) : (
             <div className="space-y-4">
-              {cartItems.map((item) => (
-                <div
-                  key={`${item.productType}-${item.id}`}
-                  className="flex items-center space-x-4"
-                >
+              {cartItems.map((item, idx) => (
+                <div key={idx} className="flex items-center space-x-4">
                   <Image
                     src={item.images[0]}
                     alt={item.name}

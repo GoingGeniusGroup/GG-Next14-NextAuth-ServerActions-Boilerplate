@@ -2,7 +2,7 @@ import { Toaster } from "@/ui/sonner";
 import type { Metadata } from "next";
 import Providers from "@/app/providers/SessionProvider";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "@/styles/globals.css";
 import { AuroraBackground } from "@/components/ui/background/aurora-background";
 import { ThemeSwitcher } from "@/components/layouts/ThemeToggler/ThemeSwitcher";
 import { ThemeProvider } from "next-themes";

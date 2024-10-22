@@ -20,7 +20,6 @@ import { LoginForm } from "../form/login-form";
 import { RegisterForm } from "../form/register-form";
 import { Button } from "../ui/button/button";
 
-// Define the backgrounds array
 const backgrounds = [
   {
     name: "Cosmic Nebula",
@@ -57,13 +56,15 @@ const MobileSimulator: React.FC<MobileSimulatorProps> = ({
   setShowMobile,
 }) => {
   const { data: session, status } = useSession();
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [screens, setScreens] = useState<SectionProps[]>([]);
   const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false);
   const [currentBackground, setCurrentBackground] = useState<BackgroundProps>(
     backgrounds[0]
   );
   const [showLogin, setShowLogin] = useState<boolean>(true);
+  const [activeScreens, setActiveScreens] = useState<number[]>([]);
+
+  // Directly compute isLoggedIn from session status
+  const isLoggedIn = status === "authenticated";
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -74,15 +75,16 @@ const MobileSimulator: React.FC<MobileSimulatorProps> = ({
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
+  // Reset screens when auth state changes
   useEffect(() => {
-    setIsLoggedIn(status === "authenticated");
-  }, [status]);
+    setActiveScreens([]);
+  }, [isLoggedIn]);
 
   const handleToggleAuth = useCallback(() => {
-    setShowLogin((prevShowLogin) => !prevShowLogin);
+    setShowLogin((prev) => !prev);
   }, []);
 
-  // Define sections array based on login status
+  // Define sections with useMemo
   const sections: SectionProps[] = useMemo(
     () => [
       {
@@ -98,23 +100,23 @@ const MobileSimulator: React.FC<MobileSimulatorProps> = ({
         content: isLoggedIn ? (
           <ProfileComponent />
         ) : showLogin ? (
-          <>
+          <div className="flex flex-col gap-4">
             <LoginForm isMobile={true} />
             <div className="flex w-full justify-center">
               <Button variant="black" onClick={handleToggleAuth}>
                 Register Here
               </Button>
             </div>
-          </>
+          </div>
         ) : (
-          <>
+          <div className="flex flex-col gap-4">
             <RegisterForm isMobile={true} />
             <div className="flex w-full justify-center">
               <Button variant="black" onClick={handleToggleAuth}>
                 Login Here
               </Button>
             </div>
-          </>
+          </div>
         ),
       },
       {
@@ -140,26 +142,22 @@ const MobileSimulator: React.FC<MobileSimulatorProps> = ({
   );
 
   const toggleScreen = useCallback((section: SectionProps) => {
-    setScreens((prevScreens) => {
-      const isOpen = prevScreens.some((screen) => screen.id === section.id);
+    setActiveScreens((prev) => {
+      const isOpen = prev.includes(section.id);
       if (isOpen) {
-        return prevScreens.filter((screen) => screen.id !== section.id);
+        return prev.filter((id) => id !== section.id);
       } else {
-        // Number of screen to show in the simulator
-        return [section, ...prevScreens].slice(0, 2);
+        return [section.id, ...prev].slice(0, 2);
       }
     });
   }, []);
 
-  useEffect(() => {
-    // Update screens when sections change
-    setScreens((prevScreens) => {
-      return prevScreens.map((screen) => {
-        const updatedSection = sections.find((s) => s.id === screen.id);
-        return updatedSection || screen;
-      });
-    });
-  }, [sections, isLoggedIn]);
+  // Convert activeScreens IDs to actual screen objects
+  const screens = useMemo(() => {
+    return activeScreens
+      .map((id) => sections.find((section) => section.id === id))
+      .filter((section): section is SectionProps => section !== undefined);
+  }, [activeScreens, sections]);
 
   return (
     <>
@@ -177,11 +175,9 @@ const MobileSimulator: React.FC<MobileSimulatorProps> = ({
         toggleScreen={toggleScreen}
         screens={screens}
         removeScreen={(id) =>
-          setScreens((prevScreens) =>
-            prevScreens.filter((screen) => screen.id !== id)
-          )
+          setActiveScreens((prev) => prev.filter((screenId) => screenId !== id))
         }
-        closeAllScreens={() => setScreens([])}
+        closeAllScreens={() => setActiveScreens([])}
         updateCurrentBackground={setCurrentBackground}
       />
     </>

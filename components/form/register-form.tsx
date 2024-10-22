@@ -47,7 +47,7 @@ export const RegisterForm = ({ isMobile }: { isMobile: boolean }) => {
     >
       <Form {...form}>
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-4">
+          <div className="space-y-4 text-black dark:text-white">
             <FormInput
               control={form.control}
               name="username"

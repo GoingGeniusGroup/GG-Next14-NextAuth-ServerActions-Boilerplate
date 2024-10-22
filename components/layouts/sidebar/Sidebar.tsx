@@ -24,9 +24,9 @@ export default function Sidebar() {
       className={`pt-24 bg-transparent p-4 border-r border-gray-200/20 overflow-y-auto w-64 flex-shrink-0`}
     >
       <div className="space-y-1">
-        {navItems.map((item) => (
+        {navItems.map((item, idx) => (
           <Link
-            key={item.href}
+            key={idx}
             href={item.href}
             className={`block px-2 py-1 rounded-md transition-all duration-200 ease-in-out ${
               pathname === item.href

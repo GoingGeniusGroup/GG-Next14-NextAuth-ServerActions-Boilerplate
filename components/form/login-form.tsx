@@ -31,13 +31,36 @@ export const LoginForm = ({ isMobile }: { isMobile: boolean }) => {
       login(values)
         .then((data) => {
           if (!data) return;
+
           if (!data.success) {
             return toast.error(data.error.message);
           }
+
           toast.success(data.message);
-          return router.push("/two-factor");
+
+          // If 2FA is required, redirect to 2FA page
+          if (data.twoFactor) {
+            return router.push("/two-factor");
+          }
+
+          // If login is successful without 2FA:
+          // 1. Show success message
+          toast.success("Login successful! Redirecting...");
+
+          // 2. Small delay to ensure toast is shown
+          setTimeout(() => {
+            // 3. Reload the entire page
+            window.location.reload();
+
+            // 4. Optional: Replace current history entry with home page
+            window.location.href = "/";
+          }, 1000);
         })
-        .catch(() => toast.error("Something went wrong."));
+        .catch(() => {
+          toast.error("Something went wrong.");
+          // Reset form on error
+          form.reset();
+        });
     });
   });
 
@@ -51,8 +74,18 @@ export const LoginForm = ({ isMobile }: { isMobile: boolean }) => {
       showSocial
     >
       <Form {...form}>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-4">
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-6"
+          // Prevent default form submission
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              handleSubmit();
+            }
+          }}
+        >
+          <div className="space-y-4 text-black dark:text-white">
             <FormInput
               control={form.control}
               name="email"
@@ -60,6 +93,8 @@ export const LoginForm = ({ isMobile }: { isMobile: boolean }) => {
               type="email"
               placeholder="e.g. johndoe@example.com"
               isPending={isPending}
+              // Disable autocomplete for security
+              autoComplete="off"
             />
             <div>
               <FormInput
@@ -69,19 +104,25 @@ export const LoginForm = ({ isMobile }: { isMobile: boolean }) => {
                 type="password"
                 placeholder="******"
                 isPending={isPending}
+                // Disable autocomplete for security
+                autoComplete="new-password"
               />
               <Button
                 size="sm"
                 variant="anylink"
-                className={`-mt-6 p-0 text-xs w-full justify-end`}
+                className="w-full justify-end -mt-6 p-0 text-xs"
                 asChild
               >
                 <Link href="/reset">Forgot password?</Link>
               </Button>
             </div>
           </div>
-          <Button type="submit" disabled={isPending} className="w-full">
-            Login
+          <Button
+            type="submit"
+            disabled={isPending || !form.formState.isValid}
+            className="w-full"
+          >
+            {isPending ? "Logging in..." : "Login"}
           </Button>
         </form>
       </Form>
