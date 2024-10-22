@@ -42,7 +42,7 @@ type ResponseError = {
 
 export type ResponseWithMessage =
   | {
-      twoFactor: any;
+      twoFactor?: any;
       success: true;
       code: ResponseCode;
       message: string;

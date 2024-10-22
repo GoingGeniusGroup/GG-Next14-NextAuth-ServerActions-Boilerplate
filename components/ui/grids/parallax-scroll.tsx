@@ -95,18 +95,16 @@ export const ParallaxScroll = ({
           {/* Front face */}
           <div className="absolute w-full h-full backface-hidden rounded-lg overflow-hidden">
             <Lens>
-              <div className="w-full h-full relative rounded-lg overflow-hidden">
-                <Image
-                  src="https://images.unsplash.com/photo-1505765050516-f72dcac9c60e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3540&q=80"
-                  alt="thumbnail"
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  quality={90}
-                  priority={idx < 4}
-                  fill
-                  unoptimized
-                />
-              </div>
+              <Image
+                src="https://images.unsplash.com/photo-1505765050516-f72dcac9c60e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3540&q=80"
+                alt="thumbnail"
+                className="object-cover"
+                quality={90}
+                priority={idx < 4}
+                height={400}
+                width={400}
+                unoptimized
+              />
             </Lens>
           </div>
 

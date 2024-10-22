@@ -42,7 +42,7 @@ export const login = async (payload: z.infer<typeof loginSchema>) => {
     });
   }
 
-  // Check if passwords doesn't match, then return an error.
+  // Check if passwords doesn't matches, then return an error.
   const isPasswordMatch = await bcrypt.compare(password, existingUser.password);
   if (!isPasswordMatch) {
     return response({
@@ -65,7 +65,7 @@ export const login = async (payload: z.infer<typeof loginSchema>) => {
       await deleteTwoFactorConfirmationById(existingTwoFactorConfirmation.id);
     }
 
-    // If two factor confirmation doesn't exist or has expired, handle 2FA
+    // If two factor confirmation doesn't exist or if two factor confirmation has expired, then handle 2fa
     if (!existingTwoFactorConfirmation || hasExpired) {
       const cookieStore = cookies();
       const token = signJwt(validatedFields.data);
@@ -74,12 +74,10 @@ export const login = async (payload: z.infer<typeof loginSchema>) => {
       const twoFactorToken = await generateTwoFactorToken(existingUser.email);
       await sendTwoFactorEmail(twoFactorToken.email, twoFactorToken.token);
 
-      // Return response with twoFactor flag
       return response({
         success: true,
         code: 200,
         message: "Please confirm your two-factor authentication code.",
-        twoFactor: true,
       });
     }
   }
@@ -107,12 +105,10 @@ export const signInCredentials = async (email: string, password: string) => {
       });
     }
 
-    // Return success with empty data object
     return response({
       success: true,
       code: 200,
       message: "Login successful.",
-      data: {},
     });
   } catch (error) {
     if (error instanceof AuthError) {
