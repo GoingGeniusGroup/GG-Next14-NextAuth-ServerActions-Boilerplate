@@ -4,7 +4,7 @@ import { LayoutGrid } from "@/components/ui/grids/layout-grid";
 
 export default function GeniusUserExperience() {
   return (
-    <div className="h-screen py-20 w-full">
+    <div className="h-screen w-full px-6">
       <LayoutGrid cards={cards} />
     </div>
   );

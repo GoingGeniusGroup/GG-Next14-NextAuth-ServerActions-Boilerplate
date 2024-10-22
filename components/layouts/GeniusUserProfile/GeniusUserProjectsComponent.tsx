@@ -38,10 +38,11 @@ export default function GeniusUserProjectsComponent() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/20  h-full w-full z-10"
+            className="bg-black/50 h-full w-full z-10"
           />
         )}
       </AnimatePresence>
+
       <AnimatePresence>
         {active && typeof active === "object" ? (
           <div className="fixed inset-0 grid place-items-center z-[100]">
