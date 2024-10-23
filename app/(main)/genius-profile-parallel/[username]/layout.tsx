@@ -134,6 +134,7 @@ export default function GeniusProfileLayout({
               exit={{ x: -300, opacity: 0 }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
               className="px-4 pb-4 pt-8 h-full relative overflow-y-auto scroll-container"
+              style={{ scrollBehavior: "smooth" }}
             >
               {/* Individual sections using semantic HTML5 section tags */}
               <section id="info" className="info-section">

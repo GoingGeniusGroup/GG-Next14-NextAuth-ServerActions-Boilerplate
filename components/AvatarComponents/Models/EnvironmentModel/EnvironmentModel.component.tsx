@@ -5,7 +5,7 @@ import {
   CustomNode,
   Transform,
   triggerCallback,
-} from "@/services/avatar";
+} from "@/services/avatar/index";
 import { useGraph } from "@react-three/fiber";
 import { BaseModelProps } from "@/types/avatar";
 import { EnvironmentModels } from "@/services/avatar/Environment.service";
