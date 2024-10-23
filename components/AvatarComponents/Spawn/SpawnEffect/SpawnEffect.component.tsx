@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useMemo, useRef } from "react";
 import { AnimationMixer, Group, LoopRepeat } from "three";
 import { useFrame, useGraph } from "@react-three/fiber";
-import { triggerCallback, useGltfLoader } from "@/services/avatar";
+import { triggerCallback, useGltfLoader } from "@/services/avatar/index";
 import { loadAnimationClip } from "@/services/avatar/Animation.service";
 
 interface SpawnEffectProps {

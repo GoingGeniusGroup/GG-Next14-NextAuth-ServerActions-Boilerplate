@@ -11,7 +11,7 @@ import {
   normaliseMaterialsConfig,
   triggerCallback,
   usePersistantRotation,
-} from "@/services/avatar";
+} from "@/services/avatar/index";
 import { useGraph, useThree } from "@react-three/fiber";
 import { hasWindow } from "@/services/avatar/Client.service";
 import { BaseModelProps } from "@/types/avatar";

@@ -9,7 +9,7 @@ import {
   useFallback,
   useIdleExpression,
   useEmotion,
-} from "@/services/avatar";
+} from "@/services/avatar/index";
 import { BaseModelProps } from "@/types/avatar";
 import { loadAnimationClip } from "@/services/avatar/Animation.service";
 import { Emotion } from "@/components/Avatar/Avatar.component";
