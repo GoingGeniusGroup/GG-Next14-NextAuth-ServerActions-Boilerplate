@@ -1,6 +1,6 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import { FC, useEffect, useRef } from "react";
-import { clamp, lerp } from "@/services/avatar";
+import { clamp, lerp } from "@/services/avatar/index";
 import { Camera, Object3D, Vector3 } from "three";
 import { OrbitControls } from "three-stdlib";
 

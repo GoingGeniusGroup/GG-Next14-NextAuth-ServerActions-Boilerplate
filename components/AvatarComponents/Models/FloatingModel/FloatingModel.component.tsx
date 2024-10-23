@@ -2,7 +2,7 @@ import React, { useRef, FC } from "react";
 import { useFrame } from "@react-three/fiber";
 import type { Group } from "three";
 import { Model } from "@/components/AvatarComponents/Models/Model";
-import { useGltfLoader } from "@/services/avatar";
+import { useGltfLoader } from "@/services/avatar/index";
 import { BaseModelProps } from "@/types/avatar";
 
 export interface FloatingModelProps extends BaseModelProps {

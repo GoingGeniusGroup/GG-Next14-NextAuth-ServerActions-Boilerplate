@@ -29,26 +29,26 @@ export const ParallaxScroll = ({
     offset: ["start start", "end start"],
   });
 
+  // Create alternating scroll effects for 6 columns
   const translateFirst = useTransform(scrollYProgress, [0, 1], [0, -200]);
   const translateSecond = useTransform(scrollYProgress, [0, 1], [0, 200]);
   const translateThird = useTransform(scrollYProgress, [0, 1], [0, -200]);
+  const translateFourth = useTransform(scrollYProgress, [0, 1], [0, 200]);
+  const translateFifth = useTransform(scrollYProgress, [0, 1], [0, -200]);
+  const translateSixth = useTransform(scrollYProgress, [0, 1], [0, 200]);
 
-  const third = Math.ceil(images.length / 3);
-
-  const firstPart = images.slice(0, third);
-  const secondPart = images.slice(third, 2 * third);
-  const thirdPart = images.slice(2 * third);
+  // Distribute images across 6 columns without repetition
+  const columnArrays = Array.from({ length: 6 }, (_, columnIndex) =>
+    images.filter((_, index) => index % 6 === columnIndex)
+  );
 
   const handleBackButtonClick = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent the click from bubbling up to the card
+    e.stopPropagation();
     setFlippedIndex(null);
   };
 
   const getGlobalIndex = (columnIndex: number, idx: number) => {
-    if (columnIndex === 1) return idx;
-    if (columnIndex === 2) return third + idx;
-    if (columnIndex === 3) return 2 * third + idx;
-    return -1;
+    return idx * 6 + columnIndex;
   };
 
   const renderCard = (
@@ -109,7 +109,7 @@ export const ParallaxScroll = ({
             </Lens>
           </div>
 
-          {/* Back face (description only) */}
+          {/* Back face */}
           <div
             className="absolute size-full backface-hidden z-20 bg-black/95 text-white p-2 rounded-lg flex items-center justify-center"
             style={{
@@ -125,7 +125,7 @@ export const ParallaxScroll = ({
               }}
             />
             <button
-              onClick={handleBackButtonClick} // Flip back button
+              onClick={handleBackButtonClick}
               className="size-3 rounded-full bg-red-500 text-white absolute top-3 right-3 z-20"
             ></button>
           </div>
@@ -134,21 +134,28 @@ export const ParallaxScroll = ({
     );
   };
 
+  const translateArray = [
+    translateFirst,
+    translateSecond,
+    translateThird,
+    translateFourth,
+    translateFifth,
+    translateSixth,
+  ];
+
   return (
     <div
       className={cn("h-[98%] items-start overflow-y-auto w-full", className)}
       ref={gridRef}
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-start max-w-5xl mx-auto gap-10 p-6">
-        <div className="grid gap-10">
-          {firstPart.map((el, idx) => renderCard(el, idx, 1, translateFirst))}
-        </div>
-        <div className="grid gap-10">
-          {secondPart.map((el, idx) => renderCard(el, idx, 2, translateSecond))}
-        </div>
-        <div className="grid gap-10">
-          {thirdPart.map((el, idx) => renderCard(el, idx, 3, translateThird))}
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 items-start gap-2 pb-16">
+        {columnArrays.map((columnImages, columnIndex) => (
+          <div key={columnIndex} className="grid gap-10">
+            {columnImages.map((image, idx) =>
+              renderCard(image, idx, columnIndex, translateArray[columnIndex])
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );

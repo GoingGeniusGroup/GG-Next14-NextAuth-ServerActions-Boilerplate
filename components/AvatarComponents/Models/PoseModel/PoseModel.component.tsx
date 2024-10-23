@@ -7,7 +7,7 @@ import {
   useEmotion,
   useFallback,
   useGltfLoader,
-} from "@/services/avatar";
+} from "@/services/avatar/index";
 import { BaseModelProps } from "@/types/avatar";
 import { Emotion } from "@/components/Avatar/Avatar.component";
 

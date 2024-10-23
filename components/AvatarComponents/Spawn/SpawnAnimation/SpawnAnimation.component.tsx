@@ -1,7 +1,7 @@
 import { useFrame, useGraph } from "@react-three/fiber";
 import React, { useMemo, useEffect, FC } from "react";
 import { AnimationMixer, Group, LoopRepeat } from "three";
-import { triggerCallback } from "@/services/avatar";
+import { triggerCallback } from "@/services/avatar/index";
 import { loadAnimationClip } from "@/services/avatar/Animation.service";
 
 interface SpawnAnimationProps {

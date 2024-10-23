@@ -9,7 +9,7 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { triggerCallback } from "@/services/avatar";
+import { triggerCallback } from "@/services/avatar/index";
 import { BaseModelProps } from "@/types/avatar";
 
 export interface BoundsModelContainerProps extends BaseModelProps {
