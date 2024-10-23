@@ -59,7 +59,7 @@ export default function AboutSection({ aboutUser }: AboutSectionProps) {
         </div>
       )}
       <p
-        className={`text-black dark:text-gray-300 w-[57%] overflow-hidden text-ellipsis whitespace-normal line-clamp-2 ${
+        className={`text-black dark:text-gray-300 overflow-hidden text-ellipsis whitespace-normal line-clamp-2 ${
           pathname.startsWith("/genius-profile") ? "" : "mt-20"
         }`}
       >

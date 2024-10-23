@@ -1,6 +1,5 @@
 import AboutSection from "../console/AboutSection";
 import BottomSection from "../console/BottomSection";
-import GeniusUserAvatar from "./GeniusUserAvatar";
 
 export default function GeniusUserHome({ username }: { username: string }) {
   const newsItems = [
@@ -47,12 +46,15 @@ export default function GeniusUserHome({ username }: { username: string }) {
   };
   return (
     <>
-      <AboutSection aboutUser={aboutGenius} />
-      <div className="absolute top-2 right-2">
-        <GeniusUserAvatar />
+      <div className="flex w-full justify-between">
+        <div className="w-[35%]">
+          <AboutSection aboutUser={aboutGenius} />
+        </div>
+        <div className="w-[35%]">
+          {/* Projects Grid */}
+          <BottomSection items={newsItems} />
+        </div>
       </div>
-      {/* Projects Grid */}
-      <BottomSection items={newsItems} />
     </>
   );
 }
