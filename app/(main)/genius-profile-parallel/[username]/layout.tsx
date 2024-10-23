@@ -1,7 +1,7 @@
-"use client";
+"use client"; // Marks this as a client-side component in Next.js
 
 import { AnimatePresence, motion } from "framer-motion";
-import { ReactNode, useEffect, useMemo, useState } from "react";
+import { ReactNode, useEffect, useMemo, useState, useCallback } from "react";
 import {
   IconExposure,
   IconHome,
@@ -10,6 +10,7 @@ import {
 } from "@tabler/icons-react";
 import TopFloatingDock2 from "@/components/ui/dock/top-floating-dock2";
 
+// Define the expected props for the component
 interface GeniusProfileLayoutProps {
   info: ReactNode;
   gallery: ReactNode;
@@ -18,6 +19,7 @@ interface GeniusProfileLayoutProps {
   children: ReactNode;
 }
 
+// Define the structure for navigation tabs
 type Tab = {
   title: string;
   link: string;
@@ -31,7 +33,9 @@ export default function GeniusProfileLayout({
   experience,
   children,
 }: GeniusProfileLayoutProps) {
-  const tabs: Tab[] = useMemo(
+  // Memoize tabs array to prevent unnecessary recreations
+  // This only runs once and stays constant throughout component lifecycle
+  const tabs = useMemo(
     () => [
       { title: "Home", icon: <IconHome size={14} />, link: "#info" },
       { title: "Gallery", icon: <IconPhoto size={14} />, link: "#gallery" },
@@ -45,72 +49,85 @@ export default function GeniusProfileLayout({
     []
   );
 
+  // State for dock visibility and active section tracking
   const [isOpen, setIsOpen] = useState(true);
   const [activeSection, setActiveSection] = useState("Home");
 
-  const handleIsOpen = () => {
-    setIsOpen(!isOpen);
-  };
+  // Memoized toggle handler to prevent recreation on every render
+  // Using useCallback ensures the function reference stays stable
+  const handleIsOpen = useCallback(() => {
+    setIsOpen((prev) => !prev); // Using functional update for better state management
+  }, []);
 
-  // Function to handle smooth scrolling
-  const scrollToSection = (sectionId: string) => {
+  // Memoized scroll handler that smoothly scrolls to the selected section
+  // This prevents recreation of the function on every render
+  const scrollToSection = useCallback((sectionId: string) => {
     const element = document.querySelector(sectionId);
-    if (element) {
+    const container = document.querySelector(".scroll-container");
+    if (element && container) {
       const offsetTop = element.getBoundingClientRect().top;
-      const container = document.querySelector(".scroll-container");
-      if (container) {
-        container.scrollTo({
-          top: container.scrollTop + offsetTop - 150, // Adjust this value to control the scroll position
-          behavior: "smooth",
-        });
-      }
+      container.scrollTo({
+        top: container.scrollTop + offsetTop - 150, // Adjust scroll position with offset
+        behavior: "smooth",
+      });
     }
-  };
+  }, []);
 
-  // Function to observe sections and highlight the corresponding dock item
+  // Set up intersection observer to track which section is currently visible
   useEffect(() => {
-    const sections = tabs.map((tab) => document.querySelector(tab.link));
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const activeTab = tabs.find(
-              (tab) => tab.link === `#${entry.target.id}`
-            );
-            if (activeTab) setActiveSection(activeTab.title);
-          }
-        });
-      },
-      { rootMargin: "-100px 0px 0px 0px", threshold: 0.2 }
-    );
-
-    sections.forEach((section) => {
-      if (section) observer.observe(section);
-    });
-
-    return () => {
-      sections.forEach((section) => {
-        if (section) observer.unobserve(section);
+    // Callback function for the observer
+    // This runs whenever the visibility of observed elements changes
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          // Find the tab corresponding to the visible section
+          const activeTab = tabs.find(
+            (tab) => tab.link === `#${entry.target.id}`
+          );
+          if (activeTab) setActiveSection(activeTab.title);
+        }
       });
     };
-  }, [tabs]);
+
+    // Create the observer with options
+    // rootMargin adds a margin to the viewport for earlier/later triggering
+    // threshold determines how much of the element needs to be visible
+    const observer = new IntersectionObserver(observerCallback, {
+      rootMargin: "-100px 0px 0px 0px",
+      threshold: 0.2,
+    });
+
+    // Get all sections and filter out any null values
+    // Then observe each section
+    const sections = tabs
+      .map((tab) => document.querySelector(tab.link))
+      .filter(Boolean);
+    sections.forEach((section) => observer.observe(section!));
+
+    // Cleanup function to disconnect observer when component unmounts
+    return () => observer.disconnect();
+  }, [tabs]); // Only recreate observer when tabs change
 
   return (
     <div className="relative size-full">
       <div className="flex h-full gap-x-3 text-black dark:text-white">
+        {/* Top navigation dock component */}
         <TopFloatingDock2
           items={tabs}
           handleIsOpen={handleIsOpen}
           activeSection={activeSection}
-          onSectionClick={scrollToSection} // Pass the scroll handler
+          onSectionClick={scrollToSection}
         />
+
+        {/* Main content container with sliding animation */}
         <div
-          className={`flex-1 border transition-all duration-300 ease-in-out rounded-lg overflow-hidden ${
+          className={`flex-1 border rounded-lg overflow-hidden transition-transform duration-300 ease-in-out ${
             isOpen ? "ml-16" : "ml-0"
           }`}
         >
+          {/* AnimatePresence enables exit animations */}
           <AnimatePresence mode="wait">
+            {/* Animated container for all sections */}
             <motion.div
               initial={{ x: 300, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
@@ -118,23 +135,20 @@ export default function GeniusProfileLayout({
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
               className="px-4 pb-4 pt-8 h-full relative overflow-y-auto scroll-container"
             >
-              {/* Add padding-top to create space at the top */}
-              <div id="info" className="info-section">
+              {/* Individual sections using semantic HTML5 section tags */}
+              <section id="info" className="info-section">
                 {info}
-              </div>
-              <div id="gallery" className="gallery-section">
+              </section>
+              <section id="gallery" className="gallery-section">
                 {gallery}
-              </div>
-              <div id="projects" className="projects-section">
+              </section>
+              <section id="projects" className="projects-section">
                 {projects}
-              </div>
-              <div
-                id="experience"
-                className="experience-section h-full relative overflow-y-auto scroll-container"
-              >
+              </section>
+              <section id="experience" className="experience-section">
                 {experience}
-              </div>
-              <div>{children}</div>
+              </section>
+              {children}
             </motion.div>
           </AnimatePresence>
         </div>
