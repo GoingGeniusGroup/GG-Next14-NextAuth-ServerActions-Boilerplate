@@ -29,7 +29,8 @@ let currentRotation = 0;
 export const AnimationModel: FC<AnimationModelProps> = ({
   modelSrc,
   animationSrc,
-  rotation = 20 * (Math.PI / 180),
+  // rotation = 1 * (Math.PI / 180),
+  rotation = 0, // Start rotation at 0
   scale = 1,
   idleRotation = false,
   setModelFallback,
@@ -75,8 +76,10 @@ export const AnimationModel: FC<AnimationModelProps> = ({
     }
 
     if (ref?.current) {
-      currentRotation += delta * 0.2;
-      ref.current.rotation.y = rotation + Math.sin(currentRotation) / 3;
+      currentRotation += delta * 0.4;
+      // Rotate 30 degrees left and right
+      ref.current.rotation.y =
+        rotation + Math.sin(currentRotation) * (Math.PI / 6);
     }
   });
 

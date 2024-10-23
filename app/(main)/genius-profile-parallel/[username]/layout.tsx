@@ -13,6 +13,7 @@ import TopFloatingDock2 from "@/components/ui/dock/top-floating-dock2";
 // Define the expected props for the component
 interface GeniusProfileLayoutProps {
   info: ReactNode;
+  avatar: ReactNode;
   gallery: ReactNode;
   projects: ReactNode;
   experience: ReactNode;
@@ -29,6 +30,7 @@ type Tab = {
 export default function GeniusProfileLayout({
   info,
   gallery,
+  avatar,
   projects,
   experience,
   children,
@@ -121,10 +123,13 @@ export default function GeniusProfileLayout({
 
         {/* Main content container with sliding animation */}
         <div
-          className={`flex-1 border rounded-lg overflow-hidden transition-transform duration-300 ease-in-out ${
+          className={`flex-1 border rounded-lg w-full overflow-hidden transition-transform duration-300 ease-in-out ${
             isOpen ? "ml-16" : "ml-0"
           }`}
         >
+          <div className="fixed w-full top-20 flex items-center justify-center left-1/2 -translate-x-1/2">
+            {avatar}
+          </div>
           {/* AnimatePresence enables exit animations */}
           <AnimatePresence mode="wait">
             {/* Animated container for all sections */}

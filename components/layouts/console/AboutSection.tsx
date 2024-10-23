@@ -11,10 +11,13 @@ import {
 interface AboutSectionProps {
   aboutUser: {
     name: string;
+    faculty: string;
+    guild?: "BUDDHA" | "VAJRA" | "PADMA" | "RATNA" | "KARMA";
+    age?: number;
+    email: string;
+    username: string;
     description: string;
     updatedAt?: string;
-    guild?: string;
-    age?: number;
   };
 }
 
@@ -38,9 +41,8 @@ export default function AboutSection({ aboutUser }: AboutSectionProps) {
           {aboutUser.age && <span>{aboutUser.age}</span>}
         </div>
       </div>
-
       {pathname.startsWith("/genius-profile") && (
-        <div className="flex gap-2">
+        <div className="gap-2 flex flex-wrap overflow-x-auto w-full">
           <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
             <IconMedal className="flex justify-center items-center size-full p-2 text-emerald-500" />
           </div>
@@ -51,6 +53,39 @@ export default function AboutSection({ aboutUser }: AboutSectionProps) {
             <IconTrophy className="flex justify-center items-center size-full p-2 text-yellow-500" />
           </div>
           <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
+            <IconActivityHeartbeat className="flex justify-center items-center size-full p-2 text-red-600" />
+          </div>
+          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
+            <Icon360View className="flex justify-center items-center size-full p-2 text-purple-600" />
+          </div>
+          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
+            <IconActivityHeartbeat className="flex justify-center items-center size-full p-2 text-red-600" />
+          </div>
+          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
+            <Icon360View className="flex justify-center items-center size-full p-2 text-purple-600" />
+          </div>
+          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
+            <IconActivityHeartbeat className="flex justify-center items-center size-full p-2 text-red-600" />
+          </div>
+          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
+            <Icon360View className="flex justify-center items-center size-full p-2 text-purple-600" />
+          </div>
+          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
+            <IconActivityHeartbeat className="flex justify-center items-center size-full p-2 text-red-600" />
+          </div>
+          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
+            <Icon360View className="flex justify-center items-center size-full p-2 text-purple-600" />
+          </div>
+          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
+            <IconActivityHeartbeat className="flex justify-center items-center size-full p-2 text-red-600" />
+          </div>
+          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
+            <Icon360View className="flex justify-center items-center size-full p-2 text-purple-600" />
+          </div>
+          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
+            <IconActivityHeartbeat className="flex justify-center items-center size-full p-2 text-red-600" />
+          </div>
+          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
             <Icon360View className="flex justify-center items-center size-full p-2 text-purple-600" />
           </div>
           <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
@@ -59,7 +94,7 @@ export default function AboutSection({ aboutUser }: AboutSectionProps) {
         </div>
       )}
       <p
-        className={`text-black dark:text-gray-300 w-[57%] overflow-hidden text-ellipsis whitespace-normal line-clamp-2 ${
+        className={`text-black dark:text-gray-300 overflow-hidden text-ellipsis whitespace-normal line-clamp-2 ${
           pathname.startsWith("/genius-profile") ? "" : "mt-20"
         }`}
       >

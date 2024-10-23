@@ -31,7 +31,7 @@ export default function RootLayout({
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <AuroraBackground>
               {/* Theme switcher */}
-              <div className="absolute top-2 right-2 z-50">
+              <div className="absolute top-[8px] right-[73px] z-50">
                 <ThemeSwitcher />
               </div>
 
