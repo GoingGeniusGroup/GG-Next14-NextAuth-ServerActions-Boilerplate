@@ -125,10 +125,13 @@ export default function GeniusProfileLayout({
               <div id="gallery" className="gallery-section">
                 {gallery}
               </div>
-              <div id="projects" className="projects-section mb-20">
+              <div id="projects" className="projects-section">
                 {projects}
               </div>
-              <div id="experience" className="experience-section">
+              <div
+                id="experience"
+                className="experience-section h-full relative overflow-y-auto scroll-container"
+              >
                 {experience}
               </div>
               <div>{children}</div>
