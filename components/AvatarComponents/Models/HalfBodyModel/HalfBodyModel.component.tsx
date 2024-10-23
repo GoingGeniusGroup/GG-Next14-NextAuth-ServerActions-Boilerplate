@@ -8,7 +8,7 @@ import {
   useGltfLoader,
   useFallback,
   useIdleExpression,
-} from "@/services/avatar";
+} from "@/services/avatar/index";
 import { Group } from "three";
 import { Emotion } from "../../../Avatar/Avatar.component";
 

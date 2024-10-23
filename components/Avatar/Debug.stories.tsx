@@ -3,7 +3,7 @@ import { StatsGl } from "@react-three/drei";
 import type { Meta } from "@storybook/react";
 import { Perf } from "r3f-perf";
 import React from "react";
-import { getStoryAssetPath } from "@/services/avatar";
+import { getStoryAssetPath } from "@/services/avatar/index";
 import { LIGHT_CONFIG } from "../AvatarComponents/Lights/Lights.component";
 import { Avatar as AvatarWrapper } from "./index";
 import { AvatarProps } from "./Avatar.component";

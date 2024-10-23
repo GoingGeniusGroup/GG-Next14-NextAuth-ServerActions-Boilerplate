@@ -1,6 +1,10 @@
 import React, { FC, Ref } from "react";
 import { Model } from "@/components/AvatarComponents/Models/Model";
-import { useEmotion, useFallback, useGltfLoader } from "@/services/avatar";
+import {
+  useEmotion,
+  useFallback,
+  useGltfLoader,
+} from "@/services/avatar/index";
 import { Group } from "three";
 import { useGraph } from "@react-three/fiber";
 import { BaseModelProps } from "@/types/avatar";

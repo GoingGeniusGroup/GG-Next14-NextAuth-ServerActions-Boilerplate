@@ -3,7 +3,7 @@ import React, { FC, useEffect } from "react";
 import { Group } from "three";
 import { SpawnEffect } from "./SpawnEffect/SpawnEffect.component";
 import { SpawnAnimation } from "./SpawnAnimation/SpawnAnimation.component";
-import { isValidFormat, triggerCallback } from "@/services/avatar";
+import { isValidFormat, triggerCallback } from "@/services/avatar/index";
 import { spawnState } from "@/state/spawnAtom";
 
 interface SpawnProps {
