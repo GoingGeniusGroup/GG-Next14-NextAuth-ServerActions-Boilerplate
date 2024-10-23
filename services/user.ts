@@ -16,8 +16,11 @@ export const getUserByEmail = async (email: string) => {
 export const getUserByPhone = async (phone: string) => {
   try {
     const user = await db.user.findUnique({
-      where: { phone_number: phone },
+      where: { phone_number: phone }, // Ensure 'phone_number' is correct in your DB schema
     });
+    if (!user) {
+      console.log(`User not found with phone number: ${phone}`);
+    }
     return user;
   } catch (error) {
     console.error("Error in getUserByPhone:", error);
@@ -58,7 +61,10 @@ export const createUser = async (userData: Prisma.UserCreateInput) => {
   }
 };
 
-export const updateUserById = async (gg_id: string, userData: Prisma.UserUpdateInput) => {
+export const updateUserById = async (
+  gg_id: string,
+  userData: Prisma.UserUpdateInput
+) => {
   try {
     return await db.user.update({
       where: { gg_id },

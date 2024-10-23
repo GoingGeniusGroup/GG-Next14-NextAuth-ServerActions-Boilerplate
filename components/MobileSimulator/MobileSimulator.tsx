@@ -100,7 +100,7 @@ const MobileSimulator: React.FC<MobileSimulatorProps> = ({
         content: isLoggedIn ? (
           <ProfileComponent />
         ) : showLogin ? (
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 h-full overflow-auto">
             <LoginForm isMobile={true} />
             <div className="flex w-full justify-center">
               <Button variant="black" onClick={handleToggleAuth}>
@@ -109,7 +109,7 @@ const MobileSimulator: React.FC<MobileSimulatorProps> = ({
             </div>
           </div>
         ) : (
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 h-full overflow-auto">
             <RegisterForm isMobile={true} />
             <div className="flex w-full justify-center">
               <Button variant="black" onClick={handleToggleAuth}>
