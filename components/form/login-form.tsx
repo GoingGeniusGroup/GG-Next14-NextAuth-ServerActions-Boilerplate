@@ -38,8 +38,18 @@ export const LoginForm = ({ isMobile }: { isMobile: boolean }) => {
             toast.success(data.message);
             return router.push("/two-factor");
           }
-          toast.success(data.message);
-          router.push("/"); // Adjust this route as needed
+          // If login is successful without 2FA:
+          // 1. Show success message
+          toast.success("Login successful! Redirecting...");
+
+          // 2. Small delay to ensure toast is shown
+          setTimeout(() => {
+            // 3. Reload the entire page
+            window.location.reload();
+
+            // 4. Optional: Replace current history entry with home page
+            window.location.href = "/";
+          }, 1000);
         })
         .catch(() => toast.error("Something went wrong."));
     });

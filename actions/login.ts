@@ -9,7 +9,11 @@ import {
   getTwoFactorConfirmationByUserId,
 } from "@/services/two-factor-confirmation";
 import { generateTwoFactorToken } from "@/services/two-factor-token";
-import { getUserByEmail, getUserByPhone, getUserByUsername } from "@/services/user";
+import {
+  getUserByEmail,
+  getUserByPhone,
+  getUserByUsername,
+} from "@/services/user";
 import bcrypt from "bcryptjs";
 import { AuthError } from "next-auth";
 import { cookies } from "next/headers";
@@ -29,9 +33,10 @@ export const login = async (payload: z.infer<typeof loginSchema>) => {
 
   const { login, password } = validatedFields.data;
 
-  const existingUser = await getUserByEmail(login) || 
-                       await getUserByPhone(login) || 
-                       await getUserByUsername(login);
+  const existingUser =
+    (await getUserByEmail(login)) ||
+    (await getUserByPhone(login)) ||
+    (await getUserByUsername(login));
 
   if (!existingUser || !existingUser.password) {
     return response({
@@ -56,7 +61,8 @@ export const login = async (payload: z.infer<typeof loginSchema>) => {
 
   // Check if user's 2FA are enabled
   if (existingUser.isTwoFactorEnabled && existingUser.email) {
-    const existingTwoFactorConfirmation = await getTwoFactorConfirmationByUserId(existingUser.gg_id);
+    const existingTwoFactorConfirmation =
+      await getTwoFactorConfirmationByUserId(existingUser.gg_id);
     const hasExpired = isExpired(existingTwoFactorConfirmation?.expires!);
 
     // If two factor confirmation exist and expired, then delete it.
@@ -89,7 +95,7 @@ export const login = async (payload: z.infer<typeof loginSchema>) => {
 export const signInCredentials = async (login: string, password: string) => {
   try {
     const result = await signIn("credentials", {
-      login,  // Change this from 'email' to 'login'
+      login, // Change this from 'email' to 'login'
       password,
       redirect: false,
     });
