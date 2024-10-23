@@ -25,12 +25,7 @@ export const HoverEffect = ({
   const pathname = usePathname();
 
   return (
-    <div
-      className={cn(
-        "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 py-10 gap-0",
-        className
-      )}
-    >
+    <div className={cn("grid grid-cols-2 py-10 gap-0", className)}>
       {items.map((item, idx) => (
         <div
           key={idx}
@@ -76,7 +71,7 @@ export const HoverEffect = ({
               />
             )}
           </AnimatePresence>
-          <Lens>
+          <Lens lensSize={70}>
             <div className="relative w-full aspect-[5/3]">
               <Image
                 src={item.image || "/api/placeholder/600/450"}

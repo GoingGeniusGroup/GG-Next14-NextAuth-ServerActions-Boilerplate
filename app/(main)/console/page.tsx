@@ -1,5 +1,6 @@
 import AboutSection from "@/components/layouts/console/AboutSection";
 import BottomSection from "@/components/layouts/console/BottomSection";
+import { UserCardData } from "@/core/interface/userCardData.interface";
 
 export default function ConsolePage() {
   const newsItems = [
@@ -37,11 +38,16 @@ export default function ConsolePage() {
     },
   ];
 
-  const aboutItem = {
+  const aboutItem: UserCardData = {
     name: "Official Fortnite Genius",
     description:
       "Stay up to date with the latest Fortnite news, updates, and item shop releases. Get information about upcoming collaborations and special events. Stay up to date with the latest Fortnite news, updates, and item shop releases. Get information about upcoming collaborations and special events.",
     updatedAt: "4 hours ago",
+    age: 20,
+    faculty: "Science",
+    guild: "BUDDHA",
+    email: "johndoe@example.com",
+    username: "johndoe",
   };
 
   return (
