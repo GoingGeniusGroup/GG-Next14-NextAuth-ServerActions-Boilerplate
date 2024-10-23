@@ -32,7 +32,7 @@ import {
 import { CameraControls } from "@/components/AvatarComponents/Scene/CameraControls.component";
 import { Environment } from "@/components/AvatarComponents/Scene/Environment.component";
 import Shadow from "@/components/AvatarComponents/Shadow/Shadow.component";
-import { isValidFormat, triggerCallback } from "@/services/avatar";
+import { isValidFormat, triggerCallback } from "@/services/avatar/index";
 import {
   BaseModelProps,
   EffectConfiguration,
