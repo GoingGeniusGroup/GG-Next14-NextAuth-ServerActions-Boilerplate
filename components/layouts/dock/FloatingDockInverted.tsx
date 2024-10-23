@@ -2,6 +2,7 @@ import React from "react";
 import { FloatingDockInverted } from "@/components/ui/dock/floating-dock-inverted";
 import {
   Icon24Hours,
+  Icon3dRotate,
   IconBrandPushover,
   IconCoinEuroFilled,
   IconDeviceGamepad2,
@@ -79,6 +80,11 @@ export default function FloatingDockInvertedComponent() {
       title: "Profile",
       icon: <IconUser className="size-full" />,
       href: "/profile",
+    },
+    {
+      title: "Profile Parallel Routing",
+      icon: <Icon3dRotate className="size-full" />,
+      href: "/genius-profile-parallel/ram",
     },
   ];
   return <FloatingDockInverted items={links} />;

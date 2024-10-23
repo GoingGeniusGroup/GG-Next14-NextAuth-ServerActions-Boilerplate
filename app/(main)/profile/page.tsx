@@ -4,10 +4,17 @@ import { ProfileForm } from "@/components/form/profile-form";
 import { ExtendedUser } from "@/types/next-auth";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import ProfileMobileView from "@/components/layouts/Profile/ProfileMobileView";
 
-export default function ProfilePage() {
+export default function ProfilePage({
+  params,
+}: {
+  params: { username: string };
+}) {
   const { data: session, update: updateSession } = useSession();
   const [user, setUser] = useState<ExtendedUser | null>(null);
+
+  const username = params.username;
 
   useEffect(() => {
     if (session?.user) {
@@ -35,6 +42,9 @@ export default function ProfilePage() {
           Profile Settings
         </h2>
         <ProfileForm user={user} onProfileUpdate={handleProfileUpdate} />
+      </div>
+      <div className="w-[300px] absolute top-9 right-12">
+        <ProfileMobileView username={username} />
       </div>
     </div>
   );

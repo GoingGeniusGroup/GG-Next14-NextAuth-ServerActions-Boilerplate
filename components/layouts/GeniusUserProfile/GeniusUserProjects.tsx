@@ -19,7 +19,7 @@ export default function GeniusUserProjects({ items }: ItemsProp) {
   let [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <BentoGridHover className="px-6">
+    <BentoGridHover className="py-10">
       {items.map((item, idx) => (
         <BentoGridHoverItem
           key={idx}
