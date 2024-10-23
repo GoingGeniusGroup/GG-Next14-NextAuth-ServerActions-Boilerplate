@@ -1,25 +1,38 @@
 import { db } from "@/lib/db";
-import { registerSchema } from "@/schemas";
 import { Prisma } from "@prisma/client";
-import { z } from "zod";
 
 export const getUserByEmail = async (email: string) => {
   try {
     const user = await db.user.findUnique({
       where: { email },
-      select: {
-        gg_id: true,
-        username: true,
-        email: true,
-        password: true,
-        role: true,
-        isTwoFactorEnabled: true,
-        emailVerified: true,
-      }
     });
-    return user ? { ...user, isOAuth: false } : null;
+    return user;
   } catch (error) {
     console.error("Error in getUserByEmail:", error);
+    return null;
+  }
+};
+
+export const getUserByPhone = async (phone: string) => {
+  try {
+    const user = await db.user.findUnique({
+      where: { phone_number: phone },
+    });
+    return user;
+  } catch (error) {
+    console.error("Error in getUserByPhone:", error);
+    return null;
+  }
+};
+
+export const getUserByUsername = async (username: string) => {
+  try {
+    const user = await db.user.findUnique({
+      where: { username },
+    });
+    return user;
+  } catch (error) {
+    console.error("Error in getUserByUsername:", error);
     return null;
   }
 };
@@ -27,31 +40,32 @@ export const getUserByEmail = async (email: string) => {
 export const getUserById = async (gg_id: string) => {
   try {
     const user = await db.user.findUnique({ where: { gg_id } });
-
     return user;
-  } catch {
+  } catch (error) {
+    console.error("Error in getUserById:", error);
     return null;
   }
 };
 
-export const createUser = async (payload: z.infer<typeof registerSchema>) => {
+export const createUser = async (userData: Prisma.UserCreateInput) => {
   try {
     return await db.user.create({
-      data: payload,
+      data: userData,
     });
-  } catch {
+  } catch (error) {
+    console.error("Error in createUser:", error);
     return null;
   }
 };
 
-type UpdateUserType = Prisma.Args<typeof db.user, "update">["data"];
-export const updateUserById = async (gg_id: string, payload: UpdateUserType) => {
+export const updateUserById = async (gg_id: string, userData: Prisma.UserUpdateInput) => {
   try {
     return await db.user.update({
       where: { gg_id },
-      data: payload,
+      data: userData,
     });
-  } catch {
+  } catch (error) {
+    console.error("Error in updateUserById:", error);
     return null;
   }
 };

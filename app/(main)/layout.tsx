@@ -1,6 +1,7 @@
+import Navbar from "@/app/_components/navbar";
+import { signOut } from "@/auth";
 import { Layout } from "@/components/dom/Layout";
 import { TooltipProvider } from "@/components/ui/tooltip/tooltip";
-import { signOut } from "@/auth";
 
 export default async function MainLayout({
   children,
@@ -15,7 +16,10 @@ export default async function MainLayout({
   return (
     <>
       <Layout handleServerSignOut={handleServerSignOut}>
-        <TooltipProvider>{children}</TooltipProvider>
+        <TooltipProvider>
+          <Navbar />
+          <main>{children}</main>
+        </TooltipProvider>
       </Layout>
     </>
   );

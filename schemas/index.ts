@@ -6,7 +6,7 @@ const EMAIL_SCHEMA = z
   .email("Invalid Email Address.");
 
 export const loginSchema = z.object({
-  email: EMAIL_SCHEMA,
+  login: z.string().min(1, "Login is required."),
   password: z.string().min(1, "Password is required."),
 });
 

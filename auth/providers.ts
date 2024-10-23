@@ -1,5 +1,5 @@
 import { loginSchema } from "@/schemas";
-import { getUserByEmail } from "@/services/user";
+import { getUserByEmail, getUserByPhone, getUserByUsername } from "@/services/user";
 import { UserRole } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import Credentials from "next-auth/providers/credentials";
@@ -11,9 +11,12 @@ export const CredentialsProvider = Credentials({
     const validatedFields = loginSchema.safeParse(credentials);
 
     if (validatedFields.success) {
-      const { email, password } = validatedFields.data;
+      const { login, password } = validatedFields.data;
 
-      const user = await getUserByEmail(email);
+      let user = await getUserByEmail(login) || 
+                 await getUserByPhone(login) || 
+                 await getUserByUsername(login);
+
       if (!user || !user.password) return null;
 
       const passwordsMatch = await bcrypt.compare(password, user.password);
@@ -56,7 +59,7 @@ export const GoogleProvider = Google({
   profile(profile) {
     return {
       id: profile.sub,
-      name: profile.username,
+      name: profile.name,
       email: profile.email,
       image: profile.picture,
       role: UserRole.User,
