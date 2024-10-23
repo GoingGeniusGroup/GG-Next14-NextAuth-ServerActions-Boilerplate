@@ -29,15 +29,6 @@ const TopFloatingDock2 = ({
     handleIsOpen();
   };
 
-  // Handle click on navigation items
-  const handleItemClick = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    link: string
-  ) => {
-    e.preventDefault();
-    link;
-  };
-
   return (
     <div className={cn("fixed top-[92px] left-8 z-30", className)}>
       <button
@@ -75,9 +66,8 @@ const TopFloatingDock2 = ({
                 exit={{ opacity: 0, y: -10, transition: { delay: idx * 0.05 } }}
                 transition={{ delay: idx * 0.05 }}
               >
-                <a
-                  href={item.link}
-                  onClick={(e) => handleItemClick(e, item.link)}
+                <button
+                  onClick={() => onSectionClick(item.link)}
                   className={cn(
                     "h-10 w-10 rounded-full bg-white dark:bg-neutral-900 border-2 flex items-center justify-center shadow-lg relative group hover:text-sky-400",
                     activeSection === item.title && "bg-sky-100 dark:bg-sky-900"
@@ -98,7 +88,7 @@ const TopFloatingDock2 = ({
                   <div className="absolute left-full ml-2 px-2 py-1 rounded-md bg-white dark:bg-neutral-800 text-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-lg">
                     {item.title}
                   </div>
-                </a>
+                </button>
               </motion.div>
             ))}
           </motion.div>

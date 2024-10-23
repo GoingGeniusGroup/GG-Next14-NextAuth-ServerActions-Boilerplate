@@ -56,7 +56,14 @@ export default function GeniusProfileLayout({
   const scrollToSection = (sectionId: string) => {
     const element = document.querySelector(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const offsetTop = element.getBoundingClientRect().top;
+      const container = document.querySelector(".scroll-container");
+      if (container) {
+        container.scrollTo({
+          top: container.scrollTop + offsetTop - 150, // Adjust this value to control the scroll position
+          behavior: "smooth",
+        });
+      }
     }
   };
 
@@ -109,15 +116,16 @@ export default function GeniusProfileLayout({
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: -300, opacity: 0 }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="px-4 pb-4 pt-8 h-full relative overflow-y-auto scroll-smooth"
+              className="px-4 pb-4 pt-8 h-full relative overflow-y-auto scroll-container"
             >
+              {/* Add padding-top to create space at the top */}
               <div id="info" className="info-section">
                 {info}
               </div>
               <div id="gallery" className="gallery-section">
                 {gallery}
               </div>
-              <div id="projects" className="projects-section">
+              <div id="projects" className="projects-section mb-20">
                 {projects}
               </div>
               <div id="experience" className="experience-section">
