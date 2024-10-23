@@ -1,7 +1,7 @@
 "use client";
 
 import React, { ReactNode, useState } from "react";
-import ProfileHud from "../Huds/ProfileHud";
+import ProfileHudTop from "../Huds/ProgileHudTop";
 import MobileSimulator from "../MobileSimulator/MobileSimulator";
 
 interface LayoutProps {
@@ -14,7 +14,7 @@ const Layout: React.FC<LayoutProps> = ({ children, handleServerSignOut }) => {
 
   return (
     <>
-      <ProfileHud
+      <ProfileHudTop
         showMobile={showMobile}
         setShowMobile={setShowMobile}
         handleServerSignOut={handleServerSignOut}
