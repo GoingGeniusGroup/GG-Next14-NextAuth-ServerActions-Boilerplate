@@ -37,14 +37,14 @@ export default function ProfileHud({
   const { data: session, status } = useSession();
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState<TabType>("Mobile");
-  const [isVisible, setIsVisible] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // Type the user properly
   const user = session?.user as ExtendedUser | undefined;
 
   // Show component only when authenticated
   useEffect(() => {
-    setIsVisible(status === "authenticated");
+    setIsLoggedIn(status === "authenticated");
   }, [status]);
 
   // Reset selected tab when auth state changes
@@ -74,8 +74,8 @@ export default function ProfileHud({
     }
   };
 
-  // Don't render if not authenticated
-  if (!isVisible) return null;
+  // // Don't render if not authenticated
+  // if (!isLoggedIn) return null;
 
   const username = user?.name || "user";
   const profilePic = user?.image;
@@ -103,7 +103,7 @@ export default function ProfileHud({
           <p style={{ color: "#ffffff", textShadow: "1px 1px 2px #00FF00" }}>
             {/* {user?.credits?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") ||
               "0"} */}
-            170782
+            {isLoggedIn ? "170782" : "0"}
           </p>
         </div>
         <div className="flex gap-x-1 text-xs">
@@ -113,7 +113,7 @@ export default function ProfileHud({
           <p style={{ color: "#ffffff", textShadow: "1px 1px 2px #FFFF00" }}>
             {/* {user?.diamonds?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") ||
               "0"} */}
-            1297659
+            {isLoggedIn ? "1297659" : "0"}
           </p>
         </div>
         <div className="size-[19px] rounded-full border-2 border-white bg-black text-white transition-all duration-300 ease-in-out">
