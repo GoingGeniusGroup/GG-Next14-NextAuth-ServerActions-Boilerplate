@@ -1,3 +1,4 @@
+import { UserCardData } from "@/core/interface/userCardData.interface";
 import AboutSection from "../console/AboutSection";
 import BottomSection from "../console/BottomSection";
 
@@ -37,12 +38,15 @@ export default function GeniusUserHome({ username }: { username: string }) {
     },
   ];
 
-  const aboutGenius = {
+  const aboutGenius: UserCardData = {
     name: username,
     description:
       "Stay up to date with the latest Ram news, updates, and item shop releases. Get information about upcoming collaborations and special events. Stay up to date with the latest Fortnite news, updates, and item shop releases. Get information about upcoming collaborations and special events.",
-    guild: "VAJRA",
-    age: 25,
+    age: 25, // Add the age property
+    faculty: "Science",
+    guild: "BUDDHA",
+    email: "johndoe@example.com",
+    username: "johndoe",
   };
   return (
     <>

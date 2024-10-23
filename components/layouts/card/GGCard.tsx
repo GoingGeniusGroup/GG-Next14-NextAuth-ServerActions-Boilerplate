@@ -50,7 +50,7 @@ export default function GGCard({ userData }: { userData: UserCardData }) {
         <div className="group h-full [prespective:1000px]">
           {/* Flip the card when clicked */}
           <div
-            style={getGradientStyle(userData.guild)}
+            style={getGradientStyle(userData.guild || "BUDDHA")}
             className={`relative size-full rounded-lg shadow-md transition-all duration-500 [transform-style:preserve-3d]
     ${isFlipped ? "[transform:rotateY(180deg)]" : ""}`}
             onClick={handleFlip}
@@ -58,7 +58,7 @@ export default function GGCard({ userData }: { userData: UserCardData }) {
             <div className="absolute right-2 top-2">
               <p
                 className={`text-montserrat text-xs font-semibold`}
-                style={{ color: getTextColor(userData.guild) }}
+                style={{ color: getTextColor(userData.guild || "BUDDHA") }}
               >
                 {userData.faculty}
               </p>
@@ -73,7 +73,7 @@ export default function GGCard({ userData }: { userData: UserCardData }) {
             <div className="absolute bottom-2 right-2">
               <p
                 className="text-montserrat z-20 text-xs font-semibold hover:underline"
-                style={{ color: getTextColor(userData.guild) }}
+                style={{ color: getTextColor(userData.guild || "BUDDHA") }}
               >
                 View More
               </p>
@@ -100,7 +100,7 @@ export default function GGCard({ userData }: { userData: UserCardData }) {
 
             {/* QRCode */}
             <div
-              style={getGradientStyle(userData.guild)}
+              style={getGradientStyle(userData.guild || "BUDDHA")}
               className="absolute inset-0 z-10 rounded-lg text-center text-slate-200 [backface-visibility:hidden] [transform:rotateY(180deg)]"
             >
               <div className="relative size-full ">
@@ -109,7 +109,7 @@ export default function GGCard({ userData }: { userData: UserCardData }) {
                 </div>
                 <div
                   className="absolute right-2 top-2 text-[14px] font-bold"
-                  style={{ color: getTextColor(userData.guild) }}
+                  style={{ color: getTextColor(userData.guild || "BUDDHA") }}
                 >
                   REGION
                 </div>
@@ -118,7 +118,7 @@ export default function GGCard({ userData }: { userData: UserCardData }) {
                 </div>
                 <div
                   className="absolute bottom-2 right-2 text-xs font-semibold"
-                  style={{ color: getTextColor(userData.guild) }}
+                  style={{ color: getTextColor(userData.guild || "BUDDHA") }}
                 >
                   Back
                 </div>
