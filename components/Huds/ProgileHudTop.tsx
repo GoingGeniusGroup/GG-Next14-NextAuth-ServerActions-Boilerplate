@@ -64,7 +64,7 @@ export default function ProfileHudTop({
   const profilePic = user?.image;
 
   return (
-    <div className="fixed top-[8px] right-[52px] z-50 flex size-[40px] select-none items-center rounded-full">
+    <div className="fixed  top-2 right-7 z-50 flex size-[40px] select-none items-center rounded-full">
       <DropdownMenu>
         <DropdownMenuTrigger className="outline-none transition-all duration-300 ease-in-out flex dark:border-white/20 hover:dark:border-white border-black/40 hover:border-black justify-center items-center size-full overflow-hidden rounded-full bg-white dark:bg-gray-800 border">
           <Avatar className="relative">
