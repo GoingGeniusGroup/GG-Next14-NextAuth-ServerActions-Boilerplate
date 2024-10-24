@@ -11,7 +11,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Form,
@@ -23,6 +22,8 @@ import {
 } from "@/components/ui/form";
 import { updateProfile } from "@/actions/update-profile";
 import { toast } from "sonner";
+import { IconUserEdit } from "@tabler/icons-react";
+import { Button } from "@/components/ui/border/moving-border";
 
 const formSchema = z.object({
   first_name: z.string().min(3, {
@@ -94,7 +95,13 @@ const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">Update Profile</Button>
+        {/* <Button className="rounded-full text-white dark:text-black dark:bg-white bg-black"></Button> */}
+        <Button
+          borderRadius="1.75rem"
+          className="bg-white size-10 dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800"
+        >
+          <IconUserEdit size={20} />
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>

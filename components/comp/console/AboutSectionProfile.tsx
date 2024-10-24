@@ -22,13 +22,15 @@ export default async function AboutSectionProfile({
     <div className="flex flex-col gap-y-16">
       <div className="flex flex-col gap-4 mb-3">
         {LoggedUserProfile && currentUser && (
-          <UpdateProfileDialog
-            gg_id={currentUser.gg_id}
-            currentFirstName={currentUser.first_name ?? ""}
-            currentLastName={currentUser.last_name ?? ""}
-            currentAddress={currentUser.address ?? ""}
-            currentDescription={currentUser.description ?? ""}
-          />
+          <div className="absolute top-4 right-4 z-40">
+            <UpdateProfileDialog
+              gg_id={currentUser.gg_id}
+              currentFirstName={currentUser.first_name ?? ""}
+              currentLastName={currentUser.last_name ?? ""}
+              currentAddress={currentUser.address ?? ""}
+              currentDescription={currentUser.description ?? ""}
+            />
+          </div>
         )}
         <div className="flex items-center gap-3 text-black dark:text-gray-300">
           <span className="uppercase">
