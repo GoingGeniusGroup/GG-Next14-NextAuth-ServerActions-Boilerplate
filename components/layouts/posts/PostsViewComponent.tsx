@@ -5,12 +5,12 @@ import { gsap } from "gsap";
 import { Button } from "@/components/ui/button/button";
 
 // Sub-components
-import Header from "@/components/layouts/profile/subComponents/Header";
-import VideoBackground from "@/components/layouts/profile/subComponents/VideoBackground";
-import SearchBar from "@/components/layouts/profile/subComponents/SearchBar";
-import PostsGrid from "@/components/layouts/profile/subComponents/PostGrids";
-import FloatingControls from "@/components/layouts/profile/subComponents/FloatingControls";
-import BackgroundChanger from "@/components/layouts/profile/subComponents/BackgroundChanger";
+import Header from "../profile/subComponents/Header";
+import VideoBackground from "../profile/subComponents/VideoBackground";
+import SearchBar from "../profile/subComponents/SearchBar";
+import PostsGrid from "../profile/subComponents/PostGrids";
+import FloatingControls from "../profile/subComponents/FloatingControls";
+import BackgroundChanger from "../profile/subComponents/BackgroundChanger";
 
 //icons
 import { FiMaximize2, FiMinimize2 } from "react-icons/fi";
