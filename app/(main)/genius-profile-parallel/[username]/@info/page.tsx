@@ -1,4 +1,4 @@
-import GeniusUserHome from "@/components/layouts/GeniusUserProfile/GeniusUserHome";
+import GeniusUserHome from "@/components/comp/GeniusUserProfile/GeniusUserHome";
 
 interface ProfileViewProps {
   params: {
@@ -6,7 +6,7 @@ interface ProfileViewProps {
   };
 }
 
-export default function GeniusUserInfo({ params }: ProfileViewProps) {
+export default async function GeniusUserInfo({ params }: ProfileViewProps) {
   const username = params.username;
   return (
     <>

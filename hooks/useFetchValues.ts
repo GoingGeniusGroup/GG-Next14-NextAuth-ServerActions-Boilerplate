@@ -1,6 +1,5 @@
 // import { create } from "zustand";
 
-
 // interface Option {
 //   id: string;
 //   label: string;
@@ -25,14 +24,14 @@
 //   suppliers: [],
 //   products: [],
 //   isLoading: false,
-  
+
 //   fetchProducts: async () => {
 //     set({ isLoading: true });
 //     try {
 //       const productData = await getProducts();
 
 //       // Handle the case where productData might be null and ensure it's an array
-//       set({ 
+//       set({
 //         products: productData ? productData.map((product: any) => ({
 //           id: product.id,
 //           name: product.name,
@@ -48,7 +47,7 @@
 //           categoryId: product.categoryId || product.category.id, // Adjust category assignment
 //         })) : [],  // Fallback to empty array if productData is null
 
-//         isLoading: false 
+//         isLoading: false
 //       });
 //     } catch (error) {
 //       console.error("Failed to fetch products:", error);
@@ -60,4 +59,3 @@
 //     // ... similar implementation for categories and suppliers
 //   },
 // }));
-

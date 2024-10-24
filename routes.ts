@@ -7,7 +7,7 @@ export const authRoutes: string[] = [
   "/resend",
   "/reset",
   "/new-password",
-  "/two-factor"
+  "/two-factor",
 ];
 
 export const apiAuthPrefix: string = "/api/auth";
