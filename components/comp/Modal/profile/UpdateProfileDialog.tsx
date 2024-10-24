@@ -49,6 +49,7 @@ const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
           currentLastName={currentLastName}
           currentAddress={currentAddress}
           currentDescription={currentDescription}
+          setOpen={setOpen}
         />
       </DialogContent>
     </Dialog>

@@ -20,6 +20,7 @@ import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 
 interface UpdateProfileDialogProps {
+  setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
   gg_id: string;
   currentFirstName: string;
   currentLastName: string;
@@ -28,6 +29,7 @@ interface UpdateProfileDialogProps {
 }
 
 export default function UpdateProfileForm({
+  setOpen,
   gg_id,
   currentFirstName,
   currentLastName,
@@ -61,6 +63,7 @@ export default function UpdateProfileForm({
       if (result.success) {
         toast.success("Profile updated successfully");
         router.refresh();
+        setOpen && setOpen(false);
         form.reset();
       } else {
         toast.error(result.error.message);
@@ -126,13 +129,13 @@ export default function UpdateProfileForm({
           )}
         />
         <div className="flex justify-end gap-3">
-          {/* <Button
+          <Button
             type="button"
             variant="outline"
-            onClick={() => setOpen(false)}
+            onClick={() => setOpen && setOpen(false)}
           >
             Cancel
-          </Button> */}
+          </Button>
           <Button type="submit" disabled={form.formState.isSubmitting}>
             {form.formState.isSubmitting ? "Updating..." : "Update"}
           </Button>
