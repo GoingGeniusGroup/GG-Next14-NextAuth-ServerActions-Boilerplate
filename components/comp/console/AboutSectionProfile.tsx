@@ -6,6 +6,7 @@ import {
   IconMedal,
 } from "@tabler/icons-react";
 import UpdateProfileDialog from "../Modal/profile/UpdateProfileDialog";
+import Link from "next/link";
 
 export default async function AboutSectionProfile({
   username,
@@ -32,6 +33,7 @@ export default async function AboutSectionProfile({
             />
           </div>
         )}
+        <Link href="/genius-profile-parallel/haleatus/edit-info">Info</Link>
         <div className="flex items-center gap-3 text-black dark:text-gray-300">
           <span className="uppercase">
             {LoggedUserProfile ? currentUser?.username : profileOwner?.username}
