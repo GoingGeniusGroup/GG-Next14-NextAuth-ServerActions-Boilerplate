@@ -1,4 +1,4 @@
-import AboutSection from "../console/AboutSection";
+import AboutSectionProfile from "../console/AboutSectionProfile";
 import BottomSection from "../console/BottomSection";
 
 export default async function GeniusUserHome({
@@ -45,7 +45,7 @@ export default async function GeniusUserHome({
     <>
       <div className="flex w-full justify-between">
         <div className="w-[35%]">
-          <AboutSection username={username} />
+          <AboutSectionProfile username={username} />
         </div>
         <div className="w-[35%]">
           {/* Projects Grid */}
