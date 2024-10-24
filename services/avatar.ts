@@ -5,7 +5,7 @@ export const getAvatarsByUserId = async (gg_id: string) => {
   try {
     const avatars = await db.avatar.findMany({
       where: { gg_id },
-      orderBy: { avatar_id: 'desc' },
+      orderBy: { avatar_id: "desc" },
     });
     return avatars;
   } catch (error) {
@@ -26,7 +26,10 @@ export const createAvatar = async (data: Prisma.avatarCreateInput) => {
   }
 };
 
-export const updateAvatar = async (avatar_id: string, data: Prisma.avatarUpdateInput) => {
+export const updateAvatar = async (
+  avatar_id: string,
+  data: Prisma.avatarUpdateInput
+) => {
   try {
     const avatar = await db.avatar.update({
       where: { avatar_id },

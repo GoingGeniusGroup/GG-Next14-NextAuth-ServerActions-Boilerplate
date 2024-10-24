@@ -49,7 +49,9 @@ export type UserGameStats = {
   achievements: { name: string; achieved: number }[];
 };
 
-export const getSteamPlayerSummary = async (steamId: string): Promise<SteamPlayerData | null> => {
+export const getSteamPlayerSummary = async (
+  steamId: string
+): Promise<SteamPlayerData | null> => {
   const apiKey = process.env.STEAM_API_KEY;
   if (!apiKey) {
     console.error("Steam API key is not set");
@@ -62,7 +64,11 @@ export const getSteamPlayerSummary = async (steamId: string): Promise<SteamPlaye
     const response = await fetch(url);
     const data = await response.json();
 
-    if (data.response && data.response.players && data.response.players.length > 0) {
+    if (
+      data.response &&
+      data.response.players &&
+      data.response.players.length > 0
+    ) {
       return data.response.players[0] as SteamPlayerData;
     } else {
       console.error("No player data found");
@@ -74,7 +80,9 @@ export const getSteamPlayerSummary = async (steamId: string): Promise<SteamPlaye
   }
 };
 
-export const getOwnedGames = async (steamId: string): Promise<GetOwnedGamesResponse | null> => {
+export const getOwnedGames = async (
+  steamId: string
+): Promise<GetOwnedGamesResponse | null> => {
   const apiKey = process.env.STEAM_API_KEY;
   if (!apiKey) {
     console.error("Steam API key is not set");
@@ -87,7 +95,7 @@ export const getOwnedGames = async (steamId: string): Promise<GetOwnedGamesRespo
     const response = await fetch(url);
     const data = await response.json();
 
-    if (data.response && 'games' in data.response) {
+    if (data.response && "games" in data.response) {
       return data.response as GetOwnedGamesResponse;
     } else {
       console.error("No games found or profile is private");
@@ -99,7 +107,10 @@ export const getOwnedGames = async (steamId: string): Promise<GetOwnedGamesRespo
   }
 };
 
-export const getUserStatsForGame = async (steamId: string, appId: number): Promise<UserGameStats | null> => {
+export const getUserStatsForGame = async (
+  steamId: string,
+  appId: number
+): Promise<UserGameStats | null> => {
   const apiKey = process.env.STEAM_API_KEY;
   if (!apiKey) {
     console.error("Steam API key is not set");

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button/button";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea, ScrollBar } from "@/components/ui/scrollarea";
 import ProductList from "./subComponents/ProductList";
-import { Product, CartItem } from "./subComponents/types";
+import { CartItem } from "./subComponents/types";
 import CartSheet from "./subComponents/CartSheet";
 
 import physicalProducts from "@/core/data/physicalProduct";
