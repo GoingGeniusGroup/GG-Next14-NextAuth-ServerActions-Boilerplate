@@ -7,6 +7,7 @@ import { AuroraBackground } from "@/components/ui/background/aurora-background";
 import { ThemeSwitcher } from "@/components/comp/ThemeToggler/ThemeSwitcher";
 import { ThemeProvider } from "next-themes";
 import FloatingDockInvertedComponent from "@/components/comp/dock/FloatingDockInverted";
+import { UsernameProvider } from "@/hooks/UsernameProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,22 +31,24 @@ export default function RootLayout({
         <Providers>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <AuroraBackground>
-              {/* Theme switcher */}
-              <div className="absolute top-[8px] right-[73px] z-50">
-                <ThemeSwitcher />
-              </div>
-
-              {/* Dock section */}
-              <div className="w-full z-40">
-                <div className="p-4 text-black dark:text-white">
-                  <FloatingDockInvertedComponent />
+              <UsernameProvider>
+                {/* Theme switcher */}
+                <div className="absolute top-[8px] right-[73px] z-50">
+                  <ThemeSwitcher />
                 </div>
-              </div>
 
-              {/* Content section */}
-              <div className="flex-1 px-8 py-4 w-full overflow-auto">
-                {children}
-              </div>
+                {/* Dock section */}
+                <div className="w-full z-40">
+                  <div className="p-4 text-black dark:text-white">
+                    <FloatingDockInvertedComponent />
+                  </div>
+                </div>
+
+                {/* Content section */}
+                <div className="flex-1 px-8 py-4 w-full overflow-auto">
+                  {children}
+                </div>
+              </UsernameProvider>
             </AuroraBackground>
           </ThemeProvider>
         </Providers>

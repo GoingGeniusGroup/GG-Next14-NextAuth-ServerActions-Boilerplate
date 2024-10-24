@@ -68,7 +68,7 @@ export default function FloatingDockInvertedComponent() {
     {
       title: "Genius Profile",
       icon: <IconUserBitcoin className="size-full" />,
-      href: "/genius-profile/ram",
+      href: "/genius-profile/ro_.sth",
     },
     {
       title: "Posts",
@@ -83,7 +83,7 @@ export default function FloatingDockInvertedComponent() {
     {
       title: "Profile Parallel Routing",
       icon: <Icon3dRotate className="size-full" />,
-      href: "/genius-profile-parallel/ram",
+      href: "/genius-profile-parallel/ro_.sth",
     },
   ];
   return <FloatingDockInverted items={links} />;

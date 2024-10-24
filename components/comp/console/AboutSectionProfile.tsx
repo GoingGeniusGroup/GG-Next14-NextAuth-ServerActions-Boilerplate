@@ -5,6 +5,7 @@ import {
   IconActivityHeartbeat,
   IconMedal,
 } from "@tabler/icons-react";
+import UpdateProfileDialog from "../Modal/profile/UpdateProfileDialog";
 
 export default async function AboutSectionProfile({
   username,
@@ -20,6 +21,12 @@ export default async function AboutSectionProfile({
   return (
     <div className="flex flex-col gap-y-16">
       <div className="flex flex-col gap-4 mb-3">
+        {currentUser && (
+          <UpdateProfileDialog
+            gg_id={currentUser.gg_id}
+            currentEmail={currentUser.email ?? ""}
+          />
+        )}
         <div className="flex items-center gap-3 text-black dark:text-gray-300">
           <span className="uppercase">
             {LoggedUserProfile ? currentUser?.username : profileOwner?.username}

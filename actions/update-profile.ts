@@ -6,10 +6,12 @@ import { z } from "zod";
 
 const updateProfileSchema = z.object({
   gg_id: z.string(),
-  username: z.string().min(3).max(20),
+  email: z.string().email(),
 });
 
-export const updateProfile = async (payload: z.infer<typeof updateProfileSchema>) => {
+export const updateProfile = async (
+  payload: z.infer<typeof updateProfileSchema>
+) => {
   const validatedFields = updateProfileSchema.safeParse(payload);
   if (!validatedFields.success) {
     return response({
@@ -21,10 +23,10 @@ export const updateProfile = async (payload: z.infer<typeof updateProfileSchema>
     });
   }
 
-  const { gg_id, username } = validatedFields.data;
+  const { gg_id, email } = validatedFields.data;
 
   try {
-    await updateUserById(gg_id, { username });
+    await updateUserById(gg_id, { email });
     return response({
       success: true,
       code: 200,
