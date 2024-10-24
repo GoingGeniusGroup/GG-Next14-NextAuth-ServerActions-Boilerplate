@@ -24,7 +24,11 @@ export default async function AboutSectionProfile({
         {currentUser && (
           <UpdateProfileDialog
             gg_id={currentUser.gg_id}
-            currentEmail={currentUser.email ?? ""}
+            currentFirstName={currentUser.first_name ?? ""}
+            currentLastName={currentUser.last_name ?? ""}
+            currentAddress={currentUser.address ?? ""}
+            currentDescription={currentUser.description ?? ""}
+            currentDob={currentUser.dob ?? ""}
           />
         )}
         <div className="flex items-center gap-3 text-black dark:text-gray-300">
@@ -42,50 +46,68 @@ export default async function AboutSectionProfile({
             <span>{profileOwner?.dob?.toString()}</span>
           )}
         </div>
-      </div>
-      <div className="gap-2 flex flex-wrap overflow-x-auto w-full">
-        <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
-          <IconMedal className="flex justify-center items-center size-full p-2 text-emerald-500" />
+        <div>
+          {LoggedUserProfile ? (
+            <p>{currentUser?.description}</p>
+          ) : (
+            <p>{profileOwner?.description}</p>
+          )}
+
+          <div className="flex gap-2">
+            <span className="text-black dark:text-gray-300">
+              {LoggedUserProfile ? currentUser?.address : profileOwner?.address}
+            </span>
+            <span className="text-black dark:text-gray-300">
+              {LoggedUserProfile
+                ? currentUser?.dob?.toString()
+                : profileOwner?.dob?.toString()}
+            </span>
+          </div>
         </div>
-        <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
-          <Icon360View className="flex justify-center items-center size-full p-2 text-purple-600" />
+        <div className="gap-2 flex flex-wrap overflow-x-auto w-full">
+          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
+            <IconMedal className="flex justify-center items-center size-full p-2 text-emerald-500" />
+          </div>
+          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
+            <Icon360View className="flex justify-center items-center size-full p-2 text-purple-600" />
+          </div>
+          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
+            <IconActivityHeartbeat className="flex justify-center items-center size-full p-2 text-red-600" />
+          </div>
+          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
+            <Icon360View className="flex justify-center items-center size-full p-2 text-purple-600" />
+          </div>
+          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
+            <IconActivityHeartbeat className="flex justify-center items-center size-full p-2 text-red-600" />
+          </div>
+          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
+            <Icon360View className="flex justify-center items-center size-full p-2 text-purple-600" />
+          </div>
+          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
+            <IconActivityHeartbeat className="flex justify-center items-center size-full p-2 text-red-600" />
+          </div>
+          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
+            <Icon360View className="flex justify-center items-center size-full p-2 text-purple-600" />
+          </div>
+          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
+            <IconActivityHeartbeat className="flex justify-center items-center size-full p-2 text-red-600" />
+          </div>
+          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
+            <Icon360View className="flex justify-center items-center size-full p-2 text-purple-600" />
+          </div>
+          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
+            <IconActivityHeartbeat className="flex justify-center items-center size-full p-2 text-red-600" />
+          </div>
         </div>
-        <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
-          <IconActivityHeartbeat className="flex justify-center items-center size-full p-2 text-red-600" />
-        </div>
-        <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
-          <Icon360View className="flex justify-center items-center size-full p-2 text-purple-600" />
-        </div>
-        <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
-          <IconActivityHeartbeat className="flex justify-center items-center size-full p-2 text-red-600" />
-        </div>
-        <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
-          <Icon360View className="flex justify-center items-center size-full p-2 text-purple-600" />
-        </div>
-        <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
-          <IconActivityHeartbeat className="flex justify-center items-center size-full p-2 text-red-600" />
-        </div>
-        <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
-          <Icon360View className="flex justify-center items-center size-full p-2 text-purple-600" />
-        </div>
-        <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
-          <IconActivityHeartbeat className="flex justify-center items-center size-full p-2 text-red-600" />
-        </div>
-        <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
-          <Icon360View className="flex justify-center items-center size-full p-2 text-purple-600" />
-        </div>
-        <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
-          <IconActivityHeartbeat className="flex justify-center items-center size-full p-2 text-red-600" />
-        </div>
-      </div>
-      <p
-        className={`text-black dark:text-gray-300 overflow-hidden text-ellipsis whitespace-normal line-clamp-2 mt-20
+        <p
+          className={`text-black dark:text-gray-300 overflow-hidden text-ellipsis whitespace-normal line-clamp-2 mt-20
         }`}
-      >
-        {LoggedUserProfile
-          ? currentUser?.created_at?.toString()
-          : profileOwner?.created_at?.toString()}
-      </p>
+        >
+          {LoggedUserProfile
+            ? currentUser?.created_at?.toString()
+            : profileOwner?.created_at?.toString()}
+        </p>
+      </div>
     </div>
   );
 }
