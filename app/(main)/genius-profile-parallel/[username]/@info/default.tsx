@@ -6,7 +6,9 @@ interface ProfileViewProps {
   };
 }
 
-export default function DefaultGeniusUserInfo({ params }: ProfileViewProps) {
+export default async function DefaultGeniusUserInfo({
+  params,
+}: ProfileViewProps) {
   const username = params.username;
   return (
     <>

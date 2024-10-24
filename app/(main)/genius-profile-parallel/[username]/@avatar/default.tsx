@@ -1,5 +1,5 @@
 import GeniusUserAvatar from "@/components/layouts/GeniusUserProfile/GeniusUserAvatar";
 
-export default function DefaultAvatarSection() {
+export default async function DefaultAvatarSection() {
   return <GeniusUserAvatar />;
 }

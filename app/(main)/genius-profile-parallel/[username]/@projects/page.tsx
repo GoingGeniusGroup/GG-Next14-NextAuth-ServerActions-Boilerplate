@@ -9,7 +9,7 @@ import {
   IconBoxAlignTopLeft,
 } from "@tabler/icons-react";
 
-export default function GeniusUserProject() {
+export default async function GeniusUserProject() {
   const images = [
     {
       title: "The Dawn of Innovation",
