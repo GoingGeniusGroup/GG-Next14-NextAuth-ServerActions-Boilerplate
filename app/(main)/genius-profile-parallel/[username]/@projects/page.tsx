@@ -1,4 +1,4 @@
-import GeniusUserProjects from "@/components/layouts/GeniusUserProfile/GeniusUserProjects";
+import GeniusUserProjects from "@/components/comp/GeniusUserProfile/GeniusUserProjects";
 import {
   IconClipboardCopy,
   IconFileBroken,

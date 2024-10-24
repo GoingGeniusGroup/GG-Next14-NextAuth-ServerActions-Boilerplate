@@ -11,27 +11,27 @@ import {
   useMemo,
   useRef,
 } from "react";
-import { BackgroundColor } from "@/components/layouts/AvatarComponents/Background";
+import { BackgroundColor } from "@/components/comp/AvatarComponents/Background";
 import {
   Background,
   Box,
-} from "@/components/layouts/AvatarComponents/Background/Box/Box.component";
-import { BaseCanvas } from "@/components/layouts/AvatarComponents/BaseCanvas";
-import Bloom from "@/components/layouts/AvatarComponents/Bloom/Bloom.component";
+} from "@/components/comp/AvatarComponents/Background/Box/Box.component";
+import { BaseCanvas } from "@/components/comp/AvatarComponents/BaseCanvas";
+import Bloom from "@/components/comp/AvatarComponents/Bloom/Bloom.component";
 import Capture, {
   CaptureType,
-} from "@/components/layouts/AvatarComponents/Capture/Capture.component";
-import Lights from "@/components/layouts/AvatarComponents/Lights/Lights.component";
-import Loader from "@/components/layouts/AvatarComponents/Loader";
+} from "@/components/comp/AvatarComponents/Capture/Capture.component";
+import Lights from "@/components/comp/AvatarComponents/Lights/Lights.component";
+import Loader from "@/components/comp/AvatarComponents/Loader";
 import {
   AnimationModel,
   HalfBodyModel,
   PoseModel,
   StaticModel,
-} from "@/components/layouts/AvatarComponents/Models";
-import { CameraControls } from "@/components/layouts/AvatarComponents/Scene/CameraControls.component";
-import { Environment } from "@/components/layouts/AvatarComponents/Scene/Environment.component";
-import Shadow from "@/components/layouts/AvatarComponents/Shadow/Shadow.component";
+} from "@/components/comp/AvatarComponents/Models";
+import { CameraControls } from "@/components/comp/AvatarComponents/Scene/CameraControls.component";
+import { Environment } from "@/components/comp/AvatarComponents/Scene/Environment.component";
+import Shadow from "@/components/comp/AvatarComponents/Shadow/Shadow.component";
 import { isValidFormat, triggerCallback } from "@/services/avatar/index";
 import {
   BaseModelProps,

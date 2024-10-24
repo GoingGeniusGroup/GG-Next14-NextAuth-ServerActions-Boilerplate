@@ -1,5 +1,5 @@
-import AboutSection from "@/components/layouts/console/AboutSection";
-import BottomSection from "@/components/layouts/console/BottomSection";
+import AboutSection from "@/components/comp/console/AboutSection";
+import BottomSection from "@/components/comp/console/BottomSection";
 import { UserCardData } from "@/core/interface/userCardData.interface";
 
 export default function ConsolePage() {

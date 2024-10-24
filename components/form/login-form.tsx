@@ -1,8 +1,8 @@
 "use client";
 
 import { login } from "@/actions/login";
-import { CardWrapper } from "@/components/layouts/auth/card-wrapper";
-import { FormInput } from "@/components/layouts/auth/form-input";
+import { CardWrapper } from "@/components/comp/auth/card-wrapper";
+import { FormInput } from "@/components/comp/auth/form-input";
 import { Button } from "@/components/ui/button/button";
 import { Form } from "@/components/ui/form";
 import { loginSchema } from "@/schemas";

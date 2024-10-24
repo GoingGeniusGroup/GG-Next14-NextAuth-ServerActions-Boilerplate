@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { FaTimes } from "react-icons/fa";
 import { Tab } from "../RightSideHud";
 // import ShopSection from "@/components/shop/ShopSection";
-import ProfileComponent from "@/components/layouts/profile/ProfileMobileView/ProfileComponent";
+import ProfileComponent from "@/components/comp/profile/ProfileMobileView/ProfileComponent";
 
 interface TabContentProps {
   tab: Tab;

@@ -1,11 +1,11 @@
 "use client";
 
-import { CardWrapper } from "@/components/layouts/auth/card-wrapper";
+import { CardWrapper } from "@/components/comp/auth/card-wrapper";
 import { resendSchema } from "@/schemas";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Form } from "@/components/ui/form";
-import { FormInput } from "@/components/layouts/auth/form-input";
+import { FormInput } from "@/components/comp/auth/form-input";
 import { useTransition } from "react";
 import { resendToken } from "@/actions/resend";
 import { toast } from "sonner";

@@ -16,7 +16,7 @@ import { useFrame } from "@react-three/fiber";
 import type { ObjectMap, SkinnedMeshProps } from "@react-three/fiber";
 import { GLTF, GLTFLoader, DRACOLoader } from "three-stdlib";
 import { suspend } from "suspend-react";
-import { Emotion } from "@/components/layouts/Avatar/Avatar.component";
+import { Emotion } from "@/components/comp/Avatar/Avatar.component";
 import { BloomConfiguration } from "@/types/avatar";
 
 export interface CustomNode extends Object3D {

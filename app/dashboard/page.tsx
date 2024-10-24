@@ -7,7 +7,7 @@ import Navbar from "../../components/layouts/myComponent/navbar";
 import ProductSummary from "../../components/layouts/myComponent/ProductSummary";
 import LowQuantity from "../../components/layouts/myComponent/LowQuantity";
 import BG from "../../public/bg/bg.jpg";
-import TopSelling from "@/components/layouts/myComponent/TopSelling";
+import TopSelling from "@/components/comp/myComponent/TopSelling";
 
 const page = () => {
   return (

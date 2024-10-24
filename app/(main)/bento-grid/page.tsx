@@ -1,8 +1,8 @@
 "use client";
 
-import BentoGridDemo from "@/components/layouts/AceternityUI/bento-grid/bento-grid-demo";
-import BentoGridSecondDemo from "@/components/layouts/AceternityUI/bento-grid/bento-grid-demo-2";
-import BentoGridThirdDemo from "@/components/layouts/AceternityUI/bento-grid/bento-grid-demo-3";
+import BentoGridDemo from "@/components/comp/AceternityUI/bento-grid/bento-grid-demo";
+import BentoGridSecondDemo from "@/components/comp/AceternityUI/bento-grid/bento-grid-demo-2";
+import BentoGridThirdDemo from "@/components/comp/AceternityUI/bento-grid/bento-grid-demo-3";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 

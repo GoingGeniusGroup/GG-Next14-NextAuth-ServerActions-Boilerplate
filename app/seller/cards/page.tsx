@@ -1,4 +1,4 @@
-import Card from "@/components/layouts/myComponent/Card";
+import Card from "@/components/comp/myComponent/Card";
 import React from "react";
 
 export default function page() {

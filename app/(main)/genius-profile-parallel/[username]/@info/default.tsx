@@ -1,4 +1,4 @@
-import GeniusUserHome from "@/components/layouts/GeniusUserProfile/GeniusUserHome";
+import GeniusUserHome from "@/components/comp/GeniusUserProfile/GeniusUserHome";
 
 interface ProfileViewProps {
   params: {

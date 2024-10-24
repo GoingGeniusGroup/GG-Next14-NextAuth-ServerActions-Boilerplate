@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import ExpressionBottomMidHud from "../Huds/ExpressionBottomMidHud";
-import LeftSideViewComponent from "@/components/layouts/PublicProfileComponent/LeftSideViewComponent";
+import LeftSideViewComponent from "@/components/comp/PublicProfileComponent/LeftSideViewComponent";
 
 const expressions = [
   {

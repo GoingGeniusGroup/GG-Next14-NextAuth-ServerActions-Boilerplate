@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { fetchUserAvatars } from "@/actions/avatar";
 import { getCurrentUser } from "@/actions/userAndGuild";
-import { Avatar } from "@/components/layouts/Avatar";
+import { Avatar } from "@/components/comp/Avatar";
 
 interface LeftSideViewComponentProps {
   emote?: string;

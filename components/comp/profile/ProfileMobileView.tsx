@@ -3,7 +3,7 @@
 import { FaEdit } from "react-icons/fa";
 import GGCard from "../card/GGCard";
 import CustomCardStack from "../card/CustomCardStack";
-import CustomToolTipLeftRight from "@/components/layouts/CustomComponents/CustomToolTipLeftRight";
+import CustomToolTipLeftRight from "@/components/comp/CustomComponents/CustomToolTipLeftRight";
 
 const publicUser = {
   name: "John Doe", // User's full name

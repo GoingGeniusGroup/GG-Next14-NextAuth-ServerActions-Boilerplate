@@ -18,7 +18,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip/tooltip";
-import { Avatar } from "@/components/layouts/Avatar";
+import { Avatar } from "@/components/comp/Avatar";
 import { Slider } from "@/components/ui/slider/slider";
 
 interface ProductDetailProps {

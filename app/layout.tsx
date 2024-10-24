@@ -4,9 +4,9 @@ import Providers from "@/app/providers/SessionProvider";
 import { Inter } from "next/font/google";
 import "@/styles/globals.css";
 import { AuroraBackground } from "@/components/ui/background/aurora-background";
-import { ThemeSwitcher } from "@/components/layouts/ThemeToggler/ThemeSwitcher";
+import { ThemeSwitcher } from "@/components/comp/ThemeToggler/ThemeSwitcher";
 import { ThemeProvider } from "next-themes";
-import FloatingDockInvertedComponent from "@/components/layouts/dock/FloatingDockInverted";
+import FloatingDockInvertedComponent from "@/components/comp/dock/FloatingDockInverted";
 
 const inter = Inter({ subsets: ["latin"] });
 
