@@ -1,16 +1,13 @@
 // 'use client'
-import Card from '@/components/myComponent/Card'
-import React from 'react'
+import Card from "@/components/layouts/myComponent/Card";
+import React from "react";
 
 const Page = () => {
+  return (
+    <>
+      <Card />
+    </>
+  );
+};
 
-
-
-    return (
-        <>
-            <Card />
-        </>
-    )
-}
-
-export default Page
+export default Page;

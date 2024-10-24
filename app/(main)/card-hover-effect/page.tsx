@@ -1,4 +1,4 @@
-import { CardHoverEffectDemo } from "@/components/AceternityUI/CardHoverEffect";
+import { CardHoverEffectDemo } from "@/components/layouts/AceternityUI/CardHoverEffect";
 
 export default function CardHoverEffect() {
   return (

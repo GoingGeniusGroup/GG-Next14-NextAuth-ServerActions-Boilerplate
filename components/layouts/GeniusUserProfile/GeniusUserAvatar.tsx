@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { Suspense } from "react";
 
 const LazyAvatar = dynamic(
-  () => import("@/components/Avatar/Avatar.component"),
+  () => import("@/components/layouts/Avatar/Avatar.component"),
   {
     ssr: false, // Disable server-side rendering
   }

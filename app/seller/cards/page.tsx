@@ -1,8 +1,6 @@
-import Card from '@/components/myComponent/Card'
-import React from 'react'
+import Card from "@/components/layouts/myComponent/Card";
+import React from "react";
 
 export default function page() {
-    return (
-        <Card />
-    )
+  return <Card />;
 }
