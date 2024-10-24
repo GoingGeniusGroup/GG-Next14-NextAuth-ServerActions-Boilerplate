@@ -1,33 +1,34 @@
 import { getCurrentUser } from "@/actions/userAndGuild";
+import { getUserByUsername } from "@/services/user";
 import {
   Icon360View,
   IconActivityHeartbeat,
   IconMedal,
-  IconMedal2,
-  IconTrophy,
 } from "@tabler/icons-react";
 
 export default async function AboutSection({ username }: { username: string }) {
   const currentUser = await getCurrentUser();
 
-  const owner = currentUser?.username === username;
+  const LoggedUserProfile = currentUser?.username === username;
+
+  const profileOwner = await getUserByUsername(username);
 
   return (
     <div className="flex flex-col gap-y-16">
       <div className="flex flex-col gap-4 mb-3">
         <div className="flex items-center gap-3 text-black dark:text-gray-300">
           <span className="uppercase">
-            {owner ? currentUser?.username : username}
+            {LoggedUserProfile ? currentUser?.username : profileOwner?.username}
           </span>{" "}
           |{" "}
           <span>
-            {owner ? currentUser?.created_at?.toString() : "SOME DATE"}
+            {LoggedUserProfile ? currentUser?.email : profileOwner?.email}
           </span>{" "}
           <span>|</span>
-          {owner ? (
+          {LoggedUserProfile ? (
             <span>{currentUser?.dob?.toString()}</span>
           ) : (
-            <span>19</span>
+            <span>{profileOwner?.dob?.toString()}</span>
           )}
         </div>
       </div>
@@ -70,7 +71,9 @@ export default async function AboutSection({ username }: { username: string }) {
         className={`text-black dark:text-gray-300 overflow-hidden text-ellipsis whitespace-normal line-clamp-2 mt-20
         }`}
       >
-        {owner ? currentUser?.email : "user email"}
+        {LoggedUserProfile
+          ? currentUser?.created_at?.toString()
+          : profileOwner?.created_at?.toString()}
       </p>
     </div>
   );
