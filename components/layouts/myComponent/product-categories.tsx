@@ -1,15 +1,11 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { PlusCircle } from 'lucide-react'
-import * as LucideIcons from 'lucide-react'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { useState } from "react";
+import { PlusCircle } from "lucide-react";
+import * as LucideIcons from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 
 import {
   Dialog,
@@ -19,39 +15,49 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
 
 type Category = {
-  id: string
-  name: string
-  iconName: keyof typeof LucideIcons // Only store the icon name
-}
+  id: string;
+  name: string;
+  iconName: keyof typeof LucideIcons; // Only store the icon name
+};
 
 export default function ProductCategoriesComponent() {
   const [categories, setCategories] = useState<Category[]>([
-    { id: '1', name: 'Electronics', iconName: 'Smartphone' },
-    { id: '2', name: 'Clothing', iconName: 'Shirt' },
-    { id: '3', name: 'Books', iconName: 'BookOpen' },
-  ])
+    { id: "1", name: "Electronics", iconName: "Smartphone" },
+    { id: "2", name: "Clothing", iconName: "Shirt" },
+    { id: "3", name: "Books", iconName: "BookOpen" },
+  ]);
 
-  const [newCategory, setNewCategory] = useState<Omit<Category, 'id'>>({ name: '', iconName: 'HelpCircle' })
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [newCategory, setNewCategory] = useState<Omit<Category, "id">>({
+    name: "",
+    iconName: "HelpCircle",
+  });
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleAddCategory = () => {
     if (newCategory.name && newCategory.iconName) {
-      setCategories([...categories, { ...newCategory, id: Date.now().toString() }])
-      setNewCategory({ name: '', iconName: 'HelpCircle' })
-      setIsDialogOpen(false)
+      setCategories([
+        ...categories,
+        { ...newCategory, id: Date.now().toString() },
+      ]);
+      setNewCategory({ name: "", iconName: "HelpCircle" });
+      setIsDialogOpen(false);
     } else {
-      alert('Please fill in all fields.')
+      alert("Please fill in all fields.");
     }
-  }
+  };
 
-  const IconComponent = ({ iconName }: { iconName: keyof typeof LucideIcons }) => {
-    const Icon = LucideIcons[iconName] as React.ElementType
-    return Icon ? <Icon className="h-6 w-6" /> : null
-  }
+  const IconComponent = ({
+    iconName,
+  }: {
+    iconName: keyof typeof LucideIcons;
+  }) => {
+    const Icon = LucideIcons[iconName] as React.ElementType;
+    return Icon ? <Icon className="h-6 w-6" /> : null;
+  };
 
   return (
     <div className="container mx-auto py-10">
@@ -89,7 +95,9 @@ export default function ProductCategoriesComponent() {
                 <Input
                   id="name"
                   value={newCategory.name}
-                  onChange={(e) => setNewCategory({ ...newCategory, name: e.target.value })}
+                  onChange={(e) =>
+                    setNewCategory({ ...newCategory, name: e.target.value })
+                  }
                   className="col-span-3"
                 />
               </div>
@@ -99,9 +107,14 @@ export default function ProductCategoriesComponent() {
                 </Label>
                 <Input
                   id="icon"
-                  type='file'
+                  type="file"
                   value={newCategory.iconName}
-                  onChange={(e) => setNewCategory({ ...newCategory, iconName: e.target.value as keyof typeof LucideIcons })}
+                  onChange={(e) =>
+                    setNewCategory({
+                      ...newCategory,
+                      iconName: e.target.value as keyof typeof LucideIcons,
+                    })
+                  }
                   className="col-span-3"
                   placeholder="e.g., Smartphone, Shirt, BookOpen"
                 />
@@ -114,5 +127,5 @@ export default function ProductCategoriesComponent() {
         </Dialog>
       </div>
     </div>
-  )
+  );
 }

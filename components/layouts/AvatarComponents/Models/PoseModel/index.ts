@@ -1,1 +1,1 @@
-export { PoseModelContainer as PoseModel } from './PoseModel.container'
+export { PoseModelContainer as PoseModel } from "./PoseModel.container";

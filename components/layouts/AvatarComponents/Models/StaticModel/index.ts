@@ -1,1 +1,1 @@
-export { StaticModelContainer as StaticModel } from './StaticModel.container'
+export { StaticModelContainer as StaticModel } from "./StaticModel.container";

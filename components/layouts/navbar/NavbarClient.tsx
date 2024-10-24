@@ -7,7 +7,7 @@ import { GiBarbedStar, GiShipWheel } from "react-icons/gi";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { RiEarthFill } from "react-icons/ri";
 import Hamburger from "hamburger-react";
-import CustomToolTipLeftRight from "../layouts/CustomComponents/CustomToolTipLeftRight";
+import CustomToolTipLeftRight from "../CustomComponents/CustomToolTipLeftRight";
 
 const NavbarClient = () => {
   const [isOpen, setOpen] = useState(false);

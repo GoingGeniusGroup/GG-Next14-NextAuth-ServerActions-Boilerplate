@@ -1,1 +1,1 @@
-export { FloatingModelContainer as FloatingModel } from './FloatingModel.container'
+export { FloatingModelContainer as FloatingModel } from "./FloatingModel.container";

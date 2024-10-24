@@ -1,1 +1,1 @@
-export { BaseCanvas } from './BaseCanvas.component'
+export { BaseCanvas } from "./BaseCanvas.component";

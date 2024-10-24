@@ -1,1 +1,1 @@
-export { HalfBodyModelContainer as HalfBodyModel } from './HalfBodyModel.container'
+export { HalfBodyModelContainer as HalfBodyModel } from "./HalfBodyModel.container";

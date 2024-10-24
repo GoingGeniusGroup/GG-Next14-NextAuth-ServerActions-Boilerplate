@@ -1,21 +1,69 @@
-'use client'
+"use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { DollarSign, TrendingUp, Users } from "lucide-react"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { DollarSign, TrendingUp, Users } from "lucide-react";
 
 export function SalesReportComponent() {
   const salesData = [
-    { id: 1, timestamp: "2023-06-01 09:23:15", product: "Widget A", quantity: 5, amount: 250.00, customer: "John Doe" },
-    { id: 2, timestamp: "2023-06-01 10:45:30", product: "Gadget B", quantity: 2, amount: 150.00, customer: "Jane Smith" },
-    { id: 3, timestamp: "2023-06-01 11:15:22", product: "Tool C", quantity: 1, amount: 75.00, customer: "Bob Johnson" },
-    { id: 4, timestamp: "2023-06-01 13:30:45", product: "Widget A", quantity: 3, amount: 150.00, customer: "Alice Brown" },
-    { id: 5, timestamp: "2023-06-01 14:55:10", product: "Gadget B", quantity: 1, amount: 75.00, customer: "Charlie Davis" },
-  ]
+    {
+      id: 1,
+      timestamp: "2023-06-01 09:23:15",
+      product: "Widget A",
+      quantity: 5,
+      amount: 250.0,
+      customer: "John Doe",
+    },
+    {
+      id: 2,
+      timestamp: "2023-06-01 10:45:30",
+      product: "Gadget B",
+      quantity: 2,
+      amount: 150.0,
+      customer: "Jane Smith",
+    },
+    {
+      id: 3,
+      timestamp: "2023-06-01 11:15:22",
+      product: "Tool C",
+      quantity: 1,
+      amount: 75.0,
+      customer: "Bob Johnson",
+    },
+    {
+      id: 4,
+      timestamp: "2023-06-01 13:30:45",
+      product: "Widget A",
+      quantity: 3,
+      amount: 150.0,
+      customer: "Alice Brown",
+    },
+    {
+      id: 5,
+      timestamp: "2023-06-01 14:55:10",
+      product: "Gadget B",
+      quantity: 1,
+      amount: 75.0,
+      customer: "Charlie Davis",
+    },
+  ];
 
-  const totalSales = salesData.reduce((sum, sale) => sum + sale.amount, 0)
-  const totalItems = salesData.reduce((sum, sale) => sum + sale.quantity, 0)
-  const uniqueCustomers = new Set(salesData.map(sale => sale.customer)).size
+  const totalSales = salesData.reduce((sum, sale) => sum + sale.amount, 0);
+  const totalItems = salesData.reduce((sum, sale) => sum + sale.quantity, 0);
+  const uniqueCustomers = new Set(salesData.map((sale) => sale.customer)).size;
 
   return (
     <Card className="w-full max-w-4xl mx-auto">
@@ -28,7 +76,9 @@ export function SalesReportComponent() {
           <Card>
             <CardContent className="flex flex-row items-center justify-between p-4">
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Total Sales</p>
+                <p className="text-sm font-medium text-muted-foreground">
+                  Total Sales
+                </p>
                 <p className="text-2xl font-bold">${totalSales.toFixed(2)}</p>
               </div>
               <DollarSign className="h-6 w-6 text-muted-foreground" />
@@ -37,7 +87,9 @@ export function SalesReportComponent() {
           <Card>
             <CardContent className="flex flex-row items-center justify-between p-4">
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Items Sold</p>
+                <p className="text-sm font-medium text-muted-foreground">
+                  Items Sold
+                </p>
                 <p className="text-2xl font-bold">{totalItems}</p>
               </div>
               <TrendingUp className="h-6 w-6 text-muted-foreground" />
@@ -46,7 +98,9 @@ export function SalesReportComponent() {
           <Card>
             <CardContent className="flex flex-row items-center justify-between p-4">
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Unique Customers</p>
+                <p className="text-sm font-medium text-muted-foreground">
+                  Unique Customers
+                </p>
                 <p className="text-2xl font-bold">{uniqueCustomers}</p>
               </div>
               <Users className="h-6 w-6 text-muted-foreground" />
@@ -77,5 +131,5 @@ export function SalesReportComponent() {
         </Table>
       </CardContent>
     </Card>
-  )
+  );
 }

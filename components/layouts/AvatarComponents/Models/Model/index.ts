@@ -1,1 +1,1 @@
-export { Model } from './Model.component'
+export { Model } from "./Model.component";

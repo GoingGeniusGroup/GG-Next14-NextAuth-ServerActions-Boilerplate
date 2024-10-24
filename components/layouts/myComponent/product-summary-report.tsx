@@ -1,52 +1,65 @@
-'use client'
+"use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Badge } from "@/components/ui/badge"
-import { ArrowUpIcon, ArrowDownIcon, PackageIcon } from "lucide-react"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { ArrowUpIcon, ArrowDownIcon, PackageIcon } from "lucide-react";
 
 // Mock data for the report
 
-type Trend = 'up' | 'down';
+type Trend = "up" | "down";
 
 interface TopSellingItem {
-    id: number;
-    name: string;
-    sales: number;
-    trend: Trend;
+  id: number;
+  name: string;
+  sales: number;
+  trend: Trend;
 }
 
 interface SlowMovingItem {
-    id: number;
-    name: string;
-    sales: number;
-    daysInStock: number;
+  id: number;
+  name: string;
+  sales: number;
+  daysInStock: number;
 }
 
 interface ItemNeedingRestock {
-    id: number;
-    name: string;
-    currentStock: number;
-    reorderPoint: number;
+  id: number;
+  name: string;
+  currentStock: number;
+  reorderPoint: number;
 }
 
 const topSellingItems: TopSellingItem[] = [
   { id: 1, name: "Wireless Earbuds", sales: 1200, trend: "up" },
   { id: 2, name: "Smart Watch", sales: 950, trend: "up" },
   { id: 3, name: "Portable Charger", sales: 800, trend: "down" },
-]
+];
 
 const slowMovingItems: SlowMovingItem[] = [
   { id: 4, name: "Desk Lamp", sales: 50, daysInStock: 60 },
   { id: 5, name: "Keyboard Cover", sales: 30, daysInStock: 90 },
   { id: 6, name: "Mouse Pad", sales: 20, daysInStock: 120 },
-]
+];
 
 const itemsNeedingRestock: ItemNeedingRestock[] = [
   { id: 7, name: "USB-C Cable", currentStock: 5, reorderPoint: 20 },
   { id: 8, name: "Phone Case", currentStock: 8, reorderPoint: 25 },
   { id: 9, name: "Screen Protector", currentStock: 3, reorderPoint: 15 },
-]
+];
 
 export function ProductSummaryReportComponent() {
   return (
@@ -54,7 +67,9 @@ export function ProductSummaryReportComponent() {
       <Card>
         <CardHeader>
           <CardTitle>Product Summary Report</CardTitle>
-          <CardDescription>Overview of product performance and inventory status</CardDescription>
+          <CardDescription>
+            Overview of product performance and inventory status
+          </CardDescription>
         </CardHeader>
       </Card>
 
@@ -155,5 +170,5 @@ export function ProductSummaryReportComponent() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

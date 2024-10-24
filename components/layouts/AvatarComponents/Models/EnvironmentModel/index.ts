@@ -1,1 +1,1 @@
-export { EnvironmentModelContainer as EnvironmentModel } from './EnvironmentModel.container'
+export { EnvironmentModelContainer as EnvironmentModel } from "./EnvironmentModel.container";

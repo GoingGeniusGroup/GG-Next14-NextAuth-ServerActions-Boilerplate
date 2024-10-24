@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "@/components/ui/button/button";
 import { Play, SkipBack, SkipForward, Sun, CheckCircle } from "lucide-react";
 import CustomToolTip from "../CustomComponents/CustomToolTip";

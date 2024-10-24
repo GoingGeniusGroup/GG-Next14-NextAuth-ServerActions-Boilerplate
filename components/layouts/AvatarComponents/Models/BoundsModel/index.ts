@@ -1,1 +1,1 @@
-export { BoundsModelContainer as BoundsModel } from './BoundsModel.container'
+export { BoundsModelContainer as BoundsModel } from "./BoundsModel.container";

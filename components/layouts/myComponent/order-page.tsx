@@ -1,8 +1,8 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -10,7 +10,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from "@/components/ui/table";
 import {
   Pagination,
   PaginationContent,
@@ -19,25 +19,56 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination"
-import { SearchIcon, EyeIcon, DownloadIcon } from 'lucide-react'
+} from "@/components/ui/pagination";
+import { SearchIcon, EyeIcon, DownloadIcon } from "lucide-react";
 
 // Mock data for orders
 const orders = [
-  { id: '1', customer: 'John Doe', date: '2023-09-15', total: '$120.00', status: 'Completed' },
-  { id: '2', customer: 'Jane Smith', date: '2023-09-16', total: '$85.50', status: 'Processing' },
-  { id: '3', customer: 'Bob Johnson', date: '2023-09-17', total: '$200.00', status: 'Shipped' },
-  { id: '4', customer: 'Alice Brown', date: '2023-09-18', total: '$150.75', status: 'Completed' },
-  { id: '5', customer: 'Charlie Davis', date: '2023-09-19', total: '$95.25', status: 'Processing' },
-]
+  {
+    id: "1",
+    customer: "John Doe",
+    date: "2023-09-15",
+    total: "$120.00",
+    status: "Completed",
+  },
+  {
+    id: "2",
+    customer: "Jane Smith",
+    date: "2023-09-16",
+    total: "$85.50",
+    status: "Processing",
+  },
+  {
+    id: "3",
+    customer: "Bob Johnson",
+    date: "2023-09-17",
+    total: "$200.00",
+    status: "Shipped",
+  },
+  {
+    id: "4",
+    customer: "Alice Brown",
+    date: "2023-09-18",
+    total: "$150.75",
+    status: "Completed",
+  },
+  {
+    id: "5",
+    customer: "Charlie Davis",
+    date: "2023-09-19",
+    total: "$95.25",
+    status: "Processing",
+  },
+];
 
 export function OrderPageComponent() {
-  const [searchTerm, setSearchTerm] = useState('')
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredOrders = orders.filter(order => 
-    order.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    order.id.includes(searchTerm)
-  )
+  const filteredOrders = orders.filter(
+    (order) =>
+      order.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      order.id.includes(searchTerm)
+  );
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -114,5 +145,5 @@ export function OrderPageComponent() {
         </PaginationContent>
       </Pagination>
     </div>
-  )
+  );
 }

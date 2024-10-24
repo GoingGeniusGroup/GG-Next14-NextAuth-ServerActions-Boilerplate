@@ -1,1 +1,1 @@
-export { AnimationModelContainer as AnimationModel } from './AnimationModel.container'
+export { AnimationModelContainer as AnimationModel } from "./AnimationModel.container";

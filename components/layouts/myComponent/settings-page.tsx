@@ -1,35 +1,43 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { Bell, Lock, User, ChevronDown } from 'lucide-react'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Switch } from "@/components/ui/switch"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useState } from "react";
+import { Bell, Lock, User, ChevronDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 
 export function SettingsPageComponent() {
-  const [activeTab, setActiveTab] = useState("account")
+  const [activeTab, setActiveTab] = useState("account");
 
   return (
     <div className="container mx-auto py-10">
       <h1 className="text-3xl font-bold mb-8">Settings</h1>
       <div className="flex flex-col md:flex-row gap-8">
         <aside className="w-full md:w-64">
-          <Tabs orientation="vertical" value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <Tabs
+            orientation="vertical"
+            value={activeTab}
+            onValueChange={setActiveTab}
+            className="w-full"
+          >
             <TabsList className="flex flex-col h-full space-y-2">
               <TabsTrigger value="account" className="w-full justify-start">
                 <User className="mr-2 h-4 w-4" />
                 Account
               </TabsTrigger>
-              <TabsTrigger value="notifications" className="w-full justify-start">
+              <TabsTrigger
+                value="notifications"
+                className="w-full justify-start"
+              >
                 <Bell className="mr-2 h-4 w-4" />
                 Notifications
               </TabsTrigger>
@@ -51,7 +59,11 @@ export function SettingsPageComponent() {
                 </div>
                 <div className="grid gap-2">
                   <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" placeholder="john@example.com" />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="john@example.com"
+                  />
                 </div>
                 <div className="grid gap-2">
                   <Label htmlFor="language">Language</Label>
@@ -72,10 +84,14 @@ export function SettingsPageComponent() {
           </TabsContent>
           <TabsContent value="notifications" className="space-y-6">
             <div>
-              <h2 className="text-2xl font-semibold mb-4">Notification Preferences</h2>
+              <h2 className="text-2xl font-semibold mb-4">
+                Notification Preferences
+              </h2>
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="email-notifications">Email Notifications</Label>
+                  <Label htmlFor="email-notifications">
+                    Email Notifications
+                  </Label>
                   <Switch id="email-notifications" />
                 </div>
                 <div className="flex items-center justify-between">
@@ -118,5 +134,5 @@ export function SettingsPageComponent() {
         <Button>Save Changes</Button>
       </div>
     </div>
-  )
+  );
 }

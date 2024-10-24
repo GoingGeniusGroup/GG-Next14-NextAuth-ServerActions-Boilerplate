@@ -1,27 +1,27 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 // import { toast } from "@/components/ui/use-toast"
 
 interface Seller {
-  id: number
-  name: string
-  email: string
-  sales: number
+  id: number;
+  name: string;
+  email: string;
+  sales: number;
 }
 
 export function SellerFormComponent() {
-  const [sellers, setSellers] = useState<Seller[]>([])
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [sales, setSales] = useState("")
+  const [sellers, setSellers] = useState<Seller[]>([]);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [sales, setSales] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!name || !email || !sales) {
       // toast({
@@ -37,19 +37,19 @@ export function SellerFormComponent() {
       name,
       email,
       sales: parseFloat(sales),
-    }
+    };
 
-    setSellers([...sellers, newSeller])
+    setSellers([...sellers, newSeller]);
     // toast({
     //   title: "Success",
     //   description: "Seller added successfully!",
     // })
 
     // Reset form fields
-    setName("")
-    setEmail("")
-    setSales("")
-  }
+    setName("");
+    setEmail("");
+    setSales("");
+  };
 
   return (
     <Card className="w-full max-w-md mx-auto">
@@ -103,12 +103,13 @@ export function SellerFormComponent() {
           <ul className="space-y-2">
             {sellers.map((seller) => (
               <li key={seller.id} className="border p-2 rounded">
-                <strong>{seller.name}</strong> - {seller.email} - ${seller.sales}
+                <strong>{seller.name}</strong> - {seller.email} - $
+                {seller.sales}
               </li>
             ))}
           </ul>
         )}
       </CardContent>
     </Card>
-  )
+  );
 }
