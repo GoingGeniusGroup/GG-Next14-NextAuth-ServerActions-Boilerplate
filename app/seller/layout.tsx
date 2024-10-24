@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import Sidebar2 from "../../components/layouts/myComponent/Sidebar2";
 import Navbar from "../../components/layouts/myComponent/navbar";
 import BG from "../../public/bg/bg.jpg";
