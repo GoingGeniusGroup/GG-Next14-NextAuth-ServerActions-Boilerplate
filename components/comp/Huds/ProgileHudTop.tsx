@@ -13,6 +13,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useUsername } from "@/hooks/UsernameProvider";
 
 interface ProfileHudProps {
   setShowMobile: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,15 +21,14 @@ interface ProfileHudProps {
   handleServerSignOut: () => Promise<void>;
 }
 
-const tabs = ["Settings", "Mobile", "Cart", "Edit", "Wallet"] as const;
-type TabType = (typeof tabs)[number];
-
 export default function ProfileHudTop({
   setShowMobile,
   showMobile,
   handleServerSignOut,
 }: ProfileHudProps) {
   const { data: session, status } = useSession();
+  const usernameContext = useUsername();
+  const username = usernameContext ? usernameContext.username : "";
 
   // Type the user properly
   const user = session?.user as ExtendedUser | undefined;
@@ -60,7 +60,6 @@ export default function ProfileHudTop({
 
   // // Don't render if not authenticated
   // if (!isLoggedIn) return null;
-  const username = user?.name || "user";
   const profilePic = user?.image;
 
   return (
@@ -68,7 +67,7 @@ export default function ProfileHudTop({
       <DropdownMenu>
         <DropdownMenuTrigger className="outline-none transition-all duration-300 ease-in-out flex dark:border-white/20 hover:dark:border-white border-black/40 hover:border-black justify-center items-center size-full overflow-hidden rounded-full bg-white dark:bg-gray-800 border">
           <Avatar className="relative">
-            <AvatarImage src={profilePic || undefined} alt={username} />
+            <AvatarImage src={profilePic || undefined} alt={username || ""} />
             <AvatarFallback>
               <UserRound className="size-[20px] dark:text-white text-black" />
             </AvatarFallback>
@@ -77,7 +76,11 @@ export default function ProfileHudTop({
         <DropdownMenuContent>
           <DropdownMenuItem className="cursor-pointer">
             {user ? (
-              <Link href={`/genius-profile/${username}`} className="flex">
+              // <ProfileLink />
+              <Link
+                href={`/genius-profile-parallel/${username}`}
+                className="flex"
+              >
                 <CgProfile className="mr-2 size-4" />
                 Profile
               </Link>

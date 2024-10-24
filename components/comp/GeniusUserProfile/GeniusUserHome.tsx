@@ -1,8 +1,11 @@
-import { UserCardData } from "@/core/interface/userCardData.interface";
-import AboutSection from "../console/AboutSection";
+import AboutSectionProfile from "../console/AboutSectionProfile";
 import BottomSection from "../console/BottomSection";
 
-export default function GeniusUserHome({ username }: { username: string }) {
+export default async function GeniusUserHome({
+  username,
+}: {
+  username: string;
+}) {
   const newsItems = [
     {
       title: "Project 1",
@@ -38,21 +41,11 @@ export default function GeniusUserHome({ username }: { username: string }) {
     },
   ];
 
-  const aboutGenius: UserCardData = {
-    name: username,
-    description:
-      "Stay up to date with the latest Ram news, updates, and item shop releases. Get information about upcoming collaborations and special events. Stay up to date with the latest Fortnite news, updates, and item shop releases. Get information about upcoming collaborations and special events.",
-    age: 25, // Add the age property
-    faculty: "Science",
-    guild: "BUDDHA",
-    email: "johndoe@example.com",
-    username: "johndoe",
-  };
   return (
     <>
       <div className="flex w-full justify-between">
         <div className="w-[35%]">
-          <AboutSection aboutUser={aboutGenius} />
+          <AboutSectionProfile username={username} />
         </div>
         <div className="w-[35%]">
           {/* Projects Grid */}
