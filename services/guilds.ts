@@ -37,7 +37,10 @@ export const getGuildByName = async (guild_name: string) => {
   }
 };
 
-export const updateGuild = async (id: string, data: Prisma.guildsUpdateInput) => {
+export const updateGuild = async (
+  id: string,
+  data: Prisma.guildsUpdateInput
+) => {
   try {
     const guild = await db.guilds.update({
       where: { id },

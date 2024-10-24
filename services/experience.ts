@@ -37,7 +37,10 @@ export const getExperiencesByUserId = async (gg_id: string) => {
   }
 };
 
-export const updateExperience = async (experience_id: string, data: Prisma.experienceUpdateInput) => {
+export const updateExperience = async (
+  experience_id: string,
+  data: Prisma.experienceUpdateInput
+) => {
   try {
     const experience = await db.experience.update({
       where: { experience_id },

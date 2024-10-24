@@ -1,8 +1,8 @@
 "use client";
 
 import { profile } from "@/actions/profile";
-import { FormInput } from "@/components/auth/form-input";
-import { FormToggle } from "@/components/auth/form-toggle";
+import { FormInput } from "@/components/comp/auth/form-input";
+import { FormToggle } from "@/components/comp/auth/form-toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Form } from "@/components/ui/form";
 import { ExtendedUser } from "@/types/next-auth";

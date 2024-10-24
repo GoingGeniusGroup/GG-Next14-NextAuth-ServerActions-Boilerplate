@@ -1,4 +1,4 @@
-import { Layout } from "@/components/dom/Layout";
+import { Layout } from "@/components/comp/dom/Layout";
 import { TooltipProvider } from "@/components/ui/tooltip/tooltip";
 import { signOut } from "@/auth";
 

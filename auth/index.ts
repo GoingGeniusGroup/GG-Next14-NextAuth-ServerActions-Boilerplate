@@ -10,10 +10,10 @@ import NextAuth from "next-auth";
 
 export const {
   handlers: { GET, POST },
-  auth, 
+  auth,
   signIn,
   signOut,
-  update
+  update,
 } = NextAuth({
   adapter: PrismaAdapter(db),
   session: {
@@ -70,11 +70,10 @@ export const {
       if (account?.provider !== "credentials") return true;
 
       const existingUser = await getUserById(user.id);
-      
+
       if (existingUser?.isTwoFactorEnabled) {
-        const existingTwoFactorConfirmation = await getTwoFactorConfirmationByUserId(
-          existingUser.gg_id
-        );
+        const existingTwoFactorConfirmation =
+          await getTwoFactorConfirmationByUserId(existingUser.gg_id);
         if (!existingTwoFactorConfirmation) return false;
         const hasExpired = isExpired(existingTwoFactorConfirmation.expires);
         if (hasExpired) return false;

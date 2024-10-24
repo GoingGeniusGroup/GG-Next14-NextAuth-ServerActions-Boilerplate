@@ -1,4 +1,4 @@
-import CustomGalleryComponent from "@/components/layouts/gallery/CustomGalleryComponent";
+import CustomGalleryComponent from "@/components/comp/gallery/CustomGalleryComponent";
 
 export default function GeniusUserGalleryPage() {
   return (

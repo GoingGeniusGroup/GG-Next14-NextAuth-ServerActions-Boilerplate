@@ -37,7 +37,10 @@ export const getSkillsByUserId = async (gg_id: string) => {
   }
 };
 
-export const updateSkills = async (skill_id: string, data: Prisma.skillsUpdateInput) => {
+export const updateSkills = async (
+  skill_id: string,
+  data: Prisma.skillsUpdateInput
+) => {
   try {
     const skills = await db.skills.update({
       where: { skill_id },

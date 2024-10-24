@@ -1,4 +1,4 @@
-import GeniusUserProjects from "@/components/layouts/GeniusUserProfile/GeniusUserProjects";
+import GeniusUserProjects from "@/components/comp/GeniusUserProfile/GeniusUserProjects";
 import {
   IconClipboardCopy,
   IconFileBroken,
@@ -9,7 +9,7 @@ import {
   IconBoxAlignTopLeft,
 } from "@tabler/icons-react";
 
-export default function GeniusUserProject() {
+export default async function GeniusUserProject() {
   const images = [
     {
       title: "The Dawn of Innovation",

@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Lens } from "../lens/lens";
-import { CardSpotlight } from "@/components/layouts/card/CardSpotlight";
+import { CardSpotlight } from "@/components/comp/card/CardSpotlight";
 
 interface ImageData {
   src: string;

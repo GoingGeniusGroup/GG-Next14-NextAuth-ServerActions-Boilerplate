@@ -1,5 +1,9 @@
 import { loginSchema } from "@/schemas";
-import { getUserByEmail, getUserByPhone, getUserByUsername } from "@/services/user";
+import {
+  getUserByEmail,
+  getUserByPhone,
+  getUserByUsername,
+} from "@/services/user";
 import { UserRole } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import Credentials from "next-auth/providers/credentials";
@@ -13,9 +17,10 @@ export const CredentialsProvider = Credentials({
     if (validatedFields.success) {
       const { login, password } = validatedFields.data;
 
-      let user = await getUserByEmail(login) || 
-                 await getUserByPhone(login) || 
-                 await getUserByUsername(login);
+      let user =
+        (await getUserByEmail(login)) ||
+        (await getUserByPhone(login)) ||
+        (await getUserByUsername(login));
 
       if (!user || !user.password) return null;
 
@@ -28,7 +33,7 @@ export const CredentialsProvider = Credentials({
           email: user.email,
           role: user.role,
           isTwoFactorEnabled: user.isTwoFactorEnabled,
-          isOAuth: false
+          isOAuth: false,
         };
       }
     }
@@ -48,7 +53,7 @@ export const GithubProvider = Github({
       image: profile.avatar_url,
       role: UserRole.User,
       isTwoFactorEnabled: false,
-      isOAuth: true
+      isOAuth: true,
     };
   },
 });
@@ -64,7 +69,7 @@ export const GoogleProvider = Google({
       image: profile.picture,
       role: UserRole.User,
       isTwoFactorEnabled: false,
-      isOAuth: true
+      isOAuth: true,
     };
   },
   authorization: {

@@ -4,7 +4,7 @@ import { ProfileForm } from "@/components/form/profile-form";
 import { ExtendedUser } from "@/types/next-auth";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import ProfileMobileView from "@/components/layouts/Profile/ProfileMobileView";
+import ProfileMobileView from "@/components/comp/profile/ProfileMobileView";
 
 export default function ProfilePage({
   params,

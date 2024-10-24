@@ -60,4 +60,4 @@ const physicalProducts: PhysicalProduct[] = [
   },
 ];
 
-  export default physicalProducts;
+export default physicalProducts;

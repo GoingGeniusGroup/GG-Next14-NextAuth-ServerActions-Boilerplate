@@ -1,8 +1,8 @@
 "use client";
 
-import { CardWrapper } from "@/components/auth/card-wrapper";
+import { CardWrapper } from "@/components/comp/auth/card-wrapper";
 import { Form } from "@/components/ui/form";
-import { FormInput } from "@/components/auth/form-input";
+import { FormInput } from "@/components/comp/auth/form-input";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { resetPasswordSchema } from "@/schemas";

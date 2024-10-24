@@ -1,6 +1,6 @@
-import GeniusUserExperience from "@/components/layouts/GeniusUserProfile/GeniusUserExperience";
+import GeniusUserExperience from "@/components/comp/GeniusUserProfile/GeniusUserExperience";
 
-export default function GeniusUserExperince() {
+export default async function GeniusUserExperiencePage() {
   return (
     <>
       <GeniusUserExperience />
