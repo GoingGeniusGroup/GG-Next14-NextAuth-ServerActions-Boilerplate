@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState, useMemo } from "react";
-import Button from "../../../components/layouts/myComponent/Button";
+import Button from "../../../components/comp/myComponent/Button";
 import Image from "next/image";
 
 // Define Product type once, outside of any function
