@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { FloatingDockInverted } from "@/components/ui/dock/floating-dock-inverted";
 import {
@@ -15,8 +17,14 @@ import {
   IconUser,
   IconUserBitcoin,
 } from "@tabler/icons-react";
+import { useUsername } from "@/hooks/UsernameProvider";
 
 export default function FloatingDockInvertedComponent() {
+  const usernameContext = useUsername();
+  const username = usernameContext
+    ? usernameContext.username
+    : "defaultUsername";
+
   const links = [
     {
       title: "Home",
@@ -68,7 +76,7 @@ export default function FloatingDockInvertedComponent() {
     {
       title: "Genius Profile",
       icon: <IconUserBitcoin className="size-full" />,
-      href: "/genius-profile/ro_.sth",
+      href: `/genius-profile/${username}`,
     },
     {
       title: "Posts",
@@ -83,7 +91,7 @@ export default function FloatingDockInvertedComponent() {
     {
       title: "Profile Parallel Routing",
       icon: <Icon3dRotate className="size-full" />,
-      href: "/genius-profile-parallel/ro_.sth",
+      href: `/genius-profile-parallel/${username}`,
     },
   ];
   return <FloatingDockInverted items={links} />;

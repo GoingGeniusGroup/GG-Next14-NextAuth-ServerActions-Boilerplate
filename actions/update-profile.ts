@@ -7,21 +7,10 @@ import { z } from "zod";
 const updateProfileSchema = z.object({
   gg_id: z.string(),
   // email: z.string().email(),
-  first_name: z.string().min(3, {
-    message: "First name must be at least 3 characters.",
-  }),
-  last_name: z.string().min(3, {
-    message: "Last name must be at least 3 characters.",
-  }),
-  address: z.string().min(3, {
-    message: "Address must be at least 3 characters.",
-  }),
-  description: z.string().min(3, {
-    message: "Description must be at least 3 characters.",
-  }),
-  dob: z.string().min(3, {
-    message: "Date of birth must be at least 3 characters.",
-  }),
+  first_name: z.string().min(3),
+  last_name: z.string().min(3),
+  address: z.string().min(3),
+  description: z.string().min(3),
 });
 
 export const updateProfile = async (
@@ -38,7 +27,7 @@ export const updateProfile = async (
     });
   }
 
-  const { gg_id, first_name, last_name, description, dob, address } =
+  const { gg_id, first_name, last_name, description, address } =
     validatedFields.data;
 
   try {
@@ -46,7 +35,6 @@ export const updateProfile = async (
       first_name,
       last_name,
       description,
-      dob,
       address,
     });
     return response({

@@ -77,7 +77,10 @@ export default function ProfileHudTop({
           <DropdownMenuItem className="cursor-pointer">
             {user ? (
               // <ProfileLink />
-              <Link href={`/genius-profile/${username}`} className="flex">
+              <Link
+                href={`/genius-profile-parallel/${username}`}
+                className="flex"
+              >
                 <CgProfile className="mr-2 size-4" />
                 Profile
               </Link>

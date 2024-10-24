@@ -21,14 +21,13 @@ export default async function AboutSectionProfile({
   return (
     <div className="flex flex-col gap-y-16">
       <div className="flex flex-col gap-4 mb-3">
-        {currentUser && (
+        {LoggedUserProfile && currentUser && (
           <UpdateProfileDialog
             gg_id={currentUser.gg_id}
             currentFirstName={currentUser.first_name ?? ""}
             currentLastName={currentUser.last_name ?? ""}
             currentAddress={currentUser.address ?? ""}
             currentDescription={currentUser.description ?? ""}
-            currentDob={currentUser.dob ?? ""}
           />
         )}
         <div className="flex items-center gap-3 text-black dark:text-gray-300">
@@ -48,6 +47,15 @@ export default async function AboutSectionProfile({
         </div>
         <div>
           {LoggedUserProfile ? (
+            <p>
+              {currentUser?.first_name} {currentUser?.last_name}
+            </p>
+          ) : (
+            <p>
+              {profileOwner?.first_name} {profileOwner?.last_name}
+            </p>
+          )}
+          {LoggedUserProfile ? (
             <p>{currentUser?.description}</p>
           ) : (
             <p>{profileOwner?.description}</p>
@@ -56,11 +64,6 @@ export default async function AboutSectionProfile({
           <div className="flex gap-2">
             <span className="text-black dark:text-gray-300">
               {LoggedUserProfile ? currentUser?.address : profileOwner?.address}
-            </span>
-            <span className="text-black dark:text-gray-300">
-              {LoggedUserProfile
-                ? currentUser?.dob?.toString()
-                : profileOwner?.dob?.toString()}
             </span>
           </div>
         </div>
