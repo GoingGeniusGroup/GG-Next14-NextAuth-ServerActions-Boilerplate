@@ -14,6 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useUsername } from "@/hooks/UsernameProvider";
+import { IconArrowDown } from "@tabler/icons-react";
 
 interface ProfileHudProps {
   setShowMobile: React.Dispatch<React.SetStateAction<boolean>>;
@@ -65,32 +66,29 @@ export default function ProfileHudTop({
   return (
     <div className="fixed  top-2 right-7 z-50 flex size-[40px] select-none items-center rounded-full">
       <DropdownMenu>
-        <DropdownMenuTrigger className="outline-none transition-all duration-300 ease-in-out flex dark:border-white/20 hover:dark:border-white border-black/40 hover:border-black justify-center items-center size-full overflow-hidden rounded-full bg-white dark:bg-gray-800 border">
-          <Avatar className="relative">
+        <Avatar className="relative size-[40px] rounded-full bg-white dark:bg-gray-800 border transition-all duration-300 ease-in-out dark:border-white/20 hover:dark:border-white border-black/40 hover:border-black">
+          <Link
+            href={!user ? "#" : `/genius-profile-parallel/${username}`}
+            className="relative size-full flex justify-center items-center rounded-full"
+          >
             <AvatarImage src={profilePic || undefined} alt={username || ""} />
             <AvatarFallback>
               <UserRound className="size-[20px] dark:text-white text-black" />
             </AvatarFallback>
-          </Avatar>
-        </DropdownMenuTrigger>
+          </Link>
+          <DropdownMenuTrigger className="absolute bottom-0 right-0 outline-none flex  justify-center items-center size-3 overflow-hidden rounded-full dark:bg-white text-white dark:text-black bg-black">
+            <IconArrowDown />
+          </DropdownMenuTrigger>
+        </Avatar>
         <DropdownMenuContent>
-          <DropdownMenuItem className="cursor-pointer">
-            {user ? (
-              // <ProfileLink />
-              <Link
-                href={`/genius-profile-parallel/${username}`}
-                className="flex"
-              >
-                <CgProfile className="mr-2 size-4" />
-                Profile
-              </Link>
-            ) : (
+          {!user && (
+            <DropdownMenuItem className="cursor-pointer">
               <div onClick={handleMobileButtonClick} className="flex">
                 <CgProfile className="mr-2 size-4" />
                 Login
               </div>
-            )}
-          </DropdownMenuItem>
+            </DropdownMenuItem>
+          )}
 
           {user && (
             <DropdownMenuItem
