@@ -42,9 +42,9 @@ const TopFloatingDock2 = ({
       <div
         className={`absolute ${
           open
-            ? "left-[68px] dark:text-sky-600/70 text-black"
-            : "left-[48px] dark:text-white/70 text-black/70"
-        } top-[9px] uppercase transition-all duration-300 ease-in-out font-bold`}
+            ? "dark:text-[#FCBB3F]/70 text-black"
+            : "dark:text-white/70 text-black/70"
+        } top-[8px] left-[68px] uppercase backdrop-blur-sm rounded-md border-2 px-2 transition-all duration-300 ease-in-out font-bold`}
       >
         {activeSection}
       </div>

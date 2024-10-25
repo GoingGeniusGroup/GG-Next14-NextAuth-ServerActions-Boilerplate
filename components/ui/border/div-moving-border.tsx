@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import {
   motion,
@@ -10,10 +11,9 @@ import {
 import { useRef } from "react";
 import { cn } from "@/lib/utils";
 
-export function Button({
+export function DivWithMovingBorder({
   borderRadius = "1.75rem",
   children,
-  as: Component = "button",
   containerClassName,
   borderClassName,
   duration,
@@ -22,7 +22,6 @@ export function Button({
 }: {
   borderRadius?: string;
   children: React.ReactNode;
-  as?: any;
   containerClassName?: string;
   borderClassName?: string;
   duration?: number;
@@ -30,9 +29,9 @@ export function Button({
   [key: string]: any;
 }) {
   return (
-    <Component
+    <div
       className={cn(
-        "bg-transparent relative text-xl p-[1px] overflow-hidden ",
+        "bg-transparent relative text-xl p-[1px] overflow-hidden",
         containerClassName
       )}
       style={{
@@ -47,7 +46,7 @@ export function Button({
         <MovingBorder duration={duration} rx="30%" ry="30%">
           <div
             className={cn(
-              "h-16 w-16 opacity-[0.9] dark:bg-[radial-gradient(var(--yellow-500)_40%,transparent_60%)] bg-[radial-gradient(var(--sky-500)_40%,transparent_60%)]",
+              "h-48 w-48 opacity-[1] bg-[radial-gradient(var(--sky-600)_40%,transparent_60%)]",
               borderClassName
             )}
           />
@@ -65,13 +64,13 @@ export function Button({
       >
         {children}
       </div>
-    </Component>
+    </div>
   );
 }
 
 export const MovingBorder = ({
   children,
-  duration = 2000,
+  duration = 5000,
   rx,
   ry,
   ...otherProps

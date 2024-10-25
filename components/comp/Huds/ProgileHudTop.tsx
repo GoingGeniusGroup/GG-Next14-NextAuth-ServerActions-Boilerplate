@@ -13,7 +13,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useUsername } from "@/hooks/UsernameProvider";
+import { useUser } from "@/hooks/UserProvider";
 import { IconArrowDown } from "@tabler/icons-react";
 
 interface ProfileHudProps {
@@ -28,8 +28,9 @@ export default function ProfileHudTop({
   handleServerSignOut,
 }: ProfileHudProps) {
   const { data: session, status } = useSession();
-  const usernameContext = useUsername();
+  const usernameContext = useUser();
   const username = usernameContext ? usernameContext.username : "";
+  const profilePic = usernameContext ? usernameContext.image : "";
 
   // Type the user properly
   const user = session?.user as ExtendedUser | undefined;
@@ -59,10 +60,6 @@ export default function ProfileHudTop({
     }
   };
 
-  // // Don't render if not authenticated
-  // if (!isLoggedIn) return null;
-  const profilePic = user?.image;
-
   return (
     <div className="fixed  top-2 right-7 z-50 flex size-[40px] select-none items-center rounded-full">
       <DropdownMenu>
@@ -71,7 +68,11 @@ export default function ProfileHudTop({
             href={!user ? "#" : `/genius-profile-parallel/${username}`}
             className="relative size-full flex justify-center items-center rounded-full"
           >
-            <AvatarImage src={profilePic || undefined} alt={username || ""} />
+            <AvatarImage
+              className="size-full rounded-full"
+              src={profilePic || undefined}
+              alt={username || ""}
+            />
             <AvatarFallback>
               <UserRound className="size-[20px] dark:text-white text-black" />
             </AvatarFallback>

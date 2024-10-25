@@ -13,10 +13,10 @@ export const createGuild = async (data: Prisma.guildsCreateInput) => {
   }
 };
 
-export const getGuildById = async (id: string) => {
+export const getGuildById = async (guild_id: string) => {
   try {
     const guild = await db.guilds.findUnique({
-      where: { id },
+      where: { guild_id },
     });
     return guild;
   } catch (error) {
@@ -38,12 +38,12 @@ export const getGuildByName = async (guild_name: string) => {
 };
 
 export const updateGuild = async (
-  id: string,
+  guild_id: string,
   data: Prisma.guildsUpdateInput
 ) => {
   try {
     const guild = await db.guilds.update({
-      where: { id },
+      where: { guild_id },
       data,
     });
     return guild;
@@ -53,10 +53,10 @@ export const updateGuild = async (
   }
 };
 
-export const deleteGuild = async (id: string) => {
+export const deleteGuild = async (guild_id: string) => {
   try {
     const guild = await db.guilds.delete({
-      where: { id },
+      where: { guild_id },
     });
     return guild;
   } catch (error) {
