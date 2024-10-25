@@ -1,9 +1,9 @@
-import CustomGalleryComponent from "@/components/comp/gallery/CustomGalleryComponent";
+import CustomGalleryComponentDemo from "@/components/comp/gallery/CustomGalleryComponentDemo";
 
 export default async function DefaultGeniusUserGallery() {
   return (
     <>
-      <CustomGalleryComponent />
+      <CustomGalleryComponentDemo />
     </>
   );
 }
