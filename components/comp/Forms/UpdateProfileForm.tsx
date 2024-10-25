@@ -21,7 +21,10 @@ import { useRouter } from "next/navigation";
 import { LabelInputContainer } from "@/components/ui/animated-input/label-input-container";
 import { Label } from "@/components/ui/animated-input/label";
 
-import { FileUploaderMinimal } from "@uploadcare/react-uploader";
+import {
+  FileUploaderMinimal,
+  FileUploaderRegular,
+} from "@uploadcare/react-uploader";
 import "@uploadcare/react-uploader/core.css";
 import Image from "next/image";
 
@@ -201,10 +204,10 @@ export default function UpdateProfileForm({
           render={({ field }) => (
             <FormItem>
               <LabelInputContainer>
-                <Label>Profile Picture</Label>
-                <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <Label>Change Profile Picture</Label>
                   {field.value && (
-                    <div className="relative w-24 h-24 mx-auto rounded-full overflow-hidden">
+                    <div className="relative size-8 rounded-full overflow-hidden">
                       <Image
                         src={field.value}
                         alt="Profile picture"
@@ -215,14 +218,14 @@ export default function UpdateProfileForm({
                       />
                     </div>
                   )}
-                  <FileUploaderMinimal
-                    onChange={handleImageUpload}
-                    className="w-full"
-                    pubkey="07a7ff6f5c022ca83d62" // Replace with your Uploadcare public key
-                    imgOnly
-                    multiple={false}
-                  />
                 </div>
+                <FileUploaderMinimal
+                  onChange={handleImageUpload}
+                  pubkey={process.env.NEXT_PUBLIC_UPLOADCARE_PUBLIC_KEY} // Replace with your Uploadcare public key
+                  imgOnly
+                  className="text-sm font-medium text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+                  multiple={false}
+                />
               </LabelInputContainer>
               <FormMessage />
             </FormItem>

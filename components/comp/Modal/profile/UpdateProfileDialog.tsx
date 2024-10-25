@@ -11,6 +11,7 @@ import {
 import { IconUserEdit } from "@tabler/icons-react";
 import { Button as MovingBorderButton } from "@/components/ui/border/moving-border";
 import UpdateProfileForm from "../../Forms/UpdateProfileForm";
+import Image from "next/image";
 
 interface UpdateProfileDialogProps {
   gg_id: string;
