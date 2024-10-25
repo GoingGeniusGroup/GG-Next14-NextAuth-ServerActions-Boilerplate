@@ -8,6 +8,7 @@ import {
 import UpdateProfileDialog from "../Modal/profile/UpdateProfileDialog";
 import { calculateAge } from "@/utils/dateFormatter";
 import { IconCake } from "@tabler/icons-react";
+import Image from "next/image";
 
 export default async function AboutSectionProfile({
   username,
@@ -39,11 +40,26 @@ export default async function AboutSectionProfile({
                 currentAddress={currentUser.address ?? ""}
                 currentDescription={currentUser.description ?? ""}
                 currentDob={currentUser.dob ? new Date(currentUser.dob) : null}
+                currentImage={currentUser.image ?? ""}
               />
             </div>
           )}
           {/* username */}
-          <div className="flex items-center text-black dark:text-gray-300">
+          <div className="flex items-center gap-2 text-black dark:text-gray-300">
+            <div className="relative size-8 rounded-full overflow-hidden border-2 hover:border-[#FCBB3F]/60">
+              <Image
+                src={
+                  LoggedUserProfile
+                    ? currentUser?.image ?? "/default-image.png"
+                    : profileOwner?.image ?? "/default-image.png"
+                }
+                alt="Profile picture"
+                fill
+                className="object-cover"
+                unoptimized
+                loading="lazy"
+              />
+            </div>
             <span className="uppercase font-bold">
               {LoggedUserProfile
                 ? currentUser?.username

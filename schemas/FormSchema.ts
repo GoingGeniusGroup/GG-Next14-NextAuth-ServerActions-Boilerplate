@@ -14,4 +14,5 @@ export const ProfileFormSchema = z.object({
     message: "Description must be at least 3 characters.",
   }),
   dob: z.date().nullable(),
+  image: z.string().optional(),
 });

@@ -21,6 +21,10 @@ import { useRouter } from "next/navigation";
 import { LabelInputContainer } from "@/components/ui/animated-input/label-input-container";
 import { Label } from "@/components/ui/animated-input/label";
 
+import { FileUploaderMinimal } from "@uploadcare/react-uploader";
+import "@uploadcare/react-uploader/core.css";
+import Image from "next/image";
+
 interface UpdateProfileDialogProps {
   setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
   gg_id: string;
@@ -29,6 +33,7 @@ interface UpdateProfileDialogProps {
   currentAddress: string;
   currentDescription: string;
   currentDob: Date | null;
+  currentImage: string;
 }
 
 export default function UpdateProfileForm({
@@ -39,6 +44,7 @@ export default function UpdateProfileForm({
   currentAddress,
   currentDescription,
   currentDob,
+  currentImage,
 }: UpdateProfileDialogProps) {
   const router = useRouter();
 
@@ -52,8 +58,21 @@ export default function UpdateProfileForm({
       description: currentDescription || "",
       // Properly parse the date, ensuring it's a Date object
       dob: currentDob ? new Date(currentDob) : null,
+      image: currentImage || "",
     },
   });
+
+  const handleImageUpload = (info: { allEntries: any[] }) => {
+    const successfulFiles = info.allEntries.filter(
+      (file) => file.status === "success"
+    );
+    if (successfulFiles.length > 0) {
+      // Get the URL of the last uploaded file
+      const imageUrl = successfulFiles[successfulFiles.length - 1].cdnUrl;
+      // Update the form with the new image URL
+      form.setValue("image", imageUrl);
+    }
+  };
 
   const onSubmit = async (data: any) => {
     try {
@@ -69,6 +88,7 @@ export default function UpdateProfileForm({
             : data.dob
             ? new Date(data.dob)
             : null,
+        image: data.image, // Include the image URL in the form submission
       };
 
       const result = await updateProfile(formData);
@@ -171,6 +191,39 @@ export default function UpdateProfileForm({
               <FormControl>
                 <AnimatedInput {...field} placeholder="Eg. Web Developer" />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="image"
+          render={({ field }) => (
+            <FormItem>
+              <LabelInputContainer>
+                <Label>Profile Picture</Label>
+                <div className="space-y-4">
+                  {field.value && (
+                    <div className="relative w-24 h-24 mx-auto rounded-full overflow-hidden">
+                      <Image
+                        src={field.value}
+                        alt="Profile picture"
+                        fill
+                        className="object-cover"
+                        unoptimized
+                        loading="lazy"
+                      />
+                    </div>
+                  )}
+                  <FileUploaderMinimal
+                    onChange={handleImageUpload}
+                    className="w-full"
+                    pubkey="07a7ff6f5c022ca83d62" // Replace with your Uploadcare public key
+                    imgOnly
+                    multiple={false}
+                  />
+                </div>
+              </LabelInputContainer>
               <FormMessage />
             </FormItem>
           )}

@@ -17,10 +17,10 @@ import {
   IconUser,
   IconUserBitcoin,
 } from "@tabler/icons-react";
-import { useUsername } from "@/hooks/UsernameProvider";
+import { useUser } from "@/hooks/UserProvider";
 
 export default function FloatingDockInvertedComponent() {
-  const usernameContext = useUsername();
+  const usernameContext = useUser();
   const username = usernameContext
     ? usernameContext.username
     : "defaultUsername";
