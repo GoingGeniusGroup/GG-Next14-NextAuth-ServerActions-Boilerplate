@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { IconHome } from "@tabler/icons-react";
+import { IconUser } from "@tabler/icons-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 
@@ -36,7 +36,7 @@ const TopFloatingDock2 = ({
         className="h-10 relative w-10 rounded-full bg-white border-2 dark:bg-neutral-800 flex items-center justify-center shadow-lg"
       >
         {items.find((item) => item.title === activeSection)?.icon || (
-          <IconHome />
+          <IconUser />
         )}
       </button>
       <div
