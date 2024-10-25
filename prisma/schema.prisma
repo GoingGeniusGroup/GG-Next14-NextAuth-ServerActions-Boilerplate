@@ -9,7 +9,7 @@ datasource db {
 
 model Account {
   id                String  @id @default(cuid())
-  userId            String  @unique @db.Uuid
+  userId            String  @db.Uuid @unique
   type              String
   provider          String
   providerAccountId String
@@ -95,18 +95,32 @@ model User {
   Order                 Order[]
   twoFactorConfirmation TwoFactorConfirmation?
   UserPaymentMethod     UserPaymentMethod[]
+  coordinate            coordinate[]
+  Product Product[]
+  Business Business[]
+  SalesInvoice SalesInvoice[]
 }
 
 model avatar {
-  avatar_id  String @id @default(uuid()) @db.Uuid
-  gg_id      String @db.Uuid
+  avatar_id  String  @id @default(uuid()) @db.Uuid
+  gg_id      String  @db.Uuid
   avatar_url String? @db.VarChar(255)
-  users      User   @relation(fields: [gg_id], references: [gg_id], onDelete: Cascade, onUpdate: NoAction)
+  users      User    @relation(fields: [gg_id], references: [gg_id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model coordinate {
+  id        String  @id @default(uuid()) @db.Uuid
+  gg_id     String  @db.Uuid
+  longitude String?
+  latitude  String?
+  users     User    @relation(fields: [gg_id], references: [gg_id], onDelete: Cascade, onUpdate: NoAction)
+  Business Business[]
 }
 
 model guilds {
+  guild_id         String    @id @default(uuid()) @db.Uuid
   description      String?
-  guild_name       String?  @unique
+  guild_name       String?   @unique
   avatar_img       String?
   continent        String?
   skills           String[]
@@ -114,10 +128,23 @@ model guilds {
   symbol           String?
   color            String?
   alignment        String[]
-  id               String   @id @default(uuid()) @db.Uuid
   element          String?
-  faculty          Json[]
+  faculty          faculty[]
   guild_frame      String?
+}
+
+model faculty {
+  id           String   @id @default(uuid()) @db.Uuid
+  description  String?
+  faculty_name String?  @unique
+  faculty_img  String?
+  skills       String[]
+  symbol       String?
+  color        String?
+  alignment    String[]
+  element      String?
+  guild_id     String   @db.Uuid
+  guilds       guilds   @relation(fields: [guild_id], references: [guild_id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model VerificationToken {
@@ -172,11 +199,33 @@ model Product {
   taxId           String?
   carts           Cart[]
   inventory       Inventory?
-  category        Category         @relation(fields: [categoryId], references: [id])
+  category        ProductCategory  @relation(fields: [categoryId], references: [id])
   Tax             Tax?             @relation(fields: [taxId], references: [id])
   ProductVariant  ProductVariant[]
   orders          Order[]          @relation("ProductOrders")
   Supplier        Supplier[]
+  gg_id           String           @db.Uuid
+  users           User             @relation(fields: [gg_id], references: [gg_id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model Business {
+  id                   String           @id @default(cuid())
+  business_name        String
+  business_description String?
+  business_image       String?
+  business_validity    String?
+  business_categoryId  String           @db.Uuid
+  coordinate_id        String?          @db.Uuid
+  business_coordinate  coordinate?       @relation(fields: [coordinate_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  isFeatured           Boolean?         @default(false)
+  slug                 String?
+  status               Boolean          @default(true)
+  taxId                String?
+  category             BusinessCategory @relation(fields: [business_categoryId], references: [id])
+  Tax                  Tax?             @relation(fields: [taxId], references: [id])
+  orders               Order[]          @relation("ProductOrders")
+  gg_id                String           @db.Uuid
+  users                User             @relation(fields: [gg_id], references: [gg_id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model Cart {
@@ -201,11 +250,19 @@ model Variant {
   VariantOption  VariantOption[]
 }
 
-model Category {
+model ProductCategory {
   id           String    @id @default(cuid())
   categoryName String
   description  String?
   products     Product[]
+}
+
+model BusinessCategory {
+  id           String  @id @default(cuid())
+  categoryName String
+  description  String?
+
+  Business Business[]
 }
 
 model Inventory {
@@ -247,6 +304,8 @@ model Order {
   user          User          @relation(fields: [userId], references: [gg_id], onDelete: Cascade)
   SalesInvoice  SalesInvoice?
   products      Product[]     @relation("ProductOrders")
+
+  Business Business[] @relation("ProductOrders")
 }
 
 model PaymentType {
@@ -282,7 +341,9 @@ model SalesInvoice {
   orderId     String   @unique
   Order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
   Tax         Tax[]
-}
+  gg_id       String? @db.Uuid
+  users      User?    @relation(fields: [gg_id], references: [gg_id], onDelete: Cascade, onUpdate: NoAction)
+  }
 
 model Tax {
   id           String         @id
@@ -291,6 +352,7 @@ model Tax {
   description  String?
   Product      Product[]
   SalesInvoice SalesInvoice[]
+  Business Business[]
 }
 
 model UserPaymentMethod {
@@ -317,6 +379,7 @@ model VariantOption {
 enum UserRole {
   Admin
   User
+  SuperAdmin
 }
 
 enum ProductStatus {
@@ -335,4 +398,3 @@ enum OrderStatus {
   DELIVERED
   CANCELLED
 }
-
