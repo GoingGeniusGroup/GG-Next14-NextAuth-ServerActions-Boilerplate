@@ -1,5 +1,5 @@
 // import VideoHome from "@/components/HomePage/VideoHome";
-import { currentUser } from "@/lib/auth";
+import { getCurrentUser } from "@/actions/userAndGuild";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { UserRound } from "lucide-react";
 import { Metadata } from "next";
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const user = await currentUser();
+  const user = await getCurrentUser();
   const profilePic = user?.image || undefined;
   return (
     <div className="flex justify-center items-center">
@@ -45,7 +45,7 @@ export default async function Home() {
               <UserRound className="size-6 text-black" />
             </AvatarFallback>
           </Avatar>
-          Hello {user?.name}
+          Hello {user?.first_name} {user?.last_name}
         </div>
       </div>
     </div>
