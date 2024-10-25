@@ -1,8 +1,7 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 
 type Card = {
   id: number;
@@ -26,7 +25,7 @@ export const LayoutGrid = ({ cards }: { cards: Card[] }) => {
   };
 
   return (
-    <div className="w-full h-full py-10 grid grid-cols-3 md:grid-cols-5 gap-4 relative">
+    <div className="w-full h-full px-2 my-10 grid grid-cols-3 md:grid-cols-6 gap-4 relative">
       {cards.map((card, i) => (
         <div key={i} className={cn(card.className, "")}>
           <motion.div
