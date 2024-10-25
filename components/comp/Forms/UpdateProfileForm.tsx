@@ -21,12 +21,10 @@ import { useRouter } from "next/navigation";
 import { LabelInputContainer } from "@/components/ui/animated-input/label-input-container";
 import { Label } from "@/components/ui/animated-input/label";
 
-import {
-  FileUploaderMinimal,
-  FileUploaderRegular,
-} from "@uploadcare/react-uploader";
+import { FileUploaderMinimal } from "@uploadcare/react-uploader";
 import "@uploadcare/react-uploader/core.css";
 import Image from "next/image";
+import { useState } from "react";
 
 interface UpdateProfileDialogProps {
   setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -51,6 +49,8 @@ export default function UpdateProfileForm({
 }: UpdateProfileDialogProps) {
   const router = useRouter();
 
+  const [isImageUploading, setIsImageUploading] = useState(false);
+
   const form = useForm({
     mode: "onBlur",
     resolver: zodResolver(ProfileFormSchema),
@@ -66,18 +66,34 @@ export default function UpdateProfileForm({
   });
 
   const handleImageUpload = (info: { allEntries: any[] }) => {
+    // Check if any files are being uploaded
+    const hasUploadingFiles = info.allEntries.some(
+      (file) => file.status === "uploading"
+    );
+    setIsImageUploading(hasUploadingFiles);
+
     const successfulFiles = info.allEntries.filter(
       (file) => file.status === "success"
     );
+
     if (successfulFiles.length > 0) {
       // Get the URL of the last uploaded file
       const imageUrl = successfulFiles[successfulFiles.length - 1].cdnUrl;
       // Update the form with the new image URL
       form.setValue("image", imageUrl);
+
+      // If no files are uploading and we have successful files, set uploading to false
+      if (!hasUploadingFiles) {
+        setIsImageUploading(false);
+      }
     }
   };
 
   const onSubmit = async (data: any) => {
+    if (isImageUploading) {
+      toast.error("Please wait for image upload to complete");
+      return;
+    }
     try {
       const formData = {
         gg_id,
@@ -221,7 +237,7 @@ export default function UpdateProfileForm({
                 </div>
                 <FileUploaderMinimal
                   onChange={handleImageUpload}
-                  pubkey={process.env.NEXT_PUBLIC_UPLOADCARE_PUBLIC_KEY} // Replace with your Uploadcare public key
+                  pubkey={process.env.NEXT_PUBLIC_UPLOADCARE_PUBLIC_KEY}
                   imgOnly
                   className="text-sm font-medium text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
                   multiple={false}
@@ -240,8 +256,15 @@ export default function UpdateProfileForm({
           >
             Cancel
           </Button>
-          <Button type="submit" disabled={form.formState.isSubmitting}>
-            {form.formState.isSubmitting ? "Updating..." : "Update"}
+          <Button
+            type="submit"
+            disabled={isImageUploading || form.formState.isSubmitting}
+          >
+            {isImageUploading
+              ? "Image Uploading..."
+              : form.formState.isSubmitting
+              ? "Updating..."
+              : "Update"}
           </Button>
         </div>
       </form>

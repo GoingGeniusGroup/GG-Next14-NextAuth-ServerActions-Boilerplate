@@ -105,7 +105,7 @@ export default function GeniusProfilePage({ params }: ProfileViewProps) {
       icon: <IconPhoto size={24} />,
       content: (
         <div>
-          <CustomGalleryComponent />
+          <CustomGalleryComponent username={username} />
         </div>
       ),
     },

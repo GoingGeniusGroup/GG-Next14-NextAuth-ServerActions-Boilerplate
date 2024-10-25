@@ -16,3 +16,7 @@ export const ProfileFormSchema = z.object({
   dob: z.date().nullable(),
   image: z.string().optional(),
 });
+
+export const GalleryImageUploadFormSchema = z.object({
+  image_urls: z.array(z.string()),
+});

@@ -1,9 +1,18 @@
 import CustomGalleryComponent from "@/components/comp/gallery/CustomGalleryComponent";
 
-export default async function GeniusUserGallery() {
+interface GeniusUserGalleryProps {
+  params: {
+    username: string;
+  };
+}
+
+export default async function GeniusUserGallery({
+  params,
+}: GeniusUserGalleryProps) {
+  const { username } = params;
   return (
     <>
-      <CustomGalleryComponent />
+      <CustomGalleryComponent username={username} />
     </>
   );
 }
