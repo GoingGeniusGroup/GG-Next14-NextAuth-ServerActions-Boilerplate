@@ -6,6 +6,8 @@ import {
   IconMedal,
 } from "@tabler/icons-react";
 import UpdateProfileDialog from "../Modal/profile/UpdateProfileDialog";
+import { calculateAge } from "@/utils/dateFormatter";
+import { IconCake } from "@tabler/icons-react";
 
 export default async function AboutSectionProfile({
   username,
@@ -17,6 +19,10 @@ export default async function AboutSectionProfile({
   const LoggedUserProfile = currentUser?.username === username;
 
   const profileOwner = await getUserByUsername(username);
+
+  const userDob = LoggedUserProfile ? currentUser?.dob : profileOwner?.dob;
+
+  const { age, formattedDob } = calculateAge(userDob ?? null);
 
   return (
     <>
@@ -30,6 +36,7 @@ export default async function AboutSectionProfile({
                 currentLastName={currentUser.last_name ?? ""}
                 currentAddress={currentUser.address ?? ""}
                 currentDescription={currentUser.description ?? ""}
+                currentDob={currentUser.dob ? new Date(currentUser.dob) : null}
               />
             </div>
           )}
@@ -42,7 +49,7 @@ export default async function AboutSectionProfile({
           </div>
           <div className="relative w-full rounded-md bg-black/10 dark:bg-white/10 hover:dark:bg-white/20 hover:bg-black/20 transition-all duration-300 ease-in-out px-2 py-1 dark:text-white text-black">
             <div className="flex w-full items-center justify-between">
-              <div className="text-[16px] font-bold">
+              <div className="text-[16px] font-bold flex gap-x-1 items-center">
                 {LoggedUserProfile ? (
                   <p>
                     {currentUser?.first_name} {currentUser?.last_name}
@@ -52,15 +59,21 @@ export default async function AboutSectionProfile({
                     {profileOwner?.first_name} {profileOwner?.last_name}
                   </p>
                 )}
-              </div>
-              <div className="text-xs font-semibold">
-                {LoggedUserProfile ? (
+
+                {formattedDob && (
                   <>
-                    <span>{currentUser?.dob?.toString()}</span>
+                    <span className="text-sm font-semibold">•</span>
+                    {age && (
+                      <span className="text-sm font-semibold">{age}</span>
+                    )}
                   </>
-                ) : (
+                )}
+              </div>
+              <div className="text-xs font-semibold flex items-center gap-1">
+                {formattedDob && (
                   <>
-                    <span>{profileOwner?.dob?.toString()}</span>
+                    <IconCake size={12} className="text-pink-500" />
+                    {formattedDob}
                   </>
                 )}
               </div>

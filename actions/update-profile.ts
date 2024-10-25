@@ -11,6 +11,7 @@ const updateProfileSchema = z.object({
   last_name: z.string().min(3),
   address: z.string().min(3),
   description: z.string().min(3),
+  dob: z.date().nullable(),
 });
 
 export const updateProfile = async (
@@ -27,7 +28,7 @@ export const updateProfile = async (
     });
   }
 
-  const { gg_id, first_name, last_name, description, address } =
+  const { gg_id, first_name, last_name, description, address, dob } =
     validatedFields.data;
 
   try {
@@ -36,6 +37,7 @@ export const updateProfile = async (
       last_name,
       description,
       address,
+      dob,
     });
     return response({
       success: true,
