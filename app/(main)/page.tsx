@@ -45,7 +45,13 @@ export default async function Home() {
               <UserRound className="size-6 text-black" />
             </AvatarFallback>
           </Avatar>
-          Hello {user?.first_name} {user?.last_name}
+          {user?.first_name ? (
+            <span>
+              Hello {user?.first_name} {user?.last_name}
+            </span>
+          ) : (
+            <span>Hello {user?.username}</span>
+          )}
         </div>
       </div>
     </div>

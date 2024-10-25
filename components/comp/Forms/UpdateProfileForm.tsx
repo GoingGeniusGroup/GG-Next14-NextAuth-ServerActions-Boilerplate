@@ -15,9 +15,11 @@ import { useForm } from "react-hook-form";
 import { ProfileFormSchema } from "@/schemas/FormSchema";
 import { updateProfile } from "@/actions/update-profile";
 import { toast } from "sonner";
-import { Input } from "@/components/ui/input";
+import { AnimatedInput } from "@/components/ui/animated-input/animated-input";
 
 import { useRouter } from "next/navigation";
+import { LabelInputContainer } from "@/components/ui/animated-input/label-input-container";
+import { Label } from "@/components/ui/animated-input/label";
 
 interface UpdateProfileDialogProps {
   setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -81,10 +83,12 @@ export default function UpdateProfileForm({
           name="first_name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>First Name</FormLabel>
-              <FormControl>
-                <Input {...field} placeholder="Eg. John" />
-              </FormControl>
+              <LabelInputContainer>
+                <Label>First Name</Label>
+                <FormControl>
+                  <AnimatedInput {...field} placeholder="Eg. John" />
+                </FormControl>
+              </LabelInputContainer>
               <FormMessage />
             </FormItem>
           )}
@@ -96,7 +100,7 @@ export default function UpdateProfileForm({
             <FormItem>
               <FormLabel>Last Name</FormLabel>
               <FormControl>
-                <Input {...field} placeholder="Eg. Doe" />
+                <AnimatedInput {...field} placeholder="Eg. Doe" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -109,7 +113,7 @@ export default function UpdateProfileForm({
             <FormItem>
               <FormLabel>Address</FormLabel>
               <FormControl>
-                <Input {...field} placeholder="Eg. 1234 Main St" />
+                <AnimatedInput {...field} placeholder="Eg. 1234 Main St" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -122,7 +126,7 @@ export default function UpdateProfileForm({
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Input {...field} placeholder="Eg. Web Developer" />
+                <AnimatedInput {...field} placeholder="Eg. Web Developer" />
               </FormControl>
               <FormMessage />
             </FormItem>
