@@ -19,10 +19,10 @@ export default async function AboutSectionProfile({
   const profileOwner = await getUserByUsername(username);
 
   return (
-    <div className="flex flex-col gap-y-16">
-      <div className="flex flex-col gap-4 mb-3">
+    <div className="relative flex flex-col gap-4 border p-4 rounded-xl backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
+      <div className="flex flex-col gap-4">
         {LoggedUserProfile && currentUser && (
-          <div className="absolute top-4 right-4 z-40">
+          <div className="absolute top-2 right-2 z-40">
             <UpdateProfileDialog
               gg_id={currentUser.gg_id}
               currentFirstName={currentUser.first_name ?? ""}
@@ -33,7 +33,7 @@ export default async function AboutSectionProfile({
           </div>
         )}
         <div className="flex items-center gap-3 text-black dark:text-gray-300">
-          <span className="uppercase">
+          <span className="uppercase font-bold">
             {LoggedUserProfile ? currentUser?.username : profileOwner?.username}
           </span>{" "}
           |{" "}
@@ -56,11 +56,6 @@ export default async function AboutSectionProfile({
             <p>
               {profileOwner?.first_name} {profileOwner?.last_name}
             </p>
-          )}
-          {LoggedUserProfile ? (
-            <p>{currentUser?.description}</p>
-          ) : (
-            <p>{profileOwner?.description}</p>
           )}
 
           <div className="flex gap-2">
@@ -104,8 +99,13 @@ export default async function AboutSectionProfile({
             <IconActivityHeartbeat className="flex justify-center items-center size-full p-2 text-red-600" />
           </div>
         </div>
+        {LoggedUserProfile ? (
+          <p>{currentUser?.description}</p>
+        ) : (
+          <p>{profileOwner?.description}</p>
+        )}
         <p
-          className={`text-black dark:text-gray-300 overflow-hidden text-ellipsis whitespace-normal line-clamp-2 mt-20
+          className={`text-black dark:text-gray-300 overflow-hidden text-ellipsis whitespace-normal line-clamp-2
         }`}
         >
           {LoggedUserProfile
