@@ -8,28 +8,20 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { IconUserEdit } from "@tabler/icons-react";
-import { Button as MovingBorderButton } from "@/components/ui/border/moving-border";
-import UpdateProfileForm from "../../Forms/UpdateProfileForm";
 
-interface UpdateProfileDialogProps {
+import { Button as MovingBorderButton } from "@/components/ui/border/moving-border";
+
+import UploadImagesGalleryForm from "../../Forms/UploadImagesGalleryForm";
+import { IconPhotoAi } from "@tabler/icons-react";
+
+interface UploadGalleryDialogProps {
   gg_id: string;
-  currentFirstName: string;
-  currentLastName: string;
-  currentAddress: string;
-  currentDescription: string;
-  currentDob: Date | null;
-  currentImage: string;
+  currentGalleryImages: string[];
 }
 
-const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
+const UploadGalleryDialog: React.FC<UploadGalleryDialogProps> = ({
   gg_id,
-  currentFirstName,
-  currentLastName,
-  currentAddress,
-  currentDescription,
-  currentDob,
-  currentImage,
+  currentGalleryImages,
 }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -40,23 +32,19 @@ const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
           borderRadius="1.75rem"
           className="bg-white size-10 dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800"
         >
-          <IconUserEdit size={20} />
+          <IconPhotoAi size={20} />
         </MovingBorderButton>
       </DialogTrigger>
+
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="flex justify-center uppercase font-semibold text-sm">
             Update Profile
           </DialogTitle>
         </DialogHeader>
-        <UpdateProfileForm
+        <UploadImagesGalleryForm
           gg_id={gg_id}
-          currentFirstName={currentFirstName}
-          currentLastName={currentLastName}
-          currentAddress={currentAddress}
-          currentDescription={currentDescription}
-          currentDob={currentDob}
-          currentImage={currentImage}
+          currentGalleryImages={currentGalleryImages}
           setOpen={setOpen}
         />
       </DialogContent>
@@ -64,4 +52,4 @@ const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
   );
 };
 
-export default UpdateProfileDialog;
+export default UploadGalleryDialog;

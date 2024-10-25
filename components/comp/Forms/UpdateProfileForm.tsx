@@ -21,10 +21,7 @@ import { useRouter } from "next/navigation";
 import { LabelInputContainer } from "@/components/ui/animated-input/label-input-container";
 import { Label } from "@/components/ui/animated-input/label";
 
-import {
-  FileUploaderMinimal,
-  FileUploaderRegular,
-} from "@uploadcare/react-uploader";
+import { FileUploaderMinimal } from "@uploadcare/react-uploader";
 import "@uploadcare/react-uploader/core.css";
 import Image from "next/image";
 
