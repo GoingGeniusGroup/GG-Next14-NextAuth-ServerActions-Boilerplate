@@ -57,7 +57,6 @@ export default function UpdateProfileForm({
 
   const onSubmit = async (data: any) => {
     try {
-      // Ensure we're sending a proper Date object for dob
       const formData = {
         gg_id,
         first_name: data.first_name,
