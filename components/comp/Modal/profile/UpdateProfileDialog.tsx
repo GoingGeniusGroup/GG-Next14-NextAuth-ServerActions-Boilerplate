@@ -11,6 +11,7 @@ import {
 import { IconUserEdit } from "@tabler/icons-react";
 import { Button as MovingBorderButton } from "@/components/ui/border/moving-border";
 import UpdateProfileForm from "../../Forms/UpdateProfileForm";
+import Image from "next/image";
 
 interface UpdateProfileDialogProps {
   gg_id: string;
@@ -18,6 +19,8 @@ interface UpdateProfileDialogProps {
   currentLastName: string;
   currentAddress: string;
   currentDescription: string;
+  currentDob: Date | null;
+  currentImage: string;
 }
 
 const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
@@ -26,6 +29,8 @@ const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
   currentLastName,
   currentAddress,
   currentDescription,
+  currentDob,
+  currentImage,
 }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -41,7 +46,9 @@ const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Update Profile</DialogTitle>
+          <DialogTitle className="flex justify-center uppercase font-semibold text-sm">
+            Update Profile
+          </DialogTitle>
         </DialogHeader>
         <UpdateProfileForm
           gg_id={gg_id}
@@ -49,6 +56,8 @@ const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
           currentLastName={currentLastName}
           currentAddress={currentAddress}
           currentDescription={currentDescription}
+          currentDob={currentDob}
+          currentImage={currentImage}
           setOpen={setOpen}
         />
       </DialogContent>
