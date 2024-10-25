@@ -93,7 +93,7 @@ model User {
   UserPaymentMethod     UserPaymentMethod[]
   avatar                avatar[]
   cards                 cards[]
-  coordinate            coordinate?
+  coordinate            coordinate[]
   experience            experience[]
   skills                skills[]
 }
@@ -321,7 +321,7 @@ model coordinate {
   gg_id     String  @db.Uuid
   longitude String?
   latitude  String?
-  User      User    @relation(fields: [id], references: [gg_id], onDelete: Cascade, onUpdate: NoAction)
+  User      User    @relation(fields: [gg_id], references: [gg_id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model faculty {
