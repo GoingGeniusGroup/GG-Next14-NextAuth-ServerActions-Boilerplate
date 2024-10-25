@@ -9,7 +9,6 @@ datasource db {
 
 model Account {
   id                String  @id @default(cuid())
-  userId            String  @unique @db.Uuid
   type              String
   provider          String
   providerAccountId String
@@ -20,6 +19,7 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
+  userId            String  @unique @db.Uuid
   user              User    @relation(fields: [userId], references: [gg_id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
@@ -62,46 +62,47 @@ model skills {
 }
 
 model User {
-  gg_id                 String                 @id @default(uuid()) @db.Uuid
-  first_name            String?                @db.VarChar(50)
-  last_name             String?                @db.VarChar(50)
   email                 String?                @unique @db.VarChar(100)
+  emailVerified         DateTime?
+  image                 String?
   password              String?                @db.VarChar(255)
-  phone_number          String?                @unique @db.VarChar(15)
+  role                  UserRole               @default(User)
+  isTwoFactorEnabled    Boolean                @default(false)
+  address               String?                @db.VarChar(200)
+  cover_images          String[]
+  created_at            DateTime?              @default(now()) @db.Timestamp(6)
+  description           String?
+  dob                   DateTime?
+  faculty               Json?
+  first_name            String?                @db.VarChar(50)
+  gg_id                 String                 @id @default(uuid()) @db.Uuid
+  guild_id              String?                @db.Uuid
+  image_urls            String[]
+  last_name             String?                @db.VarChar(50)
   oauth_provider        String?                @db.VarChar(50)
   oauth_token           String?                @db.VarChar(255)
   otp                   Int?
-  created_at            DateTime?              @default(now()) @db.Timestamp(6)
-  image_urls            String[]
-  description           String?
-  address               String?                @db.VarChar(200)
-  region                Json?
-  guild_id              String?                @db.Uuid
-  username              String?                @unique
-  faculty               Json?
-  cover_images          String[]
-  avatar                avatar[]
-  cards                 cards[]
-  experience            experience[]
-  skills                skills[]
-  emailVerified         DateTime?
-  image                 String?
-  role                  UserRole               @default(User)
-  isTwoFactorEnabled    Boolean                @default(false)
   phone                 String?
-  dob                   DateTime?
+  phone_number          String?                @unique @db.VarChar(15)
+  region                Json?
+  username              String?                @unique
   accounts              Account?
   Cart                  Cart[]
   Order                 Order[]
   twoFactorConfirmation TwoFactorConfirmation?
   UserPaymentMethod     UserPaymentMethod[]
+  avatar                avatar[]
+  cards                 cards[]
+  coordinate            coordinate?
+  experience            experience[]
+  skills                skills[]
 }
 
 model avatar {
-  avatar_id  String @id @default(uuid()) @db.Uuid
-  gg_id      String @db.Uuid
+  avatar_id  String  @id @default(uuid()) @db.Uuid
+  gg_id      String  @db.Uuid
   avatar_url String? @db.VarChar(255)
-  users      User   @relation(fields: [gg_id], references: [gg_id], onDelete: Cascade, onUpdate: NoAction)
+  users      User    @relation(fields: [gg_id], references: [gg_id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model guilds {
@@ -114,10 +115,11 @@ model guilds {
   symbol           String?
   color            String?
   alignment        String[]
-  id               String   @id @default(uuid()) @db.Uuid
   element          String?
-  faculty          Json[]
   guild_frame      String?
+  faculty_id       String   @db.Uuid
+  guild_id         String   @id @db.Uuid
+  faculty          faculty  @relation(fields: [faculty_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model VerificationToken {
@@ -149,8 +151,8 @@ model TwoFactorToken {
 
 model TwoFactorConfirmation {
   id      String   @id @default(cuid())
-  userId  String   @unique @db.Uuid
   expires DateTime
+  userId  String   @unique @db.Uuid
   user    User     @relation(fields: [userId], references: [gg_id], onDelete: Cascade)
 }
 
@@ -167,16 +169,16 @@ model Product {
   categoryId      String
   isFeatured      Boolean?         @default(false)
   slug            String?
-  status          Boolean          @default(true)
-  discount        Float?
   taxId           String?
+  discount        Float?
+  status          Boolean          @default(true)
   carts           Cart[]
   inventory       Inventory?
   category        Category         @relation(fields: [categoryId], references: [id])
   Tax             Tax?             @relation(fields: [taxId], references: [id])
   ProductVariant  ProductVariant[]
   orders          Order[]          @relation("ProductOrders")
-  Supplier        Supplier[]
+  Supplier        Supplier[]       @relation("ProductToSupplier")
 }
 
 model Cart {
@@ -184,13 +186,13 @@ model Cart {
   quantity       Int
   status         CartStatus       @default(PENDING)
   productId      String
-  userId         String           @db.Uuid
   orderId        String?
   amount         Float?
+  userId         String           @db.Uuid
   order          Order?           @relation("OrderCarts", fields: [orderId], references: [id], onDelete: Cascade)
   product        Product          @relation(fields: [productId], references: [id])
   user           User             @relation(fields: [userId], references: [gg_id], onDelete: Cascade)
-  ProductVariant ProductVariant[]
+  ProductVariant ProductVariant[] @relation("CartToProductVariant")
 }
 
 model Variant {
@@ -226,7 +228,7 @@ model Supplier {
   email        String?
   phone        String?
   address      String?
-  Product      Product[]
+  Product      Product[] @relation("ProductToSupplier")
 }
 
 model Order {
@@ -238,10 +240,10 @@ model Order {
   state         String
   city          String
   status        OrderStatus   @default(PENDING)
-  userId        String        @db.Uuid
   amount        Float?
   paymentId     String?
   paymentStatus Boolean       @default(false)
+  userId        String        @db.Uuid
   carts         Cart[]        @relation("OrderCarts")
   PaymentType   PaymentType?  @relation(fields: [paymentId], references: [id])
   user          User          @relation(fields: [userId], references: [gg_id], onDelete: Cascade)
@@ -271,7 +273,7 @@ model ProductVariant {
   Product         Product        @relation(fields: [productId], references: [id], onDelete: Cascade)
   Variant         Variant        @relation(fields: [var_id], references: [id])
   VariantOption   VariantOption? @relation(fields: [var_opt], references: [id])
-  Cart            Cart[]
+  Cart            Cart[]         @relation("CartToProductVariant")
 }
 
 model SalesInvoice {
@@ -281,7 +283,7 @@ model SalesInvoice {
   totalAmount Float?
   orderId     String   @unique
   Order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  Tax         Tax[]
+  Tax         Tax[]    @relation("SalesInvoiceToTax")
 }
 
 model Tax {
@@ -290,7 +292,7 @@ model Tax {
   rate         Float
   description  String?
   Product      Product[]
-  SalesInvoice SalesInvoice[]
+  SalesInvoice SalesInvoice[] @relation("SalesInvoiceToTax")
 }
 
 model UserPaymentMethod {
@@ -314,6 +316,27 @@ model VariantOption {
   Variant        Variant          @relation(fields: [var_id], references: [id])
 }
 
+model coordinate {
+  id        String  @id @db.Uuid
+  gg_id     String  @db.Uuid
+  longitude String?
+  latitude  String?
+  User      User    @relation(fields: [id], references: [gg_id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model faculty {
+  id           String   @id @db.Uuid
+  description  String?
+  faculty_name String?  @unique
+  faculty_img  String?
+  skills       String[]
+  symbol       String?
+  color        String?
+  alignment    String[]
+  element      String?
+  guilds       guilds[]
+}
+
 enum UserRole {
   Admin
   User
@@ -335,4 +358,3 @@ enum OrderStatus {
   DELIVERED
   CANCELLED
 }
-

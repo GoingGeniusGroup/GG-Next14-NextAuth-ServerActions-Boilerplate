@@ -99,11 +99,17 @@ export default async function AboutSectionProfile({
             <IconActivityHeartbeat className="flex justify-center items-center size-full p-2 text-red-600" />
           </div>
         </div>
-        {LoggedUserProfile ? (
-          <p>{currentUser?.description}</p>
-        ) : (
-          <p>{profileOwner?.description}</p>
-        )}
+
+        <div className="relative w-full rounded-md bg-black/10 dark:bg-white/10 px-2 py-1 dark:text-white text-black">
+          <h1 className="text-[16px] font-bold">BIO</h1>
+          <p className="h-[60px] w-full overflow-auto text-[12px] font-semibold">
+            {LoggedUserProfile ? (
+              <span>{currentUser?.description}</span>
+            ) : (
+              <span>{profileOwner?.description}</span>
+            )}
+          </p>
+        </div>
         <p
           className={`text-black dark:text-gray-300 overflow-hidden text-ellipsis whitespace-normal line-clamp-2
         }`}
