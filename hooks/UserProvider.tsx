@@ -4,49 +4,53 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { getCurrentUser } from "@/actions/userAndGuild";
 
 // Define the context type
-interface UsernameContextType {
+interface UserContextType {
   username: string | null;
+  image: string | null;
   loading: boolean;
 }
 
 // Create context
-const UsernameContext = createContext<UsernameContextType | null>(null);
+const UserContext = createContext<UserContextType | null>(null);
 
 // Create provider component
 import { ReactNode } from "react";
 
-export function UsernameProvider({ children }: { children: ReactNode }) {
+export function UserProvider({ children }: { children: ReactNode }) {
   const [username, setUsername] = useState<string | null>(null);
+  const [image, setImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchUsername() {
+    async function fetchUserData() {
       try {
         const user = await getCurrentUser();
         setUsername(user?.username || null);
+        setImage(user?.image || null);
       } catch (error) {
-        console.error("Error fetching username:", error);
+        console.error("Error fetching user data:", error);
         setUsername(null);
+        setImage(null);
       } finally {
         setLoading(false);
       }
     }
 
-    fetchUsername();
+    fetchUserData();
   }, []);
 
   return (
-    <UsernameContext.Provider value={{ username, loading }}>
+    <UserContext.Provider value={{ username, image, loading }}>
       {children}
-    </UsernameContext.Provider>
+    </UserContext.Provider>
   );
 }
 
-// Custom hook to use the username
-export function useUsername() {
-  const context = useContext(UsernameContext);
-  if (context === undefined) {
-    throw new Error("useUsername must be used within a UsernameProvider");
+// Custom hook to use the user data
+export function useUser() {
+  const context = useContext(UserContext);
+  if (context === null) {
+    throw new Error("useUser must be used within a UserProvider");
   }
   return context;
 }

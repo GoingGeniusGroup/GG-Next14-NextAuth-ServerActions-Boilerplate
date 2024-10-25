@@ -8,7 +8,7 @@ import { useState } from "react";
 import { Lens } from "../lens/lens";
 import { usePathname } from "next/navigation";
 
-export const HoverEffect = ({
+export const HoverEffect2 = ({
   items,
   className,
 }: {
@@ -25,11 +25,11 @@ export const HoverEffect = ({
   const pathname = usePathname();
 
   return (
-    <div className={cn("grid grid-cols-4 py-10 gap-0", className)}>
+    <div className={cn("grid grid-cols-2 gap-0", className)}>
       {items.map((item, idx) => (
         <div
           key={idx}
-          className="relative group block p-2"
+          className="relative group block p-1"
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(null)}
         >
@@ -57,7 +57,7 @@ export const HoverEffect = ({
           <AnimatePresence>
             {hoveredIndex === idx && (
               <motion.span
-                className="absolute inset-0 h-full w-full bg-neutral-200 dark:bg-slate-400/[0.8] block rounded-xl"
+                className="absolute inset-0 h-full w-full bg-neutral-200 dark:bg-slate-400/[0.8] block rounded-lg"
                 layoutId="hoverBackground"
                 initial={{ opacity: 0 }}
                 animate={{
@@ -77,7 +77,7 @@ export const HoverEffect = ({
                 src={item.image || "/api/placeholder/600/450"}
                 alt={item.title}
                 fill
-                className="rounded-xl object-cover"
+                className="rounded-lg object-cover"
                 sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
                 unoptimized
                 loading="lazy"
