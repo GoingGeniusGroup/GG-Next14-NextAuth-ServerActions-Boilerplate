@@ -5,13 +5,12 @@ import {
   AvatarCreatorConfig,
   AvatarExportedEvent,
 } from "@readyplayerme/react-avatar-creator";
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { useState } from "react";
 
 const config: AvatarCreatorConfig = {
   clearCache: true,
   bodyType: "fullbody",
-  quickStart: false,
+  quickStart: true,
   language: "en",
 };
 
