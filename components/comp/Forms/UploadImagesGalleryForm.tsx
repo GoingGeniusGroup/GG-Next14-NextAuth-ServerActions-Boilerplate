@@ -32,7 +32,9 @@ export default function UploadImagesGalleryForm({
   currentGalleryImages,
 }: UploadImagesGalleryFormProps) {
   const router = useRouter();
-  const [isUploading, setIsUploading] = useState(false); // Track upload status
+  const [isUploading, setIsUploading] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [processedFiles, setProcessedFiles] = useState(new Set());
 
   const form = useForm({
     defaultValues: {
@@ -41,23 +43,38 @@ export default function UploadImagesGalleryForm({
   });
 
   const handleImageUpload = (info: { allEntries: any[] }) => {
-    setIsUploading(true); // Start uploading
+    setIsProcessing(true); // Start processing when files are selected
+
+    // Check if any files are still uploading
+    const hasUploadingFiles = info.allEntries.some(
+      (file) => file.status === "uploading"
+    );
+    setIsUploading(hasUploadingFiles);
 
     const successfulFiles = info.allEntries.filter(
-      (file) => file.status === "success"
+      (file) => file.status === "success" && !processedFiles.has(file.uuid)
     );
 
     if (successfulFiles.length > 0) {
-      const imageUrls = successfulFiles.map((file) => file.cdnUrl);
+      successfulFiles.forEach((file) => {
+        setProcessedFiles((prev) => new Set([...prev, file.uuid]));
+      });
+
+      const newImageUrls = successfulFiles.map((file) => file.cdnUrl);
       const currentUrls = form.getValues("image_urls");
-      form.setValue("image_urls", [...currentUrls, ...imageUrls]);
+      const uniqueUrls = Array.from(new Set([...currentUrls, ...newImageUrls]));
+      form.setValue("image_urls", uniqueUrls);
     }
 
-    setIsUploading(false); // Complete uploading after successful upload
+    // Only set processing to false if all files are done uploading
+    if (!hasUploadingFiles) {
+      setIsProcessing(false);
+      setIsUploading(false);
+    }
   };
 
   const onSubmit = async (data: any) => {
-    if (isUploading) return; // Prevent submission if files are still uploading
+    if (isUploading || isProcessing) return;
 
     try {
       const formData = {
@@ -72,6 +89,7 @@ export default function UploadImagesGalleryForm({
         router.refresh();
         setOpen && setOpen(false);
         form.reset();
+        setProcessedFiles(new Set());
       } else {
         toast.error(result.error.message);
       }
@@ -80,6 +98,9 @@ export default function UploadImagesGalleryForm({
       toast.error("An error occurred while uploading images.");
     }
   };
+
+  // Check if there are any images selected/uploaded
+  const hasImages = form.getValues("image_urls").length > 0;
 
   return (
     <Form {...form}>
@@ -99,7 +120,6 @@ export default function UploadImagesGalleryForm({
                   multiple={true}
                 />
               </LabelInputContainer>
-
               <FormMessage />
             </FormItem>
           )}
@@ -115,10 +135,15 @@ export default function UploadImagesGalleryForm({
           </Button>
           <Button
             type="submit"
-            disabled={isUploading || form.formState.isSubmitting}
+            disabled={
+              isUploading ||
+              isProcessing ||
+              form.formState.isSubmitting ||
+              !hasImages
+            }
           >
-            {isUploading
-              ? "Uploading..."
+            {isUploading || isProcessing
+              ? "Processing..."
               : form.formState.isSubmitting
               ? "Submitting..."
               : "Upload Images"}
