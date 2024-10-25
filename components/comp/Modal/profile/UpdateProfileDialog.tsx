@@ -43,7 +43,9 @@ const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Update Profile</DialogTitle>
+          <DialogTitle className="flex justify-center uppercase font-semibold text-sm">
+            Update Profile
+          </DialogTitle>
         </DialogHeader>
         <UpdateProfileForm
           gg_id={gg_id}

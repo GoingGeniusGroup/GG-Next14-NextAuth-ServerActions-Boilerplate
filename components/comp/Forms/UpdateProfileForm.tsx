@@ -89,7 +89,7 @@ export default function UpdateProfileForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
         {/* Other form fields remain the same */}
         <FormField
           control={form.control}
@@ -119,6 +119,37 @@ export default function UpdateProfileForm({
             </FormItem>
           )}
         />
+        {/* Updated DOB field with proper date handling */}
+        <FormField
+          control={form.control}
+          name="dob"
+          render={() => (
+            <FormItem className="flex w-full flex-col">
+              <FormLabel>DOB</FormLabel>
+              <FormControl>
+                <Controller
+                  name="dob"
+                  control={form.control}
+                  render={({ field: { onChange, value } }) => (
+                    <DatePicker
+                      selected={value}
+                      onChange={(date) => onChange(date)}
+                      dateFormat="yyyy-MM-dd"
+                      placeholderText="Select your date of birth"
+                      className="w-full rounded-md border bg-gray-100 border-white/20 dark:bg-zinc-900 px-3 py-[10px] text-sm text-black dark:text-white ring-offset-background placeholder:text-gray-500 dark:placeholder:text-gray-400 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                      showYearDropdown
+                      yearDropdownItemNumber={100}
+                      scrollableYearDropdown
+                      calendarClassName="rounded-md shadow-lg bg-white dark:bg-black text-black dark:text-white"
+                    />
+                  )}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <FormField
           control={form.control}
           name="address"
@@ -145,35 +176,7 @@ export default function UpdateProfileForm({
             </FormItem>
           )}
         />
-        {/* Updated DOB field with proper date handling */}
-        <FormField
-          control={form.control}
-          name="dob"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Date of Birth</FormLabel>
-              <FormControl>
-                <Controller
-                  name="dob"
-                  control={form.control}
-                  render={({ field: { onChange, value } }) => (
-                    <DatePicker
-                      selected={value}
-                      onChange={(date: Date | null) => onChange(date)}
-                      dateFormat="yyyy-MM-dd"
-                      placeholderText="Select your date of birth"
-                      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                      showYearDropdown
-                      yearDropdownItemNumber={100}
-                      scrollableYearDropdown
-                    />
-                  )}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+
         <div className="flex justify-end gap-3">
           <Button
             type="button"

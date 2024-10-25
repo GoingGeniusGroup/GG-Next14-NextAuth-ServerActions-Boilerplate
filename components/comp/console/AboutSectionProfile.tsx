@@ -26,8 +26,10 @@ export default async function AboutSectionProfile({
 
   return (
     <>
+      {/* Div with user information */}
       <div className="relative flex flex-col gap-4 border p-4 rounded-xl backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
         <div className="flex flex-col gap-4">
+          {/* dialog to open the update profile form */}
           {LoggedUserProfile && currentUser && (
             <div className="absolute top-2 right-2 z-40">
               <UpdateProfileDialog
@@ -40,6 +42,7 @@ export default async function AboutSectionProfile({
               />
             </div>
           )}
+          {/* username */}
           <div className="flex items-center text-black dark:text-gray-300">
             <span className="uppercase font-bold">
               {LoggedUserProfile
@@ -47,6 +50,7 @@ export default async function AboutSectionProfile({
                 : profileOwner?.username}
             </span>
           </div>
+          {/* top section */}
           <div className="relative w-full rounded-md bg-black/10 dark:bg-white/10 hover:dark:bg-white/20 hover:bg-black/20 transition-all duration-300 ease-in-out px-2 py-1 dark:text-white text-black">
             <div className="flex w-full items-center justify-between">
               <div className="text-[16px] font-bold flex gap-x-1 items-center">
@@ -86,6 +90,7 @@ export default async function AboutSectionProfile({
               )}
             </div>
           </div>
+          {/* bottom section */}
           <div className="relative w-full rounded-md bg-black/10 dark:bg-white/10 px-2 py-1 hover:dark:bg-white/20 hover:bg-black/20 dark:text-white text-black transition-all duration-300 ease-in-out">
             <p
               className={`text-black dark:text-gray-300 flex justify-between items-center overflow-hidden text-ellipsis whitespace-normal line-clamp-2 font-semibold transition-all duration-500 ease-in-out`}
@@ -101,7 +106,7 @@ export default async function AboutSectionProfile({
             </p>
 
             <p
-              className={`text-black dark:text-gray-300 flex justify-between items-center overflow-hidden text-ellipsis whitespace-normal line-clamp-2 font-semibold`}
+              className={`text-black dark:text-gray-300 flex justify-between items-center overflow-hidden text-ellipsis whitespace-normal line-clamp-2 font-semibold transition-all duration-300 ease-in-out`}
             >
               <span className="hover-black text-sm dark:hover:text-white cursor-pointer">
                 JOINED
@@ -119,6 +124,7 @@ export default async function AboutSectionProfile({
           </div>
         </div>
       </div>
+      {/* Div with achievements */}
       <div className="relative flex flex-col gap-4 border mt-4 p-4 rounded-xl backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
         <div className="gap-2 flex flex-wrap overflow-x-auto w-full">
           <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
