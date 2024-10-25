@@ -1,12 +1,12 @@
-"use client"; // Marks this as a client-side component in Next.js
+"use client";
 
 import { AnimatePresence, motion } from "framer-motion";
 import { ReactNode, useEffect, useMemo, useState, useCallback } from "react";
 import {
   IconExposure,
-  IconHome,
   IconPhoto,
   IconTool,
+  IconUser,
 } from "@tabler/icons-react";
 import TopFloatingDock2 from "@/components/ui/dock/top-floating-dock2";
 
@@ -39,7 +39,7 @@ export default function GeniusProfileLayout({
   // This only runs once and stays constant throughout component lifecycle
   const tabs = useMemo(
     () => [
-      { title: "Home", icon: <IconHome size={14} />, link: "#info" },
+      { title: "Profile", icon: <IconUser size={14} />, link: "#info" },
       { title: "Gallery", icon: <IconPhoto size={14} />, link: "#gallery" },
       { title: "Projects", icon: <IconTool size={14} />, link: "#projects" },
       {
