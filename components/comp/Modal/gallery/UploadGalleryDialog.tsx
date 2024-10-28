@@ -39,7 +39,7 @@ const UploadGalleryDialog: React.FC<UploadGalleryDialogProps> = ({
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="flex justify-center uppercase font-semibold text-sm">
-            Uploade Gallery Images
+            Upload Gallery Images
           </DialogTitle>
         </DialogHeader>
         <UploadImagesGalleryForm

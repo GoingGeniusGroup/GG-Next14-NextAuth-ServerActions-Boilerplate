@@ -78,7 +78,7 @@ export default function SmallPreviewCard({
           <p className="absolute top-2 right-2 text-[8px] font-semibold text-yellow-600">
             GG
           </p>
-          <p className="text-[7px] absolute top-2 left-2">
+          <p className="text-[7px] absolute top-2 text-white left-2">
             {userData.address || "No Address"}
           </p>
           <div className="flex flex-col justify-center items-start size-full">

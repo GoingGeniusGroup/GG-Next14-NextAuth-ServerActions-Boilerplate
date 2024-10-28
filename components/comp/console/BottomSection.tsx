@@ -57,6 +57,7 @@ export default function BottomSection({ userInfo }: { userInfo: any }) {
           unoptimized
           loading="lazy"
         />
+        <div className="absolute inset-0 bg-black/30 size-full"></div>
         {userInfo && (
           <div className="absolute top-2 right-2 z-40">
             <UpdateCoverPhotoDialog
