@@ -1,5 +1,3 @@
-import { getCurrentUser } from "@/actions/userAndGuild";
-import { getUserByUsername } from "@/services/user";
 import {
   Icon360View,
   IconActivityHeartbeat,
