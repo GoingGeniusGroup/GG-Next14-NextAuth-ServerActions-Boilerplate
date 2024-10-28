@@ -91,7 +91,7 @@ const ExperienceForm: React.FC<ExperienceFormProps> = ({
     }
   };
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: z.infer<typeof experienceSchema>) => {
     if (isUploading) {
       toast.error("Please wait for image upload to complete");
       return;
@@ -102,6 +102,9 @@ const ExperienceForm: React.FC<ExperienceFormProps> = ({
         ...data,
         gg_id,
         experience_id,
+        skills: data.skills || [], // Ensure skills is always an array
+        tools: data.tools || [], // Ensure tools is always an array
+        project_pictures: data.project_pictures || [], // Ensure project_pictures is always an array
       };
 
       const result = await addExperience(formData);
@@ -113,7 +116,7 @@ const ExperienceForm: React.FC<ExperienceFormProps> = ({
             : "Experience created successfully"
         );
         router.refresh();
-        setOpen && setOpen(false);
+        setOpen(false);
         form.reset();
       } else {
         toast.error(result.error?.message || "An unknown error occurred");

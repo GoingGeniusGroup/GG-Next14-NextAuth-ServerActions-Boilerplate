@@ -1,67 +1,67 @@
 import { db } from "@/lib/db";
+import { Prisma } from "@prisma/client";
 
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
-
-export async function createExperience(
-  experience_id: string,
-  data: any,
-  user: any
-) {
-  const {
-    type,
-    name,
-    description,
-    tools,
-    project_skills,
-    project_pictures,
-    link,
-    users,
-  } = data;
-
+export const createExperience = async (data: {
+  gg_id: string;
+  type?: string;
+  name?: string;
+  description?: string;
+  tools: string[];
+  project_skills: string[];
+  project_pictures: string[];
+  link?: string;
+}) => {
   try {
-    const experience = await prisma.experience.create({
+    const experience = await db.experience.create({
       data: {
-        experience_id,
-        gg_id: user.gg_id,
-        type,
-        name,
-        description,
-        tools,
-        project_skills,
-        project_pictures,
-        link,
         users: {
           connect: {
-            gg_id: user.gg_id,
+            gg_id: data.gg_id,
           },
         },
+        type: data.type,
+        name: data.name,
+        description: data.description,
+        tools: data.tools,
+        project_skills: data.project_skills,
+        project_pictures: data.project_pictures,
+        link: data.link,
       },
     });
-
     return experience;
   } catch (error) {
-    console.error("Error creating experience:", error);
+    console.error("Error in createExperience:", error);
     throw error;
   }
-}
+};
 
-export async function updateExperienceById(experience_id: string, data: any) {
+export const updateExperienceById = async (
+  experience_id: string,
+  data: Omit<Prisma.experienceUpdateInput, "users">
+) => {
   try {
-    const updatedExperience = await prisma.experience.update({
-      where: {
-        experience_id,
+    const experience = await db.experience.update({
+      where: { experience_id },
+      data: {
+        type: data.type,
+        name: data.name,
+        description: data.description,
+        tools: Array.isArray(data.tools) ? data.tools : [],
+        project_skills: Array.isArray(data.project_skills)
+          ? data.project_skills
+          : [],
+        project_pictures: Array.isArray(data.project_pictures)
+          ? data.project_pictures
+          : [],
+        link: data.link,
       },
-      data,
     });
-
-    return updatedExperience;
+    return experience;
   } catch (error) {
-    console.error("Error updating experience:", error);
+    console.error("Error in updateExperience:", error);
     throw error;
   }
-}
+};
 
 export const getExperienceById = async (experience_id: string) => {
   try {
