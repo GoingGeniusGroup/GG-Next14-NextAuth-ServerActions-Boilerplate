@@ -2,6 +2,7 @@ import { getCurrentUser } from "@/actions/userAndGuild";
 import { LayoutGrid } from "@/components/ui/grids/layout-grid";
 import { getUserByUsername } from "@/services/user";
 import UploadGalleryDialog from "../Modal/gallery/UploadGalleryDialog";
+import GalleryGridSkeleton from "./GalleryGridSkeleton";
 
 export default async function CustomGalleryComponent({
   username,
@@ -34,7 +35,15 @@ export default async function CustomGalleryComponent({
           />
         </div>
       )}
-      <LayoutGrid cards={cards} />
+      {images ? (
+        images.length > 0 ? (
+          <LayoutGrid cards={cards} />
+        ) : (
+          <GalleryGridSkeleton />
+        )
+      ) : (
+        <GalleryGridSkeleton />
+      )}
     </div>
   );
 }
