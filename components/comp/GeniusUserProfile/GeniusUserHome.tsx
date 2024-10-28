@@ -24,7 +24,9 @@ export default async function GeniusUserHome({
         </div>
         <div className="w-[35%] px-4">
           {/* Projects Grid */}
-          <BottomSection username={username} />
+          <BottomSection
+            userInfo={LoggedUserProfile ? currentUser : profileOwner}
+          />
         </div>
       </div>
     </>

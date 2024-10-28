@@ -4,11 +4,7 @@ import { getUserByUsername } from "@/services/user";
 import SmallPreviewCard from "../card/SmallPreviewCard";
 import GGCard from "../card/GGCard";
 
-interface BottomSectionProps {
-  username: string;
-}
-
-export default async function BottomSection({ username }: BottomSectionProps) {
+export default async function BottomSection({ userInfo }: { userInfo: any }) {
   const newsItems = [
     {
       title: "Project 1",
@@ -44,21 +40,11 @@ export default async function BottomSection({ username }: BottomSectionProps) {
     },
   ];
 
-  const currentUser = await getCurrentUser();
-
-  const LoggedUserProfile = currentUser?.username === username;
-
-  const profileOwner = await getUserByUsername(username);
-
-  console.log("currentUser", currentUser);
-
   return (
     <>
       <div className="w-full relative border flex gap-2 p-2 rounded-xl backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
         <div className="h-[116px] flex items-center justify-center w-full">
-          <SmallPreviewCard
-            userData={LoggedUserProfile ? currentUser : profileOwner}
-          />
+          <SmallPreviewCard userData={userInfo} />
         </div>
         {/* <GGCard userData={LoggedUserProfile ? currentUser : profileOwner} /> */}
         <div className="h-[116px] w-full bg-white/20 rounded-md"></div>
