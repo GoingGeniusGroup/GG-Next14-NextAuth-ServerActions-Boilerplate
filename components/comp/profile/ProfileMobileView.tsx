@@ -6,14 +6,18 @@ import CustomCardStack from "../card/CustomCardStack";
 import CustomToolTipLeftRight from "@/components/comp/CustomComponents/CustomToolTipLeftRight";
 
 const publicUser = {
-  name: "John Doe", // User's full name
-  faculty: "Science", // User's faculty, displayed on the card
-  guild: "BUDDHA" as "BUDDHA", // Guild, one of the defined guild types
-  age: 21, // User's age
-  email: "johndoe@example.com", // User's email, shown in the QR card
-  username: "johndoe", // Username, used to compare in the Bio section
-  description:
-    "A curious explorer and a passionate learner about the mysteries of the universe.", // User's bio description
+  name: "John Doe",
+  faculty: "Science",
+  guild: "BUDDHA" as "BUDDHA",
+  age: 25,
+  email: "john.doe@example.com",
+  username: "johndoe",
+  description: "A brief description about John Doe.",
+  first_name: "John",
+  last_name: "Doe",
+  guild_id: "12345",
+  dob: new Date("1995-12-17T03:24:00"), // Convert string to Date
+  address: "123 Main St, Anytown, USA",
 };
 
 export default function ProfileMobileView({ username }: { username: string }) {
