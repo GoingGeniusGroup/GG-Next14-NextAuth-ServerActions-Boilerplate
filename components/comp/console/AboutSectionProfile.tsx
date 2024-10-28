@@ -42,7 +42,7 @@ export default async function AboutSectionProfile({
           <div className="flex items-center gap-2 text-black dark:text-gray-300">
             <div className="relative size-8 rounded-full overflow-hidden border-2 hover:border-[#FCBB3F]/60">
               <Image
-                src={userInfo?.image ?? "/default-image.png"}
+                src={userInfo?.image ?? "/default-pictures/profile.png"}
                 alt="Profile picture"
                 fill
                 className="object-cover"
@@ -50,36 +50,58 @@ export default async function AboutSectionProfile({
                 loading="lazy"
               />
             </div>
-            <span className="uppercase font-bold">{userInfo?.username}</span>
+            <span className="uppercase font-bold">
+              {userInfo ? userInfo.username : "Username"}
+            </span>
           </div>
           {/* top section */}
           <div className="relative w-full rounded-md bg-black/10 dark:bg-white/10 hover:dark:bg-white/20 hover:bg-black/20 transition-all duration-300 ease-in-out px-2 py-1 dark:text-white text-black">
             <div className="flex w-full items-center justify-between">
-              <div className="text-[16px] font-bold flex gap-x-1 items-center">
-                <p>
-                  {userInfo?.first_name} {userInfo?.last_name}
-                </p>
+              <div className="text-[16px] font-semibold flex gap-x-1 items-center">
+                {userInfo ? (
+                  <p>
+                    {userInfo.first_name} {userInfo.last_name}
+                  </p>
+                ) : (
+                  <p>Firstname Lastname</p>
+                )}
 
-                {formattedDob && (
+                {userInfo ? (
                   <>
-                    <span className="text-sm font-semibold">•</span>
-                    {age && (
-                      <span className="text-sm font-semibold">{age}</span>
+                    {formattedDob && (
+                      <>
+                        <span className="text-sm font-semibold">•</span>
+                        {age && (
+                          <span className="text-sm font-semibold">{age}</span>
+                        )}
+                      </>
                     )}
                   </>
-                )}
-              </div>
-              <div className="text-xs font-semibold flex items-center gap-1">
-                {formattedDob && (
+                ) : (
                   <>
-                    <IconCake size={12} className="text-pink-500" />
-                    {formattedDob}
+                    <span className="text-sm font-semibold">•</span>
+                    <span className="text-sm font-semibold">AGE</span>
                   </>
                 )}
               </div>
+              {userInfo ? (
+                <div className="text-xs font-semibold flex items-center gap-1">
+                  {formattedDob && (
+                    <>
+                      <IconCake size={12} className="text-pink-500" />
+                      {formattedDob}
+                    </>
+                  )}
+                </div>
+              ) : (
+                <div className="text-xs font-semibold flex items-center gap-1">
+                  <IconCake size={12} className="text-pink-500" />
+                  DOB
+                </div>
+              )}
             </div>
             <div className="h-[60px] w-full overflow-auto text-[12px] font-semibold">
-              <span>{userInfo?.description}</span>
+              <span>{userInfo ? userInfo.description : "BIO"}</span>
             </div>
           </div>
           {/* bottom section */}
@@ -91,7 +113,7 @@ export default async function AboutSectionProfile({
                 ADDRESS
               </span>
               <span className="text-xs hover-black dark:hover:text-white cursor-pointer">
-                {userInfo?.address}
+                {userInfo ? userInfo.address : "ADDRESS"}
               </span>
             </p>
 
