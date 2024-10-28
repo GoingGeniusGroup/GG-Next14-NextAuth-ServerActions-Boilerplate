@@ -10,6 +10,7 @@ const updateExperienceSchema = z.object({
   name: z.string().min(3),
   description: z.string().min(3),
   tools: z.string().array().min(1),
+  project_skills: z.string().array().min(1),
   project_pictures: z.string().array().min(1),
   link: z.string().min(3),
 });
@@ -35,6 +36,7 @@ export const updateExperience = async (
     name,
     description,
     tools,
+    project_skills,
     project_pictures,
     link,
   } = validatedFields.data;
@@ -45,6 +47,7 @@ export const updateExperience = async (
       name,
       description,
       tools,
+      project_skills,
       project_pictures,
       link,
     });
