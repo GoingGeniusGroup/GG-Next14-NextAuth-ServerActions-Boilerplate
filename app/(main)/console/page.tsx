@@ -1,5 +1,5 @@
 import AboutSection from "@/components/comp/console/AboutSection";
-import BottomSection from "@/components/comp/console/BottomSection";
+import BottomSectionConsole from "@/components/comp/console/BottomSectionConsole";
 
 interface AboutItemProp {
   name: string;
@@ -64,7 +64,7 @@ export default function ConsolePage() {
     <div className="mt-5">
       <AboutSection aboutUser={aboutItem} />
       {/* News Grid */}
-      <BottomSection items={newsItems} />
+      <BottomSectionConsole items={newsItems} />
     </div>
   );
 }

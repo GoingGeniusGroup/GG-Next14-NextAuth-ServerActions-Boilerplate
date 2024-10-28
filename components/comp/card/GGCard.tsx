@@ -1,10 +1,10 @@
 "use client";
 
-import { UserCardData } from "@/core/interface/userCardData.interface";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import QRCode from "qrcode";
-import { useEffect, useState } from "react";
+import { UserCardData } from "@/core/interface/userCardData.interface";
 
 const guildColors = {
   BUDDHA: "#FFFFFF",
@@ -12,135 +12,170 @@ const guildColors = {
   KARMA: "#00FF00",
   RATNA: "#FFD700",
   PADMA: "#FF0000",
-};
+} as const;
 
-const getGradientStyle = (guild: keyof typeof guildColors) => {
-  const color = guildColors[guild] || "#FFFFFF"; // Default to white if guild is not found
+const getGradientStyle = (
+  guild: keyof typeof guildColors | null | undefined
+) => {
+  const color =
+    guild && guild in guildColors
+      ? guildColors[guild as keyof typeof guildColors]
+      : "#FFFFFF";
   return {
     background: `linear-gradient(to right, black 20%, ${color} 90%, ${color} 100%)`,
   };
 };
 
-const getTextColor = (guild: string) => {
+const getTextColor = (guild: string | null | undefined) => {
   return guild === "BUDDHA" ? "black" : "white";
 };
 
-export default function GGCard({ userData }: { userData: UserCardData }) {
-  // Flip Card QR
+// Format date to a readable string
+const formatDate = (date: Date | string | null | undefined) => {
+  if (!date) return "No date";
+  const dateObj = date instanceof Date ? date : new Date(date);
+  return dateObj.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+};
+
+export default function GGCard({
+  userData,
+}: {
+  userData: UserCardData | null;
+}) {
   const [imgSrc, setImgSrc] = useState("");
+  const [isFlipped, setIsFlipped] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
-    QRCode.toDataURL(pathname).then(setImgSrc);
+    if (pathname) {
+      QRCode.toDataURL(pathname).then(setImgSrc);
+    }
   }, [pathname]);
-
-  const [isHidden, setIsHidden] = useState(false);
-
-  // Flip Card QR end
-
-  const [isFlipped, setIsFlipped] = useState(false);
 
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
   };
 
+  // Early return if no userData
+  if (!userData) {
+    return (
+      <div className="flex items-center justify-center h-full">Loading...</div>
+    );
+  }
+
   return (
-    <>
-      {userData ? (
-        <div className="group h-full [prespective:1000px]">
-          {/* Flip the card when clicked */}
-          <div
-            style={getGradientStyle(userData.guild || "BUDDHA")}
-            className={`relative size-full rounded-lg shadow-md transition-all duration-500 [transform-style:preserve-3d]
-    ${isFlipped ? "[transform:rotateY(180deg)]" : ""}`}
-            onClick={handleFlip}
-          >
-            <div className="absolute right-2 top-2">
-              <p
-                className={`text-montserrat text-xs font-semibold`}
-                style={{ color: getTextColor(userData.guild || "BUDDHA") }}
-              >
-                {userData.faculty}
-              </p>
-            </div>
-
-            <div className="absolute left-2 top-2">
-              <p className={`text-montserrat text-xs font-semibold text-white`}>
-                GG
-              </p>
-            </div>
-
-            <div className="absolute bottom-2 right-2">
-              <p
-                className="text-montserrat z-20 text-xs font-semibold hover:underline"
-                style={{ color: getTextColor(userData.guild || "BUDDHA") }}
-              >
-                View More
-              </p>
-            </div>
-
-            <div className="absolute flex size-full flex-col items-start justify-center pl-4 text-[24px] font-bold uppercase text-white">
-              <h1>{userData.name}</h1>
-              <p className="-mt-2 text-[14px] font-semibold">
-                8708 H87F 8JID 989D
-              </p>
-            </div>
-
-            <div className="absolute flex size-full flex-col items-end justify-center pr-2 text-[24px] font-bold uppercase text-white">
-              <div
-                className={`size-[24px] rounded-md  ${
-                  userData.guild === "BUDDHA" ? "bg-black/70" : "bg-white/60"
-                }`}
-              ></div>
-            </div>
-
-            <div className="absolute bottom-2 left-2 text-[14px] font-bold text-white">
-              {userData.age}
-            </div>
-
-            {/* QRCode */}
-            <div
-              style={getGradientStyle(userData.guild || "BUDDHA")}
-              className="absolute inset-0 z-10 rounded-lg text-center text-slate-200 [backface-visibility:hidden] [transform:rotateY(180deg)]"
+    <div className="group h-full [perspective:1000px]">
+      <div
+        style={getGradientStyle(userData.guild)}
+        className={`relative size-full rounded-lg shadow-md transition-all duration-500 [transform-style:preserve-3d] cursor-pointer
+          ${isFlipped ? "[transform:rotateY(180deg)]" : ""}`}
+        onClick={handleFlip}
+      >
+        {/* Front of card */}
+        <div className="absolute inset-0 [backface-visibility:hidden]">
+          {/* Address */}
+          <div className="absolute right-2 top-2">
+            <p
+              className="text-montserrat text-xs font-semibold"
+              style={{ color: getTextColor(userData.guild) }}
             >
-              <div className="relative size-full ">
-                <div className="absolute left-2 top-2 text-[14px] text-blue-300 hover:underline">
-                  {userData.email}
-                </div>
-                <div
-                  className="absolute right-2 top-2 text-[14px] font-bold"
-                  style={{ color: getTextColor(userData.guild || "BUDDHA") }}
-                >
-                  REGION
-                </div>
-                <div className="absolute bottom-2 left-2 text-[14px] font-bold text-white">
-                  {userData.guild}
-                </div>
-                <div
-                  className="absolute bottom-2 right-2 text-xs font-semibold"
-                  style={{ color: getTextColor(userData.guild || "BUDDHA") }}
-                >
-                  Back
-                </div>
+              {userData.address || "No Address"}
+            </p>
+          </div>
 
-                <div className="flex size-full items-center justify-center ">
-                  {imgSrc && (
-                    <Image
-                      className="rounded-sm object-cover"
-                      alt="qr code"
-                      src={imgSrc}
-                      width={42}
-                      height={42}
-                    />
-                  )}
-                </div>
-              </div>
+          {/* GG Label */}
+          <div className="absolute left-2 top-2">
+            <p className="text-montserrat text-xs font-semibold text-white">
+              GG
+            </p>
+          </div>
+
+          {/* View More */}
+          <div className="absolute bottom-2 right-2">
+            <p
+              className="text-montserrat text-xs font-semibold hover:underline"
+              style={{ color: getTextColor(userData.guild) }}
+            >
+              View More
+            </p>
+          </div>
+
+          {/* Name and Description */}
+          <div className="absolute flex size-full flex-col items-start justify-center pl-4">
+            <h1 className="text-2xl font-bold uppercase text-white">
+              {userData.first_name || ""} {userData.last_name || ""}
+            </h1>
+            <p className="-mt-2 text-sm font-semibold text-white">
+              {userData.description || "No description"}
+            </p>
+          </div>
+
+          {/* Guild Icon */}
+          <div className="absolute flex size-full flex-col items-end justify-center pr-2">
+            <div
+              className={`size-6 rounded-md ${
+                userData.guild === "BUDDHA" ? "bg-black/70" : "bg-white/60"
+              }`}
+            />
+          </div>
+
+          {/* Date of Birth */}
+          <div className="absolute bottom-2 left-2 text-sm font-bold text-white">
+            {formatDate(userData.dob)}
+          </div>
+        </div>
+
+        {/* Back of card */}
+        <div
+          style={getGradientStyle(userData.guild)}
+          className="absolute inset-0 z-10 rounded-lg [backface-visibility:hidden] [transform:rotateY(180deg)]"
+        >
+          <div className="relative size-full">
+            {/* Email */}
+            <div className="absolute left-2 top-2 text-sm text-blue-300 hover:underline">
+              {userData.email || "No email"}
+            </div>
+
+            {/* Region */}
+            <div
+              className="absolute right-2 top-2 text-sm font-bold"
+              style={{ color: getTextColor(userData.guild) }}
+            >
+              REGION
+            </div>
+
+            {/* Guild ID */}
+            <div className="absolute bottom-2 left-2 text-sm font-bold text-white">
+              {userData.guild_id || "No Guild ID"}
+            </div>
+
+            {/* Back Label */}
+            <div
+              className="absolute bottom-2 right-2 text-xs font-semibold"
+              style={{ color: getTextColor(userData.guild) }}
+            >
+              Back
+            </div>
+
+            {/* QR Code */}
+            <div className="flex size-full items-center justify-center">
+              {imgSrc && (
+                <Image
+                  className="rounded-sm object-cover"
+                  alt="qr code"
+                  src={imgSrc}
+                  width={42}
+                  height={42}
+                />
+              )}
             </div>
           </div>
         </div>
-      ) : (
-        "Loading..."
-      )}
-    </>
+      </div>
+    </div>
   );
 }
