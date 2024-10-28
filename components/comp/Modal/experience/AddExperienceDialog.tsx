@@ -20,6 +20,7 @@ interface ExperienceDialogProps {
     name?: string;
     description?: string;
     tools?: string[];
+    skills?: string[]; // Added skills
     project_pictures?: string[];
     link?: string;
   };
@@ -55,7 +56,8 @@ const ExperienceDialog: React.FC<ExperienceDialogProps> = ({
             type: defaultValues?.type || "",
             name: defaultValues?.name || "",
             description: defaultValues?.description || "",
-            tools: defaultValues?.tools || [],
+            tools: defaultValues?.tools?.map((tool) => tool.trim()) || [], // Trim tools if available
+            skills: defaultValues?.skills?.map((skill) => skill.trim()) || [], // Trim skills if available
             project_pictures: defaultValues?.project_pictures || [],
             link: defaultValues?.link || "",
           }}

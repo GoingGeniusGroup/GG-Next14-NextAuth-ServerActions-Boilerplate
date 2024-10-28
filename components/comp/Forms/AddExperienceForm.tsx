@@ -19,12 +19,14 @@ import { toast } from "sonner";
 import { Label } from "@/components/ui/animated-input/label";
 import { LabelInputContainer } from "@/components/ui/animated-input/label-input-container";
 import { FileUploaderMinimal } from "@uploadcare/react-uploader";
+import { addExperience } from "@/actions/add-experience";
 
 const experienceSchema = z.object({
   type: z.string().min(3, "Type must be at least 3 characters"),
   name: z.string().min(3, "Name must be at least 3 characters"),
   description: z.string().min(3, "Description must be at least 3 characters"),
   tools: z.array(z.string()).min(1, "At least one tool is required"),
+  skills: z.array(z.string()).min(1, "At least one skill is required"), // Ensure this line is present
   project_pictures: z
     .array(z.string())
     .min(1, "At least one picture is required"),
@@ -40,6 +42,7 @@ interface ExperienceFormProps {
     name: string;
     description: string;
     tools: string[];
+    skills: string[]; // Added skills to default values
     project_pictures: string[];
     link: string;
   };
@@ -61,6 +64,7 @@ const ExperienceForm: React.FC<ExperienceFormProps> = ({
       name: "",
       description: "",
       tools: [],
+      skills: [], // Default value for skills
       project_pictures: [],
       link: "",
     },
@@ -100,18 +104,9 @@ const ExperienceForm: React.FC<ExperienceFormProps> = ({
         experience_id,
       };
 
-      const endpoint = experience_id
-        ? "/api/experience/update"
-        : "/api/experience/create";
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const result = await addExperience(formData);
 
-      if (response.ok) {
+      if (result.success) {
         toast.success(
           experience_id
             ? "Experience updated successfully"
@@ -121,10 +116,10 @@ const ExperienceForm: React.FC<ExperienceFormProps> = ({
         setOpen && setOpen(false);
         form.reset();
       } else {
-        const error = await response.json();
-        toast.error(error.message || "Something went wrong");
+        toast.error(result.error?.message || "An unknown error occurred");
       }
     } catch (error) {
+      console.error(error);
       toast.error("Something went wrong");
     }
   };
@@ -201,6 +196,32 @@ const ExperienceForm: React.FC<ExperienceFormProps> = ({
                     onChange={(e) =>
                       field.onChange(
                         e.target.value.split(",").map((tool) => tool.trim())
+                      )
+                    }
+                    value={field.value.join(", ")}
+                  />
+                </FormControl>
+              </LabelInputContainer>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {/* Skills Field */}
+        <FormField
+          control={form.control}
+          name="skills"
+          render={({ field }) => (
+            <FormItem>
+              <LabelInputContainer>
+                <Label>Skills (comma-separated)</Label>
+                <FormControl>
+                  <AnimatedInput
+                    {...field}
+                    placeholder="Eg. JavaScript, HTML, CSS"
+                    onChange={(e) =>
+                      field.onChange(
+                        e.target.value.split(",").map((skill) => skill.trim())
                       )
                     }
                     value={field.value.join(", ")}
