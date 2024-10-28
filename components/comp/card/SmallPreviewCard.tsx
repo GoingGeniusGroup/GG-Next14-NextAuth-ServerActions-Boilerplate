@@ -1,3 +1,9 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import QRCode from "qrcode";
 import { UserCardData } from "@/core/interface/userCardData.interface";
 
 const guildColors = {
@@ -20,6 +26,10 @@ const getGradientStyle = (
   };
 };
 
+const getTextColor = (guild: string | null | undefined) => {
+  return guild === "BUDDHA" ? "black" : "white";
+};
+
 const formatDate = (date: Date | string | null | undefined) => {
   if (!date) return "No date";
   const dateObj = date instanceof Date ? date : new Date(date);
@@ -35,16 +45,33 @@ export default function SmallPreviewCard({
 }: {
   userData: UserCardData | null;
 }) {
+  const [imgSrc, setImgSrc] = useState("");
+  const [isFlipped, setIsFlipped] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (pathname) {
+      QRCode.toDataURL(pathname).then(setImgSrc);
+    }
+  }, [pathname]);
+
+  const handleFlip = () => {
+    setIsFlipped(!isFlipped);
+  };
+
   if (!userData) {
     return (
       <div className="flex items-center justify-center h-full">Loading...</div>
     );
   }
+
   return (
-    <div className="group w-[192px] h-[116px]">
+    <div className="group w-[192px] h-[116px]] [perspective:1000px]">
       <div
         style={getGradientStyle(userData.guild)}
-        className={`relative h-[114px] w-[190px] rounded-lg shadow-md transition-all duration-500 cursor-pointer transform `}
+        className={`relative h-[114px] w-[190px] rounded-lg shadow-md transition-all duration-500 [transform-style:preserve-3d] cursor-pointer
+          ${isFlipped ? "[transform:rotateY(180deg)]" : ""}`}
+        onClick={handleFlip}
       >
         {/* Front of card */}
         <div className="p-2 size-full">
@@ -71,6 +98,38 @@ export default function SmallPreviewCard({
             <p className="text-[6px] font-semibold hover:underline text-sky-500">
               View More
             </p>
+          </div>
+        </div>
+
+        {/* Back of card */}
+        <div
+          style={getGradientStyle(userData.guild)}
+          className="absolute inset-0 z-10 rounded-lg p-2 size-full [backface-visibility:hidden] [transform:rotateY(180deg)]"
+        >
+          <p className="absolute top-2 left-2 text-[7px] text-sky-600 hover:underline font-semibold uppercase">
+            {userData.email || "No email"}
+          </p>
+          <p className="absolute top-2 right-2 text-[7px] text-yellow-500  ">
+            REGION
+          </p>
+
+          <div className="absolute bottom-2 left-2 text-[7px] text-white">
+            {userData.guild_id || "No Guild ID"}
+          </div>
+          <div className="absolute bottom-2 right-2 text-[7px] text-sky-600">
+            Back
+          </div>
+
+          <div className="flex items-center justify-center size-full">
+            {imgSrc && (
+              <Image
+                className="rounded-sm object-cover"
+                alt="qr code"
+                src={imgSrc}
+                width={50}
+                height={50}
+              />
+            )}
           </div>
         </div>
       </div>
