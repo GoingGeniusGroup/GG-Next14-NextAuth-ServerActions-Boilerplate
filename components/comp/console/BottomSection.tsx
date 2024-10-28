@@ -1,10 +1,11 @@
-import { HoverEffect2 } from "@/components/ui/card/card-hover-effect2";
-import { getCurrentUser } from "@/actions/userAndGuild";
-import { getUserByUsername } from "@/services/user";
-import SmallPreviewCard from "../card/SmallPreviewCard";
-import GGCard from "../card/GGCard";
+"use client";
 
-export default async function BottomSection({ userInfo }: { userInfo: any }) {
+import { HoverEffect2 } from "@/components/ui/card/card-hover-effect2";
+import SmallPreviewCard from "../card/SmallPreviewCard";
+import UpdateCoverPhotoDialog from "../Modal/profile/UpdateCoverPhotoDialog";
+import Image from "next/image";
+
+export default function BottomSection({ userInfo }: { userInfo: any }) {
   const newsItems = [
     {
       title: "Project 1",
@@ -42,13 +43,33 @@ export default async function BottomSection({ userInfo }: { userInfo: any }) {
 
   return (
     <>
-      <div className="w-full relative border flex gap-2 p-2 rounded-xl backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
-        <div className="h-[116px] flex items-center justify-center w-full">
+      <div className="w-full border relative flex gap-2 p-2 rounded-xl backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out overflow-hidden">
+        <Image
+          src={
+            Array.isArray(userInfo?.cover_images) &&
+            userInfo?.cover_images.length > 0
+              ? userInfo.cover_images[0]
+              : "/default-image.png"
+          }
+          alt="Cover picture"
+          fill
+          className="object-cover"
+          unoptimized
+          loading="lazy"
+        />
+        {userInfo && (
+          <div className="absolute top-2 right-2 z-40">
+            <UpdateCoverPhotoDialog
+              gg_id={userInfo.gg_id}
+              currentCoverImage={userInfo.cover_images ?? ""}
+            />
+          </div>
+        )}
+        <div className="h-[116px] flex items-center justify-center w-full cursor-pointer">
           <SmallPreviewCard userData={userInfo} />
         </div>
-        {/* <GGCard userData={LoggedUserProfile ? currentUser : profileOwner} /> */}
-        <div className="h-[116px] w-full bg-white/20 rounded-md"></div>
       </div>
+
       <div className="w-full relative border p-2 mt-4 rounded-xl backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
         <HoverEffect2 items={newsItems} />
       </div>
