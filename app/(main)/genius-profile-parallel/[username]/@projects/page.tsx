@@ -84,6 +84,8 @@ export default async function GeniusUserProject({
 
   const experiences = await getAllExperiences();
 
+  console.log("exp", experiences);
+
   return (
     <>
       <GeniusUserProjects
