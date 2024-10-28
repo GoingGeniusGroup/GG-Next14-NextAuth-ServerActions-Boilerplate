@@ -39,10 +39,20 @@ export default async function CustomGalleryComponent({
         images.length > 0 ? (
           <LayoutGrid cards={cards} />
         ) : (
-          <GalleryGridSkeleton />
+          <>
+            <div className="flex justify-center font-bold w-full text-yellow-500">
+              GALLERY IS EMPTY
+            </div>
+            <GalleryGridSkeleton />
+          </>
         )
       ) : (
-        <GalleryGridSkeleton />
+        <>
+          <div className="flex justify-center font-bold w-full text-yellow-500">
+            GALLERY IS EMPTY
+          </div>
+          <GalleryGridSkeleton />
+        </>
       )}
     </div>
   );
