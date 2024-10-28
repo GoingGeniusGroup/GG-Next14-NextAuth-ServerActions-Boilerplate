@@ -170,8 +170,15 @@ export default function UpdateProfileForm({
                   control={form.control}
                   render={({ field: { onChange, value } }) => (
                     <DatePicker
-                      selected={value}
-                      onChange={(date) => onChange(date)}
+                      selected={
+                        value ? new Date(value.setHours(12, 0, 0, 0)) : null
+                      } // Set a consistent time (e.g., noon) to avoid timezone shifts
+                      onChange={(date) => {
+                        if (date) {
+                          date.setHours(12, 0, 0, 0); // Set hours to avoid midnight timezone issues
+                          onChange(date);
+                        }
+                      }}
                       dateFormat="yyyy-MM-dd"
                       placeholderText="Select your date of birth"
                       className="w-full rounded-md border bg-gray-100 border-white/20 dark:bg-zinc-900 px-3 py-[10px] text-sm text-black dark:text-white ring-offset-background placeholder:text-gray-500 dark:placeholder:text-gray-400 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"

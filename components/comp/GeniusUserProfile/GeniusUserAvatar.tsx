@@ -12,22 +12,32 @@ const LazyAvatar = dynamic(
 
 export default function GeniusUserAvatar() {
   return (
-    <div className="relative w-[650px] h-[500px]">
-      <Suspense fallback={<div>Loading Avatar...</div>}>
-        <LazyAvatar
-          modelSrc="https://models.readyplayer.me/66fbd22e36a151e549ea8397.glb"
-          animationSrc="/animations/female-animation-catwalk.glb"
-          style={{ background: "rgb(0,0,6)", pointerEvents: "none" }}
-          fov={35}
-          cameraTarget={0}
-          cameraInitialDistance={5}
-          effects={{ ambientOcclusion: false }}
-          followModel={true}
-          // Disable interactivity
-          headMovement={false} // Disable head tracking
-          idleRotation={true}
-        />
+    <div className="relative w-[650px] h-[500px] flex justify-center">
+      <Suspense fallback={<AvatarSkeleton />}>
+        {LazyAvatar ? (
+          <LazyAvatar
+            modelSrc="https://models.readyplayer.me/66fbd22e36a151e549ea8397.glb"
+            animationSrc="/animations/female-animation-catwalk.glb"
+            style={{ background: "rgb(0,0,6)", pointerEvents: "none" }}
+            fov={35}
+            cameraTarget={0}
+            cameraInitialDistance={5}
+            effects={{ ambientOcclusion: false }}
+            followModel={true}
+            // Disable interactivity
+            headMovement={false} // Disable head tracking
+            idleRotation={true}
+          />
+        ) : (
+          <AvatarSkeleton />
+        )}
       </Suspense>
     </div>
+  );
+}
+
+function AvatarSkeleton() {
+  return (
+    <div className="animate-pulse flex items-center justify-center w-[60%] h-full bg-black/20 dark:bg-white/20 rounded-lg"></div>
   );
 }
