@@ -1,7 +1,9 @@
+import GalleryGridSkeleton from "@/components/comp/gallery/GalleryGridSkeleton";
+
 export default function GalleryLoading() {
   return (
     <>
-      <div>Loading Galleryr</div>
+      <GalleryGridSkeleton />
     </>
   );
 }
