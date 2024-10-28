@@ -8,20 +8,19 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
+import { IconPhotoEdit } from "@tabler/icons-react";
 import { Button as MovingBorderButton } from "@/components/ui/border/moving-border";
+import UpdateProfileForm from "../../Forms/UpdateProfileForm";
+import UpdateCoverImageForm from "../../Forms/UpdateCoverImageForm";
 
-import UploadImagesGalleryForm from "../../Forms/UploadImagesGalleryForm";
-import { IconPhotoAi } from "@tabler/icons-react";
-
-interface UploadGalleryDialogProps {
+interface UpdateCoverPhotoDialogProps {
   gg_id: string;
-  currentGalleryImages: string[];
+  currentCoverImage: string[];
 }
 
-const UploadGalleryDialog: React.FC<UploadGalleryDialogProps> = ({
+const UpdateProfileDialog: React.FC<UpdateCoverPhotoDialogProps> = ({
   gg_id,
-  currentGalleryImages,
+  currentCoverImage,
 }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -32,19 +31,18 @@ const UploadGalleryDialog: React.FC<UploadGalleryDialogProps> = ({
           borderRadius="1.75rem"
           className="bg-white size-10 dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800"
         >
-          <IconPhotoAi size={20} />
+          <IconPhotoEdit size={20} />
         </MovingBorderButton>
       </DialogTrigger>
-
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="flex justify-center uppercase font-semibold text-sm">
-            Upload Gallery Images
+            Update Cover Photo
           </DialogTitle>
         </DialogHeader>
-        <UploadImagesGalleryForm
+        <UpdateCoverImageForm
           gg_id={gg_id}
-          currentGalleryImages={currentGalleryImages}
+          currentCoverImage={currentCoverImage}
           setOpen={setOpen}
         />
       </DialogContent>
@@ -52,4 +50,4 @@ const UploadGalleryDialog: React.FC<UploadGalleryDialogProps> = ({
   );
 };
 
-export default UploadGalleryDialog;
+export default UpdateProfileDialog;
