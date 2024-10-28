@@ -2,7 +2,7 @@ import { UserRole } from "@prisma/client";
 import "next-auth";
 
 export interface User {
-  id: string;
+  gg_id: string;
   name?: string | null;
   email?: string | null;
   image?: string | null;

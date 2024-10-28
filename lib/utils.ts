@@ -81,3 +81,4 @@ export function response<T extends Record<string, unknown>>(
 export function response<T extends object>(response: T): T {
   return response;
 }
+

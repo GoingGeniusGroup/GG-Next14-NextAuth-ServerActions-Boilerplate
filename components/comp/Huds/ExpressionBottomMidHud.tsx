@@ -14,7 +14,7 @@ export default function ExpressionBottomMidHud({
     <>
       <motion.div
         layout
-        className="fixed bottom-[20px] left-1/2 flex h-[44px] -translate-x-1/2 select-none items-center space-x-[6px] rounded-full bg-gray-200 px-[6px] py-[4px] shadow-lg shadow-black/50 transition-all duration-300 ease-in-out"
+        className="relative bottom-[20px] left-1/2 flex h-[44px] -translate-x-1/2 select-none items-center space-x-[6px] rounded-full bg-gray-200 px-[6px] py-[4px] shadow-lg shadow-black/50 transition-all duration-300 ease-in-out"
       >
         {expressions.map((expression, i) => (
           <div
