@@ -1,7 +1,18 @@
 import { db } from "@/lib/db";
 import { Prisma } from "@prisma/client";
 
-export const createExperience = async (data: Prisma.experienceCreateInput) => {
+export const createExperience = async (
+  experience_id: string,
+  p0: {
+    type: string;
+    name: string;
+    description: string;
+    tools: string;
+    project_pictures: string;
+    link: string;
+  },
+  data: Prisma.experienceCreateInput
+) => {
   try {
     const experience = await db.experience.create({
       data,
@@ -37,7 +48,7 @@ export const getExperiencesByUserId = async (gg_id: string) => {
   }
 };
 
-export const updateExperience = async (
+export const updateExperienceById = async (
   experience_id: string,
   data: Prisma.experienceUpdateInput
 ) => {
