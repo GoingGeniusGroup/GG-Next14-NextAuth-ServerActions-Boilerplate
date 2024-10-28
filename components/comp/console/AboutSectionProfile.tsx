@@ -11,17 +11,11 @@ import { IconCake } from "@tabler/icons-react";
 import Image from "next/image";
 
 export default async function AboutSectionProfile({
-  username,
+  userInfo,
 }: {
-  username: string;
+  userInfo: any;
 }) {
-  const currentUser = await getCurrentUser();
-
-  const LoggedUserProfile = currentUser?.username === username;
-
-  const profileOwner = await getUserByUsername(username);
-
-  const userDob = LoggedUserProfile ? currentUser?.dob : profileOwner?.dob;
+  const userDob = userInfo?.dob;
 
   const { age, formattedDob } = calculateAge(userDob ?? null);
 
@@ -31,16 +25,16 @@ export default async function AboutSectionProfile({
       <div className="relative flex flex-col gap-4 border p-4 rounded-xl backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
         <div className="flex flex-col gap-4">
           {/* dialog to open the update profile form */}
-          {LoggedUserProfile && currentUser && (
+          {userInfo && (
             <div className="absolute top-2 right-2 z-40">
               <UpdateProfileDialog
-                gg_id={currentUser.gg_id}
-                currentFirstName={currentUser.first_name ?? ""}
-                currentLastName={currentUser.last_name ?? ""}
-                currentAddress={currentUser.address ?? ""}
-                currentDescription={currentUser.description ?? ""}
-                currentDob={currentUser.dob ? new Date(currentUser.dob) : null}
-                currentImage={currentUser.image ?? ""}
+                gg_id={userInfo.gg_id}
+                currentFirstName={userInfo.first_name ?? ""}
+                currentLastName={userInfo.last_name ?? ""}
+                currentAddress={userInfo.address ?? ""}
+                currentDescription={userInfo.description ?? ""}
+                currentDob={userInfo.dob ? new Date(userInfo.dob) : null}
+                currentImage={userInfo.image ?? ""}
               />
             </div>
           )}
@@ -48,11 +42,7 @@ export default async function AboutSectionProfile({
           <div className="flex items-center gap-2 text-black dark:text-gray-300">
             <div className="relative size-8 rounded-full overflow-hidden border-2 hover:border-[#FCBB3F]/60">
               <Image
-                src={
-                  LoggedUserProfile
-                    ? currentUser?.image ?? "/default-image.png"
-                    : profileOwner?.image ?? "/default-image.png"
-                }
+                src={userInfo?.image ?? "/default-image.png"}
                 alt="Profile picture"
                 fill
                 className="object-cover"
@@ -60,25 +50,15 @@ export default async function AboutSectionProfile({
                 loading="lazy"
               />
             </div>
-            <span className="uppercase font-bold">
-              {LoggedUserProfile
-                ? currentUser?.username
-                : profileOwner?.username}
-            </span>
+            <span className="uppercase font-bold">{userInfo?.username}</span>
           </div>
           {/* top section */}
           <div className="relative w-full rounded-md bg-black/10 dark:bg-white/10 hover:dark:bg-white/20 hover:bg-black/20 transition-all duration-300 ease-in-out px-2 py-1 dark:text-white text-black">
             <div className="flex w-full items-center justify-between">
               <div className="text-[16px] font-bold flex gap-x-1 items-center">
-                {LoggedUserProfile ? (
-                  <p>
-                    {currentUser?.first_name} {currentUser?.last_name}
-                  </p>
-                ) : (
-                  <p>
-                    {profileOwner?.first_name} {profileOwner?.last_name}
-                  </p>
-                )}
+                <p>
+                  {userInfo?.first_name} {userInfo?.last_name}
+                </p>
 
                 {formattedDob && (
                   <>
@@ -99,11 +79,7 @@ export default async function AboutSectionProfile({
               </div>
             </div>
             <div className="h-[60px] w-full overflow-auto text-[12px] font-semibold">
-              {LoggedUserProfile ? (
-                <span>{currentUser?.description}</span>
-              ) : (
-                <span>{profileOwner?.description}</span>
-              )}
+              <span>{userInfo?.description}</span>
             </div>
           </div>
           {/* bottom section */}
@@ -115,9 +91,7 @@ export default async function AboutSectionProfile({
                 ADDRESS
               </span>
               <span className="text-xs hover-black dark:hover:text-white cursor-pointer">
-                {LoggedUserProfile
-                  ? currentUser?.address
-                  : profileOwner?.address}
+                {userInfo?.address}
               </span>
             </p>
 
@@ -128,12 +102,8 @@ export default async function AboutSectionProfile({
                 JOINED
               </span>
               <span className="text-xs hover-black dark:hover:text-white cursor-pointer">
-                {LoggedUserProfile
-                  ? currentUser?.created_at
-                    ? new Date(currentUser.created_at).toLocaleDateString()
-                    : "N/A"
-                  : profileOwner?.created_at
-                  ? new Date(profileOwner.created_at).toLocaleDateString()
+                {userInfo?.created_at
+                  ? new Date(userInfo.created_at).toLocaleDateString()
                   : "N/A"}
               </span>
             </p>

@@ -40,12 +40,11 @@ export default function SmallPreviewCard({
       <div className="flex items-center justify-center h-full">Loading...</div>
     );
   }
-
   return (
-    <div className="group w-[192px] h-30">
+    <div className="group w-[192px] h-[116px]">
       <div
         style={getGradientStyle(userData.guild)}
-        className={`relative h-[120px] w-[190px] rounded-lg shadow-md transition-all duration-500 cursor-pointer transform `}
+        className={`relative h-[114px] w-[190px] rounded-lg shadow-md transition-all duration-500 cursor-pointer transform `}
       >
         {/* Front of card */}
         <div className="p-2 size-full">

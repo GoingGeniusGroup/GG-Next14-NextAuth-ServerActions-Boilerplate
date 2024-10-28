@@ -2,6 +2,7 @@ import { HoverEffect2 } from "@/components/ui/card/card-hover-effect2";
 import { getCurrentUser } from "@/actions/userAndGuild";
 import { getUserByUsername } from "@/services/user";
 import SmallPreviewCard from "../card/SmallPreviewCard";
+import GGCard from "../card/GGCard";
 
 interface BottomSectionProps {
   username: string;
@@ -59,6 +60,7 @@ export default async function BottomSection({ username }: BottomSectionProps) {
             userData={LoggedUserProfile ? currentUser : profileOwner}
           />
         </div>
+        {/* <GGCard userData={LoggedUserProfile ? currentUser : profileOwner} /> */}
         <div className="h-[116px] w-full bg-white/20 rounded-md"></div>
       </div>
       <div className="w-full relative border p-2 mt-4 rounded-xl backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
