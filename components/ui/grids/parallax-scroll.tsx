@@ -29,17 +29,15 @@ export const ParallaxScroll = ({
     offset: ["start start", "end start"],
   });
 
-  // Create alternating scroll effects for 6 columns
+  // Create alternating scroll effects for 4 columns
   const translateFirst = useTransform(scrollYProgress, [0, 1], [0, -200]);
   const translateSecond = useTransform(scrollYProgress, [0, 1], [0, 200]);
   const translateThird = useTransform(scrollYProgress, [0, 1], [0, -200]);
   const translateFourth = useTransform(scrollYProgress, [0, 1], [0, 200]);
-  const translateFifth = useTransform(scrollYProgress, [0, 1], [0, -200]);
-  const translateSixth = useTransform(scrollYProgress, [0, 1], [0, 200]);
 
-  // Distribute images across 6 columns without repetition
-  const columnArrays = Array.from({ length: 6 }, (_, columnIndex) =>
-    images.filter((_, index) => index % 6 === columnIndex)
+  // Distribute images across 4 columns without repetition
+  const columnArrays = Array.from({ length: 4 }, (_, columnIndex) =>
+    images.filter((_, index) => index % 4 === columnIndex)
   );
 
   const handleBackButtonClick = (e: React.MouseEvent) => {
@@ -48,7 +46,7 @@ export const ParallaxScroll = ({
   };
 
   const getGlobalIndex = (columnIndex: number, idx: number) => {
-    return idx * 6 + columnIndex;
+    return idx * 4 + columnIndex;
   };
 
   const renderCard = (
@@ -139,8 +137,6 @@ export const ParallaxScroll = ({
     translateSecond,
     translateThird,
     translateFourth,
-    translateFifth,
-    translateSixth,
   ];
 
   return (
@@ -148,7 +144,7 @@ export const ParallaxScroll = ({
       className={cn("h-[98%] items-start overflow-y-auto w-full", className)}
       ref={gridRef}
     >
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 items-start gap-2 pb-16">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 items-start gap-2 pb-16">
         {columnArrays.map((columnImages, columnIndex) => (
           <div key={columnIndex} className="grid gap-10">
             {columnImages.map((image, idx) =>
@@ -160,3 +156,5 @@ export const ParallaxScroll = ({
     </div>
   );
 };
+
+export default ParallaxScroll;
