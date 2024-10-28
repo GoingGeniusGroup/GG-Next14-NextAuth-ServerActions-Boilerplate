@@ -61,7 +61,9 @@ export default function SmallPreviewCard({
 
   if (!userData) {
     return (
-      <div className="flex items-center justify-center h-full">Loading...</div>
+      <div className="flex items-center justify-center h-full">
+        Card Is Not Available
+      </div>
     );
   }
 

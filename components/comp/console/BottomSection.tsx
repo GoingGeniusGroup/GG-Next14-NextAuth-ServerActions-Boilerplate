@@ -49,7 +49,7 @@ export default function BottomSection({ userInfo }: { userInfo: any }) {
             Array.isArray(userInfo?.cover_images) &&
             userInfo?.cover_images.length > 0
               ? userInfo.cover_images[0]
-              : "/default-image.png"
+              : "/default-pictures/cover-image.png"
           }
           alt="Cover picture"
           fill
