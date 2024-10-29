@@ -14,7 +14,7 @@ import SimulatorToggleButton from "./SimulatorToggleButton";
 import MobileSimulatorContainer from "./MobileSimulatorContainer";
 import { SectionProps } from "./interface/Section.interface";
 import { BackgroundProps } from "./interface/Background.interface";
-import ProfileComponent from "../profile/ProfileMobileView/ProfileComponent";
+// import ProfileComponent from "../profile/ProfileMobileView/ProfileComponent";
 import ShopSection from "../shop/ShopSection";
 import { LoginForm } from "../../form/login-form";
 import { RegisterForm } from "../../form/register-form";
@@ -98,7 +98,8 @@ const MobileSimulator: React.FC<MobileSimulatorProps> = ({
           <FaUserPlus />
         ),
         content: isLoggedIn ? (
-          <ProfileComponent />
+          // <ProfileComponent />
+          <div>Profile Component</div>
         ) : showLogin ? (
           <div className="flex flex-col gap-4 h-full overflow-auto">
             <LoginForm isMobile={true} />

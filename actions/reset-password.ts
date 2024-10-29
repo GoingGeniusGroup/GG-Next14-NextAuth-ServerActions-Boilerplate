@@ -7,7 +7,9 @@ import { generateResetPasswordToken } from "@/services/reset-password-token";
 import { sendResetPasswordEmail } from "@/services/mail";
 import { response } from "@/lib/utils";
 
-export const resetPassword = async (payload: z.infer<typeof resetPasswordSchema>) => {
+export const resetPassword = async (
+  payload: z.infer<typeof resetPasswordSchema>
+) => {
   // Check if user input is not valid.
   const validatedFields = resetPasswordSchema.safeParse(payload);
   if (!validatedFields.success) {
@@ -40,14 +42,18 @@ export const resetPassword = async (payload: z.infer<typeof resetPasswordSchema>
       success: false,
       error: {
         code: 401,
-        message: "Your email address is not verified yet. Please check your email.",
+        message:
+          "Your email address is not verified yet. Please check your email.",
       },
     });
   }
 
   // Generate reset password token, then send it to the email.
   const resetPasswordToken = await generateResetPasswordToken(email);
-  await sendResetPasswordEmail(resetPasswordToken.email, resetPasswordToken.token);
+  await sendResetPasswordEmail(
+    resetPasswordToken.email,
+    resetPasswordToken.token
+  );
 
   // Return response success.
   return response({

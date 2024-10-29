@@ -1,7 +1,12 @@
 "use server";
 
 import { avatar_response, response } from "@/types/utils";
-import { createAvatar, deleteAvatarById, getAvatarsByUserId, updateAvatarById } from "@/services/avatar";
+import {
+  createAvatar,
+  deleteAvatarById,
+  getAvatarsByUserId,
+  updateAvatarById,
+} from "@/services/avatar";
 import { z } from "zod";
 import { auth } from "@/auth";
 
@@ -22,7 +27,7 @@ export const addAvatar = async (avatar_url: string) => {
   }
 
   const validatedFields = avatarSchema.safeParse({ avatar_url });
-  
+
   if (!validatedFields.success) {
     return avatar_response({
       success: false,
@@ -58,7 +63,7 @@ export const addAvatar = async (avatar_url: string) => {
 
 export const updateAvatar = async (avatar_id: string, avatar_url: string) => {
   const validatedFields = avatarSchema.safeParse({ avatar_url });
-  
+
   if (!validatedFields.success) {
     return avatar_response({
       success: false,

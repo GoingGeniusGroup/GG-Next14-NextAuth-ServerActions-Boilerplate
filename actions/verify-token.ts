@@ -2,7 +2,10 @@
 
 import { isExpired, response } from "@/lib/utils";
 import { getUserByEmail, updateUserById } from "@/services/user";
-import { deleteVerificationTokenById, getVerificationToken } from "@/services/verification-token";
+import {
+  deleteVerificationTokenById,
+  getVerificationToken,
+} from "@/services/verification-token";
 import { redirect } from "next/navigation";
 
 export const newVerification = async (token: string) => {

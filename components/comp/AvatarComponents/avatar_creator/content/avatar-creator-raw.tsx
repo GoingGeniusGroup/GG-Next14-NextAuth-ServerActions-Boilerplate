@@ -1,21 +1,22 @@
-'use client'
+/* eslint-disable react-hooks/exhaustive-deps */
+"use client";
 
-import { CSSProperties, FC, useEffect, useRef } from 'react'
-import { AvatarCreatorEvent } from '../events'
-import { useAvatarCreatorUrl } from '../hooks/use-avatar-creator-url'
-import { AvatarCreatorConfig } from '../types'
+import { CSSProperties, FC, useEffect, useRef } from "react";
+import { AvatarCreatorEvent } from "../events";
+import { useAvatarCreatorUrl } from "../hooks/use-avatar-creator-url";
+import { AvatarCreatorConfig } from "../types";
 
-const MESSAGE_EVENT = 'message'
-const RPM_TARGET = 'readyplayerme'
-const IFRAME_READY_EVENT = 'v1.frame.ready'
+const MESSAGE_EVENT = "message";
+const RPM_TARGET = "readyplayerme";
+const IFRAME_READY_EVENT = "v1.frame.ready";
 
 export type AvatarCreatorRawProps = {
-  subdomain: string
-  className?: string
-  style?: CSSProperties
-  config?: AvatarCreatorConfig
-  onEventReceived?: (event: AvatarCreatorEvent) => void
-}
+  subdomain: string;
+  className?: string;
+  style?: CSSProperties;
+  config?: AvatarCreatorConfig;
+  onEventReceived?: (event: AvatarCreatorEvent) => void;
+};
 
 export const AvatarCreatorRaw: FC<AvatarCreatorRawProps> = ({
   subdomain,
@@ -24,42 +25,42 @@ export const AvatarCreatorRaw: FC<AvatarCreatorRawProps> = ({
   config,
   onEventReceived,
 }) => {
-  const frameRef = useRef<HTMLIFrameElement | null>(null)
-  const url = useAvatarCreatorUrl(subdomain, config)
+  const frameRef = useRef<HTMLIFrameElement | null>(null);
+  const url = useAvatarCreatorUrl(subdomain, config);
 
   const subscribeToAvatarCreatorEvents = () => {
-    if (!frameRef.current?.contentWindow) return
+    if (!frameRef.current?.contentWindow) return;
 
     frameRef.current?.contentWindow?.postMessage(
       JSON.stringify({
         target: RPM_TARGET,
-        type: 'subscribe',
-        eventName: 'v1.**',
+        type: "subscribe",
+        eventName: "v1.**",
       }),
-      '*'
-    )
-  }
+      "*"
+    );
+  };
 
   const subscribe = (event: MessageEvent) => {
-    const avatarCreatorEvent = JSONTryParse<AvatarCreatorEvent>(event.data)
+    const avatarCreatorEvent = JSONTryParse<AvatarCreatorEvent>(event.data);
 
-    if (avatarCreatorEvent?.source !== RPM_TARGET) return
+    if (avatarCreatorEvent?.source !== RPM_TARGET) return;
 
     if (avatarCreatorEvent?.eventName === IFRAME_READY_EVENT) {
-      subscribeToAvatarCreatorEvents()
-      return
+      subscribeToAvatarCreatorEvents();
+      return;
     }
 
-    onEventReceived?.(avatarCreatorEvent)
-  }
+    onEventReceived?.(avatarCreatorEvent);
+  };
 
   useEffect(() => {
-    window.addEventListener(MESSAGE_EVENT, subscribe)
+    window.addEventListener(MESSAGE_EVENT, subscribe);
 
     return () => {
-      window.removeEventListener(MESSAGE_EVENT, subscribe)
-    }
-  }, [])
+      window.removeEventListener(MESSAGE_EVENT, subscribe);
+    };
+  }, []);
 
   return (
     <iframe
@@ -68,20 +69,20 @@ export const AvatarCreatorRaw: FC<AvatarCreatorRawProps> = ({
       src={url}
       style={{
         ...style,
-        border: 'none',
-        width: '100%',
-        height: '100%',
+        border: "none",
+        width: "100%",
+        height: "100%",
       }}
       className={className}
       allow="camera *; microphone *; clipboard-write"
     />
-  )
-}
+  );
+};
 
 function JSONTryParse<T>(jsonString: any): T | undefined {
   try {
-    return JSON.parse(jsonString)
+    return JSON.parse(jsonString);
   } catch (error) {
-    return undefined
+    return undefined;
   }
 }
