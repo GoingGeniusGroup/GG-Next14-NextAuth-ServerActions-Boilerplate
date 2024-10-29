@@ -19,7 +19,6 @@ import { toast } from "sonner";
 import { Label } from "@/components/ui/animated-input/label";
 import { LabelInputContainer } from "@/components/ui/animated-input/label-input-container";
 import { FileUploaderMinimal } from "@uploadcare/react-uploader";
-import { addExperience } from "@/actions/add-experience";
 
 const experienceSchema = z.object({
   type: z.string().min(3, "Type must be at least 3 characters"),
@@ -91,45 +90,46 @@ const ExperienceForm: React.FC<ExperienceFormProps> = ({
     }
   };
 
-  const onSubmit = async (data: z.infer<typeof experienceSchema>) => {
-    if (isUploading) {
-      toast.error("Please wait for image upload to complete");
-      return;
-    }
+  // const onSubmit = async (data: z.infer<typeof experienceSchema>) => {
+  //   if (isUploading) {
+  //     toast.error("Please wait for image upload to complete");
+  //     return;
+  //   }
 
-    try {
-      const formData = {
-        ...data,
-        gg_id,
-        experience_id,
-        skills: data.skills || [], // Ensure skills is always an array
-        tools: data.tools || [], // Ensure tools is always an array
-        project_pictures: data.project_pictures || [], // Ensure project_pictures is always an array
-      };
+  //   try {
+  //     const formData = {
+  //       ...data,
+  //       gg_id,
+  //       experience_id,
+  //       skills: data.skills || [], // Ensure skills is always an array
+  //       tools: data.tools || [], // Ensure tools is always an array
+  //       project_pictures: data.project_pictures || [], // Ensure project_pictures is always an array
+  //     };
 
-      const result = await addExperience(formData);
+  //     const result = await experienceActions(formData);
 
-      if (result.success) {
-        toast.success(
-          experience_id
-            ? "Experience updated successfully"
-            : "Experience created successfully"
-        );
-        router.refresh();
-        setOpen(false);
-        form.reset();
-      } else {
-        toast.error(result.error?.message || "An unknown error occurred");
-      }
-    } catch (error) {
-      console.error(error);
-      toast.error("Something went wrong");
-    }
-  };
+  //     if (result.success) {
+  //       toast.success(
+  //         experience_id
+  //           ? "Experience updated successfully"
+  //           : "Experience created successfully"
+  //       );
+  //       router.refresh();
+  //       setOpen(false);
+  //       form.reset();
+  //     } else {
+  //       toast.error(result.error?.message || "An unknown error occurred");
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     toast.error("Something went wrong");
+  //   }
+  // };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      {/* <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4"> */}
+      <form className="space-y-4">
         <FormField
           control={form.control}
           name="type"

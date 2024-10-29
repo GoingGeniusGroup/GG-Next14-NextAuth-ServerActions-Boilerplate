@@ -1,65 +1,15 @@
 import { db } from "@/lib/db";
 import { Prisma } from "@prisma/client";
 
-export const createExperience = async (data: {
-  gg_id: string;
-  type?: string;
-  name?: string;
-  description?: string;
-  tools: string[];
-  project_skills: string[];
-  project_pictures: string[];
-  link?: string;
-}) => {
+export const createExperience = async (data: Prisma.experienceCreateInput) => {
   try {
     const experience = await db.experience.create({
-      data: {
-        users: {
-          connect: {
-            gg_id: data.gg_id,
-          },
-        },
-        type: data.type,
-        name: data.name,
-        description: data.description,
-        tools: data.tools,
-        project_skills: data.project_skills,
-        project_pictures: data.project_pictures,
-        link: data.link,
-      },
+      data,
     });
     return experience;
   } catch (error) {
     console.error("Error in createExperience:", error);
-    throw error;
-  }
-};
-
-export const updateExperienceById = async (
-  experience_id: string,
-  data: Omit<Prisma.experienceUpdateInput, "users">
-) => {
-  try {
-    const experience = await db.experience.update({
-      where: { experience_id },
-      data: {
-        type: data.type,
-        name: data.name,
-        description: data.description,
-        tools: Array.isArray(data.tools) ? data.tools : [],
-        project_skills: Array.isArray(data.project_skills)
-          ? data.project_skills
-          : [],
-        project_pictures: Array.isArray(data.project_pictures)
-          ? data.project_pictures
-          : [],
-        link: data.link,
-      },
-    });
-    return experience;
-  } catch (error) {
-    console.error("Error in updateExperience:", error);
-    throw error;
+    return null;
   }
 };
 
@@ -87,21 +37,21 @@ export const getExperiencesByUserId = async (gg_id: string) => {
   }
 };
 
-// export const updateExperienceById = async (
-//   experience_id: string,
-//   data: Prisma.experienceUpdateInput
-// ) => {
-//   try {
-//     const experience = await db.experience.update({
-//       where: { experience_id },
-//       data,
-//     });
-//     return experience;
-//   } catch (error) {
-//     console.error("Error in updateExperience:", error);
-//     return null;
-//   }
-// };
+export const updateExperience = async (
+  experience_id: string,
+  data: Prisma.experienceUpdateInput
+) => {
+  try {
+    const experience = await db.experience.update({
+      where: { experience_id },
+      data,
+    });
+    return experience;
+  } catch (error) {
+    console.error("Error in updateExperience:", error);
+    return null;
+  }
+};
 
 export const deleteExperience = async (experience_id: string) => {
   try {
