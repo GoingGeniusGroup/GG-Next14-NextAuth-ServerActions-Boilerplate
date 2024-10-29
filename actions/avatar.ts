@@ -1,6 +1,6 @@
 "use server";
 
-import { response } from "@/types/utils";
+import { avatar_response, response } from "@/types/utils";
 import {
   createAvatar,
   deleteAvatarById,
@@ -17,7 +17,7 @@ const avatarSchema = z.object({
 export const addAvatar = async (avatar_url: string) => {
   const session = await auth();
   if (!session?.user?.gg_id) {
-    return response({
+    return avatar_response({
       success: false,
       error: {
         code: 401,
@@ -29,7 +29,7 @@ export const addAvatar = async (avatar_url: string) => {
   const validatedFields = avatarSchema.safeParse({ avatar_url });
 
   if (!validatedFields.success) {
-    return response({
+    return avatar_response({
       success: false,
       error: {
         code: 422,
@@ -44,7 +44,7 @@ export const addAvatar = async (avatar_url: string) => {
   });
 
   if (!newAvatar) {
-    return response({
+    return avatar_response({
       success: false,
       error: {
         code: 500,
@@ -53,7 +53,7 @@ export const addAvatar = async (avatar_url: string) => {
     });
   }
 
-  return response({
+  return avatar_response({
     success: true,
     code: 201,
     message: "Avatar created successfully.",
@@ -65,7 +65,7 @@ export const updateAvatar = async (avatar_id: string, avatar_url: string) => {
   const validatedFields = avatarSchema.safeParse({ avatar_url });
 
   if (!validatedFields.success) {
-    return response({
+    return avatar_response({
       success: false,
       error: {
         code: 422,
@@ -79,7 +79,7 @@ export const updateAvatar = async (avatar_id: string, avatar_url: string) => {
   });
 
   if (!updatedAvatar) {
-    return response({
+    return avatar_response({
       success: false,
       error: {
         code: 500,
@@ -88,7 +88,7 @@ export const updateAvatar = async (avatar_id: string, avatar_url: string) => {
     });
   }
 
-  return response({
+  return avatar_response({
     success: true,
     code: 200,
     message: "Avatar updated successfully.",
@@ -100,7 +100,7 @@ export const deleteAvatar = async (avatar_id: string) => {
   const deletedAvatar = await deleteAvatarById(avatar_id);
 
   if (!deletedAvatar) {
-    return response({
+    return avatar_response({
       success: false,
       error: {
         code: 500,
