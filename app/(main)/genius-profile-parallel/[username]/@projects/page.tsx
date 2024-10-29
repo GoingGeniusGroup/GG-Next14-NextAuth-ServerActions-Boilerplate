@@ -36,10 +36,10 @@ export default async function GeniusUserProject({
         items={experiences.map((exp) => ({
           title: exp.name ?? "Untitled",
           description: exp.description ?? "No description available",
-          image: "https://default-image-url.com/default.jpg", // Replace with a default image URL
-          icon: <IconClipboardCopy className="h-4 w-4 text-neutral-500" />, // Replace with a default icon
-          type: exp.type ?? "Unknown", // Ensure type is a string
-          link: exp.link ?? "", // Ensure link is a string
+          image: "/public/default-pictures/cover-image.png",
+          icon: <IconClipboardCopy className="h-4 w-4 text-neutral-500" />,
+          type: exp.type ?? "Unknown",
+          link: exp.link ?? "",
           tools: exp.tools,
           experience_id: exp.experience_id,
         }))}
