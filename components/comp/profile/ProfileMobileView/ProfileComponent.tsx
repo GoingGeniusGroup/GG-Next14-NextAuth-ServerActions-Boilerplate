@@ -1,9 +1,8 @@
-// "use client";
+"use client";
 
 import React, { useState, useCallback } from "react";
 import { ProfileForm } from "@/components/form/profile-form";
 import { useSession } from "next-auth/react";
-import { UserRole } from "@prisma/client";
 import { ExtendedUser } from "@/types/next-auth"; // Import ExtendedUser type
 
 export default function ProfileComponent() {
@@ -20,9 +19,9 @@ export default function ProfileComponent() {
     [updateSession]
   );
 
-  //   if (!user) {
-  //     return <div>Not authenticated</div>;
-  //   }
+  if (!user) {
+    return <div>Not authenticated</div>;
+  }
 
   return (
     <div className="size-full px-2 overflow-y-auto">
