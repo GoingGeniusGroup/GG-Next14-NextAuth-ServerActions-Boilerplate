@@ -3,6 +3,10 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
+        protocol: 'https',
+        hostname: 'models.readyplayer.me',
+      },
+      {
         protocol: "https",
         hostname: "avatars.githubusercontent.com",
       },

@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { addAvatar, deleteAvatar, updateAvatar } from '@/actions/avatar'
+import { getAvatarsByUserId } from '@/services/avatar'
 import { Avatar } from '@/components/comp/Avatar'
 import { AvatarCreator, AvatarCreatorConfig, BodyType, Language } from '@/components/comp/AvatarComponents/avatar_creator'
 import { AvatarExportedEvent, UserSetEvent } from '@/components/comp/AvatarComponents/avatar_creator/events'
@@ -10,10 +11,11 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { toast } from "sonner"
 import { ExtendedUser } from "@/types/next-auth"
 import { AvatarResponse } from '@/types/utils'
+import Image from 'next/image'
 
 type AvatarType = {
   avatar_id: string
-  avatar_url: string
+  avatar_url: string | null
 }
 
 interface AvatarManagerClientProps {
@@ -29,10 +31,6 @@ const expressions = [
   { label: "angry", icon: "/emojis/angry.svg", bg: "#A20325", animation: "/M_Standing_Expressions_016.fbx" },
 ]
 
-const getAvatarImageUrl = (glbUrl: string) => {
-  return glbUrl.replace('.glb', '.png?camera=portrait')
-}
-
 export default function AvatarManagerClient({ initialAvatars, user }: AvatarManagerClientProps) {
   const [avatars, setAvatars] = useState<AvatarType[]>(initialAvatars)
   const [isCreatingAvatar, setIsCreatingAvatar] = useState(false)
@@ -40,6 +38,19 @@ export default function AvatarManagerClient({ initialAvatars, user }: AvatarMana
   const [selectedAvatar, setSelectedAvatar] = useState<string | null>(initialAvatars[0]?.avatar_url || null)
   const [currentEmote, setCurrentEmote] = useState<string>(expressions[0].animation)
   const [isCreationInProgress, setIsCreationInProgress] = useState(false)
+
+  useEffect(() => {
+    const fetchAvatars = async () => {
+      const fetchedAvatars = await getAvatarsByUserId(user.gg_id)
+      if (fetchedAvatars) {
+        setAvatars(fetchedAvatars.map(avatar => ({
+          avatar_id: avatar.avatar_id,
+          avatar_url: avatar.avatar_url || ''
+        })))
+      }
+    }
+    fetchAvatars()
+  }, [user.gg_id])
 
   const handleCreateAvatar = useCallback(() => {
     setIsCreatingAvatar(true)
@@ -145,7 +156,6 @@ export default function AvatarManagerClient({ initialAvatars, user }: AvatarMana
               }}
             />
           </div>
-          {/* <ExpressionBottomMidHud expressions={expressions} handleEmote={handleEmote} /> */}
         </CardContent>
       </Card>
 
@@ -184,9 +194,12 @@ export default function AvatarManagerClient({ initialAvatars, user }: AvatarMana
           <Card key={avatar.avatar_id}>
             <CardContent className="pt-6">
               <div className="flex flex-col items-center space-y-4">
-                <div 
-                  className="w-32 h-32 rounded-full bg-cover bg-center"
-                  style={{ backgroundImage: `url(${avatar.avatar_url})` }}
+                <Image
+                  src={avatar.avatar_url?.replace('.glb', '.png') || '/placeholder-avatar.png'}
+                  alt="Avatar"
+                  width={128}
+                  height={128}
+                  className="rounded-full"
                 />
                 <SpotlightButton
                   text={selectedAvatar === avatar.avatar_url ? "Selected" : "Select"}
