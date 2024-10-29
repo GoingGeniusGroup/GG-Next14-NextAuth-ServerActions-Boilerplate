@@ -3,11 +3,11 @@
 import { auth } from "@/auth";
 import { response } from "@/lib/utils";
 import {
-    createExperience,
-    deleteExperience,
-    getExperienceById,
-    getExperiencesByUserId,
-    updateExperience,
+  createExperience,
+  deleteExperience,
+  getExperienceById,
+  getExperiencesByUserId,
+  updateExperience,
 } from "@/services/experience";
 import { Response } from "@/types";
 import { experience } from "@prisma/client";
@@ -24,7 +24,9 @@ const experienceSchema = z.object({
   link: z.string().url().optional(),
 });
 
-export const addExperience = async (formData: FormData): Promise<Response<experience>> => {
+export const addExperience = async (
+  formData: FormData
+): Promise<Response<experience>> => {
   const session = await auth();
   if (!session?.user?.gg_id) {
     return response({
@@ -59,8 +61,8 @@ export const addExperience = async (formData: FormData): Promise<Response<experi
   const newExperience = await createExperience({
     ...validatedFields.data,
     users: {
-      connect: { gg_id: session.user.gg_id }
-    }
+      connect: { gg_id: session.user.gg_id },
+    },
   });
 
   if (!newExperience) {
@@ -102,7 +104,10 @@ export const getUserExperiences = async (): Promise<Response<experience[]>> => {
   });
 };
 
-export const updateUserExperience = async (experienceId: string, formData: FormData): Promise<Response<experience>> => {
+export const updateUserExperience = async (
+  experienceId: string,
+  formData: FormData
+): Promise<Response<experience>> => {
   const session = await auth();
   if (!session?.user?.gg_id) {
     return response({
@@ -134,7 +139,10 @@ export const updateUserExperience = async (experienceId: string, formData: FormD
     });
   }
 
-  const updatedExperience = await updateExperience(experienceId, validatedFields.data);
+  const updatedExperience = await updateExperience(
+    experienceId,
+    validatedFields.data
+  );
 
   if (!updatedExperience) {
     return response({
@@ -154,7 +162,9 @@ export const updateUserExperience = async (experienceId: string, formData: FormD
   });
 };
 
-export const deleteUserExperience = async (experienceId: string): Promise<Response<experience>> => {
+export const deleteUserExperience = async (
+  experienceId: string
+): Promise<Response<experience>> => {
   const session = await auth();
   if (!session?.user?.gg_id) {
     return response({
@@ -186,7 +196,9 @@ export const deleteUserExperience = async (experienceId: string): Promise<Respon
   });
 };
 
-export const getExperience = async (experienceId: string): Promise<Response<experience>> => {
+export const getExperience = async (
+  experienceId: string
+): Promise<Response<experience>> => {
   const experience = await getExperienceById(experienceId);
 
   if (!experience) {

@@ -63,7 +63,8 @@ export const twoFactor = async (
       success: false,
       error: {
         code: 401,
-        message: "Code has been expired. Please resend the 2FA code to your email.",
+        message:
+          "Code has been expired. Please resend the 2FA code to your email.",
       },
     });
   }

@@ -14,9 +14,6 @@ const GalleryGridSkeleton = () => {
 
   return (
     <>
-      <div className="flex justify-center font-bold w-full text-yellow-500">
-        GALLERY IS EMPTY
-      </div>
       <div className="w-full h-[92%] px-2 pt-2 grid grid-cols-3 md:grid-cols-6 gap-4">
         {skeletonCards.map((card) => (
           <div key={card.id} className={cn(card.className)}>

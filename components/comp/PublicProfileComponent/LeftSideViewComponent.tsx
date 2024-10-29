@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { getUserAvatars } from "@/actions/avatar";
 import { getCurrentUser } from "@/actions/userAndGuild";
@@ -51,7 +51,7 @@ export default function LeftSideViewComponent({
 
       if (currentUser && currentUser.gg_id) {
         const result = await getUserAvatars(currentUser.gg_id);
-        if (result.success && 'data' in result) {
+        if (result.success && "data" in result) {
           setAvatarsData(result.data as Avatar[]);
         } else if (!result.success) {
           console.error("Error fetching avatars:", result.error.message);

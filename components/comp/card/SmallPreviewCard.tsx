@@ -88,8 +88,9 @@ export default function SmallPreviewCard({
               <h1 className="text-[8px] font-bold uppercase text-white truncate">
                 {userData.first_name || ""} {userData.last_name || ""}
               </h1>
-              <p className="text-[6px] text-white truncate">
-                {userData.description || "No description"}
+              <p className="text-[7px] text-white">
+                {(userData.description || "No description").slice(0, 30) +
+                  ((userData.description?.length ?? 0) > 30 ? "..." : "")}
               </p>
             </div>
           </div>

@@ -1,5 +1,3 @@
-import { getCurrentUser } from "@/actions/userAndGuild";
-import { getUserByUsername } from "@/services/user";
 import {
   Icon360View,
   IconActivityHeartbeat,
@@ -42,7 +40,13 @@ export default async function AboutSectionProfile({
           <div className="flex items-center gap-2 text-black dark:text-gray-300">
             <div className="relative size-8 rounded-full overflow-hidden border-2 hover:border-[#FCBB3F]/60">
               <Image
-                src={userInfo?.image ?? "/default-pictures/profile.png"}
+                src={
+                  userInfo
+                    ? userInfo.image !== ""
+                      ? userInfo.image
+                      : "/default-pictures/profile.png"
+                    : "/default-pictures/profile.png"
+                }
                 alt="Profile picture"
                 fill
                 className="object-cover"

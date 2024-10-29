@@ -1,4 +1,4 @@
-import AvatarManagerServer from '@/components/comp/AvatarManager/avatar-manager-server'
+import AvatarManagerServer from "@/components/comp/AvatarManager/avatar-manager-server";
 
 export default function AvatarPage() {
   return (
@@ -6,5 +6,5 @@ export default function AvatarPage() {
       <h1 className="text-2xl font-bold mb-4">Avatar Management</h1>
       <AvatarManagerServer />
     </div>
-  )
+  );
 }
