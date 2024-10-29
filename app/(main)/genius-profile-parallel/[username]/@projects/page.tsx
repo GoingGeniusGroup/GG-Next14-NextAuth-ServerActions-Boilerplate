@@ -1,16 +1,8 @@
 import { getCurrentUser } from "@/actions/userAndGuild";
 import GeniusUserProjects from "@/components/comp/GeniusUserProfile/GeniusUserProjects";
-import { createExperience, getAllExperiences } from "@/services/experience";
+import { getExperiencesByUserId } from "@/services/experience";
 import { getUserByUsername } from "@/services/user";
-import {
-  IconClipboardCopy,
-  IconFileBroken,
-  IconSignature,
-  IconTableColumn,
-  IconArrowWaveRightUp,
-  IconBoxAlignRightFilled,
-  IconBoxAlignTopLeft,
-} from "@tabler/icons-react";
+import { IconClipboardCopy } from "@tabler/icons-react";
 
 interface GeniusUserProjectProps {
   params: {
@@ -29,15 +21,17 @@ export default async function GeniusUserProject({
 
   const profileOwner = await getUserByUsername(username);
 
-  const experiences = await getAllExperiences();
+  const gg_id = LoggedUserProfile
+    ? currentUser?.gg_id
+    : profileOwner?.gg_id ?? "";
+
+  const experiences = await getExperiencesByUserId(gg_id);
 
   return (
     <>
       <GeniusUserProjects
         userInfo={{
-          gg_id: LoggedUserProfile
-            ? currentUser?.gg_id ?? ""
-            : profileOwner?.gg_id ?? "",
+          gg_id: gg_id,
         }}
         items={experiences.map((exp) => ({
           title: exp.name ?? "Untitled",
