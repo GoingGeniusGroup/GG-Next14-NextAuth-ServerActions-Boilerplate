@@ -7,13 +7,18 @@ import { AvatarCreator, AvatarCreatorConfig, BodyType, Language } from '@/compon
 import { AvatarExportedEvent, UserSetEvent } from '@/components/comp/AvatarComponents/avatar_creator/events'
 import SpotlightButton from '@/components/ui/button/spotlightButton'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import Image from 'next/image'
 import { toast } from "sonner"
 import { ExtendedUser } from "@/types/next-auth"
+import { AvatarResponse } from '@/types/utils'
 
 type AvatarType = {
   avatar_id: string
   avatar_url: string
+}
+
+interface AvatarManagerClientProps {
+  initialAvatars: AvatarType[]
+  user: ExtendedUser
 }
 
 const expressions = [
@@ -24,9 +29,8 @@ const expressions = [
   { label: "angry", icon: "/emojis/angry.svg", bg: "#A20325", animation: "/M_Standing_Expressions_016.fbx" },
 ]
 
-interface AvatarManagerClientProps {
-  initialAvatars: AvatarType[]
-  user: ExtendedUser
+const getAvatarImageUrl = (glbUrl: string) => {
+  return glbUrl.replace('.glb', '.png?camera=portrait')
 }
 
 export default function AvatarManagerClient({ initialAvatars, user }: AvatarManagerClientProps) {
@@ -44,14 +48,18 @@ export default function AvatarManagerClient({ initialAvatars, user }: AvatarMana
   const handleAvatarCreated = useCallback(async (event: AvatarExportedEvent) => {
     setIsCreationInProgress(true)
     try {
-      const response = await addAvatar(event.data.url)
+      const response = await addAvatar(event.data.url) as AvatarResponse
+      
       if (response.success) {
-        setAvatars(prevAvatars => [...prevAvatars])
+        setAvatars(prevAvatars => [...prevAvatars, {
+          avatar_id: response.data.avatar_id,
+          avatar_url: response.data.avatar_url
+        }])
         setIsCreatingAvatar(false)
-        setSelectedAvatar(event.data.url)
+        setSelectedAvatar(response.data.avatar_url)
         toast.success("Your new avatar has been successfully saved.")
       } else {
-        throw new Error(response.error?.message || "Failed to add avatar")
+        throw new Error(response.error.message)
       }
     } catch (error) {
       console.error("Error adding avatar:", error)
@@ -64,16 +72,19 @@ export default function AvatarManagerClient({ initialAvatars, user }: AvatarMana
   const handleUpdateAvatar = async (event: AvatarExportedEvent) => {
     if (editingAvatar) {
       try {
-        const response = await updateAvatar(editingAvatar.avatar_id, event.data.url)
+        const response = await updateAvatar(editingAvatar.avatar_id, event.data.url) as AvatarResponse
         if (response.success) {
-          setAvatars(prevAvatars => prevAvatars.map(avatar => 
-            avatar.avatar_id === editingAvatar.avatar_id ? { ...avatar, avatar_url: event.data.url } : avatar
+          setAvatars(prevAvatars => prevAvatars.map(avatar =>
+            avatar.avatar_id === editingAvatar.avatar_id ? {
+              ...avatar,
+              avatar_url: response.data.avatar_url
+            } : avatar
           ))
           setEditingAvatar(null)
-          setSelectedAvatar(event.data.url)
+          setSelectedAvatar(response.data.avatar_url)
           toast.success("Your avatar has been successfully updated.")
         } else {
-          throw new Error(response.error?.message || "Failed to update avatar")
+          throw new Error(response.error.message)
         }
       } catch (error) {
         console.error("Error updating avatar:", error)
@@ -84,7 +95,7 @@ export default function AvatarManagerClient({ initialAvatars, user }: AvatarMana
 
   const handleDeleteAvatar = async (avatarId: string) => {
     try {
-      const response = await deleteAvatar(avatarId)
+      const response = await deleteAvatar(avatarId) as AvatarResponse
       if (response.success) {
         setAvatars(prevAvatars => prevAvatars.filter(avatar => avatar.avatar_id !== avatarId))
         if (avatars.length > 1) {
@@ -94,7 +105,7 @@ export default function AvatarManagerClient({ initialAvatars, user }: AvatarMana
         }
         toast.success("Avatar successfully deleted.")
       } else {
-        throw new Error(response.error?.message || "Failed to delete avatar")
+        throw new Error(response.error.message)
       }
     } catch (error) {
       console.error("Error deleting avatar:", error)
@@ -173,7 +184,10 @@ export default function AvatarManagerClient({ initialAvatars, user }: AvatarMana
           <Card key={avatar.avatar_id}>
             <CardContent className="pt-6">
               <div className="flex flex-col items-center space-y-4">
-                <Image src={avatar.avatar_url} alt="Avatar" width={128} height={128} className="rounded-full" />
+                <div 
+                  className="w-32 h-32 rounded-full bg-cover bg-center"
+                  style={{ backgroundImage: `url(${avatar.avatar_url})` }}
+                />
                 <SpotlightButton
                   text={selectedAvatar === avatar.avatar_url ? "Selected" : "Select"}
                   isPending={false}
