@@ -1,5 +1,7 @@
 // "use client";
 
+import PublicProfile from "@/components/comp/PublicProfileComponent/PublicProfile";
+
 // import { ProfileForm } from "@/components/form/profile-form";
 // import { ExtendedUser } from "@/types/next-auth";
 // import { useState, useEffect } from "react";
@@ -54,6 +56,7 @@ export default function ProfilePage() {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Profile</h1>
+      <PublicProfile username={"ram"} />
     </div>
   );
 }
