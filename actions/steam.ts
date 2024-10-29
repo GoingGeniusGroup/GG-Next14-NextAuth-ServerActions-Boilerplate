@@ -1,5 +1,9 @@
 "use server";
-import { getOwnedGames, getSteamPlayerSummary, getUserStatsForGame } from "@/services/steam";
+import {
+  getOwnedGames,
+  getSteamPlayerSummary,
+  getUserStatsForGame,
+} from "@/services/steam";
 import { z } from "zod";
 
 const steamIdSchema = z.object({
@@ -11,7 +15,9 @@ const steamIdAppIdSchema = z.object({
   appId: z.number().int().positive("Invalid App ID"),
 });
 
-export const fetchSteamProfile = async (payload: z.infer<typeof steamIdSchema>) => {
+export const fetchSteamProfile = async (
+  payload: z.infer<typeof steamIdSchema>
+) => {
   const validatedFields = steamIdSchema.safeParse(payload);
   if (!validatedFields.success) {
     return {
@@ -42,7 +48,9 @@ export const fetchSteamProfile = async (payload: z.infer<typeof steamIdSchema>) 
   };
 };
 
-export const fetchOwnedGames = async (payload: z.infer<typeof steamIdSchema>) => {
+export const fetchOwnedGames = async (
+  payload: z.infer<typeof steamIdSchema>
+) => {
   const validatedFields = steamIdSchema.safeParse(payload);
   if (!validatedFields.success) {
     return {
@@ -73,7 +81,9 @@ export const fetchOwnedGames = async (payload: z.infer<typeof steamIdSchema>) =>
   };
 };
 
-export const fetchUserStatsForGame = async (payload: z.infer<typeof steamIdAppIdSchema>) => {
+export const fetchUserStatsForGame = async (
+  payload: z.infer<typeof steamIdAppIdSchema>
+) => {
   const validatedFields = steamIdAppIdSchema.safeParse(payload);
   if (!validatedFields.success) {
     return {
@@ -103,4 +113,3 @@ export const fetchUserStatsForGame = async (payload: z.infer<typeof steamIdAppId
     data: userStats,
   };
 };
-

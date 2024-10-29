@@ -3,24 +3,16 @@
 import React, { useState, useCallback } from "react";
 import { ProfileForm } from "@/components/form/profile-form";
 import { useSession } from "next-auth/react";
-import { UserRole } from "@prisma/client";
-import { User } from "next-auth";
+import { ExtendedUser } from "@/types/next-auth"; // Import ExtendedUser type
 
 export default function ProfileComponent() {
   const { data: session, update: updateSession } = useSession();
-  const [user, setUser] = useState(session?.user);
+  const [user, setUser] = useState<ExtendedUser | undefined>(
+    session?.user as ExtendedUser
+  );
 
   const handleProfileUpdate = useCallback(
-    async (
-      updatedUser: React.SetStateAction<
-        | (User & {
-            role: UserRole;
-            isTwoFactorEnabled: boolean;
-            isOAuth: boolean;
-          })
-        | undefined
-      >
-    ) => {
+    async (updatedUser: ExtendedUser) => {
       setUser(updatedUser);
       await updateSession({ user: updatedUser });
     },

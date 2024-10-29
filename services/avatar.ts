@@ -5,51 +5,47 @@ export const getAvatarsByUserId = async (gg_id: string) => {
   try {
     const avatars = await db.avatar.findMany({
       where: { gg_id },
-      orderBy: { avatar_id: "desc" },
     });
     return avatars;
   } catch (error) {
     console.error("Error in getAvatarsByUserId:", error);
-    return [];
+    return null;
   }
 };
 
-export const createAvatar = async (data: Prisma.avatarCreateInput) => {
+export const createAvatar = async (avatarData: Prisma.avatarCreateInput) => {
   try {
-    const avatar = await db.avatar.create({
-      data,
+    return await db.avatar.create({
+      data: avatarData,
     });
-    return avatar;
   } catch (error) {
     console.error("Error in createAvatar:", error);
     return null;
   }
 };
 
-export const updateAvatar = async (
+export const updateAvatarById = async (
   avatar_id: string,
-  data: Prisma.avatarUpdateInput
+  avatarData: Prisma.avatarUpdateInput
 ) => {
   try {
-    const avatar = await db.avatar.update({
+    return await db.avatar.update({
       where: { avatar_id },
-      data,
+      data: avatarData,
     });
-    return avatar;
   } catch (error) {
-    console.error("Error in updateAvatar:", error);
+    console.error("Error in updateAvatarById:", error);
     return null;
   }
 };
 
-export const deleteAvatar = async (avatar_id: string) => {
+export const deleteAvatarById = async (avatar_id: string) => {
   try {
-    const avatar = await db.avatar.delete({
+    return await db.avatar.delete({
       where: { avatar_id },
     });
-    return avatar;
   } catch (error) {
-    console.error("Error in deleteAvatar:", error);
+    console.error("Error in deleteAvatarById:", error);
     return null;
   }
 };

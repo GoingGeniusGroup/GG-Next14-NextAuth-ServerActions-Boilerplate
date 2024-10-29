@@ -150,9 +150,9 @@ export default function GeniusProfileLayout({
               <section id="projects" className="projects-section">
                 {projects}
               </section>
-              <section id="experience" className="experience-section">
+              {/* <section id="experience" className="experience-section">
                 {experience}
-              </section>
+              </section> */}
               {children}
             </motion.div>
           </AnimatePresence>

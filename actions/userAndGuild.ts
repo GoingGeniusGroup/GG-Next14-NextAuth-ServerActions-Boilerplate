@@ -5,12 +5,12 @@ import { getUserById } from "@/services/user";
 
 export async function getCurrentUser() {
   const session = await auth();
-  if (!session || !session.user || !session.user.id) {
+  if (!session || !session.user || !session.user.gg_id) {
     return null;
   }
 
   try {
-    const user = await getUserById(session.user.id);
+    const user = await getUserById(session.user.gg_id);
     return user;
   } catch (error) {
     console.error("Error fetching current user:", error);
