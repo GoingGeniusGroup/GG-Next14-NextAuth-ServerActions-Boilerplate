@@ -5,6 +5,7 @@ import { FormInput } from "@/components/comp/auth/form-input";
 import { FormToggle } from "@/components/comp/auth/form-toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Form } from "@/components/ui/form";
+import { ExtendedUser } from "@/types/next-auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UserRound } from "lucide-react";
 import { useTransition } from "react";
@@ -16,11 +17,10 @@ import { profileSchema } from "@/schemas";
 
 // Button
 import { Button } from "@/components/ui/button/button";
-import { ExtendedUser } from "../comp/profile/ProfileMobileView/ProfileComponent";
 
 type ProfileFormProps = {
   user: ExtendedUser;
-  onProfileUpdate: (updatedUser: ExtendedUser) => Promise<void>;
+  onProfileUpdate: (updatedUser: ExtendedUser) => void;
 };
 
 export const ProfileForm = ({ user, onProfileUpdate }: ProfileFormProps) => {
