@@ -3,7 +3,10 @@
 import { response } from "@/lib/utils";
 import { resendSchema } from "@/schemas";
 import { sendVerificationEmail } from "@/services/mail";
-import { generateVerificationToken, getVerificationTokenByEmail } from "@/services/verification-token";
+import {
+  generateVerificationToken,
+  getVerificationTokenByEmail,
+} from "@/services/verification-token";
 import { z } from "zod";
 
 export const resendToken = async (payload: z.infer<typeof resendSchema>) => {
@@ -34,7 +37,9 @@ export const resendToken = async (payload: z.infer<typeof resendSchema>) => {
   }
 
   // Generate verification token and resend to the email.
-  const verificationToken = await generateVerificationToken(existingToken.email);
+  const verificationToken = await generateVerificationToken(
+    existingToken.email
+  );
   await sendVerificationEmail(verificationToken.email, verificationToken.token);
 
   // Return response success.
@@ -43,4 +48,4 @@ export const resendToken = async (payload: z.infer<typeof resendSchema>) => {
     code: 201,
     message: "Confirmation email sent. Please check your email.",
   });
-}
+};

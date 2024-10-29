@@ -1,35 +1,44 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
 
-import { ButtonProps } from "./interface/button.interface";
+interface ButtonProps {
+  text: string;
+  isPending: boolean;
+  type: "button" | "submit" | "reset";
+  onClick?: () => void;
+}
 
-const SpotlightButton = ({ text, isPending, type }: ButtonProps) => {
+const SpotlightButton = ({ text, isPending, type, onClick }: ButtonProps) => {
   const btnRef = useRef<HTMLButtonElement | null>(null);
   const spanRef = useRef<HTMLSpanElement | null>(null);
 
   useEffect(() => {
+    const button = btnRef.current;
+    const span = spanRef.current;
+
+    if (!button || !span) return;
+
     const handleMouseMove = (e: MouseEvent) => {
-      const { width } = (e.target as HTMLElement)?.getBoundingClientRect();
+      const { width } = button.getBoundingClientRect();
       const offset = e.offsetX;
       const left = `${(offset / width) * 100}%`;
 
-      spanRef.current!.animate({ left }, { duration: 250, fill: "forwards" });
+      span.animate({ left }, { duration: 250, fill: "forwards" });
     };
 
     const handleMouseLeave = () => {
-      spanRef.current!.animate(
+      span.animate(
         { left: "50%" },
         { duration: 100, fill: "forwards" }
       );
     };
 
-    btnRef?.current?.addEventListener("mousemove", handleMouseMove);
-    btnRef?.current?.addEventListener("mouseleave", handleMouseLeave);
+    button.addEventListener("mousemove", handleMouseMove);
+    button.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
-      btnRef?.current?.removeEventListener("mousemove", handleMouseMove);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      btnRef?.current?.removeEventListener("mouseleave", handleMouseLeave);
+      button.removeEventListener("mousemove", handleMouseMove);
+      button.removeEventListener("mouseleave", handleMouseLeave);
     };
   }, []);
 
@@ -39,6 +48,7 @@ const SpotlightButton = ({ text, isPending, type }: ButtonProps) => {
       ref={btnRef}
       type={type}
       disabled={isPending}
+      onClick={onClick}
       className="relative w-full max-w-xs overflow-hidden rounded-lg bg-slate-950 px-4 py-2 text-lg font-medium text-white"
     >
       <span className="pointer-events-none relative z-10 mix-blend-difference">
