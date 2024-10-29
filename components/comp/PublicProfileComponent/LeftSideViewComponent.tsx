@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { fetchUserAvatars } from "@/actions/avatar";
+import { getUserAvatars } from "@/actions/avatar";
 import { getCurrentUser } from "@/actions/userAndGuild";
 import { Avatar } from "@/components/comp/Avatar";
 
@@ -22,9 +22,10 @@ export default function LeftSideViewComponent({
       setUser(currentUser);
 
       if (currentUser) {
-        const result = await fetchUserAvatars();
-        if (result.avatars) {
-          setAvatarsData(result.avatars);
+        const result = await getUserAvatars(currentUser.gg_id);
+        if (result.success) {
+          // setAvatarsData(result);
+          console.log("Avatars fetched:", result.data);
         } else if (result.error) {
           console.error("Error fetching avatars:", result.error);
         }
