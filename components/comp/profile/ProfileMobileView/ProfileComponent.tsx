@@ -4,25 +4,28 @@ import React, { useState, useCallback } from "react";
 import { ProfileForm } from "@/components/form/profile-form";
 import { useSession } from "next-auth/react";
 import { UserRole } from "@prisma/client";
-import { User } from "next-auth";
+import { User as NextAuthUser } from "next-auth";
+
+// Define a new type that extends the NextAuth User type
+export type ExtendedUser = NextAuthUser & {
+  gg_id: string;
+  role: UserRole;
+  isTwoFactorEnabled: boolean;
+  isOAuth: boolean;
+};
 
 export default function ProfileComponent() {
   const { data: session, update: updateSession } = useSession();
-  const [user, setUser] = useState(session?.user);
+
+  // Ensure we cast the session user to ExtendedUser properly
+  const [user, setUser] = useState<ExtendedUser | undefined>(
+    session?.user as ExtendedUser
+  );
 
   const handleProfileUpdate = useCallback(
-    async (
-      updatedUser: React.SetStateAction<
-        | (User & {
-            role: UserRole;
-            isTwoFactorEnabled: boolean;
-            isOAuth: boolean;
-          })
-        | undefined
-      >
-    ) => {
+    async (updatedUser: ExtendedUser) => {
       setUser(updatedUser);
-      await updateSession({ user: updatedUser });
+      await updateSession({ user: updatedUser as NextAuthUser }); // Cast back to NextAuthUser for updateSession
     },
     [updateSession]
   );
