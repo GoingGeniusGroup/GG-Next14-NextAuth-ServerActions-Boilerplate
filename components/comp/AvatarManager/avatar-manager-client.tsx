@@ -30,6 +30,7 @@ import { IconEdit, IconTrash } from "@tabler/icons-react";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
+import ExpressionBottomMidHud from "../Huds/ExpressionBottomMidHud";
 
 type AvatarType = {
   avatar_id: string;
@@ -256,7 +257,7 @@ export default function AvatarManagerClient({
                     selectedAvatar ||
                     "https://models.readyplayer.me/658be9e8fc8bec93d06806f3.glb?morphTargets=ARKit,Eyes Extra&textureAtlas=none&lod=0"
                   }
-                  shadows
+                  shadows={false}
                   animationSrc={currentEmote}
                   style={{ pointerEvents: "none" }}
                   fov={40}
@@ -314,6 +315,12 @@ export default function AvatarManagerClient({
                 </div>
               </DialogContent>
             </Dialog>
+          </div>
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2">
+            <ExpressionBottomMidHud
+              expressions={expressions}
+              handleEmote={handleEmote}
+            />
           </div>
         </div>
 
