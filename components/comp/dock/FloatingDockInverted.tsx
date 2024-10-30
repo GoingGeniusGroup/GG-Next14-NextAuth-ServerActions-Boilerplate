@@ -16,6 +16,7 @@ import {
   IconSlash,
   IconUser,
   IconUserBitcoin,
+  IconUserCode,
 } from "@tabler/icons-react";
 import { useUser } from "@/hooks/UserProvider";
 
@@ -74,9 +75,10 @@ export default function FloatingDockInvertedComponent() {
       href: "/console",
     },
     {
-      title: "Genius Profile",
-      icon: <IconUserBitcoin className="size-full" />,
-      href: `/genius-profile/${username}`,
+      title: "avatar",
+      icon: <IconUserCode className="size-full" />,
+      // href: `/genius-profile/${username}`,
+      href: `/avatar`,
     },
     {
       title: "Posts",

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { CSSProperties, FC, useEffect, useRef } from "react";
@@ -16,6 +15,7 @@ export type AvatarCreatorRawProps = {
   style?: CSSProperties;
   config?: AvatarCreatorConfig;
   onEventReceived?: (event: AvatarCreatorEvent) => void;
+  iframeUrl?: string; // Add this line
 };
 
 export const AvatarCreatorRaw: FC<AvatarCreatorRawProps> = ({
@@ -24,9 +24,11 @@ export const AvatarCreatorRaw: FC<AvatarCreatorRawProps> = ({
   style,
   config,
   onEventReceived,
+  iframeUrl, // Add this line
 }) => {
   const frameRef = useRef<HTMLIFrameElement | null>(null);
-  const url = useAvatarCreatorUrl(subdomain, config);
+  const defaultUrl = useAvatarCreatorUrl(subdomain, config);
+  const url = iframeUrl || defaultUrl; // Use iframeUrl if provided, otherwise use the default
 
   const subscribeToAvatarCreatorEvents = () => {
     if (!frameRef.current?.contentWindow) return;
