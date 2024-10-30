@@ -12,6 +12,7 @@ import {
   AvatarExportedEvent,
   UserSetEvent,
 } from "@/components/comp/AvatarComponents/avatar_creator/events";
+import { Button } from "@/components/ui/border/moving-border";
 import SpotlightButton from "@/components/ui/button/spotlightButton";
 import {
   Card,
@@ -245,7 +246,7 @@ export default function AvatarManagerClient({
 
   return (
     <div className="space-x-4 flex justify-between w-full text-black dark:text-white">
-      <div className="w-1/2">
+      <div className="relative sw-1/2">
         <Card>
           <CardHeader>
             <CardTitle>Avatar Showcase</CardTitle>
@@ -269,58 +270,52 @@ export default function AvatarManagerClient({
             </div>
           </CardContent>
         </Card>
+        <div className="absolute top-4 right-4">
+          <Dialog
+            open={isAvatarCreatorOpen}
+            onOpenChange={setIsAvatarCreatorOpen}
+          >
+            <DialogTrigger asChild>
+              <Button onClick={handleCreateAvatar} className="p-2">
+                {isProcessing ? "..." : "Create New Avatar"}
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <div className="h-[600px] w-full relative rounded-xl overflow-hidden">
+                <AvatarCreator
+                  subdomain="gguser"
+                  config={
+                    editingAvatar
+                      ? {
+                          ...editAvatarConfig,
+                          avatarId: extractUserId(editingAvatar.avatar_url),
+                        }
+                      : createAvatarConfig
+                  }
+                  onAvatarExported={
+                    editingAvatar ? handleUpdateAvatar : handleAvatarCreated
+                  }
+                  onUserSet={(event) => console.log("User set:", event)}
+                  iframeUrl={
+                    editingAvatar
+                      ? getAvatarCreatorUrl(editingAvatar.avatar_url)
+                      : undefined
+                  }
+                />
+                {isProcessing && (
+                  <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                    {editingAvatar
+                      ? "Updating avatar..."
+                      : "Creating avatar..."}
+                  </div>
+                )}
+              </div>
+            </DialogContent>
+          </Dialog>
+        </div>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Manage Avatars</CardTitle>
-        </CardHeader>
-
-        {/* Modal for Avatar Creator */}
-        <Dialog
-          open={isAvatarCreatorOpen}
-          onOpenChange={setIsAvatarCreatorOpen}
-        >
-          <DialogTrigger asChild>
-            <SpotlightButton
-              text="Create New Avatar"
-              isPending={isProcessing}
-              type="button"
-              onClick={handleCreateAvatar}
-            />
-          </DialogTrigger>
-          <DialogContent>
-            <div className="h-[600px] relative rounded-xl overflow-hidden">
-              <AvatarCreator
-                subdomain="gguser"
-                config={
-                  editingAvatar
-                    ? {
-                        ...editAvatarConfig,
-                        avatarId: extractUserId(editingAvatar.avatar_url),
-                      }
-                    : createAvatarConfig
-                }
-                onAvatarExported={
-                  editingAvatar ? handleUpdateAvatar : handleAvatarCreated
-                }
-                onUserSet={(event) => console.log("User set:", event)}
-                iframeUrl={
-                  editingAvatar
-                    ? getAvatarCreatorUrl(editingAvatar.avatar_url)
-                    : undefined
-                }
-              />
-              {isProcessing && (
-                <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                  {editingAvatar ? "Updating avatar..." : "Creating avatar..."}
-                </div>
-              )}
-            </div>
-          </DialogContent>
-        </Dialog>
-      </Card>
-      <div className="w-1/2 flex flex-col">
+      <div className="w-1/2 backdrop-blur-lg rounded-lg border dark:border-white/20 border-black/20 hover:border-yellow-500 transition-all duration-300 ease-in-out">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {avatars.map((avatar) => (
             <Card key={avatar.avatar_id}>
