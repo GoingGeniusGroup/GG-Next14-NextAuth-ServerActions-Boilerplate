@@ -12,7 +12,8 @@ import {
   AvatarExportedEvent,
   UserSetEvent,
 } from "@/components/comp/AvatarComponents/avatar_creator/events";
-import { Button } from "@/components/ui/border/moving-border";
+import { Button as MovingBorderButton } from "@/components/ui/border/moving-border";
+import { Button } from "@/components/ui/button/button";
 import SpotlightButton from "@/components/ui/button/spotlightButton";
 import {
   Card,
@@ -21,15 +22,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { getAvatarsByUserId } from "@/services/avatar";
 import { ExtendedUser } from "@/types/next-auth";
 import { AvatarResponse } from "@/types/utils";
+import { IconEdit, IconTrash } from "@tabler/icons-react";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -112,11 +109,8 @@ export default function AvatarManagerClient({
     setEditingAvatar(null);
   }, []);
 
-  const closeAvatarModal = () => {
-    setIsAvatarCreatorOpen(false);
-  };
-
   const handleEditAvatar = useCallback((avatar: AvatarType) => {
+    console.log("Editing avatar:", avatar);
     setIsAvatarCreatorOpen(true);
     setEditingAvatar(avatar);
   }, []);
@@ -245,8 +239,8 @@ export default function AvatarManagerClient({
   };
 
   return (
-    <div className="space-x-4 flex justify-between w-full text-black dark:text-white">
-      <div className="relative sw-1/2">
+    <div className="space-x-4 flex justify-betweens w-full text-black dark:text-white">
+      <div className="w-1/2 relative backdrop-blur-lg rounded-lg border dark:border-white/20 border-black/20 hover:border-yellow-500 transition-all duration-300 ease-in-out">
         <Card>
           <CardHeader>
             <CardTitle>Avatar Showcase</CardTitle>
@@ -270,15 +264,18 @@ export default function AvatarManagerClient({
             </div>
           </CardContent>
         </Card>
+      </div>
+
+      <div className="w-1/2 relative backdrop-blur-lg rounded-lg border dark:border-white/20 border-black/20 hover:border-yellow-500 transition-all duration-300 ease-in-out">
         <div className="absolute top-4 right-4">
           <Dialog
             open={isAvatarCreatorOpen}
             onOpenChange={setIsAvatarCreatorOpen}
           >
             <DialogTrigger asChild>
-              <Button onClick={handleCreateAvatar} className="p-2">
+              <MovingBorderButton onClick={handleCreateAvatar} className="p-2">
                 {isProcessing ? "..." : "Create New Avatar"}
-              </Button>
+              </MovingBorderButton>
             </DialogTrigger>
             <DialogContent>
               <div className="h-[600px] w-full relative rounded-xl overflow-hidden">
@@ -313,13 +310,17 @@ export default function AvatarManagerClient({
             </DialogContent>
           </Dialog>
         </div>
-      </div>
-
-      <div className="w-1/2 backdrop-blur-lg rounded-lg border dark:border-white/20 border-black/20 hover:border-yellow-500 transition-all duration-300 ease-in-out">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 pt-20 h-full overflow-auto">
           {avatars.map((avatar) => (
-            <Card key={avatar.avatar_id}>
-              <CardContent className="pt-6">
+            <Card
+              key={avatar.avatar_id}
+              className={`border h-fit rounded-lg hover:border-yellow-500 transition-all duration-300 ease-in-out ${
+                selectedAvatar === avatar.avatar_url
+                  ? "border-sky-500"
+                  : "border-black/20 dark:border-white/20"
+              }`}
+            >
+              <CardContent className="relative pt-6">
                 <div className="flex flex-col items-center space-y-4">
                   <Image
                     src={
@@ -331,32 +332,38 @@ export default function AvatarManagerClient({
                     height={128}
                     className="rounded-full"
                   />
-                  <SpotlightButton
-                    text={
-                      selectedAvatar === avatar.avatar_url
-                        ? "Selected"
-                        : "Select"
-                    }
-                    isPending={false}
-                    type="button"
+                  <Button
+                    variant="black"
+                    size="sm"
+                    className={`hover:text-yellow-500 w-full ${
+                      selectedAvatar === avatar.avatar_url ? "text-sky-500" : ""
+                    }`}
                     onClick={() => setSelectedAvatar(avatar.avatar_url)}
-                  />
+                  >
+                    {selectedAvatar === avatar.avatar_url
+                      ? "Selected"
+                      : "Select"}
+                  </Button>
+                </div>
+                <div className="absolute top-2 flex gap-2 right-2">
+                  <Button
+                    variant="transparent_rounded"
+                    className="hover:text-yellow-500 text-sky-400 p-[1px]"
+                    size="mini2"
+                    onClick={() => handleEditAvatar(avatar)}
+                  >
+                    <IconEdit />
+                  </Button>
+                  <Button
+                    variant="transparent_rounded"
+                    className="hover:text-yellow-500 text-red-400 p-[1px]"
+                    size="mini2"
+                    onClick={() => handleDeleteAvatar(avatar.avatar_id)}
+                  >
+                    <IconTrash />
+                  </Button>
                 </div>
               </CardContent>
-              <CardFooter className="flex justify-end space-x-2">
-                <SpotlightButton
-                  text="Edit"
-                  isPending={false}
-                  type="button"
-                  onClick={() => handleEditAvatar(avatar)}
-                />
-                <SpotlightButton
-                  text="Delete"
-                  isPending={false}
-                  type="button"
-                  onClick={() => handleDeleteAvatar(avatar.avatar_id)}
-                />
-              </CardFooter>
             </Card>
           ))}
         </div>
