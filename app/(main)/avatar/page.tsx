@@ -2,8 +2,10 @@ import AvatarManagerServer from "@/components/comp/AvatarManager/avatar-manager-
 
 export default function AvatarPage() {
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Avatar Management</h1>
+    <div className="relative container mx-auto">
+      <h1 className="text-2xl flex justify-center dark:text-white text-black font-bold mb-4">
+        Avatar Management
+      </h1>
       <AvatarManagerServer />
     </div>
   );
