@@ -1,21 +1,21 @@
 'use client'
 
-import { useState, useCallback, useEffect } from 'react'
 import { addAvatar, deleteAvatar, updateAvatar } from '@/actions/avatar'
-import { getAvatarsByUserId } from '@/services/avatar'
 import { Avatar } from '@/components/comp/Avatar'
 import { AvatarCreator, AvatarCreatorConfig, BodyType, Language } from '@/components/comp/AvatarComponents/avatar_creator'
 import { AvatarExportedEvent, UserSetEvent } from '@/components/comp/AvatarComponents/avatar_creator/events'
 import SpotlightButton from '@/components/ui/button/spotlightButton'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { toast } from "sonner"
+import { getAvatarsByUserId } from '@/services/avatar'
 import { ExtendedUser } from "@/types/next-auth"
 import { AvatarResponse } from '@/types/utils'
 import Image from 'next/image'
+import { useCallback, useEffect, useState } from 'react'
+import { toast } from "sonner"
 
 type AvatarType = {
   avatar_id: string
-  avatar_url: string | null
+  avatar_url: string | undefined
 }
 
 interface AvatarManagerClientProps {
@@ -24,7 +24,7 @@ interface AvatarManagerClientProps {
 }
 
 const expressions = [
-  { label: "neutral", icon: "/emojis/neutral.svg", bg: "#FFFFFF", animation: "/F_Talking_Variations_001.fbx" },
+  { label: "neutral", icon: "/emojis/neutral.svg", bg: "#FFFFFF", animation: "/male-idle-3.fbx" },
   { label: "sad", icon: "/emojis/sad.svg", bg: "#0C2E5C", animation: "/M_Standing_Expressions_011.fbx" },
   { label: "happy", icon: "/emojis/happy.svg", bg: "#007F13", animation: "/M_Standing_Expressions_012.fbx" },
   { label: "amazed", icon: "/emojis/amazed.svg", bg: "#F8BF43", animation: "/M_Standing_Expressions_013.fbx" },
@@ -33,11 +33,11 @@ const expressions = [
 
 export default function AvatarManagerClient({ initialAvatars, user }: AvatarManagerClientProps) {
   const [avatars, setAvatars] = useState<AvatarType[]>(initialAvatars)
-  const [isCreatingAvatar, setIsCreatingAvatar] = useState(false)
+  const [isAvatarCreatorOpen, setIsAvatarCreatorOpen] = useState(false)
   const [editingAvatar, setEditingAvatar] = useState<AvatarType | null>(null)
-  const [selectedAvatar, setSelectedAvatar] = useState<string | null>(initialAvatars[0]?.avatar_url || null)
+  const [selectedAvatar, setSelectedAvatar] = useState<string | undefined>(initialAvatars[0]?.avatar_url)
   const [currentEmote, setCurrentEmote] = useState<string>(expressions[0].animation)
-  const [isCreationInProgress, setIsCreationInProgress] = useState(false)
+  const [isProcessing, setIsProcessing] = useState(false)
 
   useEffect(() => {
     const fetchAvatars = async () => {
@@ -45,7 +45,7 @@ export default function AvatarManagerClient({ initialAvatars, user }: AvatarMana
       if (fetchedAvatars) {
         setAvatars(fetchedAvatars.map(avatar => ({
           avatar_id: avatar.avatar_id,
-          avatar_url: avatar.avatar_url || ''
+          avatar_url: avatar.avatar_url || undefined
         })))
       }
     }
@@ -53,11 +53,17 @@ export default function AvatarManagerClient({ initialAvatars, user }: AvatarMana
   }, [user.gg_id])
 
   const handleCreateAvatar = useCallback(() => {
-    setIsCreatingAvatar(true)
+    setIsAvatarCreatorOpen(true)
+    setEditingAvatar(null)
+  }, [])
+
+  const handleEditAvatar = useCallback((avatar: AvatarType) => {
+    setIsAvatarCreatorOpen(true)
+    setEditingAvatar(avatar)
   }, [])
 
   const handleAvatarCreated = useCallback(async (event: AvatarExportedEvent) => {
-    setIsCreationInProgress(true)
+    setIsProcessing(true)
     try {
       const response = await addAvatar(event.data.url) as AvatarResponse
       
@@ -66,7 +72,6 @@ export default function AvatarManagerClient({ initialAvatars, user }: AvatarMana
           avatar_id: response.data.avatar_id,
           avatar_url: response.data.avatar_url
         }])
-        setIsCreatingAvatar(false)
         setSelectedAvatar(response.data.avatar_url)
         toast.success("Your new avatar has been successfully saved.")
       } else {
@@ -76,12 +81,14 @@ export default function AvatarManagerClient({ initialAvatars, user }: AvatarMana
       console.error("Error adding avatar:", error)
       toast.error("Failed to save the avatar. Please try again.")
     } finally {
-      setIsCreationInProgress(false)
+      setIsProcessing(false)
+      setIsAvatarCreatorOpen(false)
     }
   }, [])
 
   const handleUpdateAvatar = async (event: AvatarExportedEvent) => {
     if (editingAvatar) {
+      setIsProcessing(true)
       try {
         const response = await updateAvatar(editingAvatar.avatar_id, event.data.url) as AvatarResponse
         if (response.success) {
@@ -91,7 +98,6 @@ export default function AvatarManagerClient({ initialAvatars, user }: AvatarMana
               avatar_url: response.data.avatar_url
             } : avatar
           ))
-          setEditingAvatar(null)
           setSelectedAvatar(response.data.avatar_url)
           toast.success("Your avatar has been successfully updated.")
         } else {
@@ -100,6 +106,10 @@ export default function AvatarManagerClient({ initialAvatars, user }: AvatarMana
       } catch (error) {
         console.error("Error updating avatar:", error)
         toast.error("Failed to update the avatar. Please try again.")
+      } finally {
+        setIsProcessing(false)
+        setIsAvatarCreatorOpen(false)
+        setEditingAvatar(null)
       }
     }
   }
@@ -110,9 +120,9 @@ export default function AvatarManagerClient({ initialAvatars, user }: AvatarMana
       if (response.success) {
         setAvatars(prevAvatars => prevAvatars.filter(avatar => avatar.avatar_id !== avatarId))
         if (avatars.length > 1) {
-          setSelectedAvatar(avatars.find(avatar => avatar.avatar_id !== avatarId)?.avatar_url || null)
+          setSelectedAvatar(avatars.find(avatar => avatar.avatar_id !== avatarId)?.avatar_url)
         } else {
-          setSelectedAvatar(null)
+          setSelectedAvatar(undefined)
         }
         toast.success("Avatar successfully deleted.")
       } else {
@@ -128,12 +138,35 @@ export default function AvatarManagerClient({ initialAvatars, user }: AvatarMana
     setCurrentEmote(emote)
   }
 
-  const avatarCreatorConfig: AvatarCreatorConfig = {
-    clearCache: true,
+  const baseAvatarCreatorConfig: AvatarCreatorConfig = {
     bodyType: 'fullbody' as BodyType,
     quickStart: true,
     language: 'en' as Language,
   }
+
+  const createAvatarConfig: AvatarCreatorConfig = {
+    ...baseAvatarCreatorConfig,
+    clearCache: true,
+  }
+
+  const editAvatarConfig: AvatarCreatorConfig = {
+    ...baseAvatarCreatorConfig,
+    clearCache: false,
+  }
+
+  const extractUserId = (avatarUrl: string | undefined): string | undefined => {
+    if (!avatarUrl) return undefined;
+    const match = avatarUrl.match(/\/([^/]+)\.glb$/);
+    return match ? match[1] : undefined;
+  };
+
+  const getAvatarCreatorUrl = (avatarUrl: string | undefined): string => {
+    const userId = extractUserId(avatarUrl);
+    if (userId) {
+      return `https://gguser.readyplayer.me/avatar/${userId}?frameApi`;
+    }
+    return 'https://gguser.readyplayer.me/avatar?frameApi';
+  };
 
   return (
     <div className="space-y-4">
@@ -164,24 +197,28 @@ export default function AvatarManagerClient({ initialAvatars, user }: AvatarMana
           <CardTitle>Manage Avatars</CardTitle>
         </CardHeader>
         <CardContent>
-          {isCreatingAvatar ? (
+          {isAvatarCreatorOpen ? (
             <div className="h-[600px] relative z-50">
               <AvatarCreator
                 subdomain="gguser"
-                config={avatarCreatorConfig}
-                onAvatarExported={handleAvatarCreated}
+                config={editingAvatar ? {
+                  ...editAvatarConfig,
+                  avatarId: extractUserId(editingAvatar.avatar_url),
+                } : createAvatarConfig}
+                onAvatarExported={editingAvatar ? handleUpdateAvatar : handleAvatarCreated}
                 onUserSet={(event: UserSetEvent) => console.log('User set:', event)}
+                iframeUrl={editingAvatar ? getAvatarCreatorUrl(editingAvatar.avatar_url) : undefined}
               />
-              {isCreationInProgress && (
+              {isProcessing && (
                 <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                  Creating avatar...
+                  {editingAvatar ? "Updating avatar..." : "Creating avatar..."}
                 </div>
               )}
             </div>
           ) : (
             <SpotlightButton
               text="Create New Avatar"
-              isPending={isCreationInProgress}
+              isPending={isProcessing}
               type="button"
               onClick={handleCreateAvatar}
             />
@@ -210,41 +247,18 @@ export default function AvatarManagerClient({ initialAvatars, user }: AvatarMana
               </div>
             </CardContent>
             <CardFooter className="flex justify-end space-x-2">
-              {editingAvatar?.avatar_id === avatar.avatar_id ? (
-                <div className="w-full">
-                  <div className="h-[600px] relative z-50 mb-4">
-                    <AvatarCreator
-                      subdomain="gguser"
-                      config={{...avatarCreatorConfig, avatarId: avatar.avatar_id}}
-                      onAvatarExported={handleUpdateAvatar}
-                      onUserSet={(event: UserSetEvent) => console.log('User set during edit:', event)}
-                    />
-                  </div>
-                  <div className="flex justify-end space-x-2">
-                    <SpotlightButton
-                      text="Cancel"
-                      isPending={false}
-                      type="button"
-                      onClick={() => setEditingAvatar(null)}
-                    />
-                  </div>
-                </div>
-              ) : (
-                <>
-                  <SpotlightButton
-                    text="Edit"
-                    isPending={false}
-                    type="button"
-                    onClick={() => setEditingAvatar(avatar)}
-                  />
-                  <SpotlightButton
-                    text="Delete"
-                    isPending={false}
-                    type="button"
-                    onClick={() => handleDeleteAvatar(avatar.avatar_id)}
-                  />
-                </>
-              )}
+              <SpotlightButton
+                text="Edit"
+                isPending={false}
+                type="button"
+                onClick={() => handleEditAvatar(avatar)}
+              />
+              <SpotlightButton
+                text="Delete"
+                isPending={false}
+                type="button"
+                onClick={() => handleDeleteAvatar(avatar.avatar_id)}
+              />
             </CardFooter>
           </Card>
         ))}

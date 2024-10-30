@@ -8,7 +8,7 @@ export type AvatarCreatorConfig = {
   quickStart?: boolean;
   language?: Language;
   token?: string;
-  avatarId?: string;
+  avatarId?: string | null;
 };
 
 export type IFrameEvent<TPayload> = {
