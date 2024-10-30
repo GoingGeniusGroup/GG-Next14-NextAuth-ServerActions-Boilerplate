@@ -264,10 +264,7 @@ export default function AvatarManagerClient({
             </div>
           </CardContent>
         </Card>
-      </div>
-
-      <div className="w-1/2 relative backdrop-blur-lg rounded-lg border dark:border-white/20 border-black/20 hover:border-yellow-500 transition-all duration-300 ease-in-out">
-        <div className="absolute top-4 right-4">
+        <div className="absolute top-4 right-4 z-40">
           <Dialog
             open={isAvatarCreatorOpen}
             onOpenChange={setIsAvatarCreatorOpen}
@@ -310,7 +307,10 @@ export default function AvatarManagerClient({
             </DialogContent>
           </Dialog>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 pt-20 h-full overflow-auto">
+      </div>
+
+      <div className="w-1/2 relative h-[700px] backdrop-blur-lg rounded-lg border dark:border-white/20 border-black/20 hover:border-yellow-500 transition-all duration-300 ease-in-out">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 h-[99%] overflow-auto">
           {avatars.map((avatar) => (
             <Card
               key={avatar.avatar_id}
