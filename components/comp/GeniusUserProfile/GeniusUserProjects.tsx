@@ -67,7 +67,6 @@ export default function GeniusUserProjects({ items, userInfo }: ItemsProp) {
             header={item.image}
             skills={item.project_skills}
             tools={item.tools}
-            icon={item.icon}
             className={idx === 3 || idx === 6 ? "md:col-span-2" : ""}
             onMouseEnter={() => setHoveredIndex(idx)}
             onMouseLeave={() => setHoveredIndex(null)}

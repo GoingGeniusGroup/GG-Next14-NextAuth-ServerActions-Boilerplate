@@ -13,7 +13,7 @@ export const BentoGridHover = ({
   return (
     <div
       className={cn(
-        "grid md:auto-rows-[18rem] grid-cols-3 md:grid-cols-6 gap-0",
+        "grid md:auto-rows-[18rem] grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-0",
         className
       )}
     >
@@ -27,7 +27,6 @@ export const BentoGridHoverItem = ({
   title,
   description,
   header,
-  icon,
   skills,
   tools,
   onMouseEnter,
@@ -40,7 +39,6 @@ export const BentoGridHoverItem = ({
   header?: string;
   skills?: string[];
   tools?: string[];
-  icon?: React.ReactNode;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
   isHovered?: boolean;
@@ -90,7 +88,6 @@ export const BentoGridHoverItem = ({
           </Lens>
 
           <div className="group-hover/bento:translate-x-2 transition duration-200">
-            {icon}
             <div className="font-sans font-bold text-neutral-600 dark:text-neutral-200 mb-2 mt-2">
               {title}
             </div>
