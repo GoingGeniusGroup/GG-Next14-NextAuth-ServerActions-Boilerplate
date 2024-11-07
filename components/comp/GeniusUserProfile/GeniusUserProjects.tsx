@@ -5,7 +5,8 @@ import {
   BentoGridHover,
   BentoGridHoverItem,
 } from "@/components/ui/bento-grid/bento-grid-hover";
-import ExperienceDialog from "../Modal/experience/AddExperienceDialog";
+import ExperienceDialog from "../Modal/experience/AddUpdateExperienceDialog";
+import { DeleteExperienceDialog } from "../Modal/experience/DeleteExperienceDialog";
 
 interface ItemsProp {
   items: {
@@ -39,21 +40,27 @@ export default function GeniusUserProjects({ items, userInfo }: ItemsProp) {
           <BentoGridHoverItem
             key={idx}
             title={
-              <div className="flex justify-between items-center">
+              <div className="relative flex justify-between items-center">
                 <span>{item.title}</span>
-                <ExperienceDialog
-                  gg_id={userInfo.gg_id}
-                  experience_id={item.experience_id}
-                  defaultValues={{
-                    type: item.type,
-                    name: item.title,
-                    description: item.description,
-                    tools: item.tools,
-                    project_skills: item.project_skills,
-                    project_pictures: [item.image],
-                    link: item.link,
-                  }}
-                />
+                <div className="absolute flex  bottom-2 right-2 z-30">
+                  <ExperienceDialog
+                    gg_id={userInfo.gg_id}
+                    experience_id={item.experience_id}
+                    defaultValues={{
+                      type: item.type,
+                      name: item.title,
+                      description: item.description,
+                      tools: item.tools,
+                      project_skills: item.project_skills,
+                      project_pictures: [item.image],
+                      link: item.link,
+                    }}
+                  />
+                  <DeleteExperienceDialog
+                    experienceId={item.experience_id}
+                    experienceName={item.title}
+                  />
+                </div>
               </div>
             }
             description={item.description}
