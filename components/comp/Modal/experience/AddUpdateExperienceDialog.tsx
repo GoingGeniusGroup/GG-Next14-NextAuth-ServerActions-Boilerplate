@@ -47,7 +47,7 @@ const ExperienceDialog: React.FC<ExperienceDialogProps> = ({
         ) : (
           <Button
             variant="ghost"
-            size="icon"
+            size="mini"
             className="hover:bg-white/10 hover:text-sky-500"
           >
             <IconEdit className="h-4 w-4" />

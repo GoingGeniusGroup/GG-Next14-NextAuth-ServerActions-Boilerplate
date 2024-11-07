@@ -40,9 +40,9 @@ export default function GeniusUserProjects({ items, userInfo }: ItemsProp) {
           <BentoGridHoverItem
             key={idx}
             title={
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center gap-2">
                 <span>{item.title}</span>
-                <div className="flex">
+                <div className="flex gap-2">
                   <ExperienceDialog
                     gg_id={userInfo.gg_id}
                     experience_id={item.experience_id}

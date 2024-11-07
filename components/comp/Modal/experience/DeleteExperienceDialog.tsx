@@ -56,7 +56,7 @@ export const DeleteExperienceDialog: React.FC<DeleteExperienceDialogProps> = ({
       <AlertDialogTrigger asChild onClick={() => setIsOpen(true)}>
         <Button
           variant="ghost"
-          size="icon"
+          size="mini"
           className="hover:bg-white/10 hover:text-red-500"
           type="button"
         >
