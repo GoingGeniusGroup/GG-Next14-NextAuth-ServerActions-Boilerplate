@@ -77,8 +77,8 @@ export const BentoGridHoverItem = ({
               <Image
                 src={header ?? ""}
                 alt={typeof title === "string" ? title : ""}
-                height={200}
-                width={200}
+                height={100}
+                width={100}
                 className="object-cover object-left-top   rounded-xl mx-auto flex flex-1 w-full h-full min-h-[6rem] bg-gradient-to-br from-neutral-200 dark:from-neutral-900 dark:to-neutral-800 to-neutral-100"
                 unoptimized
               />

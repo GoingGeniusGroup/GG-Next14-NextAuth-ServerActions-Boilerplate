@@ -19,16 +19,21 @@ import { toast } from "sonner";
 import { Label } from "@/components/ui/animated-input/label";
 import { LabelInputContainer } from "@/components/ui/animated-input/label-input-container";
 import { FileUploaderMinimal } from "@uploadcare/react-uploader";
+import { addExperience } from "@/actions/experience";
 
 const experienceSchema = z.object({
   type: z.string().min(3, "Type must be at least 3 characters"),
   name: z.string().min(3, "Name must be at least 3 characters"),
   description: z.string().min(3, "Description must be at least 3 characters"),
-  tools: z.array(z.string()).min(1, "At least one tool is required"),
-  skills: z.array(z.string()).min(1, "At least one skill is required"), // Ensure this line is present
+  tools: z.array(z.string()).min(1, "At least one tool is required").optional(),
+  project_skills: z
+    .array(z.string())
+    .min(1, "At least one skill is required")
+    .optional(), // Ensure this line is present
   project_pictures: z
     .array(z.string())
-    .min(1, "At least one picture is required"),
+    .min(1, "At least one picture is required")
+    .optional(),
   link: z.string().url("Must be a valid URL"),
 });
 
@@ -41,7 +46,7 @@ interface ExperienceFormProps {
     name: string;
     description: string;
     tools: string[];
-    skills: string[]; // Added skills to default values
+    project_skills: string[]; // Added skills to default values
     project_pictures: string[];
     link: string;
   };
@@ -63,7 +68,7 @@ const ExperienceForm: React.FC<ExperienceFormProps> = ({
       name: "",
       description: "",
       tools: [],
-      skills: [], // Default value for skills
+      project_skills: [], // Default value for skills
       project_pictures: [],
       link: "",
     },
@@ -90,46 +95,53 @@ const ExperienceForm: React.FC<ExperienceFormProps> = ({
     }
   };
 
-  // const onSubmit = async (data: z.infer<typeof experienceSchema>) => {
-  //   if (isUploading) {
-  //     toast.error("Please wait for image upload to complete");
-  //     return;
-  //   }
+  const onSubmit = async (data: z.infer<typeof experienceSchema>) => {
+    if (isUploading) {
+      toast.error("Please wait for image upload to complete");
+      return;
+    }
 
-  //   try {
-  //     const formData = {
-  //       ...data,
-  //       gg_id,
-  //       experience_id,
-  //       skills: data.skills || [], // Ensure skills is always an array
-  //       tools: data.tools || [], // Ensure tools is always an array
-  //       project_pictures: data.project_pictures || [], // Ensure project_pictures is always an array
-  //     };
+    try {
+      const formData = new FormData();
+      formData.append("gg_id", gg_id);
+      formData.append("experience_id", experience_id || "");
+      formData.append("type", data.type);
+      formData.append("name", data.name);
+      formData.append("description", data.description);
+      formData.append("link", data.link);
 
-  //     const result = await experienceActions(formData);
+      // Append array values as comma-separated strings or individual entries
+      formData.append("tools", (data.tools || []).join(","));
+      formData.append("project_skills", (data.project_skills || []).join(","));
+      formData.append(
+        "project_pictures",
+        (data.project_pictures || []).join(",")
+      );
 
-  //     if (result.success) {
-  //       toast.success(
-  //         experience_id
-  //           ? "Experience updated successfully"
-  //           : "Experience created successfully"
-  //       );
-  //       router.refresh();
-  //       setOpen(false);
-  //       form.reset();
-  //     } else {
-  //       toast.error(result.error?.message || "An unknown error occurred");
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     toast.error("Something went wrong");
-  //   }
-  // };
+      const result = await addExperience(formData);
+
+      if (result.success) {
+        toast.success(
+          experience_id
+            ? "Experience updated successfully"
+            : "Experience created successfully"
+        );
+        router.refresh();
+        setOpen(false);
+        form.reset();
+      } else {
+        toast.error(result.error?.message || "An unknown error occurred");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong");
+    }
+  };
 
   return (
     <Form {...form}>
-      {/* <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4"> */}
-      <form className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        {/* <form className="space-y-4"> */}
         <FormField
           control={form.control}
           name="type"
@@ -213,7 +225,7 @@ const ExperienceForm: React.FC<ExperienceFormProps> = ({
         {/* Skills Field */}
         <FormField
           control={form.control}
-          name="skills"
+          name="project_skills"
           render={({ field }) => (
             <FormItem>
               <LabelInputContainer>
