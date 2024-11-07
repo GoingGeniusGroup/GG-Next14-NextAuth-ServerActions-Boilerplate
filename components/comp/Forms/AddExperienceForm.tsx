@@ -19,7 +19,7 @@ import { toast } from "sonner";
 import { Label } from "@/components/ui/animated-input/label";
 import { LabelInputContainer } from "@/components/ui/animated-input/label-input-container";
 import { FileUploaderMinimal } from "@uploadcare/react-uploader";
-import { addExperience } from "@/actions/experience";
+import { addExperience, updateUserExperience } from "@/actions/experience";
 
 const experienceSchema = z.object({
   type: z.string().min(3, "Type must be at least 3 characters"),
@@ -118,7 +118,15 @@ const ExperienceForm: React.FC<ExperienceFormProps> = ({
         (data.project_pictures || []).join(",")
       );
 
-      const result = await addExperience(formData);
+      let result;
+
+      if (experience_id) {
+        // Update existing experience
+        result = await updateUserExperience(experience_id, formData);
+      } else {
+        // Create new experience
+        result = await addExperience(formData);
+      }
 
       if (result.success) {
         toast.success(

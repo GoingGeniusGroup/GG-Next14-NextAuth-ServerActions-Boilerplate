@@ -36,7 +36,6 @@ export default function GeniusUserProjects({ items, userInfo }: ItemsProp) {
       )}
       {items.map((item, idx) => (
         <>
-          {item.image}
           <BentoGridHoverItem
             key={idx}
             title={
