@@ -40,9 +40,9 @@ export default function GeniusUserProjects({ items, userInfo }: ItemsProp) {
           <BentoGridHoverItem
             key={idx}
             title={
-              <div className="relative flex justify-between items-center">
+              <div className="flex justify-between items-center">
                 <span>{item.title}</span>
-                <div className="absolute flex  bottom-2 right-2 z-30">
+                <div className="flex">
                   <ExperienceDialog
                     gg_id={userInfo.gg_id}
                     experience_id={item.experience_id}
@@ -65,6 +65,8 @@ export default function GeniusUserProjects({ items, userInfo }: ItemsProp) {
             }
             description={item.description}
             header={item.image}
+            skills={item.project_skills}
+            tools={item.tools}
             icon={item.icon}
             className={idx === 3 || idx === 6 ? "md:col-span-2" : ""}
             onMouseEnter={() => setHoveredIndex(idx)}

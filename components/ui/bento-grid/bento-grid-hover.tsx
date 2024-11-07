@@ -28,6 +28,8 @@ export const BentoGridHoverItem = ({
   description,
   header,
   icon,
+  skills,
+  tools,
   onMouseEnter,
   onMouseLeave,
   isHovered,
@@ -36,6 +38,8 @@ export const BentoGridHoverItem = ({
   title?: string | React.ReactNode;
   description?: string | React.ReactNode;
   header?: string;
+  skills?: string[];
+  tools?: string[];
   icon?: React.ReactNode;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
@@ -71,9 +75,9 @@ export const BentoGridHoverItem = ({
 
       {/* Content */}
       <div className="rounded-2xl h-full w-full overflow-hidden ">
-        <div className="relative z-50 h-full row-span-1 rounded-xl group/bento hover:shadow-xl transition duration-200 shadow-input dark:shadow-none p-4 dark:bg-black dark:border-white/[0.2] bg-white border border-transparent justify-between flex flex-col space-y-4">
-          <Lens>
-            <div className="relative w-full aspect-[5/3]">
+        <div className="relative z-50 h-full row-span-1 rounded-xl group/bento hover:shadow-xl transition duration-200 shadow-input dark:shadow-none p-4 dark:bg-black dark:border-white/[0.2] bg-white border border-transparent justify-between flex flex-col ">
+          <Lens lensSize={70}>
+            <div className="relative w-full aspect-[4/3]">
               <Image
                 src={header ?? ""}
                 alt={typeof title === "string" ? title : ""}
@@ -92,6 +96,12 @@ export const BentoGridHoverItem = ({
             </div>
             <div className="font-sans font-normal text-neutral-600 text-xs dark:text-neutral-300">
               {description}
+            </div>
+            <div className="font-sans font-normal text-neutral-600 text-xs dark:text-neutral-300">
+              SKILLS : {skills}
+            </div>
+            <div className="font-sans font-normal text-neutral-600 text-xs dark:text-neutral-300">
+              TOOLS : {tools}
             </div>
           </div>
         </div>
