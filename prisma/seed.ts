@@ -199,7 +199,7 @@ await prisma.productVariant.createMany({
       var_img: "https://example.com/smartphone_red.jpg",
       stock: 20,
       salePrice: 700,
-      discount: "5%",
+      discount: 5,
     },
     {
       var_id: colorVariant.id,
@@ -208,7 +208,7 @@ await prisma.productVariant.createMany({
       var_img: "https://example.com/smartphone_blue.jpg",
       stock: 20,
       salePrice: 700,
-      discount: "5%",
+      discount: 5,
     },
 
     // Variants for T-shirt
@@ -219,7 +219,7 @@ await prisma.productVariant.createMany({
       var_img: "https://example.com/tshirt_red.jpg",
       stock: 100,
       salePrice: 15,
-      discount: "10%",
+      discount: 10,
     },
     {
       var_id: sizeVariant.id,
@@ -228,7 +228,7 @@ await prisma.productVariant.createMany({
       var_img: "https://example.com/tshirt_medium.jpg",
       stock: 100,
       salePrice: 15,
-      discount: "10%",
+      discount: 10,
     },
 
     // Variants for Office Chair
@@ -239,7 +239,7 @@ await prisma.productVariant.createMany({
       var_img: "https://example.com/chair_small.jpg",
       stock: 20,
       salePrice: 150,
-      discount: "15%",
+      discount: 15,
     },
     {
       var_id: sizeVariant.id,
@@ -248,7 +248,7 @@ await prisma.productVariant.createMany({
       var_img: "https://example.com/chair_large.jpg",
       stock: 20,
       salePrice: 150,
-      discount: "15%",
+      discount: 15,
     },
   ],
 });
