@@ -9,6 +9,7 @@ import { ThemeProvider } from "next-themes";
 import FloatingDockInvertedComponent from "@/components/comp/dock/FloatingDockInverted";
 import { UserProvider } from "@/hooks/UserProvider";
 import { ToastProvider } from "./providers/toast-provider";
+import { MobileSimulatorProvider } from "@/components/comp/MobileSimulator/MobileSimulatorContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,29 +31,31 @@ export default function RootLayout({
       <body className={inter.className}>
         <Toaster position="bottom-left" richColors theme="light" />
         <Providers>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <AuroraBackground>
-              <UserProvider>
-                {/* Theme switcher */}
-                <div className="absolute top-[8px] right-[73px] z-50">
-                  <ThemeSwitcher />
-                </div>
-
-                {/* Dock section */}
-                <div className="w-full z-40">
-                  <div className="p-4 text-black dark:text-white">
-                    <FloatingDockInvertedComponent />
+          <MobileSimulatorProvider>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              <AuroraBackground>
+                <UserProvider>
+                  {/* Theme switcher */}
+                  <div className="absolute top-[8px] right-[73px] z-50">
+                    <ThemeSwitcher />
                   </div>
-                </div>
 
-                {/* Content section */}
-                <div className="flex-1 px-8 py-4 w-full overflow-auto">
-                  {children}
-                </div>
-              </UserProvider>
-              <ToastProvider />
-            </AuroraBackground>
-          </ThemeProvider>
+                  {/* Dock section */}
+                  <div className="w-full z-40">
+                    <div className="p-4 text-black dark:text-white">
+                      <FloatingDockInvertedComponent />
+                    </div>
+                  </div>
+
+                  {/* Content section */}
+                  <div className="flex-1 px-8 py-4 w-full overflow-auto">
+                    {children}
+                  </div>
+                </UserProvider>
+                <ToastProvider />
+              </AuroraBackground>
+            </ThemeProvider>
+          </MobileSimulatorProvider>
         </Providers>
       </body>
     </html>

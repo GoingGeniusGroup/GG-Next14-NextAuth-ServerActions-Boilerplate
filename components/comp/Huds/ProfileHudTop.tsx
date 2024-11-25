@@ -16,21 +16,19 @@ import {
 import { useUser } from "@/hooks/UserProvider";
 import { IconArrowDown } from "@tabler/icons-react";
 import { useState } from "react";
+import { useMobileSimulator } from "../MobileSimulator/MobileSimulatorContext";
 
 interface ProfileHudProps {
-  setShowMobile: React.Dispatch<React.SetStateAction<boolean>>;
-  showMobile: boolean;
   handleServerSignOut: () => Promise<{ success: boolean; error?: string }>;
 }
 
 export default function ProfileHudTop({
-  setShowMobile,
-  showMobile,
   handleServerSignOut,
 }: ProfileHudProps) {
   const { data: session, status } = useSession();
   const usernameContext = useUser();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const { showMobile, setShowMobile } = useMobileSimulator();
 
   const username = usernameContext ? usernameContext.username : "";
   const profilePic = usernameContext ? usernameContext.image : "";
@@ -60,8 +58,8 @@ export default function ProfileHudTop({
 
       // Dismiss loading toast and show success message
       toast.dismiss(loadingToast);
-      await delay(1500);
-      toast.success("Logged out successfully!");
+      await delay(500);
+      toast.success("Logged out successfully! Redirecting...");
 
       // Add delay to ensure toast is visible
       await delay(1000);

@@ -3,7 +3,7 @@ import { TooltipProvider } from "@/components/ui/tooltip/tooltip";
 import { signOut } from "@/auth";
 import { revalidatePath } from "next/cache";
 
-export default async function MainLayout({
+export default function MainLayoutClient({
   children,
 }: {
   children: React.ReactNode;
