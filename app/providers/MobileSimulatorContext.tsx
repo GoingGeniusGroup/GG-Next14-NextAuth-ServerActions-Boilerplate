@@ -26,6 +26,7 @@ import { useSession } from "next-auth/react";
 import { BackgroundProps } from "../../components/comp/MobileSimulator/interface/Background.interface";
 import MobileSimulatorContainer from "../../components/comp/MobileSimulator/MobileSimulatorContainer";
 import SimulatorToggleButton from "../../components/comp/MobileSimulator/SimulatorToggleButton";
+import NotificationComponent from "@/components/comp/Notification/NotificationComponent";
 
 interface MobileSimulatorContextType {
   showMobile: boolean;
@@ -160,7 +161,7 @@ export const MobileSimulatorProvider = ({
         id: 3,
         title: "Notifications",
         icon: <FaBell />,
-        content: "View your latest notifications.",
+        content: <NotificationComponent />,
       },
       {
         id: 4,
