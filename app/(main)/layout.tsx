@@ -1,6 +1,7 @@
 import { Layout } from "@/components/comp/dom/Layout";
 import { TooltipProvider } from "@/components/ui/tooltip/tooltip";
 import { signOut } from "@/auth";
+import { revalidatePath } from "next/cache";
 
 export default async function MainLayout({
   children,
@@ -9,7 +10,15 @@ export default async function MainLayout({
 }) {
   async function handleServerSignOut() {
     "use server";
-    await signOut();
+
+    try {
+      await signOut({ redirect: false });
+      revalidatePath("/");
+      return { success: true };
+    } catch (error) {
+      console.error("Server logout error:", error);
+      return { success: false, error: "Failed to logout" };
+    }
   }
 
   return (

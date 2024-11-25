@@ -58,24 +58,25 @@ export const registerSchema = z.object({
     .min(1, "Phone Number is required.")
     .refine(
       (val) => {
-        // First check if it's a valid phone number format
+        // Remove all non-digit characters except plus sign at start
         const cleaned = val.replace(/[^\d+]/g, "");
 
-        // Allow format: +[country code][10 digits] or just 10 digits
-        return (
-          /^\+\d{1,4}\d{10}$/.test(cleaned) || // With country code
-          /^\d{10}$/.test(cleaned) // Without country code
-        );
+        // Check if it starts with country code
+        if (cleaned.startsWith("+")) {
+          // Remove the plus and validate remaining digits
+          const withoutPlus = cleaned.slice(1);
+          // Assuming country code can be 1-4 digits, followed by exactly 10 digits
+          return /^\d{1,4}\d{10}$/.test(withoutPlus);
+        }
+
+        // If no country code, must be exactly 10 digits
+        return /^\d{10}$/.test(cleaned);
       },
       {
         message:
-          "Phone number must be 10 digits with optional country code (e.g., +977XXXXXXXXXX or XXXXXXXXXX)",
+          "Phone number must be exactly 10 digits (excluding optional country code).",
       }
-    )
-    .transform((val) => {
-      // Store the normalized 10-digit version
-      return normalizePhoneNumber(val);
-    }),
+    ),
 });
 
 export const resendSchema = z.object({

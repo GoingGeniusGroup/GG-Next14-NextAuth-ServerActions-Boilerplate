@@ -2,7 +2,7 @@
 
 import { CardWrapper } from "@/components/comp/auth/card-wrapper";
 import { Form } from "@/components/ui/form";
-import { registerSchema } from "@/schemas";
+import { normalizePhoneNumber, registerSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -23,36 +23,47 @@ export const RegisterForm = ({ isMobile }: { isMobile: boolean }) => {
       password: "",
       phone_number: "", // Adding default value for optional phone number
     },
+    mode: "onChange", // Enable real-time validation
   });
 
   const handleSubmit = form.handleSubmit((values) => {
     startTransition(() => {
-      register(values).then((data) => {
+      // Normalize the phone number before registration
+      const normalizedPhoneNumber = normalizePhoneNumber(values.phone_number);
+      const registrationData = {
+        ...values,
+        phone_number: normalizedPhoneNumber,
+      };
+
+      register(registrationData).then((data) => {
         if (data.success) {
-          // Attempt to log the user in after successful registration
-          login({ login: values.phone_number, password: values.password })
+          // Use the normalized phone number for login
+          login({
+            login: normalizedPhoneNumber, // Use normalized phone number
+            password: values.password,
+          })
             .then((loginData) => {
               if (loginData.success) {
-                // Redirect the user to the home page after successful login
-                // If login is successful without 2FA:
-                // 1. Show success message
                 toast.success("Registration and login successful!");
-
-                // 2. Small delay to ensure toast is shown
                 setTimeout(() => {
-                  // 3. Reload the entire page
                   window.location.reload();
-
-                  // 4. Optional: Replace current history entry with home page
                   window.location.href = "/";
                 }, 1000);
               } else {
-                toast.error("Registration successful, but login failed.");
+                console.error("Login failed after registration:", loginData);
+                toast.error(
+                  "Registration successful, but login failed. Please try logging in manually."
+                );
               }
             })
-            .catch(() => toast.error("Something went wrong while logging in."));
+            .catch((error) => {
+              console.error("Login error:", error);
+              toast.error(
+                "Something went wrong while logging in. Please try logging in manually."
+              );
+            });
         } else {
-          toast.error(data.error.message);
+          toast.error(data.error?.message || "Registration failed");
         }
       });
     });
@@ -102,8 +113,12 @@ export const RegisterForm = ({ isMobile }: { isMobile: boolean }) => {
               isPending={isPending}
             />
           </div>
-          <Button type="submit" disabled={isPending} className="w-full">
-            Create an account
+          <Button
+            type="submit"
+            disabled={isPending || !form.formState.isValid}
+            className="w-full"
+          >
+            {isPending ? "Processing..." : "Create Account"}
           </Button>
         </form>
       </Form>
