@@ -12,10 +12,8 @@ import { useTransition } from "react";
 import { register } from "@/actions/register";
 import { login } from "@/actions/login"; // Import the login action
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 
 export const RegisterForm = ({ isMobile }: { isMobile: boolean }) => {
-  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
@@ -32,7 +30,7 @@ export const RegisterForm = ({ isMobile }: { isMobile: boolean }) => {
       register(values).then((data) => {
         if (data.success) {
           // Attempt to log the user in after successful registration
-          login({ login: values.email, password: values.password })
+          login({ login: values.phone_number, password: values.password })
             .then((loginData) => {
               if (loginData.success) {
                 // Redirect the user to the home page after successful login
@@ -81,8 +79,16 @@ export const RegisterForm = ({ isMobile }: { isMobile: boolean }) => {
             />
             <FormInput
               control={form.control}
+              name="phone_number"
+              label="Phone Number"
+              type="tel"
+              placeholder="e.g. +1234567890"
+              isPending={isPending}
+            />
+            <FormInput
+              control={form.control}
               name="email"
-              label="Email Address"
+              label="Email Address (optional)"
               type="email"
               placeholder="e.g. johndoe@example.com"
               isPending={isPending}
@@ -93,14 +99,6 @@ export const RegisterForm = ({ isMobile }: { isMobile: boolean }) => {
               label="Password"
               type="password"
               placeholder="******"
-              isPending={isPending}
-            />
-            <FormInput
-              control={form.control}
-              name="phone_number"
-              label="Phone Number (Optional)"
-              type="tel"
-              placeholder="e.g. +1234567890"
               isPending={isPending}
             />
           </div>

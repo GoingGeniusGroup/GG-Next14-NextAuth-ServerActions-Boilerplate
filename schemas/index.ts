@@ -2,11 +2,41 @@ import { z } from "zod";
 
 const EMAIL_SCHEMA = z
   .string()
-  .min(1, "Email Address is required.")
-  .email("Invalid Email Address.");
+  .email("Invalid Email Address.")
+  .or(z.literal("").optional()) // Allow empty strings
+  .optional(); // Allow the field to be entirely omitted
+
+// Helper function to normalize phone numbers
+export const normalizePhoneNumber = (phone: string) => {
+  // Remove all non-digit characters except plus sign at start
+  const cleaned = phone.replace(/[^\d+]/g, "");
+
+  // If number starts with +, extract last 10 digits
+  if (cleaned.startsWith("+")) {
+    return cleaned.slice(-10);
+  }
+
+  // Otherwise just return last 10 digits
+  return cleaned.slice(-10);
+};
+
+// Helper to validate phone format
+const isValidPhone = (phone: string) => {
+  const normalized = normalizePhoneNumber(phone);
+  return /^\d{10}$/.test(normalized);
+};
 
 export const loginSchema = z.object({
-  login: z.string().min(1, "Login is required."),
+  login: z
+    .string()
+    .min(1, "Phone Number, Email or Username is required.")
+    .transform((val) => {
+      // If value looks like a phone number (has mostly digits)
+      if (val.replace(/[^\d]/g, "").length >= 10) {
+        return normalizePhoneNumber(val);
+      }
+      return val;
+    }),
   password: z.string().min(1, "Password is required."),
 });
 
@@ -25,10 +55,27 @@ export const registerSchema = z.object({
     .min(6, "Password must be at least 6 characters."),
   phone_number: z
     .string()
-    .optional()
-    .refine((val) => !val || /^\+?[1-9]\d{1,14}$/.test(val), {
-      message: "Invalid phone number format.",
-    }), // This regex ensures an optional valid phone number format.
+    .min(1, "Phone Number is required.")
+    .refine(
+      (val) => {
+        // First check if it's a valid phone number format
+        const cleaned = val.replace(/[^\d+]/g, "");
+
+        // Allow format: +[country code][10 digits] or just 10 digits
+        return (
+          /^\+\d{1,4}\d{10}$/.test(cleaned) || // With country code
+          /^\d{10}$/.test(cleaned) // Without country code
+        );
+      },
+      {
+        message:
+          "Phone number must be 10 digits with optional country code (e.g., +977XXXXXXXXXX or XXXXXXXXXX)",
+      }
+    )
+    .transform((val) => {
+      // Store the normalized 10-digit version
+      return normalizePhoneNumber(val);
+    }),
 });
 
 export const resendSchema = z.object({

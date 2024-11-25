@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { normalizePhoneNumber } from "@/schemas";
 import { Prisma } from "@prisma/client";
 
 export const getUserByEmail = async (email: string) => {
@@ -14,9 +15,10 @@ export const getUserByEmail = async (email: string) => {
 };
 
 export const getUserByPhone = async (phone: string) => {
+  const normalizedPhone = normalizePhoneNumber(phone);
   try {
     const user = await db.user.findUnique({
-      where: { phone_number: phone }, 
+      where: { phone_number: normalizedPhone },
     });
     if (!user) {
       console.log(`User not found with phone number: ${phone}`);
