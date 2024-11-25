@@ -24,25 +24,25 @@ const backgrounds = [
   {
     name: "Cosmic Nebula",
     class:
-      "bg-gradient-to-b from-indigo-600/90 to-purple-600/60 via-pink-500/40 text-white",
+      "bg-gradient-to-b from-indigo-600 to-purple-600 via-pink-500 text-white",
   },
   {
     name: "Cyberpunk City",
     class:
-      "bg-gradient-to-b from-blue-900/80 to-purple-800/50 via-pink-700/30 text-white",
+      "bg-gradient-to-b from-blue-900 to-purple-800 via-pink-700 text-white",
   },
   {
     name: "Glimmering Stars",
     class:
-      "bg-gradient-to-b from-blue-900/90 to-purple-800/60 via-pink-700/40 text-white",
+      "bg-gradient-to-b from-blue-900 to-purple-800 via-pink-700 text-white",
   },
   {
     name: "Dark Matter",
-    class: "bg-gradient-to-b from-gray-900/80 to-black/95 text-white",
+    class: "bg-gradient-to-b from-gray-900 to-black text-white",
   },
   {
     name: "Snowfall",
-    class: "bg-gradient-to-b from-white/80 to-gray-100/60 text-black",
+    class: "bg-gradient-to-b from-white to-gray-100 text-black",
   },
 ];
 
@@ -55,7 +55,7 @@ const MobileSimulator: React.FC<MobileSimulatorProps> = ({
   showMobile,
   setShowMobile,
 }) => {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false);
   const [currentBackground, setCurrentBackground] = useState<BackgroundProps>(
     backgrounds[0]
