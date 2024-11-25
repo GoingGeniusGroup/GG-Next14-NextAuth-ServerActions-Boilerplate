@@ -9,7 +9,7 @@ import { ThemeProvider } from "next-themes";
 import FloatingDockInvertedComponent from "@/components/comp/dock/FloatingDockInverted";
 import { UserProvider } from "@/hooks/UserProvider";
 import { ToastProvider } from "./providers/toast-provider";
-import { MobileSimulatorProvider } from "@/components/comp/MobileSimulator/MobileSimulatorContext";
+import { MobileSimulatorProvider } from "@/app/providers/MobileSimulatorContext";
 
 const inter = Inter({ subsets: ["latin"] });
 

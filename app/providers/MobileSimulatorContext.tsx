@@ -19,13 +19,13 @@ import {
   FaUser,
   FaUserPlus,
 } from "react-icons/fa";
-import ShopSection from "../shop/ShopSection";
+import ShopSection from "../../components/comp/shop/ShopSection";
 import { LoginForm } from "@/components/form/login-form";
-import { SectionProps } from "./interface/Section.interface";
+import { SectionProps } from "../../components/comp/MobileSimulator/interface/Section.interface";
 import { useSession } from "next-auth/react";
-import { BackgroundProps } from "./interface/Background.interface";
-import MobileSimulatorContainer from "./MobileSimulatorContainer";
-import SimulatorToggleButton from "./SimulatorToggleButton";
+import { BackgroundProps } from "../../components/comp/MobileSimulator/interface/Background.interface";
+import MobileSimulatorContainer from "../../components/comp/MobileSimulator/MobileSimulatorContainer";
+import SimulatorToggleButton from "../../components/comp/MobileSimulator/SimulatorToggleButton";
 
 interface MobileSimulatorContextType {
   showMobile: boolean;
@@ -76,7 +76,7 @@ export const MobileSimulatorProvider = ({
   children: ReactNode;
 }) => {
   const { status } = useSession();
-  const [showMobile, setShowMobile] = useState(false);
+  const [showMobile, setShowMobile] = useState(true);
   const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false);
   const [currentBackground, setCurrentBackground] = useState<BackgroundProps>(
     backgrounds[0]
@@ -86,6 +86,15 @@ export const MobileSimulatorProvider = ({
 
   // Directly compute isLoggedIn from session status
   const isLoggedIn = status === "authenticated";
+
+  // Update showMobile when auth status changes
+  useEffect(() => {
+    if (isLoggedIn) {
+      setShowMobile(false);
+    } else {
+      setShowMobile(true);
+    }
+  }, [isLoggedIn]);
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -205,20 +214,26 @@ export const MobileSimulatorProvider = ({
         setShowMobile={setShowMobile}
       />
 
-      <MobileSimulatorContainer
-        showMobile={showMobile}
-        isSmallScreen={isSmallScreen}
-        backgrounds={backgrounds}
-        currentBackground={currentBackground}
-        sections={sections}
-        toggleScreen={toggleScreen}
-        screens={screens}
-        removeScreen={(id) =>
-          setActiveScreens((prev) => prev.filter((screenId) => screenId !== id))
-        }
-        closeAllScreens={() => setActiveScreens([])}
-        updateCurrentBackground={setCurrentBackground}
-      />
+      {showMobile && (
+        <>
+          <MobileSimulatorContainer
+            showMobile={showMobile}
+            isSmallScreen={isSmallScreen}
+            backgrounds={backgrounds}
+            currentBackground={currentBackground}
+            sections={sections}
+            toggleScreen={toggleScreen}
+            screens={screens}
+            removeScreen={(id) =>
+              setActiveScreens((prev) =>
+                prev.filter((screenId) => screenId !== id)
+              )
+            }
+            closeAllScreens={() => setActiveScreens([])}
+            updateCurrentBackground={setCurrentBackground}
+          />
+        </>
+      )}
     </MobileSimulatorContext.Provider>
   );
 };

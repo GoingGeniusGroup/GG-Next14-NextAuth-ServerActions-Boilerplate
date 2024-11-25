@@ -35,6 +35,7 @@ export default function MobileSimulatorContainer({
 }: MobileSimulatorContainerProps) {
   const [textColor, setTextColor] = useState("#000000");
   const pathname = usePathname();
+
   return (
     <>
       {/* Mobile simulator container */}
