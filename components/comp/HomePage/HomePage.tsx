@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { UserRound } from "lucide-react";
@@ -17,25 +17,32 @@ export default function HomePage({
   profilePic: string;
 }) {
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   useEffect(() => {
+    // Only proceed if we have auth_redirect parameter
     if (searchParams.get("auth_redirect") === "true") {
-      const attemptedPath = searchParams.get("attempted_path") || "this page";
+      const attemptedPath = searchParams.get("attempted_path") || "this";
       const formattedPath = toTitleCase(attemptedPath);
 
-      toast.error(`Please log in to access ${formattedPath}`, {
+      // Show the toast
+      toast.error(`Please log in to access ${formattedPath} page`, {
         icon: "🔒",
         duration: 4000,
         style: {
-          background: "#DC2626",
+          background: "#DC262690",
+          backdropFilter: "blur(4px)",
           color: "#fff",
-          padding: "16px",
+          padding: "8px",
           borderRadius: "8px",
         },
       });
-    }
-  }, [searchParams]);
 
+      // Clean up URL parameters
+      const newUrl = window.location.pathname;
+      router.replace(newUrl);
+    }
+  }, [searchParams, router]);
   return (
     <div className="flex justify-center items-center">
       <div className="absolute inset-0 flex flex-col items-center justify-center">
