@@ -8,6 +8,7 @@ import { ThemeSwitcher } from "@/components/comp/ThemeToggler/ThemeSwitcher";
 import { ThemeProvider } from "next-themes";
 import FloatingDockInvertedComponent from "@/components/comp/dock/FloatingDockInverted";
 import { UserProvider } from "@/hooks/UserProvider";
+import { ToastProvider } from "./providers/toast-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -49,6 +50,7 @@ export default function RootLayout({
                   {children}
                 </div>
               </UserProvider>
+              <ToastProvider />
             </AuroraBackground>
           </ThemeProvider>
         </Providers>
