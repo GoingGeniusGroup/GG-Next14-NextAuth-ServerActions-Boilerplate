@@ -83,17 +83,14 @@ export default function AboutSectionProfile({ userInfo }: { userInfo: any }) {
             loading="lazy"
           />
           <div className="absolute inset-0 bg-black/30 size-full"></div>
+
+          {/* dialog to open the update profile form */}
           {userInfo && (
-            <div className="absolute top-2 right-2 z-40">
+            <div className="absolute top-2 right-2 z-40 flex gap-2">
               <UpdateCoverPhotoDialog
                 gg_id={userInfo.gg_id}
                 currentCoverImage={userInfo.cover_images ?? ""}
               />
-            </div>
-          )}
-          {/* dialog to open the update profile form */}
-          {userInfo && (
-            <div className="absolute top-2 right-2 z-40">
               <UpdateProfileDialog
                 gg_id={userInfo.gg_id}
                 currentFirstName={userInfo.first_name ?? ""}
