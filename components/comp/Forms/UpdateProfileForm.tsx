@@ -35,7 +35,6 @@ interface UpdateProfileDialogProps {
   currentDescription: string;
   currentDob: Date | null;
   currentImage: string;
-  currentCoverImage: string[];
 }
 
 export default function UpdateProfileForm({
@@ -47,7 +46,6 @@ export default function UpdateProfileForm({
   currentDescription,
   currentDob,
   currentImage,
-  currentCoverImage,
 }: UpdateProfileDialogProps) {
   const router = useRouter();
 
@@ -64,11 +62,6 @@ export default function UpdateProfileForm({
       // Properly parse the date, ensuring it's a Date object
       dob: currentDob ? new Date(currentDob) : null,
       image: currentImage || "",
-      cover_images: Array.isArray(currentCoverImage)
-        ? currentCoverImage
-        : currentCoverImage
-        ? [currentCoverImage]
-        : [],
     },
   });
 
@@ -90,27 +83,6 @@ export default function UpdateProfileForm({
       form.setValue("image", imageUrl);
 
       // If no files are uploading and we have successful files, set uploading to false
-      if (!hasUploadingFiles) {
-        setIsImageUploading(false);
-      }
-    }
-  };
-
-  const handleCoverImageUpload = (info: { allEntries: any[] }) => {
-    const hasUploadingFiles = info.allEntries.some(
-      (file) => file.status === "uploading"
-    );
-    setIsImageUploading(hasUploadingFiles);
-
-    const successfulFiles = info.allEntries.filter(
-      (file) => file.status === "success"
-    );
-
-    if (successfulFiles.length > 0) {
-      const imageUrl = successfulFiles[successfulFiles.length - 1].cdnUrl;
-      // Update form with array of strings
-      form.setValue("cover_images", [imageUrl]);
-
       if (!hasUploadingFiles) {
         setIsImageUploading(false);
       }
@@ -274,40 +246,6 @@ export default function UpdateProfileForm({
                 </div>
                 <FileUploaderMinimal
                   onChange={handleImageUpload}
-                  pubkey={process.env.NEXT_PUBLIC_UPLOADCARE_PUBLIC_KEY}
-                  imgOnly
-                  className="text-sm font-medium text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
-                  multiple={false}
-                />
-              </LabelInputContainer>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="cover_images"
-          render={({ field }) => (
-            <FormItem>
-              <LabelInputContainer>
-                <div className="flex justify-between items-center">
-                  <Label>Change Cover Picture</Label>
-                  {field.value?.length > 0 && (
-                    <div className="relative size-8 rounded-full overflow-hidden">
-                      <Image
-                        src={field.value[0]}
-                        alt="Cover picture"
-                        fill
-                        className="object-cover"
-                        unoptimized
-                        loading="lazy"
-                      />
-                    </div>
-                  )}
-                </div>
-                <FileUploaderMinimal
-                  onChange={handleCoverImageUpload}
                   pubkey={process.env.NEXT_PUBLIC_UPLOADCARE_PUBLIC_KEY}
                   imgOnly
                   className="text-sm font-medium text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"

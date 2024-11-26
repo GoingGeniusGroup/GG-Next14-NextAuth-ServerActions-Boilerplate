@@ -20,7 +20,6 @@ interface UpdateProfileDialogProps {
   currentDescription: string;
   currentDob: Date | null;
   currentImage: string;
-  currentCoverImage: string[];
 }
 
 const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
@@ -31,7 +30,6 @@ const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
   currentDescription,
   currentDob,
   currentImage,
-  currentCoverImage,
 }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -59,7 +57,6 @@ const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
           currentDescription={currentDescription}
           currentDob={currentDob}
           currentImage={currentImage}
-          currentCoverImage={currentCoverImage}
           setOpen={setOpen}
         />
       </DialogContent>
