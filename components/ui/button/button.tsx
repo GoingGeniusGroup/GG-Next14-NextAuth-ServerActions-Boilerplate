@@ -22,6 +22,8 @@ const buttonVariants = cva(
         black: "bg-black hover:bg-black/80 text-white",
         animated_spin:
           "bg-primary hover:rotate-180 transition-all duration-500 ease-in-out transform",
+        transparent_rounded:
+          "bg-transparent border dark:border-white/20 border-black/20 hover:border-yellow-500/80 backdrop-blur-lg hover:bg-sky-500/20 rounded-full",
       },
       size: {
         default: "h-10 px-4 py-2",
@@ -29,6 +31,7 @@ const buttonVariants = cva(
         lg: "h-11 rounded-md px-8",
         icon: "size-10",
         mini: "size-4",
+        mini2: "size-5",
         small: "size-7",
       },
     },

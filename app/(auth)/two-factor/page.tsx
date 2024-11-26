@@ -27,7 +27,7 @@ export default async function TwoFactorPage() {
   }
 
   const existingToken = await getTwoFactorTokenByEmail(
-    verifyToken.decoded.email
+    verifyToken.decoded.login
   );
   if (!existingToken) {
     redirect("/");
@@ -36,7 +36,7 @@ export default async function TwoFactorPage() {
   return (
     <TwoFactorForm
       payload={{
-        email: existingToken.email,
+        login: existingToken.email,
         password: verifyToken.decoded.password,
       }}
     />

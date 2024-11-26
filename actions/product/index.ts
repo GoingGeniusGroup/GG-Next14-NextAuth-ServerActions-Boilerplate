@@ -44,7 +44,7 @@ export const addProduct = async (payload: FormData) => {
   try {
     const data = validatedFields.data;
  
-    const imagepath = data.image?  await writeImageToDisk(data.image) : null
+    const imagepath = data.image ?  await writeImageToDisk(data.image) : null
     const imageUrl = imagepath ? imagepath : data.imageUrl
 
     const supplierIds = data.suppliers.map((sup) => sup.id);

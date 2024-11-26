@@ -4,9 +4,9 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Tax } from "@prisma/client";
 import Modal from "../ui/model";
-import TaxForm from "../Product/TaxForm";
 import { Plus } from "lucide-react";
 import { SelectType } from "@/types/orderType";
+import TaxForm from "../comp/Product/TaxForm";
 
 const TaxModel = ({
   edit = false,

@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { hash } from 'bcrypt'
 
-//https://chatgpt.com/c/b05f382c-8f81-49bd-90d0-9cc4b0593261
+
 const prisma = new PrismaClient()
 
 
@@ -14,23 +14,23 @@ async function main() {
         update: {},
         create: {
             email: 'test@test.com',
-            name: 'Test User',
+            username: 'Test User',
             password
           }
     })
 
     const account = await prisma.account.create({
-        data: { userId: user.id,
+        data: { userId: user.gg_id ,
          type: 'credentials',
          provider: 'credentials',
-         providerAccountId: user.id
+         providerAccountId: user.gg_id
     }})
 
     // Second user (sanjay@gmail.com)
   const user2 = await prisma.user.create({
     data: {
       email: 'sanjay@gmail.com',
-      name: 'Sanjay Karki',
+      username: 'Sanjay Karki',
       phone: '9876543210',  
       password: password,
       dob: new Date('1995-01-01'), 
@@ -41,10 +41,10 @@ async function main() {
 
   const account2 = await prisma.account.create({
     data: {
-      userId: user2.id,
+      userId: user2.gg_id,
       type: 'credentials',
       provider: 'credentials',
-      providerAccountId: user2.id,
+      providerAccountId: user2.gg_id,
     },
   });
 

@@ -6,13 +6,13 @@ const EMAIL_SCHEMA = z
   .email("Invalid Email Address.");
 
 export const loginSchema = z.object({
-  email: EMAIL_SCHEMA,
+  login: z.string().min(1, "Login is required."),
   password: z.string().min(1, "Password is required."),
 });
 
 export const registerSchema = z.object({
   email: EMAIL_SCHEMA,
-  name: z
+  username: z
     .string()
     .min(1, {
       message: "Name is required.",
@@ -23,6 +23,12 @@ export const registerSchema = z.object({
     .string()
     .min(1, "Password is required.")
     .min(6, "Password must be at least 6 characters."),
+  phone_number: z
+    .string()
+    .optional()
+    .refine((val) => !val || /^\+?[1-9]\d{1,14}$/.test(val), {
+      message: "Invalid phone number format.",
+    }), // This regex ensures an optional valid phone number format.
 });
 
 export const resendSchema = z.object({
@@ -55,7 +61,7 @@ export const twoFactorSchema = z.object({
 
 export const profileSchema = z
   .object({
-    name: z.optional(
+    username: z.optional(
       z
         .string()
         .min(1, {
@@ -65,8 +71,12 @@ export const profileSchema = z
         .max(24, "Maximum length of Name is 24 characters.")
     ),
     email: z.optional(z.string().email()),
-    password: z.optional(z.string().min(6, "Password must be at least 6 characters.")),
-    newPassword: z.optional(z.string().min(6, "New Password must be at least 6 characters.")),
+    password: z.optional(
+      z.string().min(6, "Password must be at least 6 characters.")
+    ),
+    newPassword: z.optional(
+      z.string().min(6, "New Password must be at least 6 characters.")
+    ),
     isTwoFactorEnabled: z.optional(z.boolean()),
   })
   .refine(
@@ -203,7 +213,7 @@ export const profileSchema = z
 
 
 
-    export const taxSchema = z.object({
+  export const taxSchema = z.object({
       name: z.string().min(1, "Tax name is required"),
       rate: numberSchema({
         required: true, 

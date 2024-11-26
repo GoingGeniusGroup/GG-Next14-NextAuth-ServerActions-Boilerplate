@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -12,44 +9,138 @@ datasource db {
 
 model Account {
   id                String  @id @default(cuid())
-  userId            String
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.Text
+  id_token          String?
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId            String  @unique @db.Uuid
+  user              User    @relation(fields: [userId], references: [gg_id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
 
-enum UserRole {
-  Admin
-  User
+model cards {
+  card_id           String  @id(map: "card_pkey") @default(uuid()) @db.Uuid
+  gg_id             String  @db.Uuid
+  type              String? @db.VarChar(50)
+  name              String? @db.VarChar(50)
+  description       String?
+  date_in           String? @db.VarChar
+  date_out          String? @db.VarChar
+  blood_group       String?
+  emergency_contact String?
+  emergency_details String?
+  emergency_address String?
+  users             User    @relation(fields: [gg_id], references: [gg_id], onDelete: Cascade, onUpdate: NoAction, map: "card_gg_id_fkey")
+}
+
+model experience {
+  experience_id    String   @id @default(uuid()) @db.Uuid
+  gg_id            String   @db.Uuid
+  type             String?  @db.VarChar(50)
+  name             String?  @db.VarChar(50)
+  description      String?
+  tools            String[]
+  project_skills   String[]
+  project_pictures String[]
+  link             String?
+  users            User     @relation(fields: [gg_id], references: [gg_id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model skills {
+  skill_id       String   @id @default(uuid()) @db.Uuid
+  skill          Json[]
+  gg_id          String   @db.Uuid
+  certifications String[]
+  users          User     @relation(fields: [gg_id], references: [gg_id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model User {
-  id                    String                 @id @default(cuid())
-  name                  String?
-  email                 String?                @unique
-  phone                 String?
-  dob                   DateTime?
+  email                 String?                @unique @db.VarChar(100)
   emailVerified         DateTime?
-  image                 String? // You can use gravatar.com to get image profile
-  password              String?
+  image                 String?
+  password              String?                @db.VarChar(255)
   role                  UserRole               @default(User)
-  accounts              Account[]
   isTwoFactorEnabled    Boolean                @default(false)
-  twoFactorConfirmation TwoFactorConfirmation?
+  address               String?                @db.VarChar(200)
+  cover_images          String[]
+  created_at            DateTime?              @default(now()) @db.Timestamp(6)
+  description           String?
+  dob                   DateTime?
+  faculty               Json?
+  first_name            String?                @db.VarChar(50)
+  gg_id                 String                 @id @default(uuid()) @db.Uuid
+  guild_id              String?                @db.Uuid
+  image_urls            String[]
+  last_name             String?                @db.VarChar(50)
+  oauth_provider        String?                @db.VarChar(50)
+  oauth_token           String?                @db.VarChar(255)
+  otp                   Int?
+  phone                 String?
+  phone_number          String?                @unique @db.VarChar(15)
+  region                Json?
+  username              String?                @unique
+  accounts              Account?
   Cart                  Cart[]
   Order                 Order[]
+  twoFactorConfirmation TwoFactorConfirmation?
   UserPaymentMethod     UserPaymentMethod[]
+  avatar                avatar[]
+  cards                 cards[]
+  coordinate            coordinate[]
+  experience            experience[]
+  skills                skills[]
+}
+
+model avatar {
+  avatar_id  String  @id @default(uuid()) @db.Uuid
+  gg_id      String  @db.Uuid
+  avatar_url String? @db.VarChar(255)
+  users      User    @relation(fields: [gg_id], references: [gg_id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model coordinate {
+  id        String  @id @default(uuid()) @db.Uuid
+  gg_id     String  @db.Uuid
+  longitude String?
+  latitude  String?
+  users     User    @relation(fields: [gg_id], references: [gg_id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model guilds {
+  description      String?
+  guild_name       String?  @unique
+  avatar_img       String?
+  continent        String?
+  skills           String[]
+  additionalSkills String[]
+  symbol           String?
+  color            String?
+  alignment        String[]
+  element          String?
+  guild_frame      String?
+  faculty_id       String   @db.Uuid
+  guild_id         String   @id @default(uuid()) @db.Uuid
+  faculty          faculty  @relation(fields: [faculty_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model faculty {
+  id           String   @id @default(uuid()) @db.Uuid
+  description  String?
+  faculty_name String?  @unique
+  faculty_img  String?
+  skills       String[]
+  symbol       String?
+  color        String?
+  alignment    String[]
+  element      String?
+  guilds       guilds[]
 }
 
 model VerificationToken {
@@ -81,114 +172,56 @@ model TwoFactorToken {
 
 model TwoFactorConfirmation {
   id      String   @id @default(cuid())
-  userId  String   @unique
   expires DateTime
-  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-enum ProductStatus {
-  AVAILABLE
-  NOTAVAILABLE
+  userId  String   @unique @db.Uuid
+  user    User     @relation(fields: [userId], references: [gg_id], onDelete: Cascade)
 }
 
 model Product {
-  id              String   @id @default(cuid())
+  id              String           @id @default(cuid())
   name            String
   description     String?
   image           String?
   costPrice       Float
   quantityInStock Int
   validity        String?
-  discount        Float?
   salePrice       Float?
   margin          String?
-  status          Boolean  @default(true)
-  isFeatured      Boolean? @default(false)
+  categoryId      String
+  isFeatured      Boolean?         @default(false)
   slug            String?
-
-  inventory Inventory?
-
-  categoryId String
-  category   Category @relation(fields: [categoryId], references: [id])
-
-  suppliers Supplier[]
-  orders    Order[]          @relation("ProductOrders")
-  carts     Cart[]
-  Variants  ProductVariant[]
-  tax       Tax?             @relation(fields: [taxId], references: [id])
-  taxId     String?
-}
-
-enum CartStatus {
-  PENDING
-  CHECKOUT
+  taxId           String?
+  discount        Float?
+  status          Boolean          @default(true)
+  carts           Cart[]
+  inventory       Inventory?
+  category        Category         @relation(fields: [categoryId], references: [id])
+  Tax             Tax?             @relation(fields: [taxId], references: [id])
+  ProductVariant  ProductVariant[]
+  Business        Order[]          @relation("ProductOrders")
+  Supplier        Supplier[]       @relation("ProductToSupplier")
 }
 
 model Cart {
-  id String @id @default(cuid())
-
-  quantity Int
-  status   CartStatus @default(PENDING)
-
-  amount    Float?
-  productId String
-  product   Product @relation(fields: [productId], references: [id])
-
-  userId String? // User ID for authenticated users
-  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  orderId String?
-  order   Order?  @relation(fields: [orderId], references: [id], name: "OrderCarts", onDelete: Cascade)
-
-  variants ProductVariant[]
+  id             String           @id @default(cuid())
+  quantity       Int
+  status         CartStatus       @default(PENDING)
+  productId      String
+  orderId        String?
+  amount         Float?
+  userId         String           @db.Uuid
+  order          Order?           @relation("OrderCarts", fields: [orderId], references: [id], onDelete: Cascade)
+  product        Product          @relation(fields: [productId], references: [id])
+  user           User             @relation(fields: [userId], references: [gg_id], onDelete: Cascade)
+  ProductVariant ProductVariant[] @relation("CartToProductVariant")
 }
 
-model ProductVariant {
-  id        String         @id @default(uuid())
-  var_id    String
-  variant   Variant        @relation(fields: [var_id], references: [id])
-  var_opt   String?
-  option    VariantOption? @relation(fields: [var_opt], references: [id])
-  productId String
-  Product   Product        @relation(fields: [productId], references: [id], onDelete: Cascade)
-
-  var_img         String?
-  salePrice       Float
-  stock           Int?
-  status          Boolean @default(true)
-  priceDifference Float?
-  costPrice       Float?
-  discount        Float?
-
-  carts Cart[]
-}
-
-//eg: size, color
 model Variant {
-  id   String @id @default(uuid())
-  name String
-
-  status         Boolean          @default(true)
-  options        VariantOption[]
-  ProductVariant ProductVariant[]
-}
-
-// Size ( variant) => [ md, lg, sm]
-model VariantOption {
   id             String           @id @default(uuid())
-  value          String
-  var_id         String
-  variant        Variant          @relation(fields: [var_id], references: [id])
-  variantName    String?
+  name           String
+  status         Boolean          @default(true)
   ProductVariant ProductVariant[]
-}
-
-model Category {
-  id           String  @id @default(cuid())
-  categoryName String
-  description  String?
-
-  products Product[]
+  VariantOption  VariantOption[]
 }
 
 model Inventory {
@@ -199,19 +232,124 @@ model Inventory {
   location    String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-
-  productId String  @unique
-  product   Product @relation(fields: [productId], references: [id])
+  productId   String   @unique
+  product     Product  @relation(fields: [productId], references: [id])
 }
 
 model Supplier {
-  id           String  @id @default(cuid())
+  id           String    @id @default(cuid())
   supplierName String
   email        String?
   phone        String?
   address      String?
+  Product      Product[] @relation("ProductToSupplier")
+}
 
-  products Product[]
+model Order {
+  id            String        @id @default(cuid())
+  orderDate     DateTime      @default(now())
+  quantity      Int
+  deliveryDate  DateTime?
+  streetAddress String
+  state         String
+  city          String
+  status        OrderStatus   @default(PENDING)
+  amount        Float?
+  paymentId     String?
+  paymentStatus Boolean       @default(false)
+  userId        String        @db.Uuid
+  carts         Cart[]        @relation("OrderCarts")
+  PaymentType   PaymentType?  @relation(fields: [paymentId], references: [id])
+  user          User          @relation(fields: [userId], references: [gg_id], onDelete: Cascade)
+  SalesInvoice  SalesInvoice?
+  orders        Product[]     @relation("ProductOrders")
+}
+
+model PaymentType {
+  id                String              @id @default(uuid()) 
+  paymentType       String
+  Order             Order[]
+  UserPaymentMethod UserPaymentMethod[]
+}
+
+model ProductVariant {
+  id              String         @id @default(uuid()) 
+  var_id          String
+  var_opt         String?
+  productId       String
+  var_img         String?
+  salePrice       Float
+  stock           Int?
+  status          Boolean        @default(true)
+  priceDifference Float?
+  costPrice       Float?
+  discount        Float?
+  Product         Product        @relation(fields: [productId], references: [id], onDelete: Cascade)
+  Variant         Variant        @relation(fields: [var_id], references: [id])
+  VariantOption   VariantOption? @relation(fields: [var_opt], references: [id])
+  Cart            Cart[]         @relation("CartToProductVariant")
+}
+
+model SalesInvoice {
+  id          String   @id @default(uuid()) 
+  invoiceDate DateTime @default(now())
+  InvoiceId   String   @unique
+  totalAmount Float?
+  orderId     String   @unique
+  Order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  Tax         Tax[]    @relation("SalesInvoiceToTax")
+}
+
+model Tax {
+  id           String         @id @default(uuid()) 
+  name         String
+  rate         Float
+  description  String?
+  Product      Product[]
+  SalesInvoice SalesInvoice[] @relation("SalesInvoiceToTax")
+}
+
+model UserPaymentMethod {
+  id             String      @id @default(uuid()) 
+  userId         String      @db.Uuid
+  typeId         String
+  provider       String?
+  account_number String?
+  expiry_date    DateTime?
+  is_default     Boolean     @default(true)
+  PaymentType    PaymentType @relation(fields: [typeId], references: [id])
+  User           User        @relation(fields: [userId], references: [gg_id], onDelete: Cascade)
+}
+
+model VariantOption {
+  id             String           @id @default(uuid()) 
+  value          String
+  var_id         String
+  variantName    String?
+  ProductVariant ProductVariant[]
+  Variant        Variant          @relation(fields: [var_id], references: [id])
+}
+
+model Category {
+  id           String    @id @default(uuid()) 
+  categoryName String
+  description  String?
+  products     Product[]
+}
+
+enum UserRole {
+  Admin
+  User
+}
+
+enum ProductStatus {
+  AVAILABLE
+  NOTAVAILABLE
+}
+
+enum CartStatus {
+  PENDING
+  CHECKOUT
 }
 
 enum OrderStatus {
@@ -219,68 +357,4 @@ enum OrderStatus {
   SHIPPED
   DELIVERED
   CANCELLED
-}
-
-model Order {
-  id            String       @id @default(cuid())
-  orderDate     DateTime     @default(now())
-  quantity      Int
-  deliveryDate  DateTime?
-  amount        Float?
-  streetAddress String
-  state         String
-  city          String
-  status        OrderStatus  @default(PENDING)
-  paymentStatus Boolean      @default(false)
-  paymentId     String?
-  paymentType   PaymentType? @relation(fields: [paymentId], references: [id])
-
-  products Product[] @relation("ProductOrders")
-
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  saleinvoice SalesInvoice?
-
-  carts Cart[] @relation("OrderCarts")
-}
-
-model PaymentType {
-  id          String @id @default(cuid())
-  paymentType String
-
-  UserPaymentMethod UserPaymentMethod[]
-  Order             Order[]
-}
-
-model UserPaymentMethod {
-  id             String      @id @default(cuid())
-  userId         String
-  user           User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  typeId         String
-  type           PaymentType @relation(fields: [typeId], references: [id])
-  provider       String?
-  account_number String?
-  expiry_date    DateTime?
-  is_default     Boolean     @default(true)
-}
-
-model SalesInvoice {
-  id          String   @id @default(cuid())
-  invoiceDate DateTime @default(now())
-  InvoiceId   String   @unique
-  tax         Tax[]
-  totalAmount Float?
-  orderId     String   @unique
-  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
-}
-
-model Tax {
-  id          String  @id @default(cuid())
-  name        String
-  rate        Float
-  description String?
-
-  SalesInvoice SalesInvoice[]
-  Product      Product[]
 }

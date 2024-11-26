@@ -1,4 +1,5 @@
-const fromEntries = (arr: Array<any>) => Object.assign({}, ...arr.map(([k, v]) => ({ [k]: v })));
+const fromEntries = (arr: Array<any>) =>
+  Object.assign({}, ...arr.map(([k, v]) => ({ [k]: v })));
 
 export const definedProps = (obj: Object) =>
   fromEntries(

@@ -1,15 +1,5 @@
-import { signOut } from "@/auth";
-import NavbarClient from "@/components/navbar/NavbarClient";
-import { currentUser } from "@/lib/auth";
-import { ExtendedUser } from "@/types/next-auth";
+import NavbarClient from "@/components/comp/navbar/NavbarClient";
 
 export default async function Navbar() {
-  const user = (await currentUser()) as ExtendedUser | undefined;
-
-  async function handleServerSignOut() {
-    "use server";
-    await signOut();
-  }
-
-  return <NavbarClient user={user} handleServerSignOut={handleServerSignOut} />;
+  return <NavbarClient />;
 }

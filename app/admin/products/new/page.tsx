@@ -7,6 +7,7 @@ import { getCategories } from "@/actions/category";
 import { getSuppliers } from "@/actions/supplier";
 import { SelectType } from "@/types/orderType";
 import { getTaxes } from "@/actions/tax";
+import TaxForm from "@/components/comp/Product/TaxForm";
 
 
 

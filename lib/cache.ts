@@ -11,7 +11,5 @@ export function cache<T extends Callback>(
     tags?: string[];
   } = {}
 ) {
-
-return nextCache( reactCache(cb), keyParts,options)
-
+  return nextCache(reactCache(cb), keyParts, options);
 }

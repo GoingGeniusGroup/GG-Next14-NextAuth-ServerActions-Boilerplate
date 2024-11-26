@@ -35,6 +35,20 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
-
 Routes:
 shop == /shop-test
+virtualshop == /shop-2
+avatar-test == /avatar
+steam == /steam
+profile == /profile
+user'sprofile == /genius-profile/username
+
+_Aceternity UI example routes_
+floating-dock == /floating-dock
+focus-card == /focus-cards
+card-hover-effect == /card-hover-effect
+bento-grid == /bento-grid
+
+_UI Tests_
+I've made a new repo to test and manipulate the Aceternity UI components in my own way. To see the latest updates, you can visit this deployed link.
+[UIMANIPULATION](https://aceternity-ui-manipulation.vercel.app/)

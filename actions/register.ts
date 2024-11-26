@@ -1,11 +1,11 @@
 "use server";
 
+import { hashPassword, response } from "@/lib/utils";
 import { registerSchema } from "@/schemas";
-import { z } from "zod";
+import { sendVerificationEmail } from "@/services/mail";
 import { createUser, getUserByEmail } from "@/services/user";
 import { generateVerificationToken } from "@/services/verification-token";
-import { sendVerificationEmail } from "@/services/mail";
-import { hashPassword, response } from "@/lib/utils";
+import { z } from "zod";
 
 export const register = async (payload: z.infer<typeof registerSchema>) => {
   // Check if user input is not valid.
@@ -19,9 +19,11 @@ export const register = async (payload: z.infer<typeof registerSchema>) => {
       },
     });
   }
-  const { name, email, password } = validatedFields.data;
 
-  // Check if user already exist, then return an error.
+  // Extract the fields from the validated payload, including phone number
+  const { username, email, password, phone_number } = validatedFields.data;
+
+  // Check if user already exists, then return an error.
   const existingUser = await getUserByEmail(email);
   if (existingUser) {
     return response({
@@ -36,8 +38,8 @@ export const register = async (payload: z.infer<typeof registerSchema>) => {
   // Hash password that user entered.
   const hashedPassword = await hashPassword(password);
 
-  // Create an user.
-  await createUser({ name, email, password: hashedPassword });
+  // Create a user with the phone number included.
+  await createUser({ username, email, password: hashedPassword, phone_number });
 
   // Generate verification token, then send it to the email.
   const verificationToken = await generateVerificationToken(email);

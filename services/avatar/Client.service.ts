@@ -1,1 +1,1 @@
-export const hasWindow = typeof window !== 'undefined';
+export const hasWindow = typeof window !== "undefined";
