@@ -94,7 +94,6 @@ export default function UpdateProfileForm({
       toast.error("Please wait for image upload to complete");
       return;
     }
-
     try {
       const formData = {
         gg_id,
@@ -109,7 +108,6 @@ export default function UpdateProfileForm({
             ? new Date(data.dob)
             : null,
         image: data.image, // Include the image URL in the form submission
-        cover_images: data.cover_images, // Already an array
       };
 
       const result = await updateProfile(formData);

@@ -76,8 +76,26 @@ export default function AboutSectionProfile({ userInfo }: { userInfo: any }) {
   };
   return (
     <>
-      {/* Div with user information */}
-      <div className="relative flex flex-col gap-4 border p-4 rounded-xl overflow-hidden backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
+      <div className="group relative flex flex-col gap-4 border p-4 rounded-xl backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
+        {/* Div with user information */}
+        {userInfo && (
+          <div className="absolute -top-6 right-2 z-40 flex gap-2 group-hover:opacity-100 opacity-0">
+            <UpdateCoverPhotoDialog
+              gg_id={userInfo.gg_id}
+              currentCoverImage={userInfo.cover_images ?? ""}
+            />
+            <UpdateProfileDialog
+              gg_id={userInfo.gg_id}
+              currentFirstName={userInfo.first_name ?? ""}
+              currentLastName={userInfo.last_name ?? ""}
+              currentAddress={userInfo.address ?? ""}
+              currentDescription={userInfo.description ?? ""}
+              currentDob={userInfo.dob ? new Date(userInfo.dob) : null}
+              currentImage={userInfo.image ?? ""}
+            />
+          </div>
+        )}
+        {/* dialog to open the update profile form */}
         <div className="flex flex-col gap-4">
           <Image
             src={
@@ -94,24 +112,6 @@ export default function AboutSectionProfile({ userInfo }: { userInfo: any }) {
           />
           <div className="absolute inset-0 bg-black/30 size-full"></div>
 
-          {/* dialog to open the update profile form */}
-          {userInfo && (
-            <div className="absolute top-2 right-2 z-40 flex gap-2">
-              <UpdateCoverPhotoDialog
-                gg_id={userInfo.gg_id}
-                currentCoverImage={userInfo.cover_images ?? ""}
-              />
-              <UpdateProfileDialog
-                gg_id={userInfo.gg_id}
-                currentFirstName={userInfo.first_name ?? ""}
-                currentLastName={userInfo.last_name ?? ""}
-                currentAddress={userInfo.address ?? ""}
-                currentDescription={userInfo.description ?? ""}
-                currentDob={userInfo.dob ? new Date(userInfo.dob) : null}
-                currentImage={userInfo.image ?? ""}
-              />
-            </div>
-          )}
           {/* username */}
           <div className="flex items-center gap-2 text-black dark:text-gray-300">
             <div className="relative size-8 rounded-full overflow-hidden border-2 hover:border-[#FCBB3F]/60">
