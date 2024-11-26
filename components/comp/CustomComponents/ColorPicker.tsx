@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef, useMemo, useState, useTransition } from "react";
+import { forwardRef, useEffect, useMemo, useState, useTransition } from "react";
 import { HexColorPicker } from "react-colorful";
 import { cn } from "@/lib/utils";
 import { useForwardedRef } from "@/lib/use-forwarded-ref";
@@ -17,6 +17,7 @@ import { useTransform } from "framer-motion";
 import { postColors } from "@/services/color";
 import { toast } from "sonner";
 import { SpinningButton } from "@/components/ui/spinning-button";
+import { useMobileSimulator } from "@/app/providers/MobileSimulatorContext";
 
 interface ColorPickerProps {
 
@@ -30,8 +31,6 @@ interface ColorPickerProps {
 
 
 
-
-
 const ColorPicker = forwardRef<
   HTMLInputElement,
   Omit<ButtonProps, "value" | "onChange" | "onBlur"> & ColorPickerProps
@@ -42,6 +41,14 @@ const ColorPicker = forwardRef<
   ) => {
     const ref = useForwardedRef(forwardedRef);
     const [open, setOpen] = useState(false);
+
+    const {ColorPickerAttrs} = useMobileSimulator()
+    const { setTextColor, setCurrentBackground,tempColor} = ColorPickerAttrs
+  console.log(tempColor);
+  
+    // useEffect(()=>{
+    //   setTempColor(value)
+    // },[])
 
     const [ ispending,startTranstion] = useTransition()
 
@@ -77,6 +84,27 @@ const ColorPicker = forwardRef<
 
     }
 
+    const handleCancel = () => {
+      const tempValue = tempColor.find((colorObj) => colorObj.typeColor === typeColor)?.value;
+    
+      if (!tempValue) {
+        setOpen(false); 
+        return;
+      }
+    
+      setOpen(false);
+    
+      if (typeColor === "TEXT") {
+        setTextColor(tempValue as string);
+      } else {
+        setCurrentBackground({
+          name: "Custom Color",
+          class: `bg-[${tempValue}]`,
+        });
+      }
+    };
+    
+ 
 
     return (
       <Popover onOpenChange={setOpen} open={open}>
@@ -116,7 +144,8 @@ const ColorPicker = forwardRef<
           />
           <div className="flex gap-2"
           >
-          <Button size={'sm'} variant={'destructive'}>
+          <Button size={'sm'} variant={'destructive'}
+          onClick={handleCancel}>
             Cancel
           </Button>
           <SpinningButton size={'sm'}
