@@ -5,6 +5,7 @@ import {
 } from "@tabler/icons-react";
 import UpdateProfileDialog from "../Modal/profile/UpdateProfileDialog";
 import Image from "next/image";
+import SmallPreviewCard from "../card/SmallPreviewCard";
 
 export default async function AboutSectionProfile({
   userInfo,
@@ -59,6 +60,9 @@ export default async function AboutSectionProfile({
               <span>{userInfo && userInfo.description}</span>
             </div>
           </div>
+        </div>
+        <div className="h-[210px] flex items-center justify-center w-full cursor-pointer">
+          <SmallPreviewCard userData={userInfo} />
         </div>
       </div>
 

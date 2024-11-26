@@ -66,9 +66,9 @@ export default function BottomSection({ userInfo }: { userInfo: any }) {
             />
           </div>
         )}
-        <div className="h-[116px] flex items-center justify-center w-full cursor-pointer">
+        {/* <div className="h-[116px] flex items-center justify-center w-full cursor-pointer">
           <SmallPreviewCard userData={userInfo} />
-        </div>
+        </div> */}
       </div>
 
       <div className="w-full relative border p-2 mt-4 rounded-xl backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">

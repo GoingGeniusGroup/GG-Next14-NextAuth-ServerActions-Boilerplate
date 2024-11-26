@@ -68,37 +68,37 @@ export default function SmallPreviewCard({
   }
 
   return (
-    <div className="group w-[192px] h-[116px]] [perspective:1000px]">
+    <div className="group w-full h-[98%] [perspective:1000px]">
       <div
         style={getGradientStyle(userData.guild)}
-        className={`relative h-[114px] w-[190px] rounded-lg shadow-md transition-all duration-500 [transform-style:preserve-3d] cursor-pointer
+        className={`relative size-full rounded-lg shadow-md transition-all duration-500 [transform-style:preserve-3d] cursor-pointer
           ${isFlipped ? "[transform:rotateY(180deg)]" : ""}`}
         onClick={handleFlip}
       >
         {/* Front of card */}
         <div className="p-2 size-full">
-          <p className="absolute top-2 right-2 text-[8px] font-semibold text-yellow-600">
+          <p className="absolute top-2 right-2 text-[16px] font-semibold text-yellow-600">
             GG
           </p>
-          <p className="text-[7px] absolute top-2 text-white left-2">
+          <p className="text-[14px] absolute top-2 text-white left-2">
             {userData.address || "No Address"}
           </p>
           <div className="flex flex-col justify-center items-start size-full">
             <div className="text-left">
-              <h1 className="text-[8px] font-bold uppercase text-white truncate">
+              <h1 className="text-[14px] font-bold uppercase text-white truncate">
                 {userData.first_name || ""} {userData.last_name || ""}
               </h1>
-              <p className="text-[7px] text-white">
+              <p className="text-[12px] text-white">
                 {(userData.description || "No description").slice(0, 30) +
                   ((userData.description?.length ?? 0) > 30 ? "..." : "")}
               </p>
             </div>
           </div>
-          <div className="absolute bottom-2 left-2 text-[7px] font-semibold text-white">
+          <div className="absolute bottom-2 left-2 text-[14px] font-semibold text-white">
             {formatDate(userData.dob)}
           </div>
           <div className="absolute bottom-2 right-2">
-            <p className="text-[6px] font-semibold hover:underline text-sky-500">
+            <p className="text-[10px] font-semibold hover:underline text-sky-500">
               View More
             </p>
           </div>
@@ -109,17 +109,17 @@ export default function SmallPreviewCard({
           style={getGradientStyle(userData.guild)}
           className="absolute inset-0 z-10 rounded-lg p-2 size-full [backface-visibility:hidden] [transform:rotateY(180deg)]"
         >
-          <p className="absolute top-2 left-2 text-[7px] text-sky-600 hover:underline font-semibold uppercase">
+          <p className="absolute top-2 left-2 text-[12px] text-sky-600 hover:underline font-semibold uppercase">
             {userData.email || "No email"}
           </p>
-          <p className="absolute top-2 right-2 text-[7px] text-yellow-500  ">
+          <p className="absolute top-2 right-2 text-[14px] font-bold text-yellow-500  ">
             REGION
           </p>
 
-          <div className="absolute bottom-2 left-2 text-[7px] text-white">
+          <div className="absolute bottom-2 left-2 text-[14px] text-white">
             {userData.guild_id || "No Guild ID"}
           </div>
-          <div className="absolute bottom-2 right-2 text-[7px] text-sky-600">
+          <div className="absolute bottom-2 right-2 text-[10px] text-sky-600">
             Back
           </div>
 
@@ -129,8 +129,8 @@ export default function SmallPreviewCard({
                 className="rounded-sm object-cover"
                 alt="qr code"
                 src={imgSrc}
-                width={50}
-                height={50}
+                width={86}
+                height={86}
               />
             )}
           </div>
