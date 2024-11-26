@@ -21,6 +21,10 @@ import { FaXTwitter } from "react-icons/fa6";
 import { FaGgCircle } from "react-icons/fa6";
 import { useState } from "react";
 import SocialMediaDialog from "../GeniusUserProfile/Info/SocialMediaDialog";
+import { RiShareLine } from "react-icons/ri";
+import { LiaQrcodeSolid } from "react-icons/lia";
+
+import { Button as MovingBorderButton } from "@/components/ui/border/moving-border";
 
 const socials = [
   {
@@ -76,10 +80,10 @@ export default function AboutSectionProfile({ userInfo }: { userInfo: any }) {
   };
   return (
     <>
-      <div className="group relative flex flex-col gap-4 border p-4 rounded-xl backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
+      <div className="group relative flex flex-col gap-4 border p-4 rounded-lg backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
         {/* Div with user information */}
         {userInfo && (
-          <div className="absolute -top-6 right-2 z-40 flex gap-2 group-hover:opacity-100 opacity-0">
+          <div className="absolute top-2 right-[-52px] z-40 flex flex-col gap-2 group-hover:opacity-100 opacity-0 transition-all duration-300">
             <UpdateCoverPhotoDialog
               gg_id={userInfo.gg_id}
               currentCoverImage={userInfo.cover_images ?? ""}
@@ -95,6 +99,27 @@ export default function AboutSectionProfile({ userInfo }: { userInfo: any }) {
             />
           </div>
         )}
+        {/* Div with share and qr code */}
+        <div className="absolute top-2 right-2 z-40 flex gap-2 ">
+          <MovingBorderButton
+            borderRadius="1.75rem"
+            className="bg-white size-10 dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800"
+          >
+            <LiaQrcodeSolid
+              size={22}
+              className="text-white hover:text-yellow-600 transition-colors duration-300"
+            />
+          </MovingBorderButton>
+          <MovingBorderButton
+            borderRadius="1.75rem"
+            className="bg-white size-10 dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800"
+          >
+            <RiShareLine
+              size={22}
+              className="text-white hover:text-yellow-600 transition-colors duration-300"
+            />
+          </MovingBorderButton>
+        </div>
         {/* dialog to open the update profile form */}
         <div className="flex flex-col gap-4">
           <Image
@@ -106,11 +131,11 @@ export default function AboutSectionProfile({ userInfo }: { userInfo: any }) {
             }
             alt="Cover picture"
             fill
-            className="object-cover"
+            className="object-cover rounded-lg"
             unoptimized
             loading="lazy"
           />
-          <div className="absolute inset-0 bg-black/30 size-full"></div>
+          <div className="absolute inset-0 bg-black/30 rounded-lg size-full"></div>
 
           {/* username */}
           <div className="flex items-center gap-2 text-black dark:text-gray-300">

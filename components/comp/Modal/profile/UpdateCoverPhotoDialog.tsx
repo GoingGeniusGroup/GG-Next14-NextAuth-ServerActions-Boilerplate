@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/dialog";
 import { IconPhotoEdit } from "@tabler/icons-react";
 import { Button as MovingBorderButton } from "@/components/ui/border/moving-border";
-import UpdateProfileForm from "../../Forms/UpdateProfileForm";
 import UpdateCoverImageForm from "../../Forms/UpdateCoverImageForm";
 
 interface UpdateCoverPhotoDialogProps {
