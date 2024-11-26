@@ -3,9 +3,14 @@ import { Prisma } from "@prisma/client";
 
 export const createExperience = async (data: Prisma.experienceCreateInput) => {
   try {
+    const { project_skills } = data;
     const experience = await db.experience.create({
       data,
     });
+    // await db.skills.create({
+    //   gg_id: experience.gg_id,
+    //   experience_id: experience.experience_id,
+    // });
     return experience;
   } catch (error) {
     console.error("Error in createExperience:", error);
