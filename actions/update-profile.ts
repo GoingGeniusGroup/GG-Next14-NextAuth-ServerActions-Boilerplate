@@ -13,6 +13,7 @@ const updateProfileSchema = z.object({
   description: z.string().min(3),
   dob: z.date().nullable(),
   image: z.string().optional(),
+  cover_images: z.array(z.string()),
 });
 
 export const updateProfile = async (
@@ -29,8 +30,16 @@ export const updateProfile = async (
     });
   }
 
-  const { gg_id, first_name, last_name, description, address, dob, image } =
-    validatedFields.data;
+  const {
+    gg_id,
+    first_name,
+    last_name,
+    description,
+    address,
+    dob,
+    image,
+    cover_images,
+  } = validatedFields.data;
 
   try {
     await updateUserById(gg_id, {
@@ -40,6 +49,7 @@ export const updateProfile = async (
       address,
       dob,
       image,
+      cover_images,
     });
     return response({
       success: true,

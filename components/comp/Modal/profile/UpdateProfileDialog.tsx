@@ -20,6 +20,7 @@ interface UpdateProfileDialogProps {
   currentDescription: string;
   currentDob: Date | null;
   currentImage: string;
+  currentCoverImage: string[];
 }
 
 const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
@@ -30,6 +31,7 @@ const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
   currentDescription,
   currentDob,
   currentImage,
+  currentCoverImage,
 }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -43,7 +45,7 @@ const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
           <IconUserEdit size={20} />
         </MovingBorderButton>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md h-[80%] overflow-auto">
         <DialogHeader>
           <DialogTitle className="flex justify-center uppercase font-semibold text-sm">
             Update Profile
@@ -57,6 +59,7 @@ const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
           currentDescription={currentDescription}
           currentDob={currentDob}
           currentImage={currentImage}
+          currentCoverImage={currentCoverImage}
           setOpen={setOpen}
         />
       </DialogContent>

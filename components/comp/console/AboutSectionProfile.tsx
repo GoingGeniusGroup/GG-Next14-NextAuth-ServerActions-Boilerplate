@@ -102,6 +102,7 @@ export default function AboutSectionProfile({ userInfo }: { userInfo: any }) {
                 currentDescription={userInfo.description ?? ""}
                 currentDob={userInfo.dob ? new Date(userInfo.dob) : null}
                 currentImage={userInfo.image ?? ""}
+                currentCoverImage={userInfo.cover_images ?? ""}
               />
             </div>
           )}
