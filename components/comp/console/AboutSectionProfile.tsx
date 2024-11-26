@@ -19,6 +19,8 @@ import { FaSteam } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaGgCircle } from "react-icons/fa6";
+import { useState } from "react";
+import SocialMediaDialog from "../GeniusUserProfile/Info/SocialMediaDialog";
 
 const socials = [
   {
@@ -64,6 +66,14 @@ const socials = [
 ];
 
 export default function AboutSectionProfile({ userInfo }: { userInfo: any }) {
+  const [userLinks, setUserLinks] = useState({});
+
+  const handleSaveLink = (socialName: string, url: string) => {
+    setUserLinks((prev) => ({
+      ...prev,
+      [socialName]: url,
+    }));
+  };
   return (
     <>
       {/* Div with user information */}
@@ -144,11 +154,11 @@ export default function AboutSectionProfile({ userInfo }: { userInfo: any }) {
             {socials.map((social, index) => (
               <CarouselItem key={index} className="pl-1 basis-1/6">
                 <Card>
-                  <div className="flex size-[52px] bg-gray-300 rounded-full items-center justify-center">
-                    <div className="size-full flex justify-center items-center">
-                      {social.icon}
-                    </div>
-                  </div>
+                  <SocialMediaDialog
+                    social={social}
+                    userLinks={userLinks}
+                    onSave={handleSaveLink}
+                  />
                 </Card>
               </CarouselItem>
             ))}
