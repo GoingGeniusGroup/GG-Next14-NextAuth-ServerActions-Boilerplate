@@ -96,6 +96,7 @@ model User {
   coordinate            coordinate[]
   experience            experience[]
   skills                skills[]
+  Color                 Color[]
 }
 
 model avatar {
@@ -357,4 +358,18 @@ enum OrderStatus {
   SHIPPED
   DELIVERED
   CANCELLED
+}
+
+enum ThemeType {
+  THEME
+  TEXT
+}
+
+model Color {
+  id     String    @id @default(cuid())
+  status Boolean @default(false)
+  type   ThemeType
+  value  String
+  userId String     @db.Uuid
+  user   User      @relation(fields: [userId], references: [gg_id], onDelete: Cascade)
 }

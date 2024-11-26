@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef, useMemo, useState } from "react";
+import { forwardRef, useMemo, useState, useTransition } from "react";
 import { HexColorPicker } from "react-colorful";
 import { cn } from "@/lib/utils";
 import { useForwardedRef } from "@/lib/use-forwarded-ref";
@@ -12,27 +12,71 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover/popover";
 import { Input } from "@/components/ui/input";
+import {  ThemeType } from "@prisma/client"
+import { useTransform } from "framer-motion";
+import { postColors } from "@/services/color";
+import { toast } from "sonner";
+import { SpinningButton } from "@/components/ui/spinning-button";
 
 interface ColorPickerProps {
+
+
   value: string;
   onChange: (value: string) => void;
+   typeColor: ThemeType;
   onBlur?: () => void;
+  
 }
+
+
+
+
 
 const ColorPicker = forwardRef<
   HTMLInputElement,
   Omit<ButtonProps, "value" | "onChange" | "onBlur"> & ColorPickerProps
 >(
   (
-    { disabled, value, onChange, onBlur, name, className, ...props },
+    { disabled, value, typeColor,onChange, onBlur, name, className, ...props },
     forwardedRef
   ) => {
     const ref = useForwardedRef(forwardedRef);
     const [open, setOpen] = useState(false);
 
+    const [ ispending,startTranstion] = useTransition()
+
     const parsedValue = useMemo(() => {
       return value || "#FFFFFF";
     }, [value]);
+
+
+    const postColor =  (value:string, typeColor: ThemeType) => {
+
+      startTranstion( async() => { 
+        try {
+          
+         const res =  await postColors(value, typeColor)
+         if(!res){
+          toast.error("something went wrong!")
+         }
+         if(!res.success ){
+          toast.error(res.error.message)
+         }
+         if(res.success){
+          toast.success(res?.message)
+         }
+  
+        } catch (error) {
+          console.log(error);
+          
+          toast.error("something went wrong!")
+          
+        }
+
+      })
+
+    }
+
 
     return (
       <Popover onOpenChange={setOpen} open={open}>
@@ -59,7 +103,9 @@ const ColorPicker = forwardRef<
             onChange={onChange}
             // Add width and height for smaller size
             style={{ width: "150px", height: "150px" }}
-          />
+          />  
+
+          
           <Input
             maxLength={7}
             onChange={(e) => {
@@ -68,6 +114,23 @@ const ColorPicker = forwardRef<
             ref={ref}
             value={parsedValue}
           />
+          <div className="flex gap-2"
+          >
+          <Button size={'sm'} variant={'destructive'}>
+            Cancel
+          </Button>
+          <SpinningButton size={'sm'}
+          className="bg-indigo-500 hover:bg-indigo-700"
+          onClick={() => postColor(value,typeColor)}
+          isLoading={ispending}
+          >
+            
+            Save
+          </SpinningButton>
+
+          </div>
+         
+
         </PopoverContent>
       </Popover>
     );
