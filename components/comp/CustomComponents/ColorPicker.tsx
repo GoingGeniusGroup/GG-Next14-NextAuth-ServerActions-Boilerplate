@@ -12,7 +12,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover/popover";
 import { Input } from "@/components/ui/input";
-import {  ThemeType } from "@prisma/client"
+import { ThemeType } from "@prisma/client";
 import { useTransform } from "framer-motion";
 import { postColors } from "@/services/color";
 import { toast } from "sonner";
@@ -20,80 +20,70 @@ import { SpinningButton } from "@/components/ui/spinning-button";
 import { useMobileSimulator } from "@/app/providers/MobileSimulatorContext";
 
 interface ColorPickerProps {
-
-
   value: string;
   onChange: (value: string) => void;
-   typeColor: ThemeType;
+  typeColor: ThemeType;
   onBlur?: () => void;
-  
 }
-
-
 
 const ColorPicker = forwardRef<
   HTMLInputElement,
   Omit<ButtonProps, "value" | "onChange" | "onBlur"> & ColorPickerProps
 >(
   (
-    { disabled, value, typeColor,onChange, onBlur, name, className, ...props },
+    { disabled, value, typeColor, onChange, onBlur, name, className, ...props },
     forwardedRef
   ) => {
     const ref = useForwardedRef(forwardedRef);
     const [open, setOpen] = useState(false);
 
-    const {ColorPickerAttrs} = useMobileSimulator()
-    const { setTextColor, setCurrentBackground,tempColor} = ColorPickerAttrs
-  console.log(tempColor);
-  
+    const { ColorPickerAttrs } = useMobileSimulator();
+    const { setTextColor, setCurrentBackground, tempColor } = ColorPickerAttrs;
+    // console.log(tempColor);
+
     // useEffect(()=>{
     //   setTempColor(value)
     // },[])
 
-    const [ ispending,startTranstion] = useTransition()
+    const [ispending, startTranstion] = useTransition();
 
     const parsedValue = useMemo(() => {
       return value || "#FFFFFF";
     }, [value]);
 
-
-    const postColor =  (value:string, typeColor: ThemeType) => {
-
-      startTranstion( async() => { 
+    const postColor = (value: string, typeColor: ThemeType) => {
+      startTranstion(async () => {
         try {
-          
-         const res =  await postColors(value, typeColor)
-         if(!res){
-          toast.error("something went wrong!")
-         }
-         if(!res.success ){
-          toast.error(res.error.message)
-         }
-         if(res.success){
-          toast.success(res?.message)
-         }
-  
+          const res = await postColors(value, typeColor);
+          if (!res) {
+            toast.error("something went wrong!");
+          }
+          if (!res.success) {
+            toast.error(res.error.message);
+          }
+          if (res.success) {
+            toast.success(res?.message);
+          }
         } catch (error) {
           console.log(error);
-          
-          toast.error("something went wrong!")
-          
+
+          toast.error("something went wrong!");
         }
-
-      })
-
-    }
+      });
+    };
 
     const handleCancel = () => {
-      const tempValue = tempColor.find((colorObj) => colorObj.typeColor === typeColor)?.value;
-    
+      const tempValue = tempColor.find(
+        (colorObj) => colorObj.typeColor === typeColor
+      )?.value;
+
       if (!tempValue) {
-        setOpen(false); 
+        setOpen(false);
         return;
       }
-    
+
       setOpen(false);
-    
+
       if (typeColor === "TEXT") {
         setTextColor(tempValue as string);
       } else {
@@ -103,8 +93,6 @@ const ColorPicker = forwardRef<
         });
       }
     };
-    
- 
 
     return (
       <Popover onOpenChange={setOpen} open={open}>
@@ -131,9 +119,8 @@ const ColorPicker = forwardRef<
             onChange={onChange}
             // Add width and height for smaller size
             style={{ width: "150px", height: "150px" }}
-          />  
+          />
 
-          
           <Input
             maxLength={7}
             onChange={(e) => {
@@ -142,24 +129,19 @@ const ColorPicker = forwardRef<
             ref={ref}
             value={parsedValue}
           />
-          <div className="flex gap-2"
-          >
-          <Button size={'sm'} variant={'destructive'}
-          onClick={handleCancel}>
-            Cancel
-          </Button>
-          <SpinningButton size={'sm'}
-          className="bg-indigo-500 hover:bg-indigo-700"
-          onClick={() => postColor(value,typeColor)}
-          isLoading={ispending}
-          >
-            
-            Save
-          </SpinningButton>
-
+          <div className="flex gap-2">
+            <Button size={"sm"} variant={"destructive"} onClick={handleCancel}>
+              Cancel
+            </Button>
+            <SpinningButton
+              size={"sm"}
+              className="bg-indigo-500 hover:bg-indigo-700"
+              onClick={() => postColor(value, typeColor)}
+              isLoading={ispending}
+            >
+              Save
+            </SpinningButton>
           </div>
-         
-
         </PopoverContent>
       </Popover>
     );

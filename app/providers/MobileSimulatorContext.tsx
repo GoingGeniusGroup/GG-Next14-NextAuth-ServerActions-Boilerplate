@@ -34,7 +34,7 @@ interface MobileSimulatorContextType {
   showMobile: boolean;
   setShowMobile: React.Dispatch<React.SetStateAction<boolean>>;
   isSmallScreen: boolean;
-  
+
   sections: SectionProps[];
   toggleScreen: (section: SectionProps) => void;
   screens: SectionProps[];
@@ -46,9 +46,8 @@ interface MobileSimulatorContextType {
     handleTextColorChange: (color: string) => void;
     currentBackground: BackgroundProps;
     setCurrentBackground: React.Dispatch<React.SetStateAction<BackgroundProps>>;
-    tempColor: {value: string, typeColor: ThemeType}[]
-  }
- 
+    tempColor: { value: string; typeColor: ThemeType }[];
+  };
 }
 
 const backgrounds = [
@@ -95,19 +94,18 @@ export const MobileSimulatorProvider = ({
   const [showLogin, setShowLogin] = useState<boolean>(true);
   const [activeScreens, setActiveScreens] = useState<number[]>([]);
   const [textColor, setTextColor] = useState("#000000");
-  const [ tempColor, setTempColor] = useState<{value: string, typeColor: ThemeType}[]> ([])
+  const [tempColor, setTempColor] = useState<
+    { value: string; typeColor: ThemeType }[]
+  >([]);
   const handleTextColorChange = (color: string) => {
     const formattedColor = color.startsWith("#") ? color : `#${color}`;
     setTextColor(formattedColor); // Set the new text color globally
   };
-  
- console.log(tempColor,'from provider');
- 
-  useEffect(()=> {
-    const fetchcolors = async() => {
+
+  useEffect(() => {
+    const fetchcolors = async () => {
       const response = await getColorsbyUserId();
-      if(response){
-        
+      if (response) {
         response.map((colorObj) => {
           setTempColor((prev) => {
             return [
@@ -118,29 +116,21 @@ export const MobileSimulatorProvider = ({
               },
             ];
           });
-          
-          if(colorObj.type === "TEXT"){
-            setTextColor(colorObj.value)
-            
-          }
-          else{
+
+          if (colorObj.type === "TEXT") {
+            setTextColor(colorObj.value);
+          } else {
             setCurrentBackground({
               name: "Custom Color",
-              class:  `bg-[${colorObj.value}]`
-            } )
-
-           
+              class: `bg-[${colorObj.value}]`,
+            });
           }
-        })
-       
-          
+        });
       }
-    }
+    };
 
-    fetchcolors()
-
-  },[])
-  
+    fetchcolors();
+  }, []);
 
   // Directly compute isLoggedIn from session status
   const isLoggedIn = status === "authenticated";
@@ -253,9 +243,9 @@ export const MobileSimulatorProvider = ({
     textColor,
     setTextColor,
     currentBackground,
-    setCurrentBackground,tempColor
-    
-  }
+    setCurrentBackground,
+    tempColor,
+  };
 
   return (
     <MobileSimulatorContext.Provider
@@ -263,7 +253,7 @@ export const MobileSimulatorProvider = ({
         showMobile,
         setShowMobile,
         isSmallScreen,
-    
+
         sections,
         toggleScreen,
         screens,
@@ -272,9 +262,8 @@ export const MobileSimulatorProvider = ({
             prev.filter((screenId) => screenId !== id)
           ),
         closeAllScreens: () => setActiveScreens([]),
-        ColorPickerAttrs
+        ColorPickerAttrs,
       }}
-      
     >
       {children}
       <SimulatorToggleButton

@@ -111,7 +111,7 @@ export default function AvatarManagerClient({
   }, []);
 
   const handleEditAvatar = useCallback((avatar: AvatarType) => {
-    console.log("Editing avatar:", avatar);
+    // console.log("Editing avatar:", avatar);
     setIsAvatarCreatorOpen(true);
     setEditingAvatar(avatar);
   }, []);

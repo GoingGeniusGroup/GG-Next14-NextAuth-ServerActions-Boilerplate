@@ -30,13 +30,11 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
   screens,
 
   updateCurrentBackground,
-  
-  
 }) => {
+  const { ColorPickerAttrs } = useMobileSimulator();
+  const { currentBackground, textColor, handleTextColorChange } =
+    ColorPickerAttrs;
 
-  const { ColorPickerAttrs }  = useMobileSimulator()
-  const {currentBackground, textColor,handleTextColorChange } = ColorPickerAttrs
-  
   const handleColorChange = (color: string) => {
     const formattedColor = color.startsWith("#") ? color : `#${color}`;
     const newBackground = {
@@ -45,8 +43,6 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
     };
     updateCurrentBackground(newBackground);
   };
-
-
 
   // Check if the background is a custom color and apply it accordingly
   const backgroundStyle =
@@ -158,7 +154,7 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
                       : ""
                   }
                   onChange={handleColorChange}
-                  typeColor= { ThemeType.THEME}
+                  typeColor={ThemeType.THEME}
                 />
               </div>
               <div className="flex flex-col w-full items-center gap-1">
@@ -166,7 +162,7 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
                 <ColorPicker
                   value={textColor}
                   onChange={handleTextColorChange}
-                  typeColor= { ThemeType.TEXT}
+                  typeColor={ThemeType.TEXT}
                 />
               </div>
             </div>
