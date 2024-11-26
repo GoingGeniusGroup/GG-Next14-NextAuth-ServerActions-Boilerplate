@@ -4,6 +4,7 @@ import { HoverEffect2 } from "@/components/ui/card/card-hover-effect2";
 import SmallPreviewCard from "../card/SmallPreviewCard";
 import UpdateCoverPhotoDialog from "../Modal/profile/UpdateCoverPhotoDialog";
 import Image from "next/image";
+import AchievementsCard from "../GeniusUserProfile/Achievements/AchievementsCard";
 
 export default function BottomSection({ userInfo }: { userInfo: any }) {
   const newsItems = [
@@ -43,6 +44,9 @@ export default function BottomSection({ userInfo }: { userInfo: any }) {
 
   return (
     <>
+      <div className="w-full relative border p-2 mt-4 rounded-xl backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
+        <AchievementsCard />
+      </div>
       <div className="w-full relative border p-2 mt-4 rounded-xl backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
         <HoverEffect2 items={newsItems} />
       </div>

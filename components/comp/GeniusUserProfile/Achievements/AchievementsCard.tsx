@@ -47,7 +47,7 @@ export default function AchievementsCard() {
           CHECK AWARDS
         </button>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 h-[170px] overflow-auto">
         {achievements.map((achievement, index) => (
           <div key={index} className="space-y-1.5">
             <div className="flex justify-between text-sm">
