@@ -33,8 +33,8 @@ export default function MobileSimulatorContainer({
   closeAllScreens,
   updateCurrentBackground,
 }: MobileSimulatorContainerProps) {
-  const [textColor, setTextColor] = useState("#000000");
   const pathname = usePathname();
+  
 
   return (
     <>
@@ -62,8 +62,8 @@ export default function MobileSimulatorContainer({
                     index={index}
                     isSmallScreen={isSmallScreen}
                     removeScreen={removeScreen}
-                    currentBackground={currentBackground} // Pass currentBackground
-                    textColor={textColor} // Pass textColor
+                  // Pass currentBackground
+                 
                   />
                 ))}
               </AnimatePresence>
@@ -81,10 +81,8 @@ export default function MobileSimulatorContainer({
                   backgrounds={backgrounds}
                   closeAllScreens={closeAllScreens}
                   screens={screens}
-                  currentBackground={currentBackground}
                   updateCurrentBackground={updateCurrentBackground}
-                  textColor={textColor}
-                  setTextColor={setTextColor}
+                  
                 />
               </motion.div>
             </div>

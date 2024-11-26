@@ -53,3 +53,4 @@ export default function SimulatorToggleButton({
     </motion.div>
   );
 }
+
