@@ -3,8 +3,8 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'models.readyplayer.me',
+        protocol: "https",
+        hostname: "models.readyplayer.me",
       },
       {
         protocol: "https",
@@ -21,6 +21,7 @@ const nextConfig = {
     ],
     domains: ["media.steampowered.com"],
   },
+  transpilePackages: ["swiper"],
 };
 
 module.exports = nextConfig;
