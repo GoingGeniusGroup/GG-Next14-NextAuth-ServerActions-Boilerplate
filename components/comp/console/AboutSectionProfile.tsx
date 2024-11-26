@@ -6,6 +6,7 @@ import {
 import UpdateProfileDialog from "../Modal/profile/UpdateProfileDialog";
 import Image from "next/image";
 import SmallPreviewCard from "../card/SmallPreviewCard";
+import UpdateCoverPhotoDialog from "../Modal/profile/UpdateCoverPhotoDialog";
 
 export default async function AboutSectionProfile({
   userInfo,
@@ -15,8 +16,30 @@ export default async function AboutSectionProfile({
   return (
     <>
       {/* Div with user information */}
-      <div className="relative flex flex-col gap-4 border p-4 rounded-xl backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
+      <div className="relative flex flex-col gap-4 border p-4 rounded-xl overflow-hidden backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
         <div className="flex flex-col gap-4">
+          <Image
+            src={
+              Array.isArray(userInfo?.cover_images) &&
+              userInfo?.cover_images.length > 0
+                ? userInfo.cover_images[0]
+                : "/default-pictures/cover-image.png"
+            }
+            alt="Cover picture"
+            fill
+            className="object-cover"
+            unoptimized
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-black/30 size-full"></div>
+          {userInfo && (
+            <div className="absolute top-2 right-2 z-40">
+              <UpdateCoverPhotoDialog
+                gg_id={userInfo.gg_id}
+                currentCoverImage={userInfo.cover_images ?? ""}
+              />
+            </div>
+          )}
           {/* dialog to open the update profile form */}
           {userInfo && (
             <div className="absolute top-2 right-2 z-40">
@@ -44,12 +67,12 @@ export default async function AboutSectionProfile({
                 }
                 alt="Profile picture"
                 fill
-                className="object-cover"
+                className="object-cover z-0"
                 unoptimized
                 loading="lazy"
               />
             </div>
-            <span className="uppercase font-bold">
+            <span className="uppercase font-bold z-10">
               {userInfo ? userInfo.username : "Username"}
             </span>
           </div>
