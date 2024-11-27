@@ -83,8 +83,6 @@ export default function AboutSectionProfile({
     }));
   };
 
-  console.log("userInfo", ifOwnProfile);
-
   return (
     <>
       <div className="group relative flex flex-col gap-4 border p-4 rounded-lg backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
