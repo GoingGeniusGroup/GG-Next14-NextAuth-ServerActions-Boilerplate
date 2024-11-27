@@ -112,7 +112,8 @@ export default function BottomSection({
                 {emotes.map((emote, index) => (
                   <CarouselItem key={index} className="pl-1 basis-1/6">
                     <Card
-                      className={`w-[60px] h-[75px] rounded-lg bg-[${emote.color}] flex items-center justify-center hover:border border-yellow-600 transition-colors duration-300`}
+                      className={`w-[60px] h-[75px] rounded-lg flex items-center justify-center hover:border border-yellow-600 transition-colors duration-300`}
+                      style={{ backgroundColor: emote.color }}
                     >
                       {emote.emote}
                     </Card>
