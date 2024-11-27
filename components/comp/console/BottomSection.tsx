@@ -22,6 +22,7 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel/carousel";
 import AvatarManagerClientProfile from "../AvatarManager/avatar-manager-client-profile";
+import ExpressionCard from "../Huds/ExpressionsCard";
 
 const emotes = [
   { name: "legendary", emote: "Lege", color: "#FCBB3F" },
@@ -111,7 +112,7 @@ export default function BottomSection({
                 {emotes.map((emote, index) => (
                   <CarouselItem key={index} className="pl-1 basis-1/6">
                     <Card
-                      className={`w-[60px] h-[75px] rounded-lg bg-[${emote.color}] flex items-center justify-center`}
+                      className={`w-[60px] h-[75px] rounded-lg bg-[${emote.color}] flex items-center justify-center hover:border border-yellow-600 transition-colors duration-300`}
                     >
                       {emote.emote}
                     </Card>
@@ -126,7 +127,7 @@ export default function BottomSection({
                 {tabs.map((tab, index) => (
                   <CarouselItem key={index} className="pl-1 basis-1/4">
                     <Card
-                      className={`size-[90px] rounded-lg dark:bg-black/40 hover:border border-yellow-600 bg-gray-200 flex items-center justify-center text-3xl`}
+                      className={`size-[90px] rounded-lg dark:bg-black/40 hover:border border-yellow-600 bg-gray-200 flex items-center justify-center text-3xl transition-colors duration-300`}
                     >
                       {tab.icon}
                     </Card>
@@ -138,8 +139,20 @@ export default function BottomSection({
         </>
       ) : (
         <>
-          <div className="w-full relative border p-2 rounded-xl backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
-            <AchievementsCard />
+          <div className="relative flex border p-2 mt-4 rounded-xl overflow-auto backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
+            <Carousel className="w-full">
+              <CarouselContent className="-ml-1">
+                {tabs.map((tab, index) => (
+                  <CarouselItem key={index} className="pl-1 basis-1/4">
+                    <Card
+                      className={`size-[90px] rounded-lg dark:bg-black/40 hover:border border-yellow-600 bg-gray-200 flex items-center justify-center text-3xl`}
+                    >
+                      {tab.icon}
+                    </Card>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
           </div>
 
           <div className="absolute bottom-10 left-1/2 -translate-x-1/2">
@@ -259,6 +272,12 @@ export default function BottomSection({
                 ))}
               </CarouselContent>
             </Carousel>
+          </div>
+          <div className="relative mt-4 flex border p-2 rounded-xl overflow-auto backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
+            <ExpressionCard
+              expressions={expressions}
+              handleEmote={handleEmote}
+            />
           </div>
         </>
       )}

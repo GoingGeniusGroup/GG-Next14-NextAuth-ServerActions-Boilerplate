@@ -34,8 +34,8 @@ export default function AchievementsCard() {
   return (
     <Card className="w-full rounded-lg bg-zinc-900 text-white border-none">
       <CardHeader className="space-y-1 pb-4">
-        <div className="text-2xl font-bold tracking-tight">SEASON 2</div>
-        <div className="text-rose-500 font-semibold">WEEK 3</div>
+        {/* <div className="text-2xl font-bold tracking-tight">SEASON 2</div>
+        <div className="text-rose-500 font-semibold">WEEK 3</div> */}
         <div className="text-sm text-zinc-400">
           {totalProgress} / {totalRequired}
         </div>
@@ -43,9 +43,9 @@ export default function AchievementsCard() {
           value={(totalProgress / totalRequired) * 100}
           className="h-2 bg-zinc-800"
         />
-        <button className="bg-zinc-800 text-sm px-4 py-1.5 rounded-md hover:bg-zinc-700 transition-colors">
+        {/* <button className="bg-zinc-800 text-sm px-4 py-1.5 rounded-md hover:bg-zinc-700 transition-colors">
           CHECK AWARDS
-        </button>
+        </button> */}
       </CardHeader>
       <CardContent className="space-y-4 h-[170px] overflow-auto">
         {achievements.map((achievement, index) => (
