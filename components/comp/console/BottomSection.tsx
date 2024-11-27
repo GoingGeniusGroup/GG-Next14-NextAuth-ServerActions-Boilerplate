@@ -1,8 +1,5 @@
 "use client";
 
-import { HoverEffect2 } from "@/components/ui/card/card-hover-effect2";
-import SmallPreviewCard from "../card/SmallPreviewCard";
-import UpdateCoverPhotoDialog from "../Modal/profile/UpdateCoverPhotoDialog";
 import Image from "next/image";
 
 import { Button as MovingBorderButton } from "@/components/ui/border/moving-border";
@@ -23,50 +20,28 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel/carousel";
+import AvatarManagerClientProfile from "../AvatarManager/avatar-manager-client-profile";
 
-export default function BottomSection({ userInfo }: { userInfo: any }) {
-  const newsItems = [
-    {
-      title: "Project 1",
-      image:
-        "https://www.simplilearn.com/ice9/free_resources_article_thumb/project_management_coursefees.jpg",
-      description:
-        "A technology company that builds economic infrastructure for the internet.",
-      link: "#",
-    },
-    {
-      title: "Project 2",
-      image:
-        "https://www.shutterstock.com/image-photo/project-manager-working-on-computer-600nw-2002388855.jpg",
-      description:
-        "A technology company that builds economic infrastructure for the internet.",
-      link: "#",
-    },
-    {
-      title: "Project 3",
-      image:
-        "https://www.michaelpage.com.au/sites/michaelpage.com.au/files/2022-06/IT%20Project%20Manager.jpg",
-      description:
-        "A technology company that builds economic infrastructure for the internet.",
-      link: "#",
-    },
-    {
-      title: "Project 4",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1qLr3cR3-yr-1UaLFYoIKDw3gl5FJbBjCxA&s",
-      description:
-        "A technology company that builds economic infrastructure for the internet.",
-      link: "#",
-    },
-  ];
+const emotes = [
+  { name: "legendary", emote: "Lege", color: "#FCBB3F" },
+  { name: "mythic", emote: "Myth", color: "#DC143C" },
+  { name: "rare", emote: "Epic", color: "#AA25B6" },
+  { name: "epic", emote: "Rare", color: "#129FE0" },
+  { name: "uncommon", emote: "Unco", color: "#14C620" },
+  { name: "common", emote: "Com", color: "#ACACAC" },
+];
 
+export default function BottomSection({
+  userInfo,
+  ifOwnProfile,
+}: {
+  userInfo: any;
+  ifOwnProfile: boolean;
+}) {
   const {
     avatars,
     selectedAvatar,
-    currentEmote,
     isAvatarCreatorOpen,
     isProcessing,
     expressions,
@@ -105,136 +80,183 @@ export default function BottomSection({ userInfo }: { userInfo: any }) {
   };
   return (
     <>
-      <div className="w-full relative backdrop-blur-lg rounded-lg border dark:border-white/20 border-black/20 hover:border-yellow-500 transition-all duration-300 ease-in-out">
-        <div>
-          <Dialog
-            open={isAvatarCreatorOpen}
-            onOpenChange={setIsAvatarCreatorOpen}
-          >
-            <DialogTrigger asChild>
-              <MovingBorderButton onClick={handleCreateAvatar} className="p-2">
-                {isProcessing ? "..." : "Create New Avatar"}
-              </MovingBorderButton>
-            </DialogTrigger>
-            <DialogContent>
-              <div className="h-[600px] w-full relative rounded-xl overflow-hidden">
-                <AvatarCreator
-                  subdomain="gguser"
-                  config={
-                    editingAvatar
-                      ? {
-                          ...editAvatarConfig,
-                          avatarId: extractUserId(editingAvatar.avatar_url),
-                        }
-                      : createAvatarConfig
-                  }
-                  onAvatarExported={
-                    editingAvatar ? handleUpdateAvatar : handleAvatarCreated
-                  }
-                  onUserSet={(event) => console.log("User set:", event)}
-                  iframeUrl={
-                    editingAvatar
-                      ? getAvatarCreatorUrl(editingAvatar.avatar_url)
-                      : undefined
-                  }
-                />
-                {isProcessing && (
-                  <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                    {editingAvatar
-                      ? "Updating avatar..."
-                      : "Creating avatar..."}
-                  </div>
-                )}
-              </div>
-            </DialogContent>
-          </Dialog>
-        </div>
-        <div>
-          <ExpressionBottomMidHud
-            expressions={expressions}
-            handleEmote={handleEmote}
-          />
-        </div>
-      </div>
+      {!ifOwnProfile ? (
+        <>
+          <div className="relative w-full h-[300px] flex justify-end z-40">
+            <div className="absolute bottom-12 left-2">
+              <ExpressionBottomMidHud
+                expressions={expressions}
+                handleEmote={handleEmote}
+              />
+            </div>
+            <div className="h-full w-[70%]">
+              <AvatarManagerClientProfile
+                fov={40}
+                cameraInitialDistance={4}
+                cameraTarget={0}
+              />
+            </div>
+          </div>
+          <div className="relative flex border p-2 rounded-xl overflow-auto backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
+            <Carousel className="w-full max-w-sm">
+              <CarouselContent className="-ml-1">
+                {emotes.map((emote, index) => (
+                  <CarouselItem key={index} className="pl-1 basis-1/6">
+                    <Card
+                      className={`w-[60px] h-[75px] rounded-lg bg-[${emote.color}] flex items-center justify-center`}
+                    >
+                      {emote.emote}
+                    </Card>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
+          </div>
+          <div className="relative flex border p-2 mt-4 rounded-xl overflow-auto backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
+            <Carousel className="w-full max-w-sm">
+              <CarouselContent className="-ml-1">
+                {emotes.map((emote, index) => (
+                  <CarouselItem key={index} className="pl-1 basis-1/6">
+                    <Card
+                      className={`w-[60px] h-[75px] rounded-lg bg-[${emote.color}] flex items-center justify-center`}
+                    >
+                      {emote.emote}
+                    </Card>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="w-full relative border p-2 rounded-xl backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
+            <AchievementsCard />
+          </div>
 
-      <div className="w-full relative h-fit backdrop-blur-lg rounded-lg border dark:border-white/20 border-black/20 hover:border-yellow-500 transition-all duration-300 ease-in-out">
-        <Carousel className="w-full max-w-sm">
-          <CarouselContent className="-ml-1">
-            {avatars.map((avatar, index) => (
-              <CarouselItem
-                key={index}
-                className="pl-1 md:basis-1/2 lg:basis-1/3"
-              >
-                <div className="p-1">
-                  <Card
-                    key={avatar.avatar_id}
-                    className={`border h-fit rounded-lg hover:border-yellow-500 transition-all duration-300 ease-in-out ${
-                      selectedAvatar === avatar.avatar_url
-                        ? "border-sky-500"
-                        : "border-black/20 dark:border-white/20"
-                    }`}
-                  >
-                    <CardContent className="relative pt-6">
-                      <div className="flex flex-col items-center space-y-4">
-                        <Image
-                          src={
-                            avatar.avatar_url?.replace(".glb", ".png") ||
-                            "/placeholder-avatar.png"
+          <div className="absolute bottom-10 left-1/2 -translate-x-1/2">
+            <Dialog
+              open={isAvatarCreatorOpen}
+              onOpenChange={setIsAvatarCreatorOpen}
+            >
+              <DialogTrigger asChild>
+                <MovingBorderButton
+                  onClick={handleCreateAvatar}
+                  className="p-2"
+                >
+                  {isProcessing ? "..." : "Create New Avatar"}
+                </MovingBorderButton>
+              </DialogTrigger>
+              <DialogContent>
+                <div className="h-[600px] w-full relative rounded-xl overflow-hidden">
+                  <AvatarCreator
+                    subdomain="gguser"
+                    config={
+                      editingAvatar
+                        ? {
+                            ...editAvatarConfig,
+                            avatarId: extractUserId(editingAvatar.avatar_url),
                           }
-                          alt="Avatar"
-                          width={128}
-                          height={128}
-                          className="rounded-full"
-                        />
-                        <Button
-                          variant="black"
-                          size="sm"
-                          className={`hover:text-yellow-500 w-full ${
-                            selectedAvatar === avatar.avatar_url
-                              ? "text-sky-500"
-                              : ""
-                          }`}
-                          onClick={() => setSelectedAvatar(avatar.avatar_url)}
-                        >
-                          {selectedAvatar === avatar.avatar_url
-                            ? "Selected"
-                            : "Select"}
-                        </Button>
-                      </div>
-                      <div className="absolute top-2 flex gap-2 right-2">
-                        <Button
-                          variant="transparent_rounded"
-                          className="hover:text-yellow-500 text-sky-400 p-[1px]"
-                          size="mini2"
-                          onClick={() => handleEditAvatar(avatar)}
-                        >
-                          <IconEdit />
-                        </Button>
-                        <Button
-                          variant="transparent_rounded"
-                          className="hover:text-yellow-500 text-red-400 p-[1px]"
-                          size="mini2"
-                          onClick={() => handleDeleteAvatar(avatar.avatar_id)}
-                        >
-                          <IconTrash />
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
+                        : createAvatarConfig
+                    }
+                    onAvatarExported={
+                      editingAvatar ? handleUpdateAvatar : handleAvatarCreated
+                    }
+                    onUserSet={(event) => console.log("User set:", event)}
+                    iframeUrl={
+                      editingAvatar
+                        ? getAvatarCreatorUrl(editingAvatar.avatar_url)
+                        : undefined
+                    }
+                  />
+                  {isProcessing && (
+                    <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                      {editingAvatar
+                        ? "Updating avatar..."
+                        : "Creating avatar..."}
+                    </div>
+                  )}
                 </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel>
-      </div>
-      <div className="w-full relative border p-2 mt-4 rounded-xl backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
-        <AchievementsCard />
-      </div>
-      <div className="w-full relative border p-2 mt-4 rounded-xl backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
-        <HoverEffect2 items={newsItems} />
-      </div>
+              </DialogContent>
+            </Dialog>
+          </div>
+
+          <div className="w-full relative h-fit backdrop-blur-lg rounded-lg border dark:border-white/20 border-black/20 hover:border-yellow-500 transition-all duration-300 ease-in-out">
+            <Carousel className="w-full max-w-sm">
+              <CarouselContent className="-ml-1">
+                {avatars.map((avatar, index) => (
+                  <CarouselItem
+                    key={index}
+                    className="pl-1 md:basis-1/2 lg:basis-1/3"
+                  >
+                    <div className="p-1">
+                      <Card
+                        key={avatar.avatar_id}
+                        className={`border h-fit rounded-lg hover:border-yellow-500 transition-all duration-300 ease-in-out ${
+                          selectedAvatar === avatar.avatar_url
+                            ? "border-sky-500"
+                            : "border-black/20 dark:border-white/20"
+                        }`}
+                      >
+                        <CardContent className="relative pt-6">
+                          <div className="flex flex-col items-center space-y-4">
+                            <Image
+                              src={
+                                avatar.avatar_url?.replace(".glb", ".png") ||
+                                "/placeholder-avatar.png"
+                              }
+                              alt="Avatar"
+                              width={128}
+                              height={128}
+                              className="rounded-full"
+                            />
+                            <Button
+                              variant="black"
+                              size="sm"
+                              className={`hover:text-yellow-500 w-full ${
+                                selectedAvatar === avatar.avatar_url
+                                  ? "text-sky-500"
+                                  : ""
+                              }`}
+                              onClick={() =>
+                                setSelectedAvatar(avatar.avatar_url)
+                              }
+                            >
+                              {selectedAvatar === avatar.avatar_url
+                                ? "Selected"
+                                : "Select"}
+                            </Button>
+                          </div>
+                          <div className="absolute top-2 flex gap-2 right-2">
+                            <Button
+                              variant="transparent_rounded"
+                              className="hover:text-yellow-500 text-sky-400 p-[1px]"
+                              size="mini2"
+                              onClick={() => handleEditAvatar(avatar)}
+                            >
+                              <IconEdit />
+                            </Button>
+                            <Button
+                              variant="transparent_rounded"
+                              className="hover:text-yellow-500 text-red-400 p-[1px]"
+                              size="mini2"
+                              onClick={() =>
+                                handleDeleteAvatar(avatar.avatar_id)
+                              }
+                            >
+                              <IconTrash />
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
+          </div>
+        </>
+      )}
     </>
   );
 }

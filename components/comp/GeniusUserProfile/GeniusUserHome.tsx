@@ -31,6 +31,7 @@ export default async function GeniusUserHome({
           {/* Projects Grid */}
           <BottomSection
             userInfo={LoggedUserProfile ? currentUser : profileOwner}
+            ifOwnProfile={LoggedUserProfile}
           />
         </div>
       </div>

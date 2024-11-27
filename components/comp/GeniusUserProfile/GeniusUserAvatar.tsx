@@ -11,14 +11,18 @@ const LazyAvatar = dynamic(
   }
 );
 
-export default function GeniusUserAvatar() {
+export default function GeniusUserAvatar(profileOwner: any) {
   return (
     <div className="relative w-[650px] h-[500px] flex justify-center">
+      {profileOwner.username}
       <Suspense fallback={<AvatarSkeleton />}>
         {LazyAvatar ? (
           <LazyAvatar
-            modelSrc="https://models.readyplayer.me/66fbd22e36a151e549ea8397.glb"
-            animationSrc="/animations/female-animation-catwalk.glb"
+            modelSrc={
+              "https://models.readyplayer.me/658be9e8fc8bec93d06806f3.glb?morphTargets=ARKit,Eyes Extra&textureAtlas=none&lod=0"
+            }
+            shadows={false}
+            animationSrc="/male-idle-3.fbx"
             style={{ background: "rgb(0,0,6)", pointerEvents: "none" }}
             fov={35}
             cameraTarget={0}

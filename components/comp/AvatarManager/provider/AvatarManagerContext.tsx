@@ -6,6 +6,7 @@ import {
   useState,
   useCallback,
   ReactNode,
+  useEffect,
 } from "react";
 
 import { addAvatar, deleteAvatar, updateAvatar } from "@/actions/avatar";
@@ -13,6 +14,7 @@ import { AvatarExportedEvent } from "@/components/comp/AvatarComponents/avatar_c
 import { ExtendedUser } from "@/types/next-auth";
 import { AvatarResponse } from "@/types/utils";
 import { toast } from "sonner";
+import { getAvatarsByUserId } from "@/services/avatar";
 
 // Types
 export type AvatarType = {
@@ -105,6 +107,21 @@ export function AvatarProvider({
   const [isAvatarCreatorOpen, setIsAvatarCreatorOpen] = useState(false);
   const [editingAvatar, setEditingAvatar] = useState<AvatarType | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
+
+  useEffect(() => {
+    const fetchAvatars = async () => {
+      const fetchedAvatars = await getAvatarsByUserId(user.gg_id);
+      if (fetchedAvatars) {
+        setAvatars(
+          fetchedAvatars.map((avatar) => ({
+            avatar_id: avatar.avatar_id,
+            avatar_url: avatar.avatar_url || undefined,
+          }))
+        );
+      }
+    };
+    fetchAvatars();
+  }, [user.gg_id]);
 
   const handleCreateAvatar = useCallback(() => {
     setIsAvatarCreatorOpen(true);
