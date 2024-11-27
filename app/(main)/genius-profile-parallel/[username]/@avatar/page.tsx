@@ -21,7 +21,7 @@ export default async function AvatarSection({ params }: AvatarSectionProps) {
   if (LoggedUserProfile) {
     return (
       <>
-        <div className="relative w-[650px] h-[500px] flex justify-center flex-col z-40">
+        <div className="relative w-[620px] h-[510px] flex justify-center flex-col z-40">
           <AvatarManagerClientProfile
             fov={35}
             cameraInitialDistance={5}
@@ -31,6 +31,12 @@ export default async function AvatarSection({ params }: AvatarSectionProps) {
       </>
     );
   } else {
-    return <GeniusUserAvatar profileOwner={profileOwner} />;
+    return (
+      <>
+        <div className="relative w-[620px] h-[510px] flex justify-center flex-col z-40">
+          <GeniusUserAvatar profileOwner={profileOwner} />
+        </div>
+      </>
+    );
   }
 }

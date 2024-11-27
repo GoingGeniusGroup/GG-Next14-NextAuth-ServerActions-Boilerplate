@@ -32,6 +32,14 @@ const emotes = [
   { name: "common", emote: "Com", color: "#ACACAC" },
 ];
 
+const tabs = [
+  { name: "Education", icon: "📚" },
+  { name: "Business", icon: "💼" },
+  { name: "Developer", icon: "💻" },
+  { name: "Gamer", icon: "🎮" },
+  { name: "Love", icon: "❤️" },
+];
+
 export default function BottomSection({
   userInfo,
   ifOwnProfile,
@@ -82,7 +90,7 @@ export default function BottomSection({
     <>
       {!ifOwnProfile ? (
         <>
-          <div className="relative w-full h-[300px] flex justify-end z-40">
+          <div className="relative w-full h-[250px] flex justify-end z-40">
             <div className="absolute bottom-12 left-2">
               <ExpressionBottomMidHud
                 expressions={expressions}
@@ -98,7 +106,7 @@ export default function BottomSection({
             </div>
           </div>
           <div className="relative flex border p-2 rounded-xl overflow-auto backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
-            <Carousel className="w-full max-w-sm">
+            <Carousel className="w-full">
               <CarouselContent className="-ml-1">
                 {emotes.map((emote, index) => (
                   <CarouselItem key={index} className="pl-1 basis-1/6">
@@ -113,14 +121,14 @@ export default function BottomSection({
             </Carousel>
           </div>
           <div className="relative flex border p-2 mt-4 rounded-xl overflow-auto backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
-            <Carousel className="w-full max-w-sm">
+            <Carousel className="w-full">
               <CarouselContent className="-ml-1">
-                {emotes.map((emote, index) => (
-                  <CarouselItem key={index} className="pl-1 basis-1/6">
+                {tabs.map((tab, index) => (
+                  <CarouselItem key={index} className="pl-1 basis-1/4">
                     <Card
-                      className={`w-[60px] h-[75px] rounded-lg bg-[${emote.color}] flex items-center justify-center`}
+                      className={`size-[90px] rounded-lg bg-gray-200 flex items-center justify-center text-3xl`}
                     >
-                      {emote.emote}
+                      {tab.icon}
                     </Card>
                   </CarouselItem>
                 ))}
