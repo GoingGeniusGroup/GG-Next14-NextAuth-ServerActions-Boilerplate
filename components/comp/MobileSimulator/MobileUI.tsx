@@ -9,7 +9,7 @@ import { MobileInterfaceProps } from "./interface/MobileInterface.interface";
 //icon
 import { RxCross2 } from "react-icons/rx";
 import { ColorPicker } from "../CustomComponents/ColorPicker";
-import { useMobileSimulator } from "@/app/providers/MobileSimulatorContext";
+import { useMobileSimulator } from "@/components/comp/MobileSimulator/provider/MobileSimulatorContext";
 import { ThemeType } from "@prisma/client";
 
 const scheduleData = [

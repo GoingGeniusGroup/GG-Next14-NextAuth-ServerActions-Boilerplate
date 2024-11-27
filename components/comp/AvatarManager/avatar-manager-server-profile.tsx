@@ -1,13 +1,13 @@
 import { getUserAvatars } from "@/actions/avatar";
 import { currentUser } from "@/lib/auth";
-import AvatarManagerClient from "./avatar-manager-client";
+import AvatarManagerClientProfile from "./avatar-manager-client-profile";
 
 type AvatarType = {
   avatar_id: string;
   avatar_url: string;
 };
 
-export default async function AvatarManagerServer() {
+export default async function AvatarManagerServerProfile() {
   const user = await currentUser();
 
   if (!user) {
@@ -19,5 +19,5 @@ export default async function AvatarManagerServer() {
     avatarsResponse.success && Array.isArray(avatarsResponse.data)
       ? avatarsResponse.data
       : [];
-  return <AvatarManagerClient initialAvatars={avatars} user={user} />;
+  return <AvatarManagerClientProfile initialAvatars={avatars} user={user} />;
 }

@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
+import AvatarSkeleton from "./skeleton/AvatarSkeleton";
 
 const LazyAvatar = dynamic(
   () => import("@/components/comp/Avatar/Avatar.component"),
@@ -33,11 +34,5 @@ export default function GeniusUserAvatar() {
         )}
       </Suspense>
     </div>
-  );
-}
-
-function AvatarSkeleton() {
-  return (
-    <div className="animate-pulse flex items-center justify-center w-[60%] h-full bg-black/20 dark:bg-white/20 rounded-lg"></div>
   );
 }

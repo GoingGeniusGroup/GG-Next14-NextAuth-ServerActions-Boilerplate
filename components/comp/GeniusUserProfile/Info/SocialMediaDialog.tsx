@@ -65,7 +65,7 @@ const SocialMediaDialog = ({
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Add {social.name} Link</DialogTitle>
+          <DialogTitle>Add {social.name} Link (Demo)</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col gap-4">
           <Input

@@ -19,13 +19,13 @@ import {
   FaUser,
   FaUserPlus,
 } from "react-icons/fa";
-import ShopSection from "../../components/comp/shop/ShopSection";
+import ShopSection from "../../shop/ShopSection";
 import { LoginForm } from "@/components/form/login-form";
-import { SectionProps } from "../../components/comp/MobileSimulator/interface/Section.interface";
+import { SectionProps } from "../interface/Section.interface";
 import { useSession } from "next-auth/react";
-import { BackgroundProps } from "../../components/comp/MobileSimulator/interface/Background.interface";
-import MobileSimulatorContainer from "../../components/comp/MobileSimulator/MobileSimulatorContainer";
-import SimulatorToggleButton from "../../components/comp/MobileSimulator/SimulatorToggleButton";
+import { BackgroundProps } from "../interface/Background.interface";
+import MobileSimulatorContainer from "../MobileSimulatorContainer";
+import SimulatorToggleButton from "../SimulatorToggleButton";
 import NotificationComponent from "@/components/comp/Notification/NotificationComponent";
 import { getColorsbyUserId } from "@/services/color";
 import { ThemeType } from "@prisma/client";
