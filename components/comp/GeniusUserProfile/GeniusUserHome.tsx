@@ -14,12 +14,17 @@ export default async function GeniusUserHome({
 
   const profileOwner = await getUserByUsername(username);
 
+  if (!profileOwner || !currentUser) {
+    return <div>User with this username not found</div>;
+  }
+
   return (
     <>
       <div className="flex w-full justify-between">
         <div className="w-[33%] px-4">
           <AboutSectionProfile
             userInfo={LoggedUserProfile ? currentUser : profileOwner}
+            ifOwnProfile={LoggedUserProfile}
           />
         </div>
         <div className="w-[33%] px-4">

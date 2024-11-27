@@ -14,7 +14,7 @@ import UpdateCoverImageForm from "../../Forms/UpdateCoverImageForm";
 
 interface UpdateCoverPhotoDialogProps {
   gg_id: string;
-  currentCoverImage: string[];
+  currentCoverImage: string;
 }
 
 const UpdateProfileDialog: React.FC<UpdateCoverPhotoDialogProps> = ({
