@@ -126,7 +126,7 @@ export default function BottomSection({
                 {tabs.map((tab, index) => (
                   <CarouselItem key={index} className="pl-1 basis-1/4">
                     <Card
-                      className={`size-[90px] rounded-lg bg-gray-200 flex items-center justify-center text-3xl`}
+                      className={`size-[90px] rounded-lg dark:bg-black/40 hover:border border-yellow-600 bg-gray-200 flex items-center justify-center text-3xl`}
                     >
                       {tab.icon}
                     </Card>
