@@ -16,7 +16,7 @@ export const getUserByEmail = async (email: string) => {
 export const getUserByPhone = async (phone: string) => {
   try {
     const user = await db.user.findUnique({
-      where: { phone_number: phone }, 
+      where: { phone_number: phone },
     });
     if (!user) {
       console.log(`User not found with phone number: ${phone}`);

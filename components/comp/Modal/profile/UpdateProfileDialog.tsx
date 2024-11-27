@@ -43,7 +43,7 @@ const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
           <IconUserEdit size={20} />
         </MovingBorderButton>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md h-[80%] overflow-auto">
         <DialogHeader>
           <DialogTitle className="flex justify-center uppercase font-semibold text-sm">
             Update Profile

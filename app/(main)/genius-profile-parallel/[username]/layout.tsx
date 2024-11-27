@@ -9,6 +9,10 @@ import {
   IconUser,
 } from "@tabler/icons-react";
 import TopFloatingDock2 from "@/components/ui/dock/top-floating-dock2";
+import { AvatarType } from "@/components/comp/AvatarManager/provider/AvatarManagerContext";
+import { getUserAvatars } from "@/actions/avatar";
+import { getUserByUsername } from "@/services/user";
+import { PublicAvatarProvider } from "@/components/comp/AvatarManager/provider/AvatarManagerPublicContext";
 
 // Define the expected props for the component
 interface GeniusProfileLayoutProps {
@@ -18,6 +22,9 @@ interface GeniusProfileLayoutProps {
   projects: ReactNode;
   experience: ReactNode;
   children: ReactNode;
+  params: {
+    username: string;
+  };
 }
 
 // Define the structure for navigation tabs
@@ -34,7 +41,14 @@ export default function GeniusProfileLayout({
   projects,
   experience,
   children,
+  params,
 }: GeniusProfileLayoutProps) {
+  const { username } = params;
+
+  useEffect(() => {
+    localStorage.setItem("currentUsername", JSON.stringify(username));
+  }, [username]);
+
   // Memoize tabs array to prevent unnecessary recreations
   // This only runs once and stays constant throughout component lifecycle
   const tabs = useMemo(
@@ -111,53 +125,61 @@ export default function GeniusProfileLayout({
   }, [tabs]); // Only recreate observer when tabs change
 
   return (
-    <div className="relative size-full">
-      <div className="flex h-full gap-x-3 text-black dark:text-white">
-        {/* Top navigation dock component */}
-        <TopFloatingDock2
-          items={tabs}
-          handleIsOpen={handleIsOpen}
-          activeSection={activeSection}
-          onSectionClick={scrollToSection}
-        />
+    <>
+      <PublicAvatarProvider username={username}>
+        <div className="relative size-full">
+          <div className="flex h-full gap-x-3 text-black dark:text-white">
+            {/* Top navigation dock component */}
+            <TopFloatingDock2
+              items={tabs}
+              handleIsOpen={handleIsOpen}
+              activeSection={activeSection}
+              onSectionClick={scrollToSection}
+            />
 
-        {/* Main content container with sliding animation */}
+            {/* Main content container with sliding animation */}
 
-        <div
-          className={`flex-1 border-2 rounded-lg w-full mx-[69px] overflow-hidden transition-transform duration-300 ease-in-out`}
-        >
-          <div className="fixed w-full top-20 flex items-center justify-center left-1/2 -translate-x-1/2">
-            {avatar}
-          </div>
-          {/* AnimatePresence enables exit animations */}
-          <AnimatePresence mode="wait">
-            {/* Animated container for all sections */}
-            <motion.div
-              initial={{ x: 300, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: -300, opacity: 0 }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="px-4 pb-4 pt-8 h-full relative overflow-y-auto scroll-container"
-              style={{ scrollBehavior: "smooth" }}
+            <div
+              className={`flex-1 border-2 rounded-lg w-full mx-[69px] overflow-hidden transition-transform duration-300 ease-in-out`}
             >
-              {/* Individual sections using semantic HTML5 section tags */}
-              <section id="info" className="info-section">
-                {info}
-              </section>
-              <section id="gallery" className="gallery-section">
-                {gallery}
-              </section>
-              <section id="projects" className="projects-section">
-                {projects}
-              </section>
-              {/* <section id="experience" className="experience-section">
-                {experience}
-              </section> */}
-              {children}
-            </motion.div>
-          </AnimatePresence>
+              <div className="fixed w-full top-20 flex items-center justify-center left-1/2 -translate-x-1/2">
+                {avatar}
+              </div>
+              {/* AnimatePresence enables exit animations */}
+              <AnimatePresence mode="wait">
+                {/* Animated container for all sections */}
+                <motion.div
+                  initial={{ x: 300, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  exit={{ x: -300, opacity: 0 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 30,
+                  }}
+                  className="px-4 pb-4 pt-8 h-full relative overflow-y-auto scroll-container"
+                  style={{ scrollBehavior: "smooth" }}
+                >
+                  {/* Individual sections using semantic HTML5 section tags */}
+                  <section id="info" className="info-section">
+                    {info}
+                  </section>
+                  <section id="gallery" className="gallery-section">
+                    {gallery}
+                  </section>
+                  <section id="projects" className="projects-section">
+                    {projects}
+                  </section>
+                  {/* <section id="experience" className="experience-section">
+                  {experience}
+                </section> */}
+                  {children}
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      </PublicAvatarProvider>
+    </>
   );
 }

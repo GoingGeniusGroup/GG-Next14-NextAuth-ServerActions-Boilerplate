@@ -24,7 +24,13 @@ export default auth((req) => {
   }
 
   if (!isLoggedIn && !isPublicRoutes) {
-    return Response.redirect(new URL("/login", nextUrl));
+    // Add both auth_redirect flag and attempted path
+    const redirectUrl = new URL("/", nextUrl);
+    redirectUrl.searchParams.set("auth_redirect", "true");
+    // Remove leading slash and convert to title case for display
+    const attemptedPath = nextUrl.pathname.slice(1) || "this page";
+    redirectUrl.searchParams.set("attempted_path", attemptedPath);
+    return Response.redirect(redirectUrl);
   }
 
   return null;

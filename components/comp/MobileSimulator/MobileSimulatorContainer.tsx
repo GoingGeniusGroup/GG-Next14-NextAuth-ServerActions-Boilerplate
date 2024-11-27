@@ -1,9 +1,12 @@
+"use client";
+
 import { AnimatePresence, motion } from "framer-motion";
 import MobileScreen from "./MobileScreen";
 import MobileUI from "./MobileUI";
 import { BackgroundProps } from "./interface/Background.interface";
 import { SectionProps } from "./interface/Section.interface";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 interface MobileSimulatorContainerProps {
   showMobile: boolean;
@@ -30,7 +33,9 @@ export default function MobileSimulatorContainer({
   closeAllScreens,
   updateCurrentBackground,
 }: MobileSimulatorContainerProps) {
-  const [textColor, setTextColor] = useState("#000000");
+  const pathname = usePathname();
+  
+
   return (
     <>
       {/* Mobile simulator container */}
@@ -41,7 +46,7 @@ export default function MobileSimulatorContainer({
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: isSmallScreen ? 1 : 0.9 }}
             className={`fixed inset-0 flex items-center z-40 justify-end ${
-              isSmallScreen ? "" : "backdrop-blur-md"
+              isSmallScreen || pathname === "/" ? "" : "backdrop-blur-md"
             } p-4 z-20`}
           >
             <div
@@ -57,8 +62,8 @@ export default function MobileSimulatorContainer({
                     index={index}
                     isSmallScreen={isSmallScreen}
                     removeScreen={removeScreen}
-                    currentBackground={currentBackground} // Pass currentBackground
-                    textColor={textColor} // Pass textColor
+                  // Pass currentBackground
+                 
                   />
                 ))}
               </AnimatePresence>
@@ -76,10 +81,8 @@ export default function MobileSimulatorContainer({
                   backgrounds={backgrounds}
                   closeAllScreens={closeAllScreens}
                   screens={screens}
-                  currentBackground={currentBackground}
                   updateCurrentBackground={updateCurrentBackground}
-                  textColor={textColor}
-                  setTextColor={setTextColor}
+                  
                 />
               </motion.div>
             </div>

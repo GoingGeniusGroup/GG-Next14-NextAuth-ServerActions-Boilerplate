@@ -65,10 +65,7 @@ export const LoginForm = ({ isMobile }: { isMobile: boolean }) => {
       showSocial
     >
       <Form {...form}>
-        <form
-          onSubmit={handleSubmit}
-          className="space-y-6 text-black dark:text-white"
-        >
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-4">
             <FormInput
               control={form.control}

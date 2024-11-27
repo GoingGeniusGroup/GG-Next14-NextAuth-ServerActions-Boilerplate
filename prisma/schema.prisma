@@ -88,6 +88,7 @@ model User {
   username              String?                @unique
   accounts              Account?
   Cart                  Cart[]
+  Color                 Color[]
   Order                 Order[]
   twoFactorConfirmation TwoFactorConfirmation?
   UserPaymentMethod     UserPaymentMethod[]
@@ -337,6 +338,15 @@ model Category {
   products     Product[]
 }
 
+model Color {
+  id     String    @id @default(cuid())
+  type   ThemeType
+  value  String
+  userId String    @db.Uuid
+  status Boolean   @default(false)
+  user   User      @relation(fields: [userId], references: [gg_id], onDelete: Cascade)
+}
+
 enum UserRole {
   Admin
   User
@@ -357,4 +367,9 @@ enum OrderStatus {
   SHIPPED
   DELIVERED
   CANCELLED
+}
+
+enum ThemeType {
+  THEME
+  TEXT
 }
