@@ -18,6 +18,9 @@ interface GeniusProfileLayoutProps {
   projects: ReactNode;
   experience: ReactNode;
   children: ReactNode;
+  params: {
+    username: string;
+  };
 }
 
 // Define the structure for navigation tabs
@@ -34,7 +37,16 @@ export default function GeniusProfileLayout({
   projects,
   experience,
   children,
+  params,
 }: GeniusProfileLayoutProps) {
+  const { username } = params;
+
+  useEffect(() => {
+    localStorage.setItem("currentUsername", JSON.stringify(username));
+  }, [username]);
+
+  console.log("username", username);
+
   // Memoize tabs array to prevent unnecessary recreations
   // This only runs once and stays constant throughout component lifecycle
   const tabs = useMemo(
