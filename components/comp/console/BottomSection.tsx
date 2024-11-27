@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/carousel/carousel";
 import AvatarManagerClientProfile from "../AvatarManager/avatar-manager-client-profile";
 import ExpressionCard from "../Huds/ExpressionsCard";
+import { usePublicAvatar } from "../AvatarManager/provider/AvatarManagerPublicContext";
 
 const emotes = [
   { name: "legendary", emote: "Lege", color: "#FCBB3F" },
@@ -66,6 +67,8 @@ export default function BottomSection({
     getAvatarCreatorUrl,
   } = useAvatar();
 
+  const { publicExpressions, handlePublicEmote } = usePublicAvatar();
+
   const baseAvatarCreatorConfig: AvatarCreatorConfig = {
     bodyType: "fullbody" as BodyType,
     quickStart: true,
@@ -107,20 +110,10 @@ export default function BottomSection({
             </div>
           </div>
           <div className="relative flex border p-2 rounded-xl overflow-auto backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
-            <Carousel className="w-full">
-              <CarouselContent className="-ml-1">
-                {emotes.map((emote, index) => (
-                  <CarouselItem key={index} className="pl-1 basis-1/6">
-                    <Card
-                      className={`w-[60px] h-[75px] rounded-lg flex items-center justify-center hover:border border-yellow-600 transition-colors duration-300`}
-                      style={{ backgroundColor: emote.color }}
-                    >
-                      {emote.emote}
-                    </Card>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-            </Carousel>
+            <ExpressionCard
+              expressions={publicExpressions}
+              handleEmote={handlePublicEmote}
+            />
           </div>
           <div className="relative flex border p-2 mt-4 rounded-xl overflow-auto backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
             <Carousel className="w-full">

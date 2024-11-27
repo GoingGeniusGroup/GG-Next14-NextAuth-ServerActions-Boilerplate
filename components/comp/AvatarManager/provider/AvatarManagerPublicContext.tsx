@@ -29,7 +29,7 @@ interface PublicAvatarContextType {
   publicAvatars: AvatarType[];
   selectedPublicAvatar: string | undefined;
   currentPublicEmote: string;
-  expressions: Expression[];
+  publicExpressions: Expression[];
   setSelectedPublicAvatar: (url: string | undefined) => void;
   handlePublicEmote: (emote: string) => void;
   extractUserId: (avatarUrl: string | undefined) => string | undefined;
@@ -152,7 +152,7 @@ export function PublicAvatarProvider({
     publicAvatars,
     selectedPublicAvatar,
     currentPublicEmote,
-    expressions: defaultExpressions,
+    publicExpressions: defaultExpressions,
     setSelectedPublicAvatar,
     handlePublicEmote,
     extractUserId,
