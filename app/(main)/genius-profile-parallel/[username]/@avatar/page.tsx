@@ -1,7 +1,5 @@
-import AvatarManagerServerProfile from "@/components/comp/AvatarManager/avatar-manager-server-profile";
-// import GeniusUserAvatar from "@/components/comp/GeniusUserProfile/GeniusUserAvatar";
+import AvatarManagerClientProfile from "@/components/comp/AvatarManager/avatar-manager-client-profile";
 
 export default async function AvatarSection() {
-  // return <GeniusUserAvatar />;
-  return <AvatarManagerServerProfile />;
+  return <AvatarManagerClientProfile />;
 }
