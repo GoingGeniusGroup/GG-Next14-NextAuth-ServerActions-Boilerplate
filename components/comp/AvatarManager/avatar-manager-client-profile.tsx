@@ -1,66 +1,12 @@
 "use client";
 
 import { Avatar } from "@/components/comp/Avatar";
-import {
-  AvatarCreator,
-  AvatarCreatorConfig,
-  BodyType,
-  Language,
-} from "@/components/comp/AvatarComponents/avatar_creator";
-import { Button as MovingBorderButton } from "@/components/ui/border/moving-border";
-import { Button } from "@/components/ui/button/button";
-
-import { Card, CardContent } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { ExtendedUser } from "@/types/next-auth";
-import { IconEdit, IconTrash } from "@tabler/icons-react";
-import Image from "next/image";
 import { Suspense } from "react";
-import ExpressionBottomMidHud from "../Huds/ExpressionBottomMidHud";
 import AvatarSkeleton from "../GeniusUserProfile/skeleton/AvatarSkeleton";
 import { useAvatar } from "./provider/AvatarManagerContext";
 
 export default function AvatarManagerClientProfile() {
-  const {
-    avatars,
-    selectedAvatar,
-    currentEmote,
-    isAvatarCreatorOpen,
-    isProcessing,
-    expressions,
-    setIsAvatarCreatorOpen,
-    handleCreateAvatar,
-    handleEditAvatar,
-    handleDeleteAvatar,
-    handleAvatarCreated,
-    handleUpdateAvatar,
-    handleEmote,
-    editingAvatar,
-    setSelectedAvatar,
-    getAvatarCreatorUrl,
-  } = useAvatar();
-
-  const baseAvatarCreatorConfig: AvatarCreatorConfig = {
-    bodyType: "fullbody" as BodyType,
-    quickStart: true,
-    language: "en" as Language,
-  };
-
-  const createAvatarConfig: AvatarCreatorConfig = {
-    ...baseAvatarCreatorConfig,
-    clearCache: true,
-  };
-
-  const editAvatarConfig: AvatarCreatorConfig = {
-    ...baseAvatarCreatorConfig,
-    clearCache: false,
-  };
-
-  const extractUserId = (avatarUrl: string | undefined): string | undefined => {
-    if (!avatarUrl) return undefined;
-    const match = avatarUrl.match(/\/([^/]+)\.glb$/);
-    return match ? match[1] : undefined;
-  };
+  const { selectedAvatar, currentEmote } = useAvatar();
 
   return (
     <>
