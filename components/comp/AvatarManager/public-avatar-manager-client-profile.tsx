@@ -14,18 +14,18 @@ export default function PublicAvatarManagerClientProfile({
   cameraInitialDistance: number;
   cameraTarget: number;
 }) {
-  const { selectedAvatar, currentEmote } = usePublicAvatar();
+  const { selectedPublicAvatar, currentPublicEmote } = usePublicAvatar();
 
   return (
     <>
       <Suspense fallback={<AvatarSkeleton />}>
         <Avatar
           modelSrc={
-            selectedAvatar ||
+            selectedPublicAvatar ||
             "https://models.readyplayer.me/658be9e8fc8bec93d06806f3.glb?morphTargets=ARKit,Eyes Extra&textureAtlas=none&lod=0"
           }
           shadows={false}
-          animationSrc={currentEmote}
+          animationSrc={currentPublicEmote}
           style={{ background: "rgb(0,0,6)", pointerEvents: "none" }}
           fov={fov}
           cameraTarget={cameraTarget}

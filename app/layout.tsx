@@ -92,7 +92,7 @@ export default async function RootLayout({
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
               <AuroraBackground>
                 <UserProvider>
-                  <AvatarProvider initialAvatars={avatars} user={user}>
+                  <AvatarProvider initialAvatars={avatars} user={user.gg_id}>
                     {/* Theme switcher */}
                     <div className="absolute top-[8px] right-[73px] z-50">
                       <ThemeSwitcher />

@@ -89,7 +89,7 @@ const defaultExpressions: Expression[] = [
 interface AvatarProviderProps {
   children: ReactNode;
   initialAvatars: AvatarType[];
-  user: ExtendedUser;
+  user: string;
 }
 
 export function AvatarProvider({
@@ -110,7 +110,7 @@ export function AvatarProvider({
 
   useEffect(() => {
     const fetchAvatars = async () => {
-      const fetchedAvatars = await getAvatarsByUserId(user.gg_id);
+      const fetchedAvatars = await getAvatarsByUserId(user);
       if (fetchedAvatars) {
         setAvatars(
           fetchedAvatars.map((avatar) => ({
@@ -121,7 +121,7 @@ export function AvatarProvider({
       }
     };
     fetchAvatars();
-  }, [user.gg_id]);
+  }, [user]);
 
   const handleCreateAvatar = useCallback(() => {
     setIsAvatarCreatorOpen(true);

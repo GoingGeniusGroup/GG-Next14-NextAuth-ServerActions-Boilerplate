@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import ProfileHudTop from "../Huds/ProfileHudTop";
+import { getUserByUsername } from "@/services/user";
 
 interface LayoutProps {
   children: ReactNode;
@@ -7,17 +8,8 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ children, handleServerSignOut }) => {
-  let currentUsername = "Guest"; // Default username
-
-  if (typeof window !== "undefined") {
-    const storedUsername = localStorage.getItem("currentUsername");
-    if (storedUsername) {
-      currentUsername = JSON.parse(storedUsername);
-    }
-  }
   return (
     <>
-      <div className="text-white">{currentUsername}</div>
       <ProfileHudTop handleServerSignOut={handleServerSignOut} />
       {/* <CartHud /> */}
       {children}

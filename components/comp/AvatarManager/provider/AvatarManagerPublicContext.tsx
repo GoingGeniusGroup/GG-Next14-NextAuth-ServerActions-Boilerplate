@@ -4,17 +4,13 @@ import {
   createContext,
   useContext,
   useState,
-  useCallback,
   ReactNode,
   useEffect,
 } from "react";
 
-import { addAvatar, deleteAvatar, updateAvatar } from "@/actions/avatar";
-import { AvatarExportedEvent } from "@/components/comp/AvatarComponents/avatar_creator/events";
-import { ExtendedUser } from "@/types/next-auth";
-import { AvatarResponse } from "@/types/utils";
-import { toast } from "sonner";
 import { getAvatarsByUserId } from "@/services/avatar";
+import { getUserByUsername } from "@/services/user";
+import { getUserAvatars } from "@/actions/avatar";
 
 // Types
 export type AvatarType = {
@@ -30,23 +26,13 @@ export type Expression = {
 };
 
 interface PublicAvatarContextType {
-  avatars: AvatarType[];
-  selectedAvatar: string | undefined;
-  currentEmote: string;
-  isAvatarCreatorOpen: boolean;
-  editingAvatar: AvatarType | null;
-  isProcessing: boolean;
+  publicAvatars: AvatarType[];
+  selectedPublicAvatar: string | undefined;
+  currentPublicEmote: string;
   expressions: Expression[];
-  setSelectedAvatar: (url: string | undefined) => void;
-  setIsAvatarCreatorOpen: (isOpen: boolean) => void;
-  handleCreateAvatar: () => void;
-  handleEditAvatar: (avatar: AvatarType) => void;
-  handleDeleteAvatar: (avatarId: string) => Promise<void>;
-  handleAvatarCreated: (event: AvatarExportedEvent) => Promise<void>;
-  handleUpdateAvatar: (event: AvatarExportedEvent) => Promise<void>;
-  handleEmote: (emote: string) => void;
+  setSelectedPublicAvatar: (url: string | undefined) => void;
+  handlePublicEmote: (emote: string) => void;
   extractUserId: (avatarUrl: string | undefined) => string | undefined;
-  getAvatarCreatorUrl: (avatarUrl: string | undefined) => string;
 }
 
 // Create the context
@@ -90,140 +76,70 @@ const defaultExpressions: Expression[] = [
 
 interface AvatarProviderProps {
   children: ReactNode;
-  initialAvatars: AvatarType[];
+  username: string;
 }
 
 export function PublicAvatarProvider({
   children,
-  initialAvatars,
+  username,
 }: AvatarProviderProps) {
-  const [avatars, setAvatars] = useState<AvatarType[]>(initialAvatars);
-  const [selectedAvatar, setSelectedAvatar] = useState<string | undefined>(
-    initialAvatars[0]?.avatar_url
+  const [currentProfileOwner, setCurrentProfileOwner] = useState<any | null>(
+    null
   );
-  const [currentEmote, setCurrentEmote] = useState<string>(
+  const [currentUserAvatar, setCurrentUserAvatar] = useState<
+    AvatarType[] | null
+  >(null);
+
+  useEffect(() => {
+    const fetchAvatars = async () => {
+      const profileOwner = await getUserByUsername(username);
+      setCurrentProfileOwner(profileOwner);
+      if (profileOwner) {
+        const avatarsResponse = await getUserAvatars(profileOwner.gg_id);
+        const avatars: AvatarType[] =
+          avatarsResponse.success && Array.isArray(avatarsResponse.data)
+            ? avatarsResponse.data
+            : [];
+        setCurrentUserAvatar(avatars);
+      }
+    };
+
+    fetchAvatars();
+  }, [username]);
+
+  const [publicAvatars, setPublicAvatars] = useState<AvatarType[]>(
+    currentUserAvatar || []
+  );
+
+  const [selectedPublicAvatar, setSelectedPublicAvatar] = useState<
+    string | undefined
+  >(currentUserAvatar ? currentUserAvatar[0]?.avatar_url : undefined);
+  const [currentPublicEmote, setCurrentPublicEmote] = useState<string>(
     defaultExpressions[0].animation
   );
-  const [isAvatarCreatorOpen, setIsAvatarCreatorOpen] = useState(false);
-  const [editingAvatar, setEditingAvatar] = useState<AvatarType | null>(null);
-  const [isProcessing, setIsProcessing] = useState(false);
 
-  //   useEffect(() => {
-  //     const fetchAvatars = async () => {
-  //       const fetchedAvatars = await getAvatarsByUserId(user.gg_id);
-  //       if (fetchedAvatars) {
-  //         setAvatars(
-  //           fetchedAvatars.map((avatar) => ({
-  //             avatar_id: avatar.avatar_id,
-  //             avatar_url: avatar.avatar_url || undefined,
-  //           }))
-  //         );
-  //       }
-  //     };
-  //     fetchAvatars();
-  //   }, [user.gg_id]);
-
-  const handleCreateAvatar = useCallback(() => {
-    setIsAvatarCreatorOpen(true);
-    setEditingAvatar(null);
-  }, []);
-
-  const handleEditAvatar = useCallback((avatar: AvatarType) => {
-    setIsAvatarCreatorOpen(true);
-    setEditingAvatar(avatar);
-  }, []);
-
-  const handleAvatarCreated = useCallback(
-    async (event: AvatarExportedEvent) => {
-      setIsProcessing(true);
-      try {
-        const response = (await addAvatar(event.data.url)) as AvatarResponse;
-
-        if (response.success) {
-          setAvatars((prevAvatars) => [
-            ...prevAvatars,
-            {
-              avatar_id: response.data.avatar_id,
-              avatar_url: response.data.avatar_url,
-            },
-          ]);
-          setSelectedAvatar(response.data.avatar_url);
-          toast.success("Your new avatar has been successfully saved.");
-        } else {
-          throw new Error(response.error.message);
-        }
-      } catch (error) {
-        console.error("Error adding avatar:", error);
-        toast.error("Failed to save the avatar. Please try again.");
-      } finally {
-        setIsProcessing(false);
-        setIsAvatarCreatorOpen(false);
-      }
-    },
-    []
-  );
-
-  const handleUpdateAvatar = async (event: AvatarExportedEvent) => {
-    if (editingAvatar) {
-      setIsProcessing(true);
-      try {
-        const response = (await updateAvatar(
-          editingAvatar.avatar_id,
-          event.data.url
-        )) as AvatarResponse;
-        if (response.success) {
-          setAvatars((prevAvatars) =>
-            prevAvatars.map((avatar) =>
-              avatar.avatar_id === editingAvatar.avatar_id
-                ? {
-                    ...avatar,
-                    avatar_url: response.data.avatar_url,
-                  }
-                : avatar
-            )
-          );
-          setSelectedAvatar(response.data.avatar_url);
-          toast.success("Your avatar has been successfully updated.");
-        } else {
-          throw new Error(response.error.message);
-        }
-      } catch (error) {
-        console.error("Error updating avatar:", error);
-        toast.error("Failed to update the avatar. Please try again.");
-      } finally {
-        setIsProcessing(false);
-        setIsAvatarCreatorOpen(false);
-        setEditingAvatar(null);
-      }
-    }
-  };
-
-  const handleDeleteAvatar = async (avatarId: string) => {
-    try {
-      const response = (await deleteAvatar(avatarId)) as AvatarResponse;
-      if (response.success) {
-        setAvatars((prevAvatars) =>
-          prevAvatars.filter((avatar) => avatar.avatar_id !== avatarId)
+  useEffect(() => {
+    // Only fetch avatars if currentProfileOwner exists
+    if (currentProfileOwner?.gg_id) {
+      const fetchAvatars = async () => {
+        const fetchedAvatars = await getAvatarsByUserId(
+          currentProfileOwner.gg_id
         );
-        if (avatars.length > 1) {
-          setSelectedAvatar(
-            avatars.find((avatar) => avatar.avatar_id !== avatarId)?.avatar_url
+        if (fetchedAvatars) {
+          setPublicAvatars(
+            fetchedAvatars.map((avatar) => ({
+              avatar_id: avatar.avatar_id,
+              avatar_url: avatar.avatar_url || undefined,
+            }))
           );
-        } else {
-          setSelectedAvatar(undefined);
         }
-        toast.success("Avatar successfully deleted.");
-      } else {
-        throw new Error(response.error.message);
-      }
-    } catch (error) {
-      console.error("Error deleting avatar:", error);
-      toast.error("Failed to delete the avatar. Please try again.");
+      };
+      fetchAvatars();
     }
-  };
+  }, [currentProfileOwner?.gg_id]);
 
-  const handleEmote = (emote: string) => {
-    setCurrentEmote(emote);
+  const handlePublicEmote = (emote: string) => {
+    setCurrentPublicEmote(emote);
   };
 
   const extractUserId = (avatarUrl: string | undefined): string | undefined => {
@@ -232,32 +148,14 @@ export function PublicAvatarProvider({
     return match ? match[1] : undefined;
   };
 
-  const getAvatarCreatorUrl = (avatarUrl: string | undefined): string => {
-    const userId = extractUserId(avatarUrl);
-    if (userId) {
-      return `https://gguser.readyplayer.me/avatar/${userId}?frameApi`;
-    }
-    return "https://gguser.readyplayer.me/avatar?frameApi";
-  };
-
   const value = {
-    avatars,
-    selectedAvatar,
-    currentEmote,
-    isAvatarCreatorOpen,
-    editingAvatar,
-    isProcessing,
+    publicAvatars,
+    selectedPublicAvatar,
+    currentPublicEmote,
     expressions: defaultExpressions,
-    setSelectedAvatar,
-    setIsAvatarCreatorOpen,
-    handleCreateAvatar,
-    handleEditAvatar,
-    handleDeleteAvatar,
-    handleAvatarCreated,
-    handleUpdateAvatar,
-    handleEmote,
+    setSelectedPublicAvatar,
+    handlePublicEmote,
     extractUserId,
-    getAvatarCreatorUrl,
   };
 
   return (
@@ -271,7 +169,7 @@ export function PublicAvatarProvider({
 export function usePublicAvatar() {
   const context = useContext(PublicAvatarContext);
   if (context === undefined) {
-    throw new Error("useAvatar must be used within an AvatarProvider");
+    throw new Error("usePublicAvatar must be used within an AvatarProvider");
   }
   return context;
 }
