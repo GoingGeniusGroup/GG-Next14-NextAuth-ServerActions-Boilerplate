@@ -32,7 +32,7 @@ export default function AchievementsCard() {
   const totalRequired = 1000;
 
   return (
-    <Card className="w-full max-w-md bg-zinc-900 text-white border-none">
+    <Card className="w-full rounded-lg bg-zinc-900 text-white border-none">
       <CardHeader className="space-y-1 pb-4">
         <div className="text-2xl font-bold tracking-tight">SEASON 2</div>
         <div className="text-rose-500 font-semibold">WEEK 3</div>

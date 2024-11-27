@@ -181,15 +181,12 @@ export default function BottomSection({
             </Dialog>
           </div>
 
-          <div className="w-full relative h-fit backdrop-blur-lg rounded-lg border dark:border-white/20 border-black/20 hover:border-yellow-500 transition-all duration-300 ease-in-out">
-            <Carousel className="w-full max-w-sm">
+          <div className="w-full relative mt-4 h-fit backdrop-blur-lg rounded-lg border dark:border-white/20 border-black/20 hover:border-yellow-500 transition-all duration-300 ease-in-out">
+            <Carousel className="w-full">
               <CarouselContent className="-ml-1">
                 {avatars.map((avatar, index) => (
-                  <CarouselItem
-                    key={index}
-                    className="pl-1 md:basis-1/2 lg:basis-1/3"
-                  >
-                    <div className="p-1">
+                  <CarouselItem key={index} className="pl-1 basis-1/3">
+                    <div className="p-2">
                       <Card
                         key={avatar.avatar_id}
                         className={`border h-fit rounded-lg hover:border-yellow-500 transition-all duration-300 ease-in-out ${
@@ -198,8 +195,8 @@ export default function BottomSection({
                             : "border-black/20 dark:border-white/20"
                         }`}
                       >
-                        <CardContent className="relative pt-6">
-                          <div className="flex flex-col items-center space-y-4">
+                        <CardContent className="relative pt-6 pb-1">
+                          <div className="flex flex-col items-center space-y-1">
                             <Image
                               src={
                                 avatar.avatar_url?.replace(".glb", ".png") ||
@@ -227,7 +224,7 @@ export default function BottomSection({
                                 : "Select"}
                             </Button>
                           </div>
-                          <div className="absolute top-2 flex gap-2 right-2">
+                          <div className="absolute top-1 flex gap-1 right-1">
                             <Button
                               variant="transparent_rounded"
                               className="hover:text-yellow-500 text-sky-400 p-[1px]"
