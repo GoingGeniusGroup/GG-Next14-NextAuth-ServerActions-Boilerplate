@@ -21,7 +21,7 @@ export default async function AvatarManagerServerProfile() {
       ? avatarsResponse.data
       : [];
   return (
-    <AvatarProvider initialAvatars={avatars} user={user}>
+    <AvatarProvider initialAvatars={avatars} user={user.gg_id}>
       <AvatarManagerClientProfile
         fov={35}
         cameraInitialDistance={5}
