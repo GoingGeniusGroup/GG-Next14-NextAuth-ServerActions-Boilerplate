@@ -22,7 +22,12 @@ export default async function AvatarManagerServerProfile() {
       : [];
   return (
     <AvatarProvider initialAvatars={avatars} user={user}>
-      <AvatarManagerClientProfile />;
+      <AvatarManagerClientProfile
+        fov={35}
+        cameraInitialDistance={5}
+        cameraTarget={0}
+      />
+      ;
     </AvatarProvider>
   );
 }
