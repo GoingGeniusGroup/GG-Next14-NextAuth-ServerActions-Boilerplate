@@ -111,8 +111,14 @@ const ExperienceForm: React.FC<ExperienceFormProps> = ({
       formData.append("link", data.link);
 
       // Append array values as comma-separated strings or individual entries
-      formData.append("tools", (data.tools || []).join(","));
-      formData.append("project_skills", (data.project_skills || []).join(","));
+      formData.append(
+        "tools",
+        data.tools !== undefined ? data.tools.join(",") : ""
+      );
+      formData.append(
+        "project_skills",
+        data.project_skills !== undefined ? data.project_skills.join(",") : ""
+      );
       formData.append(
         "project_pictures",
         (data.project_pictures || []).join(",")
@@ -218,10 +224,13 @@ const ExperienceForm: React.FC<ExperienceFormProps> = ({
                     placeholder="Eg. React, Node.js, MongoDB"
                     onChange={(e) =>
                       field.onChange(
-                        e.target.value.split(",").map((tool) => tool.trim())
+                        e.target.value
+                          .split(",") // Split by comma
+                          .map((tool) => tool.trim()) // Trim each entry to remove extra spaces
+                          .filter((tool) => tool !== "") // Filter out empty strings
                       )
                     }
-                    value={field.value.join(", ")}
+                    value={field.value}
                   />
                 </FormControl>
               </LabelInputContainer>
@@ -244,10 +253,13 @@ const ExperienceForm: React.FC<ExperienceFormProps> = ({
                     placeholder="Eg. JavaScript, HTML, CSS"
                     onChange={(e) =>
                       field.onChange(
-                        e.target.value.split(",").map((skill) => skill.trim())
+                        e.target.value
+                          .split(",")
+                          .map((skill) => skill.trim())
+                          .filter((skill) => skill !== "")
                       )
                     }
-                    value={field.value.join(", ")}
+                    value={field.value}
                   />
                 </FormControl>
               </LabelInputContainer>
