@@ -3,7 +3,6 @@
 import Image from "next/image";
 
 import { Button as MovingBorderButton } from "@/components/ui/border/moving-border";
-import AchievementsCard from "../GeniusUserProfile/Achievements/AchievementsCard";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button/button";
 import { IconEdit, IconTrash } from "@tabler/icons-react";
@@ -24,15 +23,6 @@ import {
 import AvatarManagerClientProfile from "../AvatarManager/avatar-manager-client-profile";
 import ExpressionCard from "../Huds/ExpressionsCard";
 import { usePublicAvatar } from "../AvatarManager/provider/AvatarManagerPublicContext";
-
-const emotes = [
-  { name: "legendary", emote: "Lege", color: "#FCBB3F" },
-  { name: "mythic", emote: "Myth", color: "#DC143C" },
-  { name: "rare", emote: "Epic", color: "#AA25B6" },
-  { name: "epic", emote: "Rare", color: "#129FE0" },
-  { name: "uncommon", emote: "Unco", color: "#14C620" },
-  { name: "common", emote: "Com", color: "#ACACAC" },
-];
 
 const tabs = [
   { name: "Education", icon: "📚" },
@@ -133,23 +123,7 @@ export default function BottomSection({
         </>
       ) : (
         <>
-          <div className="relative flex border p-2 mt-4 rounded-xl overflow-auto backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
-            <Carousel className="w-full">
-              <CarouselContent className="-ml-1">
-                {tabs.map((tab, index) => (
-                  <CarouselItem key={index} className="pl-1 basis-1/4">
-                    <Card
-                      className={`size-[90px] rounded-lg dark:bg-black/40 hover:border border-yellow-600 bg-gray-200 flex items-center justify-center text-3xl`}
-                    >
-                      {tab.icon}
-                    </Card>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-            </Carousel>
-          </div>
-
-          <div className="absolute bottom-10 left-1/2 -translate-x-1/2">
+          <div className="w-full flex justify-center">
             <Dialog
               open={isAvatarCreatorOpen}
               onOpenChange={setIsAvatarCreatorOpen}
@@ -204,14 +178,14 @@ export default function BottomSection({
                     <div className="p-2">
                       <Card
                         key={avatar.avatar_id}
-                        className={`border h-fit rounded-lg hover:border-yellow-500 transition-all duration-300 ease-in-out ${
+                        className={`border h-fit rounded-lg  transition-all duration-300 ease-in-out ${
                           selectedAvatar === avatar.avatar_url
                             ? "border-sky-500"
-                            : "border-black/20 dark:border-white/20"
+                            : "border-black/20 dark:border-white/20 hover:border-black dark:hover:border-white"
                         }`}
                       >
                         <CardContent className="relative pt-6 pb-1">
-                          <div className="flex flex-col items-center space-y-1">
+                          <div className="flex flex-col items-center space-y-1 w-full">
                             <Image
                               src={
                                 avatar.avatar_url?.replace(".glb", ".png") ||
@@ -224,8 +198,7 @@ export default function BottomSection({
                             />
                             <Button
                               variant="black"
-                              size="sm"
-                              className={`hover:text-yellow-500 w-full ${
+                              className={`hover:text-yellow-500 w-full h-5 font-thin text-xs ${
                                 selectedAvatar === avatar.avatar_url
                                   ? "text-sky-500"
                                   : ""
@@ -242,21 +215,21 @@ export default function BottomSection({
                           <div className="absolute top-1 flex gap-1 right-1">
                             <Button
                               variant="transparent_rounded"
-                              className="hover:text-yellow-500 text-sky-400 p-[1px]"
+                              className="hover:text-yellow-500 hover:bg-transparent text-sky-600 p-[1px]"
                               size="mini2"
                               onClick={() => handleEditAvatar(avatar)}
                             >
-                              <IconEdit />
+                              <IconEdit size={12} />
                             </Button>
                             <Button
                               variant="transparent_rounded"
-                              className="hover:text-yellow-500 text-red-400 p-[1px]"
+                              className="hover:text-yellow-500 hover:bg-transparent text-red-600 p-[1px]"
                               size="mini2"
                               onClick={() =>
                                 handleDeleteAvatar(avatar.avatar_id)
                               }
                             >
-                              <IconTrash />
+                              <IconTrash size={12} />
                             </Button>
                           </div>
                         </CardContent>

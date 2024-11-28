@@ -2,6 +2,8 @@ import { getCurrentUser } from "@/actions/userAndGuild";
 import AboutSectionProfile from "../console/AboutSectionProfile";
 import BottomSection from "../console/BottomSection";
 import { getUserByUsername } from "@/services/user";
+import AvatarManagerClientProfile from "../AvatarManager/avatar-manager-client-profile";
+import PublicAvatarManagerClientProfile from "../AvatarManager/public-avatar-manager-client-profile";
 
 export default async function GeniusUserHome({
   username,
@@ -26,6 +28,21 @@ export default async function GeniusUserHome({
             userInfo={LoggedUserProfile ? currentUser : profileOwner}
             ifOwnProfile={LoggedUserProfile}
           />
+        </div>
+        <div className="relative w-[620px] h-[510px] flex justify-center flex-col z-20">
+          {LoggedUserProfile ? (
+            <AvatarManagerClientProfile
+              fov={35}
+              cameraInitialDistance={5}
+              cameraTarget={0}
+            />
+          ) : (
+            <PublicAvatarManagerClientProfile
+              fov={35}
+              cameraInitialDistance={5}
+              cameraTarget={0}
+            />
+          )}
         </div>
         <div className="w-[33%] px-4">
           {/* Projects Grid */}

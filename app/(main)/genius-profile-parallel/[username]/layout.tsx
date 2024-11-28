@@ -9,9 +9,6 @@ import {
   IconUser,
 } from "@tabler/icons-react";
 import TopFloatingDock2 from "@/components/ui/dock/top-floating-dock2";
-import { AvatarType } from "@/components/comp/AvatarManager/provider/AvatarManagerContext";
-import { getUserAvatars } from "@/actions/avatar";
-import { getUserByUsername } from "@/services/user";
 import { PublicAvatarProvider } from "@/components/comp/AvatarManager/provider/AvatarManagerPublicContext";
 
 // Define the expected props for the component
@@ -142,9 +139,9 @@ export default function GeniusProfileLayout({
             <div
               className={`flex-1 border-2 rounded-lg w-full mx-[69px] overflow-hidden transition-transform duration-300 ease-in-out`}
             >
-              <div className="fixed w-full top-20 flex items-center justify-center left-1/2 -translate-x-1/2">
+              {/* <div className="fixed w-full top-20 flex items-center justify-center left-1/2 -translate-x-1/2">
                 {avatar}
-              </div>
+              </div> */}
               {/* AnimatePresence enables exit animations */}
               <AnimatePresence mode="wait">
                 {/* Animated container for all sections */}

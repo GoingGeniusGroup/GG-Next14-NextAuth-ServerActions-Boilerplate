@@ -35,12 +35,12 @@ const SocialMediaDialog = ({
     <div
       className={`size-[52px] rounded-full flex items-center justify-center transition-all duration-300 ${
         socialUrl
-          ? "bg-gray-300 hover:bg-gray-400"
-          : "bg-gray-200 hover:bg-gray-300"
+          ? " bg-white hover:border-2 hover:border-green-500"
+          : "bg-transparent border-2 border-black/20 dark:border-white/20 hover:border-red-600/60"
       }`}
     >
       {React.cloneElement(social.icon, {
-        className: socialUrl ? "" : "opacity-20",
+        className: socialUrl ? "grayscale-0" : "grayscale",
       })}
     </div>
   );

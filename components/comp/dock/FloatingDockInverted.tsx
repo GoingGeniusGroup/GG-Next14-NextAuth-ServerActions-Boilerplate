@@ -85,16 +85,16 @@ export default function FloatingDockInvertedComponent() {
     //   icon: <IconPhotoStar className="size-full" />,
     //   href: "/posts",
     // },
-    // {
-    //   title: "Profile",
-    //   icon: <IconUser className="size-full" />,
-    //   href: "/profile",
-    // },
     {
-      title: "Profile Parallel Routing",
-      icon: <Icon3dRotate className="size-full" />,
-      href: `/genius-profile-parallel/${username}`,
+      title: "Profile",
+      icon: <IconUser className="size-full" />,
+      href: `/genius-profile/${username}`,
     },
+    // {
+    //   title: "Profile Parallel Routing",
+    //   icon: <Icon3dRotate className="size-full" />,
+    //   href: `/genius-profile-parallel/${username}`,
+    // },
   ];
   return <FloatingDockInverted items={links} />;
 }

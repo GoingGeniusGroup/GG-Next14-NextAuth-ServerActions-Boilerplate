@@ -18,11 +18,13 @@ import { FaSteam } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaGgCircle } from "react-icons/fa6";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import SocialMediaDialog from "../GeniusUserProfile/Info/SocialMediaDialog";
 import { RiShareLine } from "react-icons/ri";
 import { LiaQrcodeSolid } from "react-icons/lia";
 import { Button as MovingBorderButton } from "@/components/ui/border/moving-border";
+import { AnimatePresence, motion } from "framer-motion";
+import CustomToolTip from "../CustomComponents/CustomToolTip";
 
 const socials = [
   {
@@ -83,53 +85,72 @@ export default function AboutSectionProfile({
     }));
   };
 
+  let ref = useRef<HTMLDivElement>(null);
+  const [hovered, setHovered] = useState(false);
+
   return (
     <>
-      <div className="group relative flex flex-col gap-4 border p-4 rounded-lg backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
-        {ifOwnProfile && (
-          <>
-            {userInfo.gg_id && (
-              <div className="absolute top-2 right-[-52px] z-40 flex flex-col gap-2 group-hover:opacity-100 opacity-0 transition-all duration-300">
-                <UpdateCoverPhotoDialog
-                  gg_id={userInfo.gg_id}
-                  currentCoverImage={userInfo.cover_images?.[0] ?? ""}
-                />
-                <UpdateProfileDialog
-                  gg_id={userInfo.gg_id}
-                  currentFirstName={userInfo.first_name ?? ""}
-                  currentLastName={userInfo.last_name ?? ""}
-                  currentAddress={userInfo.address ?? ""}
-                  currentDescription={userInfo.description ?? ""}
-                  currentDob={userInfo.dob ? new Date(userInfo.dob) : null}
-                  currentImage={userInfo.image ?? ""}
-                />
-              </div>
-            )}
-          </>
-        )}
-
-        {/* Share and QR code buttons */}
+      {/* Share and QR code buttons */}
+      <div
+        ref={ref}
+        className="relative flex flex-col gap-4 border p-4 rounded-lg backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
         <div className="absolute top-2 right-2 z-40 flex gap-2">
-          <MovingBorderButton
-            borderRadius="1.75rem"
-            className="bg-white size-10 dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800"
-          >
-            <LiaQrcodeSolid
-              size={22}
-              className="text-white hover:text-yellow-600 transition-colors duration-300"
-            />
-          </MovingBorderButton>
-          <MovingBorderButton
-            borderRadius="1.75rem"
-            className="bg-white size-10 dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800"
-          >
-            <RiShareLine
-              size={22}
-              className="text-white hover:text-yellow-600 transition-colors duration-300"
-            />
-          </MovingBorderButton>
-        </div>
+          {ifOwnProfile && (
+            <>
+              {hovered && (
+                <div className="flex gap-2 transition-all duration-300">
+                  <UpdateCoverPhotoDialog
+                    gg_id={userInfo.gg_id}
+                    currentCoverImage={userInfo.cover_images?.[0] ?? ""}
+                  />
+                  <UpdateProfileDialog
+                    gg_id={userInfo.gg_id}
+                    currentFirstName={userInfo.first_name ?? ""}
+                    currentLastName={userInfo.last_name ?? ""}
+                    currentAddress={userInfo.address ?? ""}
+                    currentDescription={userInfo.description ?? ""}
+                    currentDob={userInfo.dob ? new Date(userInfo.dob) : null}
+                    currentImage={userInfo.image ?? ""}
+                  />
+                </div>
+              )}
+            </>
+          )}
 
+          <div className="group">
+            <MovingBorderButton
+              borderRadius="1.75rem"
+              className="bg-gray-200 size-10 dark:bg-black text-black dark:text-white hover:text-yellow-600 transition-colors duration-300 border-neutral-200 dark:border-slate-800"
+            >
+              <LiaQrcodeSolid size={22} />
+            </MovingBorderButton>
+
+            <CustomToolTip
+              content="Share QR"
+              top="42"
+              left="82"
+              translateY="2"
+            />
+          </div>
+
+          <div className="group">
+            <MovingBorderButton
+              borderRadius="1.75rem"
+              className="bg-gray-200 size-10 dark:bg-black text-black dark:text-white hover:text-yellow-600 transition-colors duration-300 border-neutral-200 dark:border-slate-800"
+            >
+              <RiShareLine size={22} />
+            </MovingBorderButton>
+            <CustomToolTip
+              content="Share Profile"
+              top="42"
+              left="120"
+              translateY="2"
+            />
+          </div>
+        </div>
         {/* User profile content */}
         <div className="flex flex-col gap-4">
           <Image
@@ -144,7 +165,7 @@ export default function AboutSectionProfile({
             unoptimized
             loading="lazy"
           />
-          <div className="absolute inset-0 bg-black/30 rounded-lg"></div>
+          <div className="absolute inset-0 bg-white/30 dark:bg-black/30 rounded-lg"></div>
 
           {/* Username */}
           <div className="flex items-center gap-2 text-black dark:text-gray-300">
@@ -164,7 +185,7 @@ export default function AboutSectionProfile({
           </div>
 
           {/* Bio section */}
-          <div className="relative w-full rounded-md bg-black/10 dark:bg-white/10 hover:dark:bg-white/20 hover:bg-black/20 transition-all duration-300 ease-in-out px-2 py-1 dark:text-white text-black">
+          <div className="relative w-full rounded-md bg-white/10 dark:bg-black/10 hover:dark:bg-black/20 hover:bg-white/20 transition-all duration-300 ease-in-out px-2 py-1 dark:text-white text-black">
             <div className="h-[60px] w-full overflow-auto text-[12px] font-semibold flex flex-col">
               <span>Bio</span>
               <span>{userInfo.description || "No description available"}</span>
