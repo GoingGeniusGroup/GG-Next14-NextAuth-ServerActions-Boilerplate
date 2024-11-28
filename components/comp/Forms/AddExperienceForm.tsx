@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { string, z } from "zod";
 import { AnimatedInput } from "@/components/ui/animated-input/animated-input";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -103,6 +103,7 @@ const ExperienceForm: React.FC<ExperienceFormProps> = ({
 
     try {
       const formData = new FormData();
+
       formData.append("gg_id", gg_id);
       formData.append("experience_id", experience_id || "");
       formData.append("type", data.type);
@@ -119,6 +120,7 @@ const ExperienceForm: React.FC<ExperienceFormProps> = ({
         "project_skills",
         data.project_skills !== undefined ? data.project_skills.join(",") : ""
       );
+
       formData.append(
         "project_pictures",
         (data.project_pictures || []).join(",")
@@ -227,10 +229,9 @@ const ExperienceForm: React.FC<ExperienceFormProps> = ({
                         e.target.value
                           .split(",") // Split by comma
                           .map((tool) => tool.trim()) // Trim each entry to remove extra spaces
-                          .filter((tool) => tool !== "") // Filter out empty strings
                       )
                     }
-                    value={field.value}
+                    value={field.value.join(", ")}
                   />
                 </FormControl>
               </LabelInputContainer>
@@ -253,13 +254,10 @@ const ExperienceForm: React.FC<ExperienceFormProps> = ({
                     placeholder="Eg. JavaScript, HTML, CSS"
                     onChange={(e) =>
                       field.onChange(
-                        e.target.value
-                          .split(",")
-                          .map((skill) => skill.trim())
-                          .filter((skill) => skill !== "")
+                        e.target.value.split(",").map((skill) => skill.trim())
                       )
                     }
-                    value={field.value}
+                    value={field.value.join(", ")}
                   />
                 </FormControl>
               </LabelInputContainer>

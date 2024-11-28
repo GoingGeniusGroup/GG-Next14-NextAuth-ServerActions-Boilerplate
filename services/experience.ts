@@ -4,10 +4,18 @@ import { Prisma } from "@prisma/client";
 export const createExperience = async (data: Prisma.experienceCreateInput) => {
   try {
     const { project_skills } = data;
-    console.log("skills here --->", project_skills);
+
     const experience = await db.experience.create({
-      data,
+      data: {
+        ...data,
+        project_skills: project_skills
+          ? (project_skills as string[])[0]
+              .split(",")
+              .map((skill) => skill.trim())
+          : [],
+      },
     });
+
     const skills = experience.project_skills;
     await Promise.all(
       skills.map(async (skill) => {
