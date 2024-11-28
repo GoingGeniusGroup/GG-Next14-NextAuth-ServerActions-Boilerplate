@@ -129,9 +129,9 @@ export default function AboutSectionProfile({
             </MovingBorderButton>
 
             <CustomToolTip
-              content="Edit Profile"
-              top="40"
-              left="20"
+              content="Share QR"
+              top="42"
+              left="82"
               translateY="2"
             />
           </div>
@@ -144,9 +144,9 @@ export default function AboutSectionProfile({
               <RiShareLine size={22} />
             </MovingBorderButton>
             <CustomToolTip
-              content="Edit Profile"
-              top="40"
-              left="20"
+              content="Share Profile"
+              top="42"
+              left="120"
               translateY="2"
             />
           </div>

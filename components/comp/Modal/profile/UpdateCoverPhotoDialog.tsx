@@ -11,11 +11,7 @@ import {
 import { IconPhotoEdit } from "@tabler/icons-react";
 import { Button as MovingBorderButton } from "@/components/ui/border/moving-border";
 import UpdateCoverImageForm from "../../Forms/UpdateCoverImageForm";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip/tooltip";
+import CustomToolTip from "../../CustomComponents/CustomToolTip";
 
 interface UpdateCoverPhotoDialogProps {
   gg_id: string;
@@ -31,19 +27,20 @@ const UpdateProfileDialog: React.FC<UpdateCoverPhotoDialogProps> = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <MovingBorderButton
-              borderRadius="1.75rem"
-              className="bg-white group size-10 dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800  hover:text-yellow-600 transition-colors duration-300"
-            >
-              <IconPhotoEdit size={20} />
-            </MovingBorderButton>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Edit Profile</p>
-          </TooltipContent>
-        </Tooltip>
+        <div className="group">
+          <MovingBorderButton
+            borderRadius="1.75rem"
+            className="bg-white group size-10 dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800  hover:text-yellow-600 transition-colors duration-300"
+          >
+            <IconPhotoEdit size={20} />
+          </MovingBorderButton>
+          <CustomToolTip
+            content="Edit Cover Picture"
+            top="42"
+            left="-57"
+            translateY="2"
+          />
+        </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
