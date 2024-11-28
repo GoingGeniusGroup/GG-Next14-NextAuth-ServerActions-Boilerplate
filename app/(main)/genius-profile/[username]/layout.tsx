@@ -54,7 +54,7 @@ export default function GeniusProfileLayout({
               >
                 <ul className="relative mx-auto flex w-fit gap-1 rounded-full bg-black/20 dark:bg-white/20 p-1">
                   <Link
-                    href={`/genius-profile-2/${username}/gallery`}
+                    href={`/genius-profile/${username}/gallery`}
                     className="group"
                   >
                     <Button
@@ -71,7 +71,7 @@ export default function GeniusProfileLayout({
                     />
                   </Link>
                   <Link
-                    href={`/genius-profile-2/${username}/projects`}
+                    href={`/genius-profile/${username}/projects`}
                     className="group"
                   >
                     <Button
@@ -90,19 +90,15 @@ export default function GeniusProfileLayout({
                 </ul>
               </div>
 
-              <DragCloseDrawer
-                open={open}
-                setOpen={setOpen}
-                username={username}
-              >
+              <DragCloseDrawer open={open} setOpen={setOpen}>
                 {isGalleryOrProjects && (
-                  <>
+                  <div className="w-full">
                     <div
                       className={`sticky top-0 z-40 flex justify-center transition-all duration-300 ease-in-out`}
                     >
                       <ul className="relative mx-auto flex w-fit gap-1 rounded-full bg-white/20 p-1">
                         <Link
-                          href={`/genius-profile-2/${username}/gallery`}
+                          href={`/genius-profile/${username}/gallery`}
                           className="group"
                         >
                           <Button
@@ -122,7 +118,7 @@ export default function GeniusProfileLayout({
                           />
                         </Link>
                         <Link
-                          href={`/genius-profile-2/${username}/projects`}
+                          href={`/genius-profile/${username}/projects`}
                           className="group"
                         >
                           <Button
@@ -143,8 +139,8 @@ export default function GeniusProfileLayout({
                         </Link>
                       </ul>
                     </div>
-                    <div className="px-2">{otherroutes}</div>
-                  </>
+                    <div className="px-20">{otherroutes}</div>
+                  </div>
                 )}
               </DragCloseDrawer>
 

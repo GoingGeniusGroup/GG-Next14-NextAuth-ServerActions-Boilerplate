@@ -8,19 +8,16 @@ import {
   useAnimate,
   motion,
 } from "framer-motion";
-import { useRouter } from "next/navigation";
 
 interface Props {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   children?: ReactNode;
-  username: string;
 }
 
-const DragCloseDrawer = ({ open, setOpen, children, username }: Props) => {
+const DragCloseDrawer = ({ open, setOpen, children }: Props) => {
   const [scope, animate] = useAnimate();
   const [drawerRef, { height }] = useMeasure();
-  const router = useRouter();
 
   const y = useMotionValue(0);
   const controls = useDragControls();
@@ -37,7 +34,7 @@ const DragCloseDrawer = ({ open, setOpen, children, username }: Props) => {
     });
 
     setOpen(false);
-    router.push(`/genius-profile/${username}/`);
+    history.back();
   };
 
   return (
