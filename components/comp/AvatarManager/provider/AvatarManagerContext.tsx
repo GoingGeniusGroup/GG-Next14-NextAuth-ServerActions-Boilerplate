@@ -57,31 +57,37 @@ const defaultExpressions: Expression[] = [
   {
     label: "neutral",
     icon: "/emojis/neutral.svg",
-    bg: "#FFFFFF",
+    bg: "#FCBB3F",
     animation: "/male-idle-3.fbx",
   },
   {
     label: "sad",
     icon: "/emojis/sad.svg",
-    bg: "#0C2E5C",
+    bg: "#DC143C",
     animation: "/M_Standing_Expressions_011.fbx",
   },
   {
     label: "happy",
     icon: "/emojis/happy.svg",
-    bg: "#007F13",
+    bg: "#AA25B6",
     animation: "/M_Standing_Expressions_012.fbx",
   },
   {
     label: "amazed",
     icon: "/emojis/amazed.svg",
-    bg: "#F8BF43",
+    bg: "#129FE0",
     animation: "/M_Standing_Expressions_013.fbx",
   },
   {
     label: "angry",
     icon: "/emojis/angry.svg",
-    bg: "#A20325",
+    bg: "#14C620",
+    animation: "/M_Standing_Expressions_016.fbx",
+  },
+  {
+    label: "angry",
+    icon: "/emojis/angry.svg",
+    bg: "#ACACAC",
     animation: "/M_Standing_Expressions_016.fbx",
   },
 ];

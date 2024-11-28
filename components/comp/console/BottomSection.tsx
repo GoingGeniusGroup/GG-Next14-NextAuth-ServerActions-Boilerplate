@@ -3,7 +3,6 @@
 import Image from "next/image";
 
 import { Button as MovingBorderButton } from "@/components/ui/border/moving-border";
-import AchievementsCard from "../GeniusUserProfile/Achievements/AchievementsCard";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button/button";
 import { IconEdit, IconTrash } from "@tabler/icons-react";
@@ -24,15 +23,6 @@ import {
 import AvatarManagerClientProfile from "../AvatarManager/avatar-manager-client-profile";
 import ExpressionCard from "../Huds/ExpressionsCard";
 import { usePublicAvatar } from "../AvatarManager/provider/AvatarManagerPublicContext";
-
-const emotes = [
-  { name: "legendary", emote: "Lege", color: "#FCBB3F" },
-  { name: "mythic", emote: "Myth", color: "#DC143C" },
-  { name: "rare", emote: "Epic", color: "#AA25B6" },
-  { name: "epic", emote: "Rare", color: "#129FE0" },
-  { name: "uncommon", emote: "Unco", color: "#14C620" },
-  { name: "common", emote: "Com", color: "#ACACAC" },
-];
 
 const tabs = [
   { name: "Education", icon: "📚" },
@@ -133,22 +123,6 @@ export default function BottomSection({
         </>
       ) : (
         <>
-          <div className="relative flex border p-2 mt-4 rounded-xl overflow-auto backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
-            <Carousel className="w-full">
-              <CarouselContent className="-ml-1">
-                {tabs.map((tab, index) => (
-                  <CarouselItem key={index} className="pl-1 basis-1/4">
-                    <Card
-                      className={`size-[90px] rounded-lg dark:bg-black/40 hover:border border-yellow-600 bg-gray-200 flex items-center justify-center text-3xl`}
-                    >
-                      {tab.icon}
-                    </Card>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-            </Carousel>
-          </div>
-
           <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30">
             <Dialog
               open={isAvatarCreatorOpen}

@@ -26,8 +26,17 @@ export default function ExpressionCard({
               onClick={() => handleEmote(expression.animation)}
             >
               <Card
-                className={`w-[60px] h-[75px] rounded-lg  flex items-center justify-center hover:border border-yellow-600 transition-colors duration-300 `}
-                style={{ backgroundColor: expression.bg }}
+                className={`w-[60px] h-[75px] rounded-lg flex items-center justify-center transition-colors duration-300 border`}
+                style={{
+                  borderColor: expression.bg,
+                  transition: "border-color 0.3s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = "orange";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = expression.bg;
+                }}
               >
                 <div className="relative">
                   <Image
