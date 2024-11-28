@@ -18,6 +18,7 @@ import { PublicAvatarProvider } from "@/components/comp/AvatarManager/provider/A
 interface GeniusProfileLayoutProps {
   userinfo: ReactNode;
   children: ReactNode;
+  otherroutes: ReactNode;
   params: {
     username: string;
   };
@@ -34,6 +35,7 @@ export default function GeniusProfileLayout({
   userinfo,
   children,
   params,
+  otherroutes,
 }: GeniusProfileLayoutProps) {
   const { username } = params;
 
@@ -122,20 +124,18 @@ export default function GeniusProfileLayout({
         <div className="relative size-full">
           <div className="flex h-full gap-x-3 text-black dark:text-white">
             {/* Top navigation dock component */}
-            <TopFloatingDock2
+            {/* <TopFloatingDock2
               items={tabs}
               handleIsOpen={handleIsOpen}
               activeSection={activeSection}
               onSectionClick={scrollToSection}
-            />
+            /> */}
 
             {/* Main content container with sliding animation */}
 
             <div
               className={`flex-1 border-2 rounded-lg w-full mx-[69px] overflow-hidden transition-transform duration-300 ease-in-out`}
             >
-              {userinfo}
-
               {/* AnimatePresence enables exit animations */}
               <AnimatePresence mode="wait">
                 {/* Animated container for all sections */}
@@ -151,19 +151,8 @@ export default function GeniusProfileLayout({
                   className="px-4 pb-4 pt-8 h-full relative overflow-y-auto scroll-container"
                   style={{ scrollBehavior: "smooth" }}
                 >
-                  {/* Individual sections using semantic HTML5 section tags */}
-                  {/* <section id="info" className="info-section">
-                    {info}
-                  </section>
-                  <section id="gallery" className="gallery-section">
-                    {gallery}
-                  </section>
-                  <section id="projects" className="projects-section">
-                    {projects}
-                  </section> */}
-                  {/* <section id="experience" className="experience-section">
-                  {experience}
-                </section> */}
+                  {userinfo}
+                  {otherroutes}
                   {children}
                 </motion.div>
               </AnimatePresence>
