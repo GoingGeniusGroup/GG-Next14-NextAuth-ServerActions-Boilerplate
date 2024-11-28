@@ -7,6 +7,7 @@ import Link from "next/link";
 
 import { PublicAvatarProvider } from "@/components/comp/AvatarManager/provider/AvatarManagerPublicContext";
 import { Button } from "@/components/ui/button";
+import DragCloseDrawer from "@/components/comp/CustomComponents/DragCloseDrawer";
 
 // Define the expected props for the component
 interface GeniusProfileLayoutProps {
@@ -25,11 +26,12 @@ export default function GeniusProfileLayout({
   otherroutes,
 }: GeniusProfileLayoutProps) {
   const { username } = params;
-  const [showOtherRoutes, setShowOtherRoutes] = useState(false);
   const pathname = usePathname();
 
   const isGalleryOrProjects =
     pathname.includes("/gallery") || pathname.includes("/projects");
+
+  const [open, setOpen] = useState(false);
 
   return (
     <PublicAvatarProvider username={username}>
@@ -38,18 +40,35 @@ export default function GeniusProfileLayout({
           <div className="flex-1 border-2 rounded-lg w-full mx-[69px] overflow-hidden transition-transform duration-300 ease-in-out">
             <div
               key={pathname}
-              className="px-4 pb-4 pt-8 h-full relative overflow-y-auto scroll-container"
+              className="px-4 pb-4 pt-8 h-full relative overflow-hidden scroll-container"
               style={{ scrollBehavior: "smooth" }}
             >
               {userinfo}
+              <button
+                onClick={() => setOpen(true)}
+                className="rounded bg-indigo-500 px-4 py-2 text-white transition-colors hover:bg-indigo-600"
+              >
+                Open drawer
+              </button>
+
+              <DragCloseDrawer open={open} setOpen={setOpen} isGoBack={true}>
+                {isGalleryOrProjects && (
+                  <div className="px-4 py-8">
+                    <Button onClick={() => history.back()} className="mb-4">
+                      Back
+                    </Button>
+                    {otherroutes}
+                  </div>
+                )}
+              </DragCloseDrawer>
               {!isGalleryOrProjects && (
-                <div className="flex space-x-4 mb-4">
-                  <Button asChild>
+                <div className="absolute bottom-0 flex space-x-4 mb-4">
+                  <Button asChild onClick={() => setOpen(true)}>
                     <Link href={`/genius-profile-2/${username}/gallery`}>
                       Gallery
                     </Link>
                   </Button>
-                  <Button asChild>
+                  <Button asChild onClick={() => setOpen(true)}>
                     <Link href={`/genius-profile-2/${username}/projects`}>
                       Projects
                     </Link>
@@ -60,24 +79,6 @@ export default function GeniusProfileLayout({
             </div>
           </div>
         </div>
-        <AnimatePresence>
-          {isGalleryOrProjects && (
-            <motion.div
-              initial={{ y: "100%" }}
-              animate={{ y: 0 }}
-              exit={{ y: "100%" }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="absolute inset-0 bg-background z-40 overflow-y-auto"
-            >
-              <div className="px-4 py-8">
-                <Button onClick={() => history.back()} className="mb-4">
-                  Back
-                </Button>
-                {otherroutes}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </div>
     </PublicAvatarProvider>
   );
