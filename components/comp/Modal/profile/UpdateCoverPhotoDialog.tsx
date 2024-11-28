@@ -30,7 +30,7 @@ const UpdateProfileDialog: React.FC<UpdateCoverPhotoDialogProps> = ({
         <div className="group">
           <MovingBorderButton
             borderRadius="1.75rem"
-            className="bg-white group size-10 dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800  hover:text-yellow-600 transition-colors duration-300"
+            className="bg-gray-200 size-10 dark:bg-black text-black dark:text-white border-neutral-200 dark:border-slate-800  hover:text-yellow-600 transition-colors duration-300"
           >
             <IconPhotoEdit size={20} />
           </MovingBorderButton>

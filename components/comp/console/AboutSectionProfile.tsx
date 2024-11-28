@@ -123,7 +123,7 @@ export default function AboutSectionProfile({
           <div className="group">
             <MovingBorderButton
               borderRadius="1.75rem"
-              className="bg-white size-10 dark:bg-slate-900 text-black dark:text-white hover:text-yellow-600 transition-colors duration-300 border-neutral-200 dark:border-slate-800"
+              className="bg-gray-200 size-10 dark:bg-black text-black dark:text-white hover:text-yellow-600 transition-colors duration-300 border-neutral-200 dark:border-slate-800"
             >
               <LiaQrcodeSolid size={22} />
             </MovingBorderButton>
@@ -139,7 +139,7 @@ export default function AboutSectionProfile({
           <div className="group">
             <MovingBorderButton
               borderRadius="1.75rem"
-              className="bg-white size-10 dark:bg-slate-900 text-black dark:text-white hover:text-yellow-600 transition-colors duration-300 border-neutral-200 dark:border-slate-800"
+              className="bg-gray-200 size-10 dark:bg-black text-black dark:text-white hover:text-yellow-600 transition-colors duration-300 border-neutral-200 dark:border-slate-800"
             >
               <RiShareLine size={22} />
             </MovingBorderButton>

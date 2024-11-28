@@ -178,14 +178,14 @@ export default function BottomSection({
                     <div className="p-2">
                       <Card
                         key={avatar.avatar_id}
-                        className={`border h-fit rounded-lg hover:border-yellow-500 transition-all duration-300 ease-in-out ${
+                        className={`border h-fit rounded-lg  transition-all duration-300 ease-in-out ${
                           selectedAvatar === avatar.avatar_url
                             ? "border-sky-500"
-                            : "border-black/20 dark:border-white/20"
+                            : "border-black/20 dark:border-white/20 hover:border-black dark:hover:border-white"
                         }`}
                       >
                         <CardContent className="relative pt-6 pb-1">
-                          <div className="flex flex-col items-center space-y-1">
+                          <div className="flex flex-col items-center space-y-1 w-full">
                             <Image
                               src={
                                 avatar.avatar_url?.replace(".glb", ".png") ||
@@ -198,8 +198,7 @@ export default function BottomSection({
                             />
                             <Button
                               variant="black"
-                              size="sm"
-                              className={`hover:text-yellow-500 w-full ${
+                              className={`hover:text-yellow-500 w-full h-5 font-thin text-xs ${
                                 selectedAvatar === avatar.avatar_url
                                   ? "text-sky-500"
                                   : ""
@@ -216,21 +215,21 @@ export default function BottomSection({
                           <div className="absolute top-1 flex gap-1 right-1">
                             <Button
                               variant="transparent_rounded"
-                              className="hover:text-yellow-500 text-sky-400 p-[1px]"
+                              className="hover:text-yellow-500 hover:bg-transparent text-sky-600 p-[1px]"
                               size="mini2"
                               onClick={() => handleEditAvatar(avatar)}
                             >
-                              <IconEdit />
+                              <IconEdit size={12} />
                             </Button>
                             <Button
                               variant="transparent_rounded"
-                              className="hover:text-yellow-500 text-red-400 p-[1px]"
+                              className="hover:text-yellow-500 hover:bg-transparent text-red-600 p-[1px]"
                               size="mini2"
                               onClick={() =>
                                 handleDeleteAvatar(avatar.avatar_id)
                               }
                             >
-                              <IconTrash />
+                              <IconTrash size={12} />
                             </Button>
                           </div>
                         </CardContent>
