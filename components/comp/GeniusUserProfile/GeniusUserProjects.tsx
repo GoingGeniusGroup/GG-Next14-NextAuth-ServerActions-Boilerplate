@@ -23,14 +23,19 @@ interface ItemsProp {
   userInfo: {
     gg_id: string;
   };
+  LoggedUserProfile: boolean;
 }
 
-export default function GeniusUserProjects({ items, userInfo }: ItemsProp) {
+export default function GeniusUserProjects({
+  items,
+  userInfo,
+  LoggedUserProfile,
+}: ItemsProp) {
   let [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
     <BentoGridHover className="relative py-10">
-      {userInfo && (
+      {LoggedUserProfile && (
         <div className="absolute top-2 right-2 z-40">
           <ExperienceDialog gg_id={userInfo.gg_id} />
         </div>
