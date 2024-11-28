@@ -77,7 +77,7 @@ model User {
   first_name            String?                @db.VarChar(50)
   gg_id                 String                 @id @default(uuid()) @db.Uuid
   guild_id              String?                @db.Uuid
-  image_urls            String[]
+ 
   last_name             String?                @db.VarChar(50)
   oauth_provider        String?                @db.VarChar(50)
   oauth_token           String?                @db.VarChar(255)
@@ -86,6 +86,7 @@ model User {
   phone_number          String?                @unique @db.VarChar(15)
   region                Json?
   username              String?                @unique
+  image_urls            String[]
   accounts              Account?
   Cart                  Cart[]
   Color                 Color[]
@@ -98,6 +99,49 @@ model User {
   experience            experience[]
   skills                skills[]
   social                social[]
+  ImagePost             ImagePost[]
+  comment               comment[]
+}
+
+// model Reaction {
+//   reaction_id String     @id @default(uuid()) @db.Uuid
+//   type        ReactionType
+//   img_id      String     @db.Uuid
+//   imagePost   ImagePost  @relation(fields: [img_id], references: [img_id], onDelete: Cascade)
+//   gg_id       String     @db.Uuid
+//   user        User       @relation(fields: [gg_id], references: [gg_id], onDelete: Cascade)
+// }
+
+enum ReactionType {
+  GOODIDEA
+  THANKS
+  WOW
+  HAHA
+  LOVE
+}
+
+model ImagePost {
+  img_id      String         @id @default(uuid()) @db.Uuid
+  image_url   String
+  caption     String
+  description String?
+  reactions   ReactionType[] @default([])
+  gg_id    String    @db.Uuid 
+  users    User      @relation(fields: [gg_id], references: [gg_id], onDelete: Cascade, onUpdate: NoAction)
+  comments comment[]
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+model comment {
+  cmt_id    String    @id @default(uuid()) @db.Uuid
+  text      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  gg_id     String    @db.Uuid 
+  users     User      @relation(fields: [gg_id], references: [gg_id], onDelete: Cascade)
+  img_id    String    @db.Uuid  
+  imagePost ImagePost @relation(fields: [img_id], references: [img_id], onDelete: Cascade)
 }
 
 enum socialType {
