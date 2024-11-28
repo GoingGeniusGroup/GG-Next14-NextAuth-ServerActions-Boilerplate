@@ -9,9 +9,6 @@ import {
   IconUser,
 } from "@tabler/icons-react";
 import TopFloatingDock2 from "@/components/ui/dock/top-floating-dock2";
-import { AvatarType } from "@/components/comp/AvatarManager/provider/AvatarManagerContext";
-import { getUserAvatars } from "@/actions/avatar";
-import { getUserByUsername } from "@/services/user";
 import { PublicAvatarProvider } from "@/components/comp/AvatarManager/provider/AvatarManagerPublicContext";
 
 // Define the expected props for the component

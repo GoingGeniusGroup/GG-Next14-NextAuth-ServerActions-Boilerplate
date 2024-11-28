@@ -8,16 +8,19 @@ import {
   useAnimate,
   motion,
 } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 interface Props {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   children?: ReactNode;
+  username: string;
 }
 
-const DragCloseDrawer = ({ open, setOpen, children }: Props) => {
+const DragCloseDrawer = ({ open, setOpen, children, username }: Props) => {
   const [scope, animate] = useAnimate();
   const [drawerRef, { height }] = useMeasure();
+  const router = useRouter();
 
   const y = useMotionValue(0);
   const controls = useDragControls();
@@ -33,9 +36,8 @@ const DragCloseDrawer = ({ open, setOpen, children }: Props) => {
       y: [yStart, height],
     });
 
-    history.back();
-
     setOpen(false);
+    router.push(`/genius-profile/${username}/`);
   };
 
   return (
@@ -46,7 +48,7 @@ const DragCloseDrawer = ({ open, setOpen, children }: Props) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           onClick={handleClose}
-          className="fixed inset-0 z-50 bg-neutral-950/70"
+          className="fixed inset-0 z-50 dark:bg-black/10 bg-white/10 backdrop-blur-md"
         >
           <motion.div
             id="drawer"
@@ -57,7 +59,7 @@ const DragCloseDrawer = ({ open, setOpen, children }: Props) => {
             transition={{
               ease: "easeInOut",
             }}
-            className="absolute bottom-0 h-[75vh] w-full overflow-hidden rounded-t-3xl bg-neutral-900"
+            className="absolute bottom-0 h-[75vh] w-full overflow-hidden rounded-t-3xl dark:bg-black bg-white"
             style={{ y }}
             drag="y"
             dragControls={controls}
@@ -76,7 +78,7 @@ const DragCloseDrawer = ({ open, setOpen, children }: Props) => {
               bottom: 0.5,
             }}
           >
-            <div className="absolute left-0 right-0 top-0 z-10 flex justify-center bg-neutral-900 p-4">
+            <div className="absolute left-0 right-0 top-0 z-10 flex justify-center dark:bg-black bg-white border-b p-4">
               <button
                 onPointerDown={(e) => {
                   controls.start(e);
