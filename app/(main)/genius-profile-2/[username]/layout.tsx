@@ -44,12 +44,6 @@ export default function GeniusProfileLayout({
               style={{ scrollBehavior: "smooth" }}
             >
               {userinfo}
-              <button
-                onClick={() => setOpen(true)}
-                className="rounded bg-indigo-500 px-4 py-2 text-white transition-colors hover:bg-indigo-600"
-              >
-                Open drawer
-              </button>
 
               <DragCloseDrawer open={open} setOpen={setOpen} isGoBack={true}>
                 {isGalleryOrProjects && (
