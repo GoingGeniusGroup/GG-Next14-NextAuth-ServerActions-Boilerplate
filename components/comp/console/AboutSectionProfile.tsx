@@ -18,40 +18,42 @@ import { FaSteam } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaGgCircle } from "react-icons/fa6";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SocialMediaDialog from "../GeniusUserProfile/Info/SocialMediaDialog";
 import { RiShareLine } from "react-icons/ri";
 import { LiaQrcodeSolid } from "react-icons/lia";
 import { Button as MovingBorderButton } from "@/components/ui/border/moving-border";
+import { socialType,social} from "@prisma/client"
+import { getSocialsbyUserId } from "@/actions/social";
 
 const socials = [
   {
-    name: "Google",
+    name: socialType.GOOGLE,
     icon: <FcGoogle size={38} />,
     link: "https://google.com",
   },
   {
-    name: "Github",
+    name: socialType.GITHUB,
     icon: <FaGithub color="black" size={38} />,
     link: "https://github.com",
   },
   {
-    name: "Steam",
+    name: socialType.STEAM,
     icon: <FaSteam size={38} color="#1b2838" />,
     link: "https://tiktok.com",
   },
   {
-    name: "Instagram",
+    name: socialType.INSTAGRAM,
     icon: <AiFillInstagram size={38} color="#E1306C" />,
     link: "https://instagram.com",
   },
   {
-    name: "Facebook",
+    name: socialType.FACEBOOK,
     icon: <SiFacebook color="#1877f2" size={38} />,
     link: "https://facebook.com",
   },
   {
-    name: "LinkedIn",
+    name: socialType.LINKDN,
     icon: <IoLogoLinkedin color="#0a66c2" size={38} />,
     link: "https://linkedin.com",
   },
@@ -75,6 +77,9 @@ export default function AboutSectionProfile({
   ifOwnProfile: boolean;
 }) {
   const [userLinks, setUserLinks] = useState<Record<string, string>>({});
+
+
+
 
   const handleSaveLink = (socialName: string, url: string) => {
     setUserLinks((prev) => ({
@@ -188,7 +193,6 @@ export default function AboutSectionProfile({
                   <SocialMediaDialog
                     social={social}
                     userLinks={userLinks}
-                    onSave={handleSaveLink}
                     ifOwnProfile={ifOwnProfile}
                   />
                 </Card>

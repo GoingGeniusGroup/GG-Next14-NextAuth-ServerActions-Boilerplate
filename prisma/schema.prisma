@@ -97,6 +97,24 @@ model User {
   coordinate            coordinate[]
   experience            experience[]
   skills                skills[]
+  social                social[]
+}
+
+enum socialType {
+  FACEBOOK
+  INSTAGRAM
+  GITHUB
+  STEAM
+  LINKDN
+  GOOGLE
+}
+
+model social {
+  social_id String     @id @default(uuid()) @db.Uuid
+  key       socialType
+  value     String
+  gg_id     String     @db.Uuid
+  users     User       @relation(fields: [gg_id], references: [gg_id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model avatar {
