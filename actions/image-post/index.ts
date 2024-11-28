@@ -56,20 +56,39 @@ export const updateImagesGallery = async (
   }
 
   const { gg_id, image_urls,imageposts } = validatedFields.data;
-
+ console.log('====================================');
+ console.log(imageposts,'imgposts');
+ console.log('====================================');
   try {
-    await updateUserById(gg_id, {
-      image_urls,
-    });
+  
 
-    await db.ImagePost.createMany({
+    const res = await db.ImagePost.createMany({
         data: imageposts.map((post) => ({
-            gg_id,
-            ...post
+            gg_id:gg_id,
+            image_url: post.image_url,
+            caption: post.caption,
+            description: post.description
+
         })),
         skipDuplicates: true,
         
     })
+    console.log('====================================');
+    console.log("after creatin",res);
+    console.log('====================================');
+    await updateUserById(gg_id, {
+        image_urls,
+      });
+    if(!res){
+        return response({
+            success: false,
+            error: {
+              code: 500,
+              message: "An error occurred while uploading the image.",
+            },
+          });
+
+    }
     return response({
       success: true,
       code: 200,

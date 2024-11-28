@@ -1,6 +1,6 @@
 "use client";
 
-import { updateImagesGallery } from "@/actions/update-images-gallery";
+
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -23,6 +23,7 @@ import { Label } from "@/components/ui/animated-input/label";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { updateImagesGallery } from "@/actions/image-post";
 
 
 // Zod schema for form validation
@@ -119,11 +120,13 @@ export default function UploadImagesGalleryForm({
 
 
       const formData = {
-        gg_id,
+        gg_id:gg_id,
         image_urls: final_urls.map(img => img.image_url),
-        imagepost: data.images
+        imageposts: data.images
       };
-
+    console.log('====================================');
+    console.log(formData,data,final_urls,'from onsubmi');
+    console.log('====================================');
       const result = await updateImagesGallery(formData);
 
       if (result.success) {
