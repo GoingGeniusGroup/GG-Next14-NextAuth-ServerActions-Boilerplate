@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import ProfileHudTop from "../Huds/ProfileHudTop";
-import { getUserByUsername } from "@/services/user";
 
 interface LayoutProps {
   children: ReactNode;

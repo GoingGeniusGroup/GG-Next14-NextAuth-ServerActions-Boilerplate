@@ -8,19 +8,16 @@ import {
   useAnimate,
   motion,
 } from "framer-motion";
-import { useRouter } from "next/navigation";
 
 interface Props {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   children?: ReactNode;
-  isGoBack?: boolean;
 }
 
-const DragCloseDrawer = ({ open, setOpen, children, isGoBack }: Props) => {
+const DragCloseDrawer = ({ open, setOpen, children }: Props) => {
   const [scope, animate] = useAnimate();
   const [drawerRef, { height }] = useMeasure();
-  const router = useRouter();
 
   const y = useMotionValue(0);
   const controls = useDragControls();
@@ -36,9 +33,7 @@ const DragCloseDrawer = ({ open, setOpen, children, isGoBack }: Props) => {
       y: [yStart, height],
     });
 
-    {
-      isGoBack && router.back();
-    }
+    history.back();
 
     setOpen(false);
   };

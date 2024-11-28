@@ -9,7 +9,7 @@ import { PublicAvatarProvider } from "@/components/comp/AvatarManager/provider/A
 import { Button } from "@/components/ui/button";
 import DragCloseDrawer from "@/components/comp/CustomComponents/DragCloseDrawer";
 
-// Define the expected props for the component
+import { LuGalleryVertical } from "react-icons/lu";
 interface GeniusProfileLayoutProps {
   userinfo: ReactNode;
   children: ReactNode;
@@ -17,6 +17,17 @@ interface GeniusProfileLayoutProps {
   params: {
     username: string;
   };
+}
+
+type Position = {
+  left: number;
+  width: number;
+  opacity: number;
+};
+
+interface ITab {
+  name: string;
+  link: string;
 }
 
 export default function GeniusProfileLayout({
@@ -44,31 +55,53 @@ export default function GeniusProfileLayout({
               style={{ scrollBehavior: "smooth" }}
             >
               {userinfo}
-
-              <DragCloseDrawer open={open} setOpen={setOpen} isGoBack={true}>
-                {isGalleryOrProjects && (
-                  <div className="px-4 py-8">
-                    <Button onClick={() => history.back()} className="mb-4">
-                      Back
+              <div
+                className={`absolute -bottom-2 z-40 left-1/2 -translate-x-1/2 flex space-x-4 mb-4 transition-all duration-300 ease-in-out`}
+              >
+                <ul className="relative mx-auto flex w-fit gap-1 rounded-full bg-white/20 p-1">
+                  <Link href={`/genius-profile-2/${username}/gallery`}>
+                    <Button
+                      className="rounded-full size-[32px] flex justify-center items-center bg-white text-black hover:bg-black hover:text-white"
+                      onClick={() => setOpen(true)}
+                    >
+                      G
                     </Button>
-                    {otherroutes}
-                  </div>
+                  </Link>
+                  <Link href={`/genius-profile-2/${username}/projects`}>
+                    <Button
+                      className="rounded-full size-[32px] flex justify-center items-center bg-white text-black hover:bg-black hover:text-white"
+                      onClick={() => setOpen(true)}
+                    >
+                      P
+                    </Button>
+                  </Link>
+                </ul>
+              </div>
+
+              <DragCloseDrawer open={open} setOpen={setOpen}>
+                {isGalleryOrProjects && (
+                  <>
+                    <div
+                      className={`sticky top-0 z-40 flex justify-center transition-all duration-300 ease-in-out`}
+                    >
+                      <ul className="relative mx-auto flex w-fit gap-1 rounded-full bg-white/20 p-1">
+                        <Link href={`/genius-profile-2/${username}/gallery`}>
+                          <Button className="rounded-full size-[32px] flex justify-center items-center bg-white text-black hover:bg-black hover:text-white">
+                            G
+                          </Button>
+                        </Link>
+                        <Link href={`/genius-profile-2/${username}/projects`}>
+                          <Button className="rounded-full size-[32px] flex justify-center items-center bg-white text-black hover:bg-black hover:text-white">
+                            P
+                          </Button>
+                        </Link>
+                      </ul>
+                    </div>
+                    <div className="p-2">{otherroutes}</div>
+                  </>
                 )}
               </DragCloseDrawer>
-              {!isGalleryOrProjects && (
-                <div className="absolute bottom-0 flex space-x-4 mb-4">
-                  <Button asChild onClick={() => setOpen(true)}>
-                    <Link href={`/genius-profile-2/${username}/gallery`}>
-                      Gallery
-                    </Link>
-                  </Button>
-                  <Button asChild onClick={() => setOpen(true)}>
-                    <Link href={`/genius-profile-2/${username}/projects`}>
-                      Projects
-                    </Link>
-                  </Button>
-                </div>
-              )}
+
               {children}
             </div>
           </div>
