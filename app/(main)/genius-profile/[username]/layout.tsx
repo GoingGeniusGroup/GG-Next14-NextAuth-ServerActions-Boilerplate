@@ -32,11 +32,11 @@ export default function GeniusProfileLayout({
 
   const [open, setOpen] = useState(false);
 
-  if (pathname.includes("/gallery") || pathname.includes("/projects")) {
-    setTimeout(() => {
-      setOpen(true); // This will open the drawer after 200ms
-    }, 200);
-  }
+  // if (pathname.includes("/gallery") || pathname.includes("/projects")) {
+  //   setTimeout(() => {
+  //     setOpen(true); // This will open the drawer after 200ms
+  //   }, 200);
+  // }
 
   return (
     <PublicAvatarProvider username={username}>
