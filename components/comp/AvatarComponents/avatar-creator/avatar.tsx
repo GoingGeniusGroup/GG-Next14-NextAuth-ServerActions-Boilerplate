@@ -18,7 +18,7 @@ export default function Avatar_Creator() {
   const [avatarUrl, setAvatarUrl] = useState("");
 
   const handleOnAvatarExported = (event: AvatarExportedEvent) => {
-    console.log(event.data.avatarId);
+    // console.log(event.data.avatarId);
     setAvatarUrl(event.data.url);
   };
 

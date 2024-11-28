@@ -1,86 +1,154 @@
 "use client";
 
-import TopFloatingDock from "@/components/ui/dock/top-radial-dock";
-import {
-  IconExposure,
-  IconHome,
-  IconPhoto,
-  IconTool,
-} from "@tabler/icons-react";
-import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
-interface ProfileViewProps {
+import { PublicAvatarProvider } from "@/components/comp/AvatarManager/provider/AvatarManagerPublicContext";
+import { Button } from "@/components/ui/button";
+import DragCloseDrawer from "@/components/comp/CustomComponents/DragCloseDrawer";
+
+import CustomToolTip from "@/components/comp/CustomComponents/CustomToolTip";
+interface GeniusProfileLayoutProps {
+  userinfo: ReactNode;
+  children: ReactNode;
+  otherroutes: ReactNode;
   params: {
     username: string;
   };
-  children: React.ReactNode;
 }
 
-type Tab = {
-  title: string;
-  link: string;
-  icon: React.ReactNode;
-};
-export default function ProfileLayout({ params, children }: ProfileViewProps) {
-  const username = params.username;
+export default function GeniusProfileLayout({
+  userinfo,
+  children,
+  params,
+  otherroutes,
+}: GeniusProfileLayoutProps) {
+  const { username } = params;
+  const pathname = usePathname();
 
-  const tabs: Tab[] = [
-    {
-      title: "Home",
-      icon: <IconHome size={14} />,
-      link: `/genius-profile/${username}`,
-    },
-    {
-      title: "Gallery",
-      icon: <IconPhoto size={14} />,
-      link: `/genius-profile/${username}/gallery`,
-    },
-    {
-      title: "Projects",
-      icon: <IconTool size={14} />,
-      link: `/genius-profile/${username}/projects`,
-    },
-    {
-      title: "Experience",
-      icon: <IconExposure size={14} />,
-      link: `/genius-profile/${username}/experience`,
-    },
-    {
-      title: "Parallex",
-      icon: <IconExposure size={14} />,
-      link: `/genius-profile/${username}/parallex`,
-    },
-  ];
+  const isGalleryOrProjects =
+    pathname.includes("/gallery") || pathname.includes("/projects");
 
-  const [isOpen, setIsOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
-  const handleIsOpen = () => {
-    setIsOpen(!isOpen);
-  };
+  if (pathname.includes("/gallery") || pathname.includes("/projects")) {
+    setTimeout(() => {
+      setOpen(true); // This will open the drawer after 200ms
+    }, 200);
+  }
 
   return (
-    <div className="relative size-full">
-      <div className="flex h-full gap-x-3 text-black dark:text-white">
-        <TopFloatingDock items={tabs} handleIsOpen={handleIsOpen} />
-        <div
-          className={`flex-1 border transition-all duration-300 ease-in-out rounded-lg overflow-hidden ${
-            isOpen ? "ml-16" : "ml-0"
-          }`}
-        >
-          <AnimatePresence mode="wait">
-            <motion.div
-              initial={{ x: 300, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: -300, opacity: 0 }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="px-4 pb-4 pt-8 h-full relative overflow-y-auto"
+    <PublicAvatarProvider username={username}>
+      <div className="relative size-full">
+        <div className="flex h-full gap-x-3 text-black dark:text-white">
+          <div className="flex-1 border-2 rounded-lg w-full mx-[69px] overflow-hidden transition-transform duration-300 ease-in-out">
+            <div
+              key={pathname}
+              className="px-4 pb-4 pt-8 h-full relative overflow-hidden scroll-container"
+              style={{ scrollBehavior: "smooth" }}
             >
+              {userinfo}
+              <div
+                className={`absolute -bottom-2 z-40 left-1/2 -translate-x-1/2 flex space-x-4 mb-4 transition-all duration-300 ease-in-out`}
+              >
+                <ul className="relative mx-auto flex w-fit gap-1 rounded-full bg-black/20 dark:bg-white/20 p-1">
+                  <Link
+                    href={`/genius-profile/${username}/gallery`}
+                    className="group"
+                  >
+                    <Button
+                      className="rounded-full size-[32px] flex justify-center items-center bg-gray-200 dark:bg-white text-black hover:bg-black hover:text-white transition-color duration-300 ease-in-out"
+                      onClick={() => setOpen(true)}
+                    >
+                      G
+                    </Button>
+                    <CustomToolTip
+                      content="Gallery"
+                      top="-30"
+                      left="-16"
+                      translateY="2"
+                    />
+                  </Link>
+                  <Link
+                    href={`/genius-profile/${username}/projects`}
+                    className="group"
+                  >
+                    <Button
+                      className="rounded-full size-[32px] flex justify-center items-center bg-gray-200 dark:bg-white text-black hover:bg-black hover:text-white transition-color duration-300 ease-in-out"
+                      onClick={() => setOpen(true)}
+                    >
+                      P
+                    </Button>
+                    <CustomToolTip
+                      content="Projects"
+                      top="-30"
+                      left="20"
+                      translateY="2"
+                    />
+                  </Link>
+                </ul>
+              </div>
+
+              <DragCloseDrawer open={open} setOpen={setOpen}>
+                {isGalleryOrProjects && (
+                  <div className="w-full">
+                    <div
+                      className={`sticky top-0 z-40 flex justify-center transition-all duration-300 ease-in-out`}
+                    >
+                      <ul className="relative mx-auto flex w-fit gap-1 rounded-full bg-white/20 p-1">
+                        <Link
+                          href={`/genius-profile/${username}/gallery`}
+                          className="group"
+                        >
+                          <Button
+                            className={`rounded-full size-[32px] flex justify-center items-center transition-color duration-300 ease-in-out ${
+                              pathname.includes("gallery")
+                                ? "bg-black text-white hover:bg-white hover:text-black "
+                                : "bg-white text-black hover:bg-black hover:text-white"
+                            }`}
+                          >
+                            G
+                          </Button>
+                          <CustomToolTip
+                            content="Gallery"
+                            top="40"
+                            left="-16"
+                            translateY="2"
+                          />
+                        </Link>
+                        <Link
+                          href={`/genius-profile/${username}/projects`}
+                          className="group"
+                        >
+                          <Button
+                            className={`rounded-full size-[32px] flex justify-center items-center transition-color duration-300 ease-in-out ${
+                              pathname.includes("projects")
+                                ? "bg-black text-white hover:bg-white hover:text-black "
+                                : "bg-white text-black hover:bg-black hover:text-white"
+                            }`}
+                          >
+                            P
+                          </Button>
+                          <CustomToolTip
+                            content="Projects"
+                            top="40"
+                            left="20"
+                            translateY="2"
+                          />
+                        </Link>
+                      </ul>
+                    </div>
+                    <div className="px-20">{otherroutes}</div>
+                  </div>
+                )}
+              </DragCloseDrawer>
+
               {children}
-            </motion.div>
-          </AnimatePresence>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </PublicAvatarProvider>
   );
 }

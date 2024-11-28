@@ -16,19 +16,19 @@ export default function SimulatorToggleButton({
   return (
     <motion.div
       layout
-      className="fixed right-[5px] md:right-[20px] z-50 flex w-[33px] top-[47%] select-none flex-col items-center space-y-[6px] rounded-full bg-white px-[6px] py-[4px] shadow-lg shadow-black/50 transition-all duration-500 ease-in-out"
+      className="fixed right-[5px] md:right-[20px] z-50 flex w-[33px] top-[47%] select-none flex-col items-center space-y-[6px] rounded-full dark:bg-black bg-white px-[6px] py-[4px] shadow-lg shadow-black/50 transition-all duration-500 ease-in-out"
     >
       {/* Toggle button for mobile view */}
       <Button
         onClick={() => setShowMobile(!showMobile)}
-        className="group rounded-full size-6 p-0 bg-gray-400 hover:bg-black/40 z-20"
+        className="group rounded-full size-6 p-0 bg-transparent z-20 hover:border-yellow-600 hover:border hover:bg-transparent"
         size="mini"
       >
-        <Smartphone className="size-4 text-white" />
+        <Smartphone className="size-4 text-black dark:text-white" />
         <CustomToolTipLeftRight
           content="Mobile SIM"
           top="0"
-          left={-30}
+          left={-35}
           translateY="2"
         />
       </Button>

@@ -18,8 +18,8 @@ export default function CustomToolTipLeftRight({
       <div
         className={`
           invisible absolute whitespace-nowrap
-          rounded-md bg-indigo-100 px-2 py-1
-          text-sm text-indigo-800 opacity-20 transition-all
+          rounded-md dark:bg-black bg-gray-200 px-2 py-1
+          text-sm dark:text-white text-black opacity-20 transition-all
           group-hover:visible group-hover:opacity-100
           ${isRightAligned ? "right-0" : "left-0"}
         `}

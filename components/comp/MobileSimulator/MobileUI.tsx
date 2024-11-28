@@ -9,6 +9,8 @@ import { MobileInterfaceProps } from "./interface/MobileInterface.interface";
 //icon
 import { RxCross2 } from "react-icons/rx";
 import { ColorPicker } from "../CustomComponents/ColorPicker";
+import { useMobileSimulator } from "@/components/comp/MobileSimulator/provider/MobileSimulatorContext";
+import { ThemeType } from "@prisma/client";
 
 const scheduleData = [
   { day: "S", schedule: [1, 0, 1, 1, 0, 1, 0] },
@@ -26,11 +28,13 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
   closeAllScreens,
   backgrounds,
   screens,
-  currentBackground,
+
   updateCurrentBackground,
-  textColor,
-  setTextColor,
 }) => {
+  const { ColorPickerAttrs } = useMobileSimulator();
+  const { currentBackground, textColor, handleTextColorChange } =
+    ColorPickerAttrs;
+
   const handleColorChange = (color: string) => {
     const formattedColor = color.startsWith("#") ? color : `#${color}`;
     const newBackground = {
@@ -38,11 +42,6 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
       name: "Custom Color",
     };
     updateCurrentBackground(newBackground);
-  };
-
-  const handleTextColorChange = (color: string) => {
-    const formattedColor = color.startsWith("#") ? color : `#${color}`;
-    setTextColor(formattedColor); // Set the new text color globally
   };
 
   // Check if the background is a custom color and apply it accordingly
@@ -155,6 +154,7 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
                       : ""
                   }
                   onChange={handleColorChange}
+                  typeColor={ThemeType.THEME}
                 />
               </div>
               <div className="flex flex-col w-full items-center gap-1">
@@ -162,6 +162,7 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
                 <ColorPicker
                   value={textColor}
                   onChange={handleTextColorChange}
+                  typeColor={ThemeType.TEXT}
                 />
               </div>
             </div>

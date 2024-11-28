@@ -1,178 +1,222 @@
-import {
-  Icon360View,
-  IconActivityHeartbeat,
-  IconMedal,
-} from "@tabler/icons-react";
+"use client";
+
 import UpdateProfileDialog from "../Modal/profile/UpdateProfileDialog";
-import { calculateAge } from "@/utils/dateFormatter";
-import { IconCake } from "@tabler/icons-react";
 import Image from "next/image";
+import SmallPreviewCard from "../card/SmallPreviewCard";
+import UpdateCoverPhotoDialog from "../Modal/profile/UpdateCoverPhotoDialog";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel/carousel";
+import { Card } from "@/components/ui/card";
+import { FcGoogle } from "react-icons/fc";
+import { SiFacebook } from "react-icons/si";
+import { AiFillInstagram } from "react-icons/ai";
+import { IoLogoLinkedin } from "react-icons/io5";
+import { FaSteam } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+import { FaGgCircle } from "react-icons/fa6";
+import { useRef, useState } from "react";
+import SocialMediaDialog from "../GeniusUserProfile/Info/SocialMediaDialog";
+import { RiShareLine } from "react-icons/ri";
+import { LiaQrcodeSolid } from "react-icons/lia";
+import { Button as MovingBorderButton } from "@/components/ui/border/moving-border";
+import { AnimatePresence, motion } from "framer-motion";
+import CustomToolTip from "../CustomComponents/CustomToolTip";
 
-export default async function AboutSectionProfile({
+const socials = [
+  {
+    name: "Google",
+    icon: <FcGoogle size={38} />,
+    link: "https://google.com",
+  },
+  {
+    name: "Github",
+    icon: <FaGithub color="black" size={38} />,
+    link: "https://github.com",
+  },
+  {
+    name: "Steam",
+    icon: <FaSteam size={38} color="#1b2838" />,
+    link: "https://tiktok.com",
+  },
+  {
+    name: "Instagram",
+    icon: <AiFillInstagram size={38} color="#E1306C" />,
+    link: "https://instagram.com",
+  },
+  {
+    name: "Facebook",
+    icon: <SiFacebook color="#1877f2" size={38} />,
+    link: "https://facebook.com",
+  },
+  {
+    name: "LinkedIn",
+    icon: <IoLogoLinkedin color="#0a66c2" size={38} />,
+    link: "https://linkedin.com",
+  },
+  {
+    name: "Twitter",
+    icon: <FaXTwitter color="black" size={38} />,
+    link: "https://twitter.com",
+  },
+  {
+    name: "Genius",
+    icon: <FaGgCircle size={38} color="#c500c7" />,
+    link: "https://genius.com",
+  },
+];
+
+export default function AboutSectionProfile({
   userInfo,
+  ifOwnProfile,
 }: {
-  userInfo: any;
+  userInfo: any | null;
+  ifOwnProfile: boolean;
 }) {
-  const userDob = userInfo?.dob;
+  const [userLinks, setUserLinks] = useState<Record<string, string>>({});
 
-  const { age, formattedDob } = calculateAge(userDob ?? null);
+  const handleSaveLink = (socialName: string, url: string) => {
+    setUserLinks((prev) => ({
+      ...prev,
+      [socialName]: url,
+    }));
+  };
+
+  let ref = useRef<HTMLDivElement>(null);
+  const [hovered, setHovered] = useState(false);
 
   return (
     <>
-      {/* Div with user information */}
-      <div className="relative flex flex-col gap-4 border p-4 rounded-xl backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
-        <div className="flex flex-col gap-4">
-          {/* dialog to open the update profile form */}
-          {userInfo && (
-            <div className="absolute top-2 right-2 z-40">
-              <UpdateProfileDialog
-                gg_id={userInfo.gg_id}
-                currentFirstName={userInfo.first_name ?? ""}
-                currentLastName={userInfo.last_name ?? ""}
-                currentAddress={userInfo.address ?? ""}
-                currentDescription={userInfo.description ?? ""}
-                currentDob={userInfo.dob ? new Date(userInfo.dob) : null}
-                currentImage={userInfo.image ?? ""}
-              />
-            </div>
+      {/* Share and QR code buttons */}
+      <div
+        ref={ref}
+        className="relative flex flex-col gap-4 border p-4 rounded-lg backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        <div className="absolute top-2 right-2 z-40 flex gap-2">
+          {ifOwnProfile && (
+            <>
+              {hovered && (
+                <div className="flex gap-2 transition-all duration-300">
+                  <UpdateCoverPhotoDialog
+                    gg_id={userInfo.gg_id}
+                    currentCoverImage={userInfo.cover_images?.[0] ?? ""}
+                  />
+                  <UpdateProfileDialog
+                    gg_id={userInfo.gg_id}
+                    currentFirstName={userInfo.first_name ?? ""}
+                    currentLastName={userInfo.last_name ?? ""}
+                    currentAddress={userInfo.address ?? ""}
+                    currentDescription={userInfo.description ?? ""}
+                    currentDob={userInfo.dob ? new Date(userInfo.dob) : null}
+                    currentImage={userInfo.image ?? ""}
+                  />
+                </div>
+              )}
+            </>
           )}
-          {/* username */}
+
+          <div className="group">
+            <MovingBorderButton
+              borderRadius="1.75rem"
+              className="bg-gray-200 size-10 dark:bg-black text-black dark:text-white hover:text-yellow-600 transition-colors duration-300 border-neutral-200 dark:border-slate-800"
+            >
+              <LiaQrcodeSolid size={22} />
+            </MovingBorderButton>
+
+            <CustomToolTip
+              content="Share QR"
+              top="42"
+              left="82"
+              translateY="2"
+            />
+          </div>
+
+          <div className="group">
+            <MovingBorderButton
+              borderRadius="1.75rem"
+              className="bg-gray-200 size-10 dark:bg-black text-black dark:text-white hover:text-yellow-600 transition-colors duration-300 border-neutral-200 dark:border-slate-800"
+            >
+              <RiShareLine size={22} />
+            </MovingBorderButton>
+            <CustomToolTip
+              content="Share Profile"
+              top="42"
+              left="120"
+              translateY="2"
+            />
+          </div>
+        </div>
+        {/* User profile content */}
+        <div className="flex flex-col gap-4">
+          <Image
+            src={
+              userInfo.cover_images && userInfo.cover_images.length > 0
+                ? userInfo.cover_images[0]
+                : "/default-pictures/cover-image.png"
+            }
+            alt="Cover picture"
+            fill
+            className="object-cover rounded-lg"
+            unoptimized
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-white/30 dark:bg-black/30 rounded-lg"></div>
+
+          {/* Username */}
           <div className="flex items-center gap-2 text-black dark:text-gray-300">
             <div className="relative size-8 rounded-full overflow-hidden border-2 hover:border-[#FCBB3F]/60">
               <Image
-                src={
-                  userInfo
-                    ? userInfo.image !== ""
-                      ? userInfo.image
-                      : "/default-pictures/profile.png"
-                    : "/default-pictures/profile.png"
-                }
+                src={userInfo.image || "/default-pictures/profile.png"}
                 alt="Profile picture"
                 fill
-                className="object-cover"
+                className="object-cover z-0"
                 unoptimized
                 loading="lazy"
               />
             </div>
-            <span className="uppercase font-bold">
-              {userInfo ? userInfo.username : "Username"}
+            <span className="uppercase font-bold z-10">
+              {userInfo.username || "Username"}
             </span>
           </div>
-          {/* top section */}
-          <div className="relative w-full rounded-md bg-black/10 dark:bg-white/10 hover:dark:bg-white/20 hover:bg-black/20 transition-all duration-300 ease-in-out px-2 py-1 dark:text-white text-black">
-            <div className="flex w-full items-center justify-between">
-              <div className="text-[16px] font-semibold flex gap-x-1 items-center">
-                {userInfo ? (
-                  <p>
-                    {userInfo.first_name} {userInfo.last_name}
-                  </p>
-                ) : (
-                  <p>Firstname Lastname</p>
-                )}
 
-                {userInfo ? (
-                  <>
-                    {formattedDob && (
-                      <>
-                        <span className="text-sm font-semibold">•</span>
-                        {age && (
-                          <span className="text-sm font-semibold">{age}</span>
-                        )}
-                      </>
-                    )}
-                  </>
-                ) : (
-                  <>
-                    <span className="text-sm font-semibold">•</span>
-                    <span className="text-sm font-semibold">AGE</span>
-                  </>
-                )}
-              </div>
-              {userInfo ? (
-                <div className="text-xs font-semibold flex items-center gap-1">
-                  {formattedDob && (
-                    <>
-                      <IconCake size={12} className="text-pink-500" />
-                      {formattedDob}
-                    </>
-                  )}
-                </div>
-              ) : (
-                <div className="text-xs font-semibold flex items-center gap-1">
-                  <IconCake size={12} className="text-pink-500" />
-                  DOB
-                </div>
-              )}
-            </div>
-            <div className="h-[60px] w-full overflow-auto text-[12px] font-semibold">
-              <span>{userInfo ? userInfo.description : "BIO"}</span>
+          {/* Bio section */}
+          <div className="relative w-full rounded-md bg-white/10 dark:bg-black/10 hover:dark:bg-black/20 hover:bg-white/20 transition-all duration-300 ease-in-out px-2 py-1 dark:text-white text-black">
+            <div className="h-[60px] w-full overflow-auto text-[12px] font-semibold flex flex-col">
+              <span>Bio</span>
+              <span>{userInfo.description || "No description available"}</span>
             </div>
           </div>
-          {/* bottom section */}
-          <div className="relative w-full rounded-md bg-black/10 dark:bg-white/10 px-2 py-1 hover:dark:bg-white/20 hover:bg-black/20 dark:text-white text-black transition-all duration-300 ease-in-out">
-            <p
-              className={`text-black dark:text-gray-300 flex justify-between items-center overflow-hidden text-ellipsis whitespace-normal line-clamp-2 font-semibold transition-all duration-500 ease-in-out`}
-            >
-              <span className="hover-black text-sm dark:hover:text-white cursor-pointer">
-                ADDRESS
-              </span>
-              <span className="text-xs hover-black dark:hover:text-white cursor-pointer">
-                {userInfo ? userInfo.address : "ADDRESS"}
-              </span>
-            </p>
+        </div>
 
-            <p
-              className={`text-black dark:text-gray-300 flex justify-between items-center overflow-hidden text-ellipsis whitespace-normal line-clamp-2 font-semibold transition-all duration-300 ease-in-out`}
-            >
-              <span className="hover-black text-sm dark:hover:text-white cursor-pointer">
-                JOINED
-              </span>
-              <span className="text-xs hover-black dark:hover:text-white cursor-pointer">
-                {userInfo?.created_at
-                  ? new Date(userInfo.created_at).toLocaleDateString()
-                  : "N/A"}
-              </span>
-            </p>
-          </div>
+        {/* Preview card */}
+        <div className="h-[210px] flex items-center justify-center w-full cursor-pointer">
+          <SmallPreviewCard userData={userInfo} />
         </div>
       </div>
-      {/* Div with achievements */}
-      <div className="relative flex flex-col gap-4 border mt-4 p-4 rounded-xl backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
-        <div className="gap-2 flex flex-wrap overflow-x-auto w-full">
-          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
-            <IconMedal className="flex justify-center items-center size-full p-2 text-emerald-500" />
-          </div>
-          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
-            <Icon360View className="flex justify-center items-center size-full p-2 text-purple-600" />
-          </div>
-          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
-            <IconActivityHeartbeat className="flex justify-center items-center size-full p-2 text-red-600" />
-          </div>
-          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
-            <Icon360View className="flex justify-center items-center size-full p-2 text-purple-600" />
-          </div>
-          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
-            <IconActivityHeartbeat className="flex justify-center items-center size-full p-2 text-red-600" />
-          </div>
-          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
-            <Icon360View className="flex justify-center items-center size-full p-2 text-purple-600" />
-          </div>
-          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
-            <IconActivityHeartbeat className="flex justify-center items-center size-full p-2 text-red-600" />
-          </div>
-          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
-            <Icon360View className="flex justify-center items-center size-full p-2 text-purple-600" />
-          </div>
-          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
-            <IconActivityHeartbeat className="flex justify-center items-center size-full p-2 text-red-600" />
-          </div>
-          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
-            <Icon360View className="flex justify-center items-center size-full p-2 text-purple-600" />
-          </div>
-          <div className="size-12 bg-black/20 dark:bg-white/20 rounded-full text-black dark:text-white">
-            <IconActivityHeartbeat className="flex justify-center items-center size-full p-2 text-red-600" />
-          </div>
-        </div>
+
+      {/* Social media carousel */}
+      <div className="relative flex border mt-4 p-4 rounded-xl overflow-auto backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
+        <Carousel className="w-full max-w-sm">
+          <CarouselContent className="-ml-1">
+            {socials.map((social, index) => (
+              <CarouselItem key={index} className="pl-1 basis-1/6">
+                <Card>
+                  <SocialMediaDialog
+                    social={social}
+                    userLinks={userLinks}
+                    onSave={handleSaveLink}
+                    ifOwnProfile={ifOwnProfile}
+                  />
+                </Card>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
       </div>
     </>
   );

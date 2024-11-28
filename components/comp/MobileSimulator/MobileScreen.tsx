@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button/button";
 import { X } from "lucide-react";
 import { motion } from "framer-motion";
 import { BackgroundProps } from "./interface/Background.interface";
+import { useMobileSimulator } from "@/components/comp/MobileSimulator/provider/MobileSimulatorContext";
 
 interface MobileScreenProps {
   screen: {
@@ -15,22 +16,12 @@ interface MobileScreenProps {
   index: number;
   isSmallScreen: boolean;
   removeScreen: (id: number) => void;
-  currentBackground: BackgroundProps;
-  textColor: string;
 }
 
 const MobileScreen = forwardRef<HTMLDivElement, MobileScreenProps>(
-  (
-    {
-      screen,
-      index,
-      isSmallScreen,
-      removeScreen,
-      currentBackground,
-      textColor,
-    },
-    ref
-  ) => {
+  ({ screen, index, isSmallScreen, removeScreen }, ref) => {
+    const { ColorPickerAttrs } = useMobileSimulator();
+    const { currentBackground, textColor } = ColorPickerAttrs;
     // Check if the background is a custom color and apply it accordingly
     const backgroundStyle =
       currentBackground.name === "Custom Color"

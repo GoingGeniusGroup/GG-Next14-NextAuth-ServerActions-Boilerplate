@@ -19,26 +19,35 @@ import {
   FaUser,
   FaUserPlus,
 } from "react-icons/fa";
-import ShopSection from "../../components/comp/shop/ShopSection";
+import ShopSection from "../../shop/ShopSection";
 import { LoginForm } from "@/components/form/login-form";
-import { SectionProps } from "../../components/comp/MobileSimulator/interface/Section.interface";
+import { SectionProps } from "../interface/Section.interface";
 import { useSession } from "next-auth/react";
-import { BackgroundProps } from "../../components/comp/MobileSimulator/interface/Background.interface";
-import MobileSimulatorContainer from "../../components/comp/MobileSimulator/MobileSimulatorContainer";
-import SimulatorToggleButton from "../../components/comp/MobileSimulator/SimulatorToggleButton";
+import { BackgroundProps } from "../interface/Background.interface";
+import MobileSimulatorContainer from "../MobileSimulatorContainer";
+import SimulatorToggleButton from "../SimulatorToggleButton";
 import NotificationComponent from "@/components/comp/Notification/NotificationComponent";
+import { getColorsbyUserId } from "@/services/color";
+import { ThemeType } from "@prisma/client";
 
 interface MobileSimulatorContextType {
   showMobile: boolean;
   setShowMobile: React.Dispatch<React.SetStateAction<boolean>>;
   isSmallScreen: boolean;
-  currentBackground: BackgroundProps;
-  setCurrentBackground: React.Dispatch<React.SetStateAction<BackgroundProps>>;
+
   sections: SectionProps[];
   toggleScreen: (section: SectionProps) => void;
   screens: SectionProps[];
   removeScreen: (id: number) => void;
   closeAllScreens: () => void;
+  ColorPickerAttrs: {
+    textColor: string;
+    setTextColor: (color: string) => void;
+    handleTextColorChange: (color: string) => void;
+    currentBackground: BackgroundProps;
+    setCurrentBackground: React.Dispatch<React.SetStateAction<BackgroundProps>>;
+    tempColor: { value: string; typeColor: ThemeType }[];
+  };
 }
 
 const backgrounds = [
@@ -84,6 +93,44 @@ export const MobileSimulatorProvider = ({
   );
   const [showLogin, setShowLogin] = useState<boolean>(true);
   const [activeScreens, setActiveScreens] = useState<number[]>([]);
+  const [textColor, setTextColor] = useState("#000000");
+  const [tempColor, setTempColor] = useState<
+    { value: string; typeColor: ThemeType }[]
+  >([]);
+  const handleTextColorChange = (color: string) => {
+    const formattedColor = color.startsWith("#") ? color : `#${color}`;
+    setTextColor(formattedColor); // Set the new text color globally
+  };
+
+  useEffect(() => {
+    const fetchcolors = async () => {
+      const response = await getColorsbyUserId();
+      if (response) {
+        response.map((colorObj) => {
+          setTempColor((prev) => {
+            return [
+              ...prev,
+              {
+                value: colorObj.value,
+                typeColor: colorObj.type,
+              },
+            ];
+          });
+
+          if (colorObj.type === "TEXT") {
+            setTextColor(colorObj.value);
+          } else {
+            setCurrentBackground({
+              name: "Custom Color",
+              class: `bg-[${colorObj.value}]`,
+            });
+          }
+        });
+      }
+    };
+
+    fetchcolors();
+  }, []);
 
   // Directly compute isLoggedIn from session status
   const isLoggedIn = status === "authenticated";
@@ -191,14 +238,22 @@ export const MobileSimulatorProvider = ({
       .filter((section): section is SectionProps => section !== undefined);
   }, [activeScreens, sections]);
 
+  const ColorPickerAttrs = {
+    handleTextColorChange,
+    textColor,
+    setTextColor,
+    currentBackground,
+    setCurrentBackground,
+    tempColor,
+  };
+
   return (
     <MobileSimulatorContext.Provider
       value={{
         showMobile,
         setShowMobile,
         isSmallScreen,
-        currentBackground,
-        setCurrentBackground,
+
         sections,
         toggleScreen,
         screens,
@@ -207,6 +262,7 @@ export const MobileSimulatorProvider = ({
             prev.filter((screenId) => screenId !== id)
           ),
         closeAllScreens: () => setActiveScreens([]),
+        ColorPickerAttrs,
       }}
     >
       {children}

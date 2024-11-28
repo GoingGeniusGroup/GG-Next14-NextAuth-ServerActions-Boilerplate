@@ -31,7 +31,7 @@ export const fetchSteamProfile = async (
 
   const { steamId } = validatedFields.data;
   const playerData = await getSteamPlayerSummary(steamId);
-  console.log(playerData);
+  // console.log(playerData);
   if (!playerData) {
     return {
       success: false,
@@ -64,7 +64,7 @@ export const fetchOwnedGames = async (
 
   const { steamId } = validatedFields.data;
   const ownedGames = await getOwnedGames(steamId);
-  console.log(ownedGames);
+  // console.log(ownedGames);
   if (!ownedGames) {
     return {
       success: false,
@@ -97,7 +97,7 @@ export const fetchUserStatsForGame = async (
 
   const { steamId, appId } = validatedFields.data;
   const userStats = await getUserStatsForGame(steamId, appId);
-  console.log(userStats);
+  // console.log(userStats);
   if (!userStats) {
     return {
       success: false,

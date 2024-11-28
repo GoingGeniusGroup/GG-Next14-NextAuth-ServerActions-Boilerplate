@@ -39,7 +39,7 @@ function Form() {
   const form = useForm<form>();
   const { register, handleSubmit, formState } = form;
   const { errors } = formState;
-  console.log(form);
+  // console.log(form);
 
   const onSubmit = (data: form) => {
     console.log("form submitted", data);

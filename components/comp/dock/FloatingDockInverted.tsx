@@ -33,11 +33,11 @@ export default function FloatingDockInvertedComponent() {
       href: "/",
     },
 
-    {
-      title: "Shop",
-      icon: <IconShoppingBag className="size-full" />,
-      href: "/shop-test",
-    },
+    // {
+    //   title: "Shop",
+    //   icon: <IconShoppingBag className="size-full" />,
+    //   href: "/shop-test",
+    // },
     {
       title: "Virtual Shop",
       icon: <IconShoppingBagHeart className="size-full" />,
@@ -48,53 +48,53 @@ export default function FloatingDockInvertedComponent() {
       icon: <IconDeviceGamepad2 className="size-full" />,
       href: "/steam",
     },
-    {
-      title: "Focus Cards",
-      icon: <IconFocus className="size-full" />,
-      href: "/focus-cards",
-    },
+    // {
+    //   title: "Focus Cards",
+    //   icon: <IconFocus className="size-full" />,
+    //   href: "/focus-cards",
+    // },
 
-    {
-      title: "Card Hover Effect",
-      icon: <IconBrandPushover className="size-full" />,
-      href: "/card-hover-effect",
-    },
-    {
-      title: "Bento Grid",
-      icon: <IconGridPattern className="size-full" />,
-      href: "/bento-grid",
-    },
-    {
-      title: "Tabs",
-      icon: <IconSlash className="size-full" />,
-      href: "/tabs",
-    },
-    {
-      title: "Console",
-      icon: <IconCoinEuroFilled className="size-full" />,
-      href: "/console",
-    },
-    {
-      title: "avatar",
-      icon: <IconUserCode className="size-full" />,
-      // href: `/genius-profile/${username}`,
-      href: `/avatar`,
-    },
-    {
-      title: "Posts",
-      icon: <IconPhotoStar className="size-full" />,
-      href: "/posts",
-    },
+    // {
+    //   title: "Card Hover Effect",
+    //   icon: <IconBrandPushover className="size-full" />,
+    //   href: "/card-hover-effect",
+    // },
+    // {
+    //   title: "Bento Grid",
+    //   icon: <IconGridPattern className="size-full" />,
+    //   href: "/bento-grid",
+    // },
+    // {
+    //   title: "Tabs",
+    //   icon: <IconSlash className="size-full" />,
+    //   href: "/tabs",
+    // },
+    // {
+    //   title: "Console",
+    //   icon: <IconCoinEuroFilled className="size-full" />,
+    //   href: "/console",
+    // },
+    // {
+    //   title: "avatar",
+    //   icon: <IconUserCode className="size-full" />,
+    //   // href: `/genius-profile/${username}`,
+    //   href: `/avatar`,
+    // },
+    // {
+    //   title: "Posts",
+    //   icon: <IconPhotoStar className="size-full" />,
+    //   href: "/posts",
+    // },
     {
       title: "Profile",
       icon: <IconUser className="size-full" />,
-      href: "/profile",
+      href: `/genius-profile/${username}`,
     },
-    {
-      title: "Profile Parallel Routing",
-      icon: <Icon3dRotate className="size-full" />,
-      href: `/genius-profile-parallel/${username}`,
-    },
+    // {
+    //   title: "Profile Parallel Routing",
+    //   icon: <Icon3dRotate className="size-full" />,
+    //   href: `/genius-profile-parallel/${username}`,
+    // },
   ];
   return <FloatingDockInverted items={links} />;
 }

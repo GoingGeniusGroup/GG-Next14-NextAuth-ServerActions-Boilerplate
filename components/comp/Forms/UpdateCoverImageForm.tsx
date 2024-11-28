@@ -29,7 +29,7 @@ const ProfileFormSchema = z.object({
 interface UpdateCoverImageFormProps {
   setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
   gg_id: string;
-  currentCoverImage: string[];
+  currentCoverImage: string;
 }
 
 export default function UpdateCoverImageForm({
