@@ -123,7 +123,7 @@ export default function BottomSection({
         </>
       ) : (
         <>
-          <div className="absolute top-1">
+          <div className="w-full flex justify-center">
             <Dialog
               open={isAvatarCreatorOpen}
               onOpenChange={setIsAvatarCreatorOpen}

@@ -61,7 +61,7 @@ export default function GeniusProfileLayout({
                 <ul className="relative mx-auto flex w-fit gap-1 rounded-full bg-white/20 p-1">
                   <Link href={`/genius-profile-2/${username}/gallery`}>
                     <Button
-                      className="rounded-full size-[32px] flex justify-center items-center bg-white text-black hover:bg-black hover:text-white"
+                      className="rounded-full size-[32px] flex justify-center items-center bg-white text-black hover:bg-black hover:text-white transition-color duration-300 ease-in-out"
                       onClick={() => setOpen(true)}
                     >
                       G
@@ -69,7 +69,7 @@ export default function GeniusProfileLayout({
                   </Link>
                   <Link href={`/genius-profile-2/${username}/projects`}>
                     <Button
-                      className="rounded-full size-[32px] flex justify-center items-center bg-white text-black hover:bg-black hover:text-white"
+                      className="rounded-full size-[32px] flex justify-center items-center bg-white text-black hover:bg-black hover:text-white transition-color duration-300 ease-in-out"
                       onClick={() => setOpen(true)}
                     >
                       P
@@ -86,18 +86,30 @@ export default function GeniusProfileLayout({
                     >
                       <ul className="relative mx-auto flex w-fit gap-1 rounded-full bg-white/20 p-1">
                         <Link href={`/genius-profile-2/${username}/gallery`}>
-                          <Button className="rounded-full size-[32px] flex justify-center items-center bg-white text-black hover:bg-black hover:text-white">
+                          <Button
+                            className={`rounded-full size-[32px] flex justify-center items-center transition-color duration-300 ease-in-out ${
+                              pathname.includes("gallery")
+                                ? "bg-black text-white hover:bg-white hover:text-black "
+                                : "bg-white text-black hover:bg-black hover:text-white"
+                            }`}
+                          >
                             G
                           </Button>
                         </Link>
                         <Link href={`/genius-profile-2/${username}/projects`}>
-                          <Button className="rounded-full size-[32px] flex justify-center items-center bg-white text-black hover:bg-black hover:text-white">
+                          <Button
+                            className={`rounded-full size-[32px] flex justify-center items-center transition-color duration-300 ease-in-out ${
+                              pathname.includes("projects")
+                                ? "bg-black text-white hover:bg-white hover:text-black "
+                                : "bg-white text-black hover:bg-black hover:text-white"
+                            }`}
+                          >
                             P
                           </Button>
                         </Link>
                       </ul>
                     </div>
-                    <div className="p-2">{otherroutes}</div>
+                    <div className="px-2">{otherroutes}</div>
                   </>
                 )}
               </DragCloseDrawer>
