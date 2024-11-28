@@ -112,14 +112,8 @@ const ExperienceForm: React.FC<ExperienceFormProps> = ({
       formData.append("link", data.link);
 
       // Append array values as comma-separated strings or individual entries
-      formData.append(
-        "tools",
-        data.tools !== undefined ? data.tools.join(",") : ""
-      );
-      formData.append(
-        "project_skills",
-        data.project_skills !== undefined ? data.project_skills.join(",") : ""
-      );
+      formData.append("tools", (data.tools || []).join(","));
+      formData.append("project_skills", (data.project_skills || []).join(","));
 
       formData.append(
         "project_pictures",
