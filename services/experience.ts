@@ -1,22 +1,31 @@
 import { db } from "@/lib/db";
+import { toolbarClasses } from "@mui/material";
 import { Prisma } from "@prisma/client";
 
 export const createExperience = async (data: Prisma.experienceCreateInput) => {
   try {
-    const { project_skills } = data;
-
+    const { tools, project_skills, project_pictures } = data;
     const experience = await db.experience.create({
       data: {
         ...data,
+        tools: tools
+          ? (tools as string[])[0].split(",").map((tool) => tool.trim())
+          : [],
         project_skills: project_skills
           ? (project_skills as string[])[0]
               .split(",")
               .map((skill) => skill.trim())
           : [],
+        project_pictures: project_pictures
+          ? (project_pictures as string[])[0]
+              .split(",")
+              .map((picture) => picture.trim())
+          : [],
       },
     });
 
     const skills = experience.project_skills;
+
     await Promise.all(
       skills.map(async (skill) => {
         return await db.skills.create({
