@@ -32,7 +32,7 @@ export const getUserByUsername = async (username: string) => {
   try {
     const user = await db.user.findUnique({
       where: { username },
-      select: {
+      include: {
         avatar: true,
       },
     });
