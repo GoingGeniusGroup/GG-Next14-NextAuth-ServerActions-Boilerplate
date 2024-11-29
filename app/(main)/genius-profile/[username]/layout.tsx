@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
@@ -27,16 +27,22 @@ export default function GeniusProfileLayout({
   const { username } = params;
   const pathname = usePathname();
 
+  const [open, setOpen] = useState(false);
+  const [hasAutoOpened, setHasAutoOpened] = useState(false);
+
   const isGalleryOrProjects =
     pathname.includes("/gallery") || pathname.includes("/projects");
 
-  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    if (isGalleryOrProjects && !hasAutoOpened) {
+      const timer = setTimeout(() => {
+        setOpen(true);
+        setHasAutoOpened(true);
+      }, 200);
 
-  // if (pathname.includes("/gallery") || pathname.includes("/projects")) {
-  //   setTimeout(() => {
-  //     setOpen(true); // This will open the drawer after 200ms
-  //   }, 200);
-  // }
+      return () => clearTimeout(timer);
+    }
+  }, [isGalleryOrProjects, hasAutoOpened]);
 
   return (
     <PublicAvatarProvider username={username}>
@@ -58,10 +64,18 @@ export default function GeniusProfileLayout({
                     className="group"
                   >
                     <Button
-                      className="rounded-full size-[32px] flex justify-center items-center bg-gray-200 dark:bg-white text-black hover:bg-black hover:text-white transition-color duration-300 ease-in-out"
+                      className={`rounded-full size-[32px] flex justify-center items-center bg-gray-200 dark:bg-white text-black hover:bg-black hover:text-white transition-color duration-300 ease-in-out `}
                       onClick={() => setOpen(true)}
                     >
-                      G
+                      <span
+                        className={`${
+                          isGalleryOrProjects && pathname.includes("gallery")
+                            ? "animate-pulse text-sky-500"
+                            : ""
+                        }`}
+                      >
+                        G
+                      </span>
                     </Button>
                     <CustomToolTip
                       content="Gallery"
@@ -75,10 +89,18 @@ export default function GeniusProfileLayout({
                     className="group"
                   >
                     <Button
-                      className="rounded-full size-[32px] flex justify-center items-center bg-gray-200 dark:bg-white text-black hover:bg-black hover:text-white transition-color duration-300 ease-in-out"
+                      className={`rounded-full size-[32px] flex justify-center items-center bg-gray-200 dark:bg-white text-black hover:bg-black hover:text-white transition-color duration-300 ease-in-out`}
                       onClick={() => setOpen(true)}
                     >
-                      P
+                      <span
+                        className={`${
+                          isGalleryOrProjects && pathname.includes("projects")
+                            ? "animate-pulse text-sky-500"
+                            : ""
+                        }`}
+                      >
+                        P
+                      </span>
                     </Button>
                     <CustomToolTip
                       content="Projects"
@@ -94,7 +116,7 @@ export default function GeniusProfileLayout({
                 {isGalleryOrProjects && (
                   <div className="w-full">
                     <div
-                      className={`sticky top-0 z-40 flex justify-center transition-all duration-300 ease-in-out`}
+                      className={`sticky top-0 z-50 flex justify-center transition-all duration-300 ease-in-out`}
                     >
                       <ul className="relative mx-auto flex w-fit gap-1 rounded-full bg-white/20 p-1">
                         <Link

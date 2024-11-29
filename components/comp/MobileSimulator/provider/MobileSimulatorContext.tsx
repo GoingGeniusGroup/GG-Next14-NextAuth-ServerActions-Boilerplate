@@ -86,7 +86,7 @@ export const MobileSimulatorProvider = ({
   children: ReactNode;
 }) => {
   const { status } = useSession();
-  const [showMobile, setShowMobile] = useState(true);
+  const [showMobile, setShowMobile] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false);
   const [currentBackground, setCurrentBackground] = useState<BackgroundProps>(
     backgrounds[0]
@@ -136,13 +136,13 @@ export const MobileSimulatorProvider = ({
   const isLoggedIn = status === "authenticated";
 
   // Update showMobile when auth status changes
-  useEffect(() => {
-    if (isLoggedIn) {
-      setShowMobile(false);
-    } else {
-      setShowMobile(true);
-    }
-  }, [isLoggedIn]);
+  // useEffect(() => {
+  //   if (isLoggedIn) {
+  //     setShowMobile(false);
+  //   } else {
+  //     setShowMobile(true);
+  //   }
+  // }, [isLoggedIn]);
 
   useEffect(() => {
     const checkScreenSize = () => {
