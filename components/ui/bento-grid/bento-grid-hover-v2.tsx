@@ -52,6 +52,12 @@ export const BentoGridHoverItemV2 = ({
   isHovered?: boolean;
 }) => {
   const [isSubCardHovered, setSubCardIsHovered] = useState(false);
+
+  const formattedUrl =
+    link?.startsWith("http://") || link?.startsWith("https://")
+      ? link
+      : `https://${link}`;
+
   return (
     <div
       className={cn(
@@ -149,7 +155,8 @@ export const BentoGridHoverItemV2 = ({
                 </div>
               </div>
               <Link
-                href={link ? link : ""}
+                href={formattedUrl}
+                target="_blank"
                 className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background dark:bg-white bg-black text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4"
               >
                 Visit Project
