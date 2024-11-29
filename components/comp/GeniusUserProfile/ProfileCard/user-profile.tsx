@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Image from "next/image";
 
 interface UserProfileProps {
   username: string;
@@ -21,15 +21,21 @@ export function UserProfile({
       className="block transition-transform hover:scale-105"
     >
       <Card className="w-[160px] h-[160px] bg-white dark:bg-black rounded-lg overflow-hidden">
-        <CardContent className="flex flex-col items-center p-2">
-          <Avatar className="size-[70px] mb-2">
-            <AvatarImage src={avatarUrl} alt={name} />
-            <AvatarFallback>{name.charAt(0)}</AvatarFallback>
-          </Avatar>
-          <h3 className="text-xs font-semibold uppercase text-white">
+        <CardContent className="relative overflow-hidden  size-full flex items-center p-2">
+          <div className="size-full">
+            <Image
+              src={avatarUrl}
+              alt={name}
+              fill
+              unoptimized
+              onError={(e) => {
+                e.currentTarget.style.display = "none"; // Hide broken image
+              }}
+            />
+          </div>
+          <h3 className="absolute inset-0 flex justify-center items-center text-xl font-bold uppercase text-white/40">
             {username}
           </h3>
-          <p className="text-xs text-muted-foreground">{role}</p>
         </CardContent>
       </Card>
     </Link>

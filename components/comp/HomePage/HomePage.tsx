@@ -81,7 +81,10 @@ export default function HomePage({
             </Button>
           </div>
         </div>
-        <div className="absolute bottom-4 right-4 w-[350px] h-[170px] rounded flex justify-center">
+        <div className="absolute bottom-6 right-4 w-[350px] h-[170px] rounded flex flex-col justify-center">
+          <div className="flex justify-center font-semibold text-md text-white">
+            GENIUS PROFILES
+          </div>
           <UserProfilesCarousel users={staticUsers} />
         </div>
       </div>
