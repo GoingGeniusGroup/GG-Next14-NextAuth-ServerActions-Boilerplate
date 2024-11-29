@@ -20,9 +20,10 @@ export default function PublicAvatarManagerClientProfile({
     <>
       <Suspense fallback={<AvatarSkeleton />}>
         <Avatar
+          key="avatar publicx"
           modelSrc={
             selectedPublicAvatar ||
-            "https://models.readyplayer.me/658be9e8fc8bec93d06806f3.glb?morphTargets=ARKit,Eyes Extra&textureAtlas=none&lod=0"
+            "https://models.readyplayer.me/66fbd22e36a151e549ea8397.glb?morphTargets=ARKit,Eyes Extra&textureAtlas=none&lod=0"
           }
           shadows={false}
           animationSrc={currentPublicEmote}

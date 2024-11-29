@@ -20,6 +20,7 @@ export default function AvatarManagerClientProfile({
     <>
       <Suspense fallback={<AvatarSkeleton />}>
         <Avatar
+          key="avatar private"
           modelSrc={
             selectedAvatar ||
             "https://models.readyplayer.me/658be9e8fc8bec93d06806f3.glb?morphTargets=ARKit,Eyes Extra&textureAtlas=none&lod=0"
