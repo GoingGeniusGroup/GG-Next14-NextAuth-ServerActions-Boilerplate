@@ -5,10 +5,18 @@ import { db } from "@/lib/db";
 import { updateUserById } from "@/services/user";
 import { response } from "@/lib/utils";
 import { z } from "zod";
+
 export const getImageUrls = async (isu: boolean = true, gg_id?: string) => {
   try {
     const session = await auth();
+
+    // If isu is true, use logged-in user's ID, otherwise use provided gg_id
     const userId = isu ? session?.user.gg_id : gg_id;
+
+    // Return null if no valid user ID is available
+    if (!userId) {
+      return null;
+    }
 
     const imgeObj = await db.imagePost.findMany({
       where: {
@@ -20,8 +28,10 @@ export const getImageUrls = async (isu: boolean = true, gg_id?: string) => {
         description: true,
       },
     });
+
     return imgeObj;
   } catch (error) {
+    console.error("Error fetching image URLs:", error);
     return null;
   }
 };

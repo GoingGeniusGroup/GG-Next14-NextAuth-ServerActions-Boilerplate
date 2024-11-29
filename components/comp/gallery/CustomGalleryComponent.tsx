@@ -12,24 +12,26 @@ export default async function CustomGalleryComponent({
   username: string;
 }) {
   const currentUser = await getCurrentUser();
-  const imageposts = await getImageUrls();
   const LoggedUserProfile = currentUser?.username === username;
   const profileOwner = await getUserByUsername(username);
-  const images = LoggedUserProfile
-    ? currentUser?.image_urls
-    : profileOwner?.image_urls;
 
-  // Convert incoming data to imagePostType
+  // Get images based on whose profile we're viewing
+  const imagePosts = await getImageUrls(
+    LoggedUserProfile,
+    LoggedUserProfile ? undefined : profileOwner?.gg_id
+  );
+
+  // Convert the images to imagePostType
   const convertedImagePosts: imagePostType[] =
-    imageposts?.map(
+    imagePosts?.map(
       (img_post: {
         description: string | null;
         image_url: string;
         caption: string;
       }) => ({
         image_url: img_post.image_url,
-        caption: img_post.caption,
-        description: img_post.description,
+        caption: img_post.caption || "",
+        description: img_post.description || "",
       })
     ) || [];
 
@@ -48,7 +50,7 @@ export default async function CustomGalleryComponent({
 
   return (
     <div className="relative h-full overflow-auto w-full px-2">
-      {LoggedUserProfile && currentUser && imageposts && (
+      {LoggedUserProfile && currentUser && convertedImagePosts && (
         <div className="absolute top-2 right-2 z-50">
           <UploadGalleryDialog
             gg_id={currentUser.gg_id}
@@ -56,8 +58,8 @@ export default async function CustomGalleryComponent({
           />
         </div>
       )}
-      {images ? (
-        images.length > 0 ? (
+      {imagePosts ? (
+        imagePosts.length > 0 ? (
           <GalleryGrid cards={cards} />
         ) : (
           <>
