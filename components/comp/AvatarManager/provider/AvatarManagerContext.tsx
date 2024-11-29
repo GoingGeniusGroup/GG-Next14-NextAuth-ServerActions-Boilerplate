@@ -11,7 +11,6 @@ import {
 
 import { addAvatar, deleteAvatar, updateAvatar } from "@/actions/avatar";
 import { AvatarExportedEvent } from "@/components/comp/AvatarComponents/avatar_creator/events";
-import { ExtendedUser } from "@/types/next-auth";
 import { AvatarResponse } from "@/types/utils";
 import { toast } from "sonner";
 import { getAvatarsByUserId } from "@/services/avatar";
