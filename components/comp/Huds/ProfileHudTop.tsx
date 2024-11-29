@@ -28,7 +28,7 @@ export default function ProfileHudTop({
   const { data: session, status } = useSession();
   const usernameContext = useUser();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
-  const { showMobile, setShowMobile } = useMobileSimulator();
+  const { toggleScreen, setShowMobile } = useMobileSimulator();
 
   const username = usernameContext ? usernameContext.username : "";
   const profilePic = usernameContext ? usernameContext.image : "";
