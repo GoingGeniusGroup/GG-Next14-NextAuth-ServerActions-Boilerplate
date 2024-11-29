@@ -34,12 +34,7 @@ const UpdateProfileDialog: React.FC<UpdateCoverPhotoDialogProps> = ({
           >
             <IconPhotoEdit size={20} />
           </MovingBorderButton>
-          <CustomToolTip
-            content="Edit Cover Picture"
-            top="42"
-            left="-57"
-            translateY="2"
-          />
+          <CustomToolTip content="Edit Cover Picture" />
         </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">

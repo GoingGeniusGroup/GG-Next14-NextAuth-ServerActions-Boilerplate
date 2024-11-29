@@ -46,24 +46,22 @@ export default function GeniusProfileLayout({
               <div
                 className={`absolute -bottom-2 z-40 left-1/2 -translate-x-1/2 flex space-x-4 mb-4 transition-all duration-300 ease-in-out`}
               >
-                <ul className="relative mx-auto flex w-fit gap-1 rounded-full bg-white/20 dark:bg-black/20 p-1">
+                <ul className="relative mx-auto flex w-fit gap-1 rounded-full bg-white/20 dark:bg-black/20 p-1 transition-all duration-300 ease-in-out">
                   {/* Home Link */}
-                  <Link href={`/genius-profile/${username}`} className="group">
+                  <Link
+                    href={`/genius-profile/${username}`}
+                    className="group relative"
+                  >
                     <Button
-                      className={`rounded-full size-[32px] flex justify-center items-center transition-color duration-300 ease-in-out ${
+                      className={`rounded-full flex justify-center items-center transition-color duration-300 ease-in-out ${
                         isHomeActive
-                          ? "bg-black text-sky-500  hover:bg-black/80 hover:text-white"
-                          : "dark:bg-white bg-gray-200 text-black  hover:bg-black hover:text-white"
+                          ? "bg-black text-sky-500 hover:bg-black/80 hover:text-white h-[32px]"
+                          : "dark:bg-white bg-gray-200 text-black hover:bg-black hover:text-white size-[32px]"
                       }`}
                     >
-                      H
+                      {isHomeActive ? "HOME" : "H"}
                     </Button>
-                    <CustomToolTip
-                      content="Home"
-                      top="-30"
-                      left="-12"
-                      translateY="2"
-                    />
+                    {!isHomeActive && <CustomToolTip content="Home" />}
                   </Link>
 
                   {/* Gallery Link */}
@@ -72,20 +70,15 @@ export default function GeniusProfileLayout({
                     className="group"
                   >
                     <Button
-                      className={`rounded-full size-[32px] flex justify-center items-center transition-color duration-300 ease-in-out ${
+                      className={`rounded-full  flex justify-center items-center transition-color duration-300 ease-in-out ${
                         isGalleryActive
-                          ? "bg-black text-sky-500  hover:bg-black/80 hover:text-white"
-                          : "dark:bg-white bg-gray-200 text-black  hover:bg-black hover:text-white"
+                          ? "bg-black text-sky-500  hover:bg-black/80 hover:text-white h-[32px]"
+                          : "dark:bg-white bg-gray-200 text-black  hover:bg-black hover:text-white size-[32px]"
                       }`}
                     >
-                      G
+                      {isGalleryActive ? "GALLERY" : "G"}
                     </Button>
-                    <CustomToolTip
-                      content="Gallery"
-                      top="-30"
-                      left="25"
-                      translateY="2"
-                    />
+                    {!isGalleryActive && <CustomToolTip content="Gallery" />}
                   </Link>
 
                   {/* Projects Link */}
@@ -94,20 +87,15 @@ export default function GeniusProfileLayout({
                     className="group"
                   >
                     <Button
-                      className={`rounded-full size-[32px] flex justify-center items-center transition-color duration-300 ease-in-out ${
+                      className={`rounded-full  flex justify-center items-center transition-color duration-300 ease-in-out ${
                         isProjectsActive
-                          ? "bg-black text-sky-500  hover:bg-black/80 hover:text-white"
-                          : "dark:bg-white bg-gray-200 text-black  hover:bg-black hover:text-white"
+                          ? "bg-black text-sky-500  hover:bg-black/80 hover:text-white h-[32px]"
+                          : "dark:bg-white bg-gray-200 text-black  hover:bg-black hover:text-white size-[32px]"
                       }`}
                     >
-                      P
+                      {isProjectsActive ? "PROJECTS" : "P"}
                     </Button>
-                    <CustomToolTip
-                      content="Projects"
-                      top="-30"
-                      left="60"
-                      translateY="2"
-                    />
+                    {!isProjectsActive && <CustomToolTip content="Projects" />}
                   </Link>
                 </ul>
               </div>

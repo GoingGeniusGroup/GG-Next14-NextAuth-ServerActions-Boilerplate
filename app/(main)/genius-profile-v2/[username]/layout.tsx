@@ -77,12 +77,7 @@ export default function GeniusProfileLayout({
                         G
                       </span>
                     </Button>
-                    <CustomToolTip
-                      content="Gallery"
-                      top="-30"
-                      left="-16"
-                      translateY="2"
-                    />
+                    <CustomToolTip content="Gallery" />
                   </Link>
                   <Link
                     href={`/genius-profile/${username}/projects`}
@@ -102,12 +97,7 @@ export default function GeniusProfileLayout({
                         P
                       </span>
                     </Button>
-                    <CustomToolTip
-                      content="Projects"
-                      top="-30"
-                      left="20"
-                      translateY="2"
-                    />
+                    <CustomToolTip content="Projects" />
                   </Link>
                 </ul>
               </div>
@@ -132,12 +122,7 @@ export default function GeniusProfileLayout({
                           >
                             G
                           </Button>
-                          <CustomToolTip
-                            content="Gallery"
-                            top="40"
-                            left="-16"
-                            translateY="2"
-                          />
+                          <CustomToolTip content="Gallery" />
                         </Link>
                         <Link
                           href={`/genius-profile/${username}/projects`}
@@ -152,12 +137,7 @@ export default function GeniusProfileLayout({
                           >
                             P
                           </Button>
-                          <CustomToolTip
-                            content="Projects"
-                            top="40"
-                            left="20"
-                            translateY="2"
-                          />
+                          <CustomToolTip content="Projects" />
                         </Link>
                       </ul>
                     </div>

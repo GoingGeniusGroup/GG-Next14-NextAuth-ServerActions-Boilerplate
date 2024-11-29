@@ -44,12 +44,7 @@ const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
           >
             <IconUserEdit size={20} />
           </MovingBorderButton>
-          <CustomToolTip
-            content="Edit Profile"
-            top="42"
-            left="26"
-            translateY="2"
-          />
+          <CustomToolTip content="Edit Profile" />
         </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md h-[80%] overflow-auto">

@@ -112,12 +112,7 @@ export default function AboutSectionProfile({
               <LiaQrcodeSolid size={22} />
             </MovingBorderButton>
 
-            <CustomToolTip
-              content="Share QR"
-              top="42"
-              left="82"
-              translateY="2"
-            />
+            <CustomToolTip content="Share QR" />
           </div>
 
           <div className="group">
@@ -127,12 +122,7 @@ export default function AboutSectionProfile({
             >
               <RiShareLine size={22} />
             </MovingBorderButton>
-            <CustomToolTip
-              content="Share Profile"
-              top="42"
-              left="120"
-              translateY="2"
-            />
+            <CustomToolTip content="Share Profile" />
           </div>
         </div>
         {/* User profile content */}
