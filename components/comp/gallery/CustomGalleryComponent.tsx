@@ -1,10 +1,10 @@
-import { LayoutGrid } from "@/components/ui/grids/layout-grid";
 import GalleryGridSkeleton from "./GalleryGridSkeleton";
 import UploadGalleryDialog from "../Modal/gallery/UploadGalleryDialog";
 import { getCurrentUser } from "@/actions/userAndGuild";
 import { getImageUrls } from "@/actions/image-post";
 import { getUserByUsername } from "@/services/user";
 import { imagePostType } from "../Forms/UploadImagesGalleryForm";
+import { GalleryGrid } from "@/components/ui/grids/gallery-grid";
 
 export default async function CustomGalleryComponent({
   username,
@@ -58,7 +58,7 @@ export default async function CustomGalleryComponent({
       )}
       {images ? (
         images.length > 0 ? (
-          <LayoutGrid cards={cards} />
+          <GalleryGrid cards={cards} />
         ) : (
           <>
             <div className="flex justify-center font-bold w-full text-yellow-500">
