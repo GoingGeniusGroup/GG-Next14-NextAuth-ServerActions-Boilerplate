@@ -193,6 +193,7 @@ export default function AboutSectionProfile({
                   <SocialMediaDialog
                     social={social}
                     ifOwnProfile={ifOwnProfile}
+                    userId={userInfo.gg_id}
                   />
                 </Card>
               </CarouselItem>
