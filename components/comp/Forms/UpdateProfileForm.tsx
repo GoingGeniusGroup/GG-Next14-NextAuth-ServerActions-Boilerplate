@@ -27,25 +27,22 @@ import Image from "next/image";
 import { useState } from "react";
 
 interface UpdateProfileDialogProps {
-  setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpen: (open: boolean) => void;
   gg_id: string;
-  currentFirstName: string;
-  currentLastName: string;
-  currentAddress: string;
-  currentDescription: string;
-  currentDob: Date | null;
-  currentImage: string;
+  defaultValues?: {
+    first_name: string;
+    last_name: string;
+    address: string;
+    description: string;
+    dob: Date | null;
+    image: string;
+  };
 }
 
 export default function UpdateProfileForm({
   setOpen,
   gg_id,
-  currentFirstName,
-  currentLastName,
-  currentAddress,
-  currentDescription,
-  currentDob,
-  currentImage,
+  defaultValues,
 }: UpdateProfileDialogProps) {
   const router = useRouter();
 
@@ -54,14 +51,13 @@ export default function UpdateProfileForm({
   const form = useForm({
     mode: "onBlur",
     resolver: zodResolver(ProfileFormSchema),
-    defaultValues: {
-      first_name: currentFirstName || "",
-      last_name: currentLastName || "",
-      address: currentAddress || "",
-      description: currentDescription || "",
-      // Properly parse the date, ensuring it's a Date object
-      dob: currentDob ? new Date(currentDob) : null,
-      image: currentImage || "",
+    defaultValues: defaultValues || {
+      first_name: "",
+      last_name: "",
+      address: "",
+      description: "",
+      dob: null,
+      image: "",
     },
   });
 

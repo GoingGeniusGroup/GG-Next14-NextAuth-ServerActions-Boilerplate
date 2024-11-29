@@ -15,22 +15,19 @@ import CustomToolTip from "../../CustomComponents/CustomToolTip";
 
 interface UpdateProfileDialogProps {
   gg_id: string;
-  currentFirstName: string;
-  currentLastName: string;
-  currentAddress: string;
-  currentDescription: string;
-  currentDob: Date | null;
-  currentImage: string;
+  defaultValues?: {
+    first_name?: string;
+    last_name?: string;
+    address?: string;
+    description?: string;
+    dob?: Date | null;
+    image?: string;
+  };
 }
 
 const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
   gg_id,
-  currentFirstName,
-  currentLastName,
-  currentAddress,
-  currentDescription,
-  currentDob,
-  currentImage,
+  defaultValues,
 }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -55,12 +52,14 @@ const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
         </DialogHeader>
         <UpdateProfileForm
           gg_id={gg_id}
-          currentFirstName={currentFirstName}
-          currentLastName={currentLastName}
-          currentAddress={currentAddress}
-          currentDescription={currentDescription}
-          currentDob={currentDob}
-          currentImage={currentImage}
+          defaultValues={{
+            first_name: defaultValues?.first_name || "",
+            last_name: defaultValues?.last_name || "",
+            address: defaultValues?.address || "",
+            description: defaultValues?.description || "",
+            dob: defaultValues?.dob || null,
+            image: defaultValues?.image || "",
+          }}
           setOpen={setOpen}
         />
       </DialogContent>
