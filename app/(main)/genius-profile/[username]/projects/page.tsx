@@ -1,5 +1,5 @@
 import { getCurrentUser } from "@/actions/userAndGuild";
-import GeniusUserProjects from "@/components/comp/GeniusUserProfile/GeniusUserProjects";
+import GeniusUserProjectsV2 from "@/components/comp/GeniusUserProfile/GeniusUserProjectsV2";
 import { getExperiencesByUserId } from "@/services/experience";
 import { getUserByUsername } from "@/services/user";
 import { IconClipboardCopy } from "@tabler/icons-react";
@@ -29,7 +29,7 @@ export default async function GeniusUserProject({
 
   return (
     <>
-      <GeniusUserProjects
+      <GeniusUserProjectsV2
         userInfo={{
           gg_id: gg_id,
         }}
