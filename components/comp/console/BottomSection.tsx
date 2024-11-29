@@ -24,6 +24,10 @@ import {
 import AvatarManagerClientProfile from "../AvatarManager/avatar-manager-client-profile";
 import ExpressionCard from "../Huds/ExpressionsCard";
 import { usePublicAvatar } from "../AvatarManager/provider/AvatarManagerPublicContext";
+import { setSelectedUserAvatar } from "@/actions/avatar";
+import { useTransition } from "react";
+import { toast } from "sonner";
+import { SpinningButton } from "@/components/ui/spinning-button";
 
 const emotes = [
   { name: "legendary", emote: "Lege", color: "#FCBB3F" },
@@ -90,6 +94,26 @@ export default function BottomSection({
     const match = avatarUrl.match(/\/([^/]+)\.glb$/);
     return match ? match[1] : undefined;
   };
+
+  const [isPending, startTransition] = useTransition()
+  const handleSelectedAvatar = async( avatar_id:string ) => {
+    startTransition( async() => {
+     const res =  await setSelectedUserAvatar(avatar_id)
+     if(!res || !res.success){
+       toast.error("error occured")
+
+     }
+     if(res){
+       toast.success("Successfully selected!")
+     }
+   
+
+    })
+ }
+ console.log('====================================');
+ console.log(selectedAvatar,'selectedavatar from bottom section',avatars);
+ console.log('====================================');
+ 
   return (
     <>
       {!ifOwnProfile ? (
@@ -199,13 +223,18 @@ export default function BottomSection({
           <div className="w-full relative mt-4 h-fit backdrop-blur-lg rounded-lg border dark:border-white/20 border-black/20 hover:border-yellow-500 transition-all duration-300 ease-in-out">
             <Carousel className="w-full">
               <CarouselContent className="-ml-1">
-                {avatars.map((avatar, index) => (
+                {avatars.map((avatar, index) => {
+                  console.log('====================================');
+                  console.log(avatar.avatar_id, selectedAvatar, );
+                  console.log('====================================');
+                  
+                  return (
                   <CarouselItem key={index} className="pl-1 basis-1/3">
                     <div className="p-2">
                       <Card
                         key={avatar.avatar_id}
                         className={`border h-fit rounded-lg hover:border-yellow-500 transition-all duration-300 ease-in-out ${
-                          selectedAvatar === avatar.avatar_url
+                          avatar.avatar_id===selectedAvatar
                             ? "border-sky-500"
                             : "border-black/20 dark:border-white/20"
                         }`}
@@ -222,22 +251,23 @@ export default function BottomSection({
                               height={128}
                               className="rounded-full"
                             />
-                            <Button
-                              variant="black"
+                            <SpinningButton
+                              variant="default"
                               size="sm"
                               className={`hover:text-yellow-500 w-full ${
-                                selectedAvatar === avatar.avatar_url
+                                avatar.avatar_id===selectedAvatar
                                   ? "text-sky-500"
                                   : ""
                               }`}
                               onClick={() =>
-                                setSelectedAvatar(avatar.avatar_url)
+                                handleSelectedAvatar(avatar.avatar_id)
                               }
+                              isLoading={isPending}
                             >
-                              {selectedAvatar === avatar.avatar_url
+                              {avatar.avatar_id===selectedAvatar
                                 ? "Selected"
                                 : "Select"}
-                            </Button>
+                            </SpinningButton>
                           </div>
                           <div className="absolute top-1 flex gap-1 right-1">
                             <Button
@@ -263,7 +293,7 @@ export default function BottomSection({
                       </Card>
                     </div>
                   </CarouselItem>
-                ))}
+                )})}
               </CarouselContent>
             </Carousel>
           </div>

@@ -46,8 +46,8 @@ interface UploadImagesGalleryFormProps {
 
 export type imagePostType = {
   image_url: string;
-  caption?: string;
-  description?: string;
+  caption: string | null;
+  description: string | null;
 }
 export default function UploadImagesGalleryForm({
   setOpen,

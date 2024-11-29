@@ -2,6 +2,7 @@
 
 import { avatar_response, response } from "@/types/utils";
 import {
+  changeAvatarStatusById,
   createAvatar,
   deleteAvatarById,
   getAvatarsByUserId,
@@ -9,6 +10,8 @@ import {
 } from "@/services/avatar";
 import { z } from "zod";
 import { auth } from "@/auth";
+import { db } from "@/lib/db";
+import { Response } from "@/types";
 
 const avatarSchema = z.object({
   avatar_url: z.string().url(),
@@ -135,4 +138,78 @@ export const getUserAvatars = async (gg_id: string) => {
     message: "User avatars fetched successfully.",
     data: avatars,
   });
+};
+
+export const setSelectedUserAvatar = async (avatar_id: string) => {
+  const avatar = await changeAvatarStatusById(avatar_id);
+  if (!avatar) {
+    return response({
+      success: false,
+      error: {
+        code: 500,
+        message: "Failed to  update the status.",
+      },
+    });
+  }
+  return response({
+    success: true,
+    code: 200,
+    message: "Successfully selected!",
+  });
+};
+
+
+type responseAvatarType = Response & {
+
+    data?: {avatar_id: string;
+    gg_id: string;
+    avatar_url: string | null;
+
+    }
+}
+export const getSelectedUserAvatar = async (
+  isU: boolean = true,
+  userId?: string
+): Promise<responseAvatarType | null> => {
+  const session = await auth();
+  const gg_id = isU ? session?.user.gg_id : userId;
+
+  if (!gg_id) {
+    return null;
+  }
+  try {
+    const avatar = await db.avatar.findFirst({
+      where: {
+        gg_id: gg_id,
+        isactive: true,
+      },
+      select: {
+        avatar_id: true,
+      },
+    });
+
+    if (!avatar) {
+      return response({
+        success: false,
+        error: {
+          code: 500,
+          message: "Failed to  fetch the status.",
+        },
+      });
+    }
+    return {
+      success: true,
+      code: 200,
+      message: "Successfully fetched!",
+      data: avatar,
+    };
+  } catch (error) {
+    return response({
+      success: false,
+      error: {
+        code: 500,
+        message: "Failed to  update the status.",
+      },
+    });
+  }
 };

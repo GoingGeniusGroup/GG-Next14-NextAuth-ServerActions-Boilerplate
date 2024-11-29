@@ -11,7 +11,7 @@ export const getImageUrls = async (isu:boolean=true,gg_id?: string) => {
    const session = await auth()
    const userId = isu ? session?.user.gg_id : gg_id
      
-    const imgeObj = await db.ImagePost.findMany({
+    const imgeObj = await db.imagePost.findMany({
       where: {
         gg_id: userId,
       },
@@ -60,11 +60,11 @@ export const updateImagesGallery = async (
   try {
   
 
-    const res = await db.ImagePost.createMany({
+    const res = await db.imagePost.createMany({
         data: imageposts.map((post) => ({
             gg_id:gg_id,
             image_url: post.image_url,
-            caption: post.caption,
+            caption: post.caption!,
             description: post.description
 
         })),

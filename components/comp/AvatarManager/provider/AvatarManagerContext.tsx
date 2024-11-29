@@ -7,9 +7,10 @@ import {
   useCallback,
   ReactNode,
   useEffect,
+  useTransition,
 } from "react";
 
-import { addAvatar, deleteAvatar, updateAvatar } from "@/actions/avatar";
+import { addAvatar, deleteAvatar, getSelectedUserAvatar, setSelectedUserAvatar, updateAvatar } from "@/actions/avatar";
 import { AvatarExportedEvent } from "@/components/comp/AvatarComponents/avatar_creator/events";
 import { ExtendedUser } from "@/types/next-auth";
 import { AvatarResponse } from "@/types/utils";
@@ -47,6 +48,7 @@ interface AvatarContextType {
   handleEmote: (emote: string) => void;
   extractUserId: (avatarUrl: string | undefined) => string | undefined;
   getAvatarCreatorUrl: (avatarUrl: string | undefined) => string;
+
 }
 
 // Create the context
@@ -98,15 +100,29 @@ export function AvatarProvider({
   user,
 }: AvatarProviderProps) {
   const [avatars, setAvatars] = useState<AvatarType[]>(initialAvatars);
-  const [selectedAvatar, setSelectedAvatar] = useState<string | undefined>(
-    initialAvatars[0]?.avatar_url
-  );
+  const [selectedAvatar, setSelectedAvatar] = useState<string | undefined>('');
   const [currentEmote, setCurrentEmote] = useState<string>(
     defaultExpressions[0].animation
   );
   const [isAvatarCreatorOpen, setIsAvatarCreatorOpen] = useState(false);
   const [editingAvatar, setEditingAvatar] = useState<AvatarType | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
+
+  console.log('====================================');
+  console.log(selectedAvatar,'selectedavatar');
+  console.log('====================================');
+  useEffect(() => {
+    const fetchcurrentAvatar = async() => {
+     const res = await getSelectedUserAvatar(true);
+     if(!res){
+       return null
+     }
+     setSelectedAvatar(res.data?.avatar_id as string)
+    }
+    fetchcurrentAvatar()
+
+ },[])
+ 
 
   useEffect(() => {
     const fetchAvatars = async () => {
@@ -122,6 +138,9 @@ export function AvatarProvider({
     };
     fetchAvatars();
   }, [user]);
+
+  
+  
 
   const handleCreateAvatar = useCallback(() => {
     setIsAvatarCreatorOpen(true);
@@ -258,6 +277,7 @@ export function AvatarProvider({
     handleEmote,
     extractUserId,
     getAvatarCreatorUrl,
+   
   };
 
   return (

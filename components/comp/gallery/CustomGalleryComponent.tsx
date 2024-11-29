@@ -29,7 +29,7 @@ export default async function CustomGalleryComponent({
 
   return (
     <div className="relative h-screen w-full px-2">
-      {LoggedUserProfile && currentUser && (
+      {LoggedUserProfile && currentUser && imageposts && (
         <div className="absolute top-2 right-2 z-50">
           <UploadGalleryDialog
             gg_id={currentUser.gg_id}
