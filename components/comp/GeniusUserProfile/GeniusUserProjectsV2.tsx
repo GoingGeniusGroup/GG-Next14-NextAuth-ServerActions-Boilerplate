@@ -33,8 +33,6 @@ export default function GeniusUserProjects({
 }: ItemsProp) {
   let [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-  console.log("ihasvhiasvbav0-------------", items);
-
   return (
     <BentoGridHoverV2 className="relative py-10">
       {LoggedUserProfile && (
