@@ -201,12 +201,7 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
             onClick={() => toggleScreen(section)}
           >
             {section.icon}
-            <CustomToolTip
-              content={section.title}
-              top="-30"
-              left="-20"
-              translateY="0"
-            />
+            <CustomToolTip content={section.title} />
           </Button>
         ))}
       </div>

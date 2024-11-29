@@ -2,7 +2,7 @@
 
 import React, { useRef, useEffect, useState } from "react";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button/button";
 import {
   ChevronLeft,
   ChevronRight,

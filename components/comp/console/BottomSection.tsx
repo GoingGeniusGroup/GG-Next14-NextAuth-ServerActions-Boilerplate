@@ -33,6 +33,37 @@ const AchievementSlider: React.FC = () => {
             className={`group relative size-[90px] rounded-lg dark:bg-black/40 hover:border-2 border-white bg-gray-200 flex items-center justify-center text-3xl transition-colors duration-300`}
           >
             <Image
+              src="/achievements/gg/GG-Beta-Tester.png"
+              alt="GG-Trophy"
+              width={74}
+              height={74}
+            />
+            <div className="absolute bottom-0 group-hover:opacity-100 opacity-0 uppercase text-yellow-500 text-xs font-bold">
+              Beta Tester
+            </div>
+          </Card>
+        </CarouselItem>
+
+        <CarouselItem className="pl-1 basis-1/4">
+          <Card
+            className={`group relative size-[90px] rounded-lg dark:bg-black/40 hover:border-2 border-white bg-gray-200 flex items-center justify-center text-3xl transition-colors duration-300`}
+          >
+            <Image
+              src="/achievements/gg/Globe.png"
+              alt="GG-Trophy"
+              width={64}
+              height={64}
+            />
+            <div className="absolute bottom-0 group-hover:opacity-100 opacity-0 uppercase text-yellow-500 text-xs font-bold">
+              GG-Globe
+            </div>
+          </Card>
+        </CarouselItem>
+        <CarouselItem className="pl-1 basis-1/4">
+          <Card
+            className={`group relative size-[90px] rounded-lg dark:bg-black/40 hover:border-2 border-white bg-gray-200 flex items-center justify-center text-3xl transition-colors duration-300`}
+          >
+            <Image
               src="/achievements/gg/GG-Member-Trophy.png"
               alt="GG-Trophy"
               width={64}

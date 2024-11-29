@@ -62,6 +62,7 @@ export const AvatarCreatorRaw: FC<AvatarCreatorRawProps> = ({
     return () => {
       window.removeEventListener(MESSAGE_EVENT, subscribe);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

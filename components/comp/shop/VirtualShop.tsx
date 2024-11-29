@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { ShoppingCart } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button/button";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea, ScrollBar } from "@/components/ui/scrollarea";
 import ProductList from "./subComponents/ProductList";

@@ -2,7 +2,6 @@
 
 import { Stars } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { cn } from "@/lib/utils";
 import React, { ReactNode, useEffect } from "react";
 
 import {
@@ -34,6 +33,7 @@ export const AuroraBackground = ({
       repeat: Infinity,
       repeatType: "mirror",
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const backgroundImage = useMotionTemplate`radial-gradient(125% 125% at 50% 0%, #020617 50%, ${color})`;

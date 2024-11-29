@@ -55,12 +55,7 @@ const ExperienceDialog: React.FC<ExperienceDialogProps> = ({
               <IconEdit className="h-4 w-4" />
             </Button>
           )}
-          <CustomToolTip
-            content="Add Projects"
-            top="-30"
-            left="-35"
-            translateY="2"
-          />
+          <CustomToolTip content="Add Projects" />
         </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md h-[80%] overflow-auto">

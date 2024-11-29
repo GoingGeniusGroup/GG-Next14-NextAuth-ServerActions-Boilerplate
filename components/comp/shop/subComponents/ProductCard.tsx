@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button/button";
 import { Badge } from "@/components/ui/badge";
 import { Product } from "./types";
 
