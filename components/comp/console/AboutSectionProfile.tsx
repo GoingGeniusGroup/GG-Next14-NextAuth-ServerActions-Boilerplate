@@ -18,11 +18,11 @@ import { FaSteam } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import SocialMediaDialog from "../GeniusUserProfile/Info/SocialMediaDialog";
 import { RiShareLine } from "react-icons/ri";
-import { LiaQrcodeSolid } from "react-icons/lia";
 import { Button as MovingBorderButton } from "@/components/ui/border/moving-border";
 import { socialType } from "@prisma/client";
 import { useRef, useState } from "react";
 import CustomToolTip from "../CustomComponents/CustomToolTip";
+import SharePopup from "../GeniusUserProfile/share/SharePopUp";
 
 type socialvalueType = {
   name: socialType;
@@ -72,8 +72,14 @@ export default function AboutSectionProfile({
 }) {
   let ref = useRef<HTMLDivElement>(null);
   const [hovered, setHovered] = useState(false);
+  const [isPopupOpen, setPopupOpen] = useState(false);
+  const currentPageUrl =
+    typeof window !== "undefined" ? window.location.href : "";
   return (
     <>
+      {isPopupOpen && (
+        <SharePopup url={currentPageUrl} onClose={() => setPopupOpen(false)} />
+      )}
       {/* Share and QR code buttons */}
       <div
         ref={ref}
@@ -108,23 +114,14 @@ export default function AboutSectionProfile({
             <MovingBorderButton
               borderRadius="1.75rem"
               className="bg-gray-200 size-10 dark:bg-black text-black dark:text-white hover:text-yellow-600 transition-colors duration-300 border-neutral-200 dark:border-slate-800"
-            >
-              <LiaQrcodeSolid size={22} />
-            </MovingBorderButton>
-
-            <CustomToolTip content="Share QR" />
-          </div>
-
-          <div className="group">
-            <MovingBorderButton
-              borderRadius="1.75rem"
-              className="bg-gray-200 size-10 dark:bg-black text-black dark:text-white hover:text-yellow-600 transition-colors duration-300 border-neutral-200 dark:border-slate-800"
+              onClick={() => setPopupOpen(true)}
             >
               <RiShareLine size={22} />
             </MovingBorderButton>
             <CustomToolTip content="Share Profile" />
           </div>
         </div>
+
         {/* User profile content */}
         <div className="flex flex-col gap-4">
           <Image
