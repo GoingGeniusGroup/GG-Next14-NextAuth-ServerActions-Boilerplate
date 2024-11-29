@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button/button";
 import { CardSpotlight as CardSpotlightComponent } from "@/components/ui/card/card-spotlight";
 
 interface CardSpotlightProps {
