@@ -78,3 +78,5 @@ export const updateUserById = async (
     return null;
   }
 };
+
+// export const removeImageByUserId = async (gg_id: string) => {};
