@@ -24,12 +24,12 @@ export default function GeniusProfileLayout({
   const pathname = usePathname();
 
   // Determine the active tab
-  const isHomeActive = pathname === `/genius-profile-v3/${username}`;
+  const isHomeActive = pathname === `/genius-profile/${username}`;
   const isGalleryActive = pathname.includes(
-    `/genius-profile-v3/${username}/gallery`
+    `/genius-profile/${username}/gallery`
   );
   const isProjectsActive = pathname.includes(
-    `/genius-profile-v3/${username}/projects`
+    `/genius-profile/${username}/projects`
   );
 
   return (
