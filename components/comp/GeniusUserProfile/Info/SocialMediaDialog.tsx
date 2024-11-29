@@ -55,7 +55,9 @@ const SocialMediaDialog = ({
   const handleSave = async () => {
     startTransition(async () => {
       try {
-        const res = await postSocial(url, social.name);
+        const trimmedUrl = url.trim(); // Trim whitespace
+        const res = await postSocial(trimmedUrl, social.name);
+
         if (res && res.success) {
           // Immediately update the local state
           setSocialVals((prevSocials) => {
@@ -64,18 +66,41 @@ const SocialMediaDialog = ({
               (s) => s.key === social.name
             );
 
-            if (existingIndex !== -1) {
-              // Update existing social
-              const updatedSocials = [...prevSocials];
-              updatedSocials[existingIndex] = { key: social.name, value: url };
-              return updatedSocials;
+            if (trimmedUrl) {
+              if (existingIndex !== -1) {
+                // Update existing social
+                const updatedSocials = [...prevSocials];
+                updatedSocials[existingIndex] = {
+                  key: social.name,
+                  value: trimmedUrl,
+                };
+                return updatedSocials;
+              } else {
+                // Add new social
+                return [
+                  ...prevSocials,
+                  { key: social.name, value: trimmedUrl },
+                ];
+              }
             } else {
-              // Add new social
-              return [...prevSocials, { key: social.name, value: url }];
+              // If URL is empty, remove the social
+              if (existingIndex !== -1) {
+                return prevSocials.filter((s) => s.key !== social.name);
+              }
+              return prevSocials;
             }
           });
 
-          toast.success(`Successfully added ${social.name} URL`);
+          // Close the dialog
+          setIsDialogOpen(false);
+
+          // Show appropriate toast message
+          if (trimmedUrl) {
+            toast.success(`Successfully added ${social.name} URL`);
+          } else {
+            toast.success(`Successfully removed ${social.name} URL`);
+          }
+
           router.refresh(); // Optional: force a full page refresh
         } else {
           toast.error("Failed to post URL");
@@ -118,7 +143,7 @@ const SocialMediaDialog = ({
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
-        <button>
+        <button onClick={() => setUrl(UrlValue || "")}>
           <SocialIcon />
         </button>
       </DialogTrigger>
@@ -133,12 +158,12 @@ const SocialMediaDialog = ({
         <div className="flex flex-col gap-4">
           <Input
             placeholder={`Enter your ${social.name} profile URL`}
-            value={url || UrlValue || ""}
+            value={url}
             onChange={(e) => setUrl(e.target.value)}
           />
           <div className="flex justify-end">
             <SpinningButton onClick={handleSave} isLoading={ispending}>
-              {UrlValue ? "Update" : "Save"}
+              {UrlValue ? (url ? "Update" : "Remove") : "Save"}
             </SpinningButton>
           </div>
         </div>
