@@ -78,16 +78,16 @@ const defaultExpressions: Expression[] = [
     animation: "/emote/animations/hiphop.fbx",
   },
   {
-    label: "angry",
-    icon: "/emojis/angry.svg",
+    label: "thriller",
+    icon: "/emote/thriller.svg",
     bg: "#14C620",
-    animation: "/male-idle-3.fbx ",
+    animation: "/emote/animations/thriller.fbx",
   },
   {
-    label: "angry",
-    icon: "/emojis/angry.svg",
+    label: "breakdance",
+    icon: "/emote/breakdance.svg",
     bg: "#ACACAC",
-    animation: "/M_Standing_Expressions_016.fbx",
+    animation: "/emote/animations/breakdance.fbx",
   },
 ];
 
