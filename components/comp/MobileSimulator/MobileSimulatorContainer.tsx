@@ -34,7 +34,6 @@ export default function MobileSimulatorContainer({
   updateCurrentBackground,
 }: MobileSimulatorContainerProps) {
   const pathname = usePathname();
-  
 
   return (
     <>
@@ -46,7 +45,9 @@ export default function MobileSimulatorContainer({
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: isSmallScreen ? 1 : 0.9 }}
             className={`fixed inset-0 flex items-center z-40 justify-end ${
-              isSmallScreen || pathname === "/" ? "" : "backdrop-blur-md"
+              isSmallScreen || pathname === "/"
+                ? "backdrop-blur-sm"
+                : "backdrop-blur-md"
             } p-4 z-20`}
           >
             <div
@@ -62,8 +63,7 @@ export default function MobileSimulatorContainer({
                     index={index}
                     isSmallScreen={isSmallScreen}
                     removeScreen={removeScreen}
-                  // Pass currentBackground
-                 
+                    // Pass currentBackground
                   />
                 ))}
               </AnimatePresence>
@@ -82,7 +82,6 @@ export default function MobileSimulatorContainer({
                   closeAllScreens={closeAllScreens}
                   screens={screens}
                   updateCurrentBackground={updateCurrentBackground}
-                  
                 />
               </motion.div>
             </div>

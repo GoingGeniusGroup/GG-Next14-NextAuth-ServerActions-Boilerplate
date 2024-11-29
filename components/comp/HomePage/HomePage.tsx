@@ -5,9 +5,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { UserRound } from "lucide-react";
-import Link from "next/link";
 
 import { toTitleCase } from "@/utils/string-utils";
+import { useMobileSimulator } from "../MobileSimulator/provider/MobileSimulatorContext";
+import { Button } from "@/components/ui/button/button";
 
 export default function HomePage({
   user,
@@ -18,6 +19,7 @@ export default function HomePage({
 }) {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const { setShowMobile } = useMobileSimulator();
 
   useEffect(() => {
     // Only proceed if we have auth_redirect parameter
@@ -43,6 +45,14 @@ export default function HomePage({
       router.replace(newUrl);
     }
   }, [searchParams, router]);
+
+  const handleGetStarted = () => {
+    if (user) {
+      router.push(`/genius-profile/${user.username}`);
+    } else {
+      setShowMobile((prev) => !prev);
+    }
+  };
   return (
     <div className="flex justify-center items-center">
       <div className="absolute inset-0 flex flex-col items-center justify-center">
@@ -57,14 +67,14 @@ export default function HomePage({
             Developer Features Coming Soon
           </p>
           <div className="flex justify-center">
-            <Link
+            <Button
               className="relative mt-8 rounded-full bg-black dark:bg-white px-6 py-2 text-sm font-medium text-white dark:text-black transition-transform duration-300 hover:scale-105 hover:bg-gray-200 "
-              href="/shop-test"
+              onClick={handleGetStarted}
               aria-label="get started button"
             >
               Get Started
               <div className="absolute right-0 top-0 size-3 animate-ping rounded-full bg-blue-300"></div>
-            </Link>
+            </Button>
           </div>
         </div>
       </div>

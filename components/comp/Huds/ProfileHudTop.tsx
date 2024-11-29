@@ -59,7 +59,7 @@ export default function ProfileHudTop({
       // Dismiss loading toast and show success message
       toast.dismiss(loadingToast);
       await delay(500);
-      toast.success("Logged out successfully! Redirecting...");
+      toast.success("Redirecting...");
 
       // Add delay to ensure toast is visible
       await delay(1000);
