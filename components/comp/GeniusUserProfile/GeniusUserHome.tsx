@@ -29,7 +29,7 @@ export default async function GeniusUserHome({
             ifOwnProfile={LoggedUserProfile}
           />
         </div>
-        <div className="relative w-[620px] h-[510px] flex justify-center flex-col z-20">
+        <div className="relative w-[33%] h-[510px] flex justify-center flex-col z-20">
           {LoggedUserProfile ? (
             <AvatarManagerClientProfile
               fov={35}
