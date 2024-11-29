@@ -267,14 +267,14 @@ export default function BottomSection({
                               </Button>
                             </div>
                             <div className="absolute top-1 flex gap-1 right-1">
-                              <Button
+                              {/* <Button
                                 variant="transparent_rounded"
                                 className="hover:text-yellow-500 hover:bg-transparent text-sky-600 p-[1px]"
                                 size="mini2"
                                 onClick={() => handleEditAvatar(avatar)}
                               >
                                 <IconEdit size={12} />
-                              </Button>
+                              </Button> */}
                               <Button
                                 variant="transparent_rounded"
                                 className="hover:text-yellow-500 hover:bg-transparent text-red-600 p-[1px]"

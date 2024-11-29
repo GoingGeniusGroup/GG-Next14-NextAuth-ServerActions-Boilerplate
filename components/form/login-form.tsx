@@ -84,14 +84,14 @@ export const LoginForm = ({ isMobile }: { isMobile: boolean }) => {
                 placeholder="******"
                 isPending={isPending}
               />
-              <Button
+              {/* <Button
                 size="sm"
                 variant="anylink"
                 className={`-mt-6 p-0 text-xs w-full justify-end`}
                 asChild
               >
                 <Link href="/reset">Forgot password?</Link>
-              </Button>
+              </Button> */}
             </div>
           </div>
           <Button type="submit" disabled={isPending} className="w-full">
