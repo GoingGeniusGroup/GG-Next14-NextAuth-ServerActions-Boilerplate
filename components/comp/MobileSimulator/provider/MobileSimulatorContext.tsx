@@ -165,39 +165,35 @@ export const MobileSimulatorProvider = ({
   // Define sections with useMemo
   const sections: SectionProps[] = useMemo(
     () => [
-      {
-        id: 1,
-        title: isLoggedIn ? "Profile" : showLogin ? "Login" : "Register",
-        icon: isLoggedIn ? (
-          <FaUser />
-        ) : showLogin ? (
-          <FaSignInAlt />
-        ) : (
-          <FaUserPlus />
-        ),
-        content: isLoggedIn ? (
-          // <ProfileComponent />
-          <div>Profile Component</div>
-        ) : showLogin ? (
-          <div className="flex flex-col gap-4 h-full overflow-auto">
-            <LoginForm isMobile={true} />
-            <div className="flex w-full justify-center">
-              <Button variant="black" onClick={handleToggleAuth}>
-                Register Here
-              </Button>
-            </div>
-          </div>
-        ) : (
-          <div className="flex flex-col gap-4 h-full overflow-auto">
-            <RegisterForm isMobile={true} />
-            <div className="flex w-full justify-center">
-              <Button variant="black" onClick={handleToggleAuth}>
-                Login Here
-              </Button>
-            </div>
-          </div>
-        ),
-      },
+      // Only show profile section if the user is not logged in
+      ...(isLoggedIn
+        ? [] // Don't add the Profile section when logged in
+        : [
+            {
+              id: 1,
+              title: showLogin ? "Login" : "Register",
+              icon: showLogin ? <FaSignInAlt /> : <FaUserPlus />,
+              content: showLogin ? (
+                <div className="flex flex-col gap-4 h-full overflow-auto">
+                  <LoginForm isMobile={true} />
+                  <div className="flex w-full justify-center">
+                    <Button variant="black" onClick={handleToggleAuth}>
+                      Register Here
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex flex-col gap-4 h-full overflow-auto">
+                  <RegisterForm isMobile={true} />
+                  <div className="flex w-full justify-center">
+                    <Button variant="black" onClick={handleToggleAuth}>
+                      Login Here
+                    </Button>
+                  </div>
+                </div>
+              ),
+            },
+          ]),
       {
         id: 2,
         title: "Shop",
@@ -209,12 +205,6 @@ export const MobileSimulatorProvider = ({
         title: "Notifications",
         icon: <FaBell />,
         content: <NotificationComponent />,
-      },
-      {
-        id: 4,
-        title: "Messages",
-        icon: <FaEnvelope />,
-        content: "Check your messages and chats.",
       },
     ],
     [isLoggedIn, showLogin, handleToggleAuth]

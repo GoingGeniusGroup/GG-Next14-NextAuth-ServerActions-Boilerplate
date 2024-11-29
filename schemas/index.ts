@@ -44,11 +44,13 @@ export const registerSchema = z.object({
   email: EMAIL_SCHEMA,
   username: z
     .string()
-    .min(1, {
-      message: "Name is required.",
-    })
+    .min(1, { message: "Name is required." })
     .min(4, "Name must be at least 4 characters.")
-    .max(24, "Maximum length of Name is 24 characters."),
+    .max(24, "Maximum length of Name is 24 characters.")
+    .regex(
+      /^[a-zA-Z0-9-]+$/,
+      "Username can only contain letters, numbers, and hyphens"
+    ),
   password: z
     .string()
     .min(1, "Password is required.")
@@ -58,23 +60,11 @@ export const registerSchema = z.object({
     .min(1, "Phone Number is required.")
     .refine(
       (val) => {
-        // Remove all non-digit characters except plus sign at start
-        const cleaned = val.replace(/[^\d+]/g, "");
-
-        // Check if it starts with country code
-        if (cleaned.startsWith("+")) {
-          // Remove the plus and validate remaining digits
-          const withoutPlus = cleaned.slice(1);
-          // Assuming country code can be 1-4 digits, followed by exactly 10 digits
-          return /^\d{1,4}\d{10}$/.test(withoutPlus);
-        }
-
-        // If no country code, must be exactly 10 digits
-        return /^\d{10}$/.test(cleaned);
+        const cleaned = val.replace(/[^\d]/g, "");
+        return cleaned.length === 10;
       },
       {
-        message:
-          "Phone number must be exactly 10 digits (excluding optional country code).",
+        message: "Phone number must be exactly 10 digits.",
       }
     ),
 });

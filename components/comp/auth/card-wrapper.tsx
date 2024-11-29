@@ -53,18 +53,18 @@ export const CardWrapper = (props: CardWrapperProps) => {
         <CardDescription>{headerDescription}</CardDescription>
       </CardHeader>
       {children ? <CardContent>{children}</CardContent> : null}
-      {showSocial ? (
+      <Separator className="shrink" />
+      <p className="text-sm text-center basis-full"></p>
+      <Separator className="shrink" />
+      {/* {showSocial ? (
         <>
           <CardFooter className="gap-x-2">
-            <Separator className="shrink" />
-            <p className="text-sm text-center basis-full">Or connect with</p>
-            <Separator className="shrink" />
           </CardFooter>
           <CardFooter>
             <Social />
           </CardFooter>
         </>
-      ) : null}
+      ) : null} */}
       {!isMobile && (
         <>
           <Separator />
