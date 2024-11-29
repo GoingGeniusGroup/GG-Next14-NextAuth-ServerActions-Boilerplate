@@ -39,7 +39,7 @@ export default function CustomToolTip({ content }: ToolTip) {
           rounded-md dark:bg-black bg-gray-200 
           px-2 py-1 text-sm dark:text-white text-black 
           opacity-0 transition-opacity duration-200
-          group-hover:opacity-100 group-hover:visible
+          group-hover:opacity-100 group-hover:visible text-nowrap
         `}
       >
         {content}

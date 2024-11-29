@@ -161,7 +161,6 @@ export default function AboutSectionProfile({
           {/* Bio section */}
           <div className="relative w-full rounded-md bg-white/10 dark:bg-black/10 hover:dark:bg-black/20 hover:bg-white/20 transition-all duration-300 ease-in-out px-2 py-1 dark:text-white text-black">
             <div className="h-[60px] w-full overflow-auto text-[12px] font-semibold flex flex-col">
-              <span>Bio</span>
               <span>{userInfo.description || "No description available"}</span>
             </div>
           </div>

@@ -166,10 +166,15 @@ const SocialMediaDialog = ({
   }
 
   if (!ifOwnProfile && UrlValue) {
+    const formattedUrl =
+      UrlValue.startsWith("http://") || UrlValue.startsWith("https://")
+        ? UrlValue
+        : `https://${UrlValue}`;
+
     return (
-      <Link href={UrlValue} target="_blank" rel="noopener noreferrer">
+      <a href={formattedUrl} target="_blank" rel="noopener noreferrer">
         <SocialIcon />
-      </Link>
+      </a>
     );
   }
 
