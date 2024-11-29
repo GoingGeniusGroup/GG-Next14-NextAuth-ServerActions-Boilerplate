@@ -31,6 +31,7 @@ export const BentoGridHoverItemV2 = ({
   title,
   description,
   header,
+  topTitle,
   skills,
   link,
   tools,
@@ -40,6 +41,7 @@ export const BentoGridHoverItemV2 = ({
 }: {
   className?: string;
   title?: string | React.ReactNode;
+  topTitle?: string;
   description?: string | React.ReactNode;
   header?: string;
   skills?: string[];
@@ -84,7 +86,7 @@ export const BentoGridHoverItemV2 = ({
         onMouseLeave={() => setSubCardIsHovered(false)}
       >
         <div className="relative z-50 h-full rounded-lg group/bento hover:shadow-xl transition duration-200 shadow-input dark:shadow-none dark:p-3 p-2 dark:bg-black dark:border-white/[0.2] bg-gray-200 border border-transparent flex flex-col">
-          <div className="relative w-full aspect-[4/3] mb-4">
+          <div className="relative size-full">
             <Image
               src={header ?? ""}
               alt={typeof title === "string" ? title : ""}
@@ -93,11 +95,10 @@ export const BentoGridHoverItemV2 = ({
               className="rounded-lg"
               unoptimized
             />
+            <span className="uppercase text-sm font-semibold absolute top-1 left-1 opacity-30">
+              {topTitle}
+            </span>
           </div>
-
-          <h3 className="font-sans font-bold text-neutral-600 dark:text-neutral-200 mb-2">
-            {title}
-          </h3>
 
           {isSubCardHovered && (
             <div className="absolute inset-0 bg-white dark:bg-black bg-opacity-90 dark:bg-opacity-90 rounded-xl p-4 flex flex-col justify-between transition-opacity duration-200 opacity-0 group-hover/bento:opacity-100">

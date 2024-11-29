@@ -34,20 +34,21 @@ export default function GeniusUserProjects({
   let [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <BentoGridHoverV2 className="relative py-10">
+    <BentoGridHoverV2 className="relative pb-10">
       {LoggedUserProfile && (
-        <div className="absolute top-2 right-2 z-40">
+        <div className="absolute -top-7 -right-3 z-40">
           <ExperienceDialog gg_id={userInfo.gg_id} />
         </div>
       )}
       {items.map((item, idx) => (
         <BentoGridHoverItemV2
           key={idx}
+          topTitle={item.title}
           title={
             <div className="flex justify-between items-center gap-2">
               <span>{item.title}</span>
               {LoggedUserProfile && (
-                <div className="flex gap-2">
+                <div className="flex gap-2 items-center">
                   <ExperienceDialog
                     gg_id={userInfo.gg_id}
                     experience_id={item.experience_id}
