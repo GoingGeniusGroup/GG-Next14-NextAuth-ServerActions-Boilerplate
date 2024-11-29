@@ -83,7 +83,7 @@ export const BentoGridHoverItemV2 = ({
         onMouseEnter={() => setSubCardIsHovered(true)}
         onMouseLeave={() => setSubCardIsHovered(false)}
       >
-        <div className="relative z-50 h-full rounded-lg group/bento hover:shadow-xl transition duration-200 shadow-input dark:shadow-none dark:p-4 p-2 dark:bg-black dark:border-white/[0.2] bg-gray-300 border border-transparent flex flex-col">
+        <div className="relative z-50 h-full rounded-lg group/bento hover:shadow-xl transition duration-200 shadow-input dark:shadow-none dark:p-3 p-2 dark:bg-black dark:border-white/[0.2] bg-gray-200 border border-transparent flex flex-col">
           <div className="relative w-full aspect-[4/3] mb-4">
             <Image
               src={header ?? ""}
@@ -101,33 +101,55 @@ export const BentoGridHoverItemV2 = ({
 
           {isSubCardHovered && (
             <div className="absolute inset-0 bg-white dark:bg-black bg-opacity-90 dark:bg-opacity-90 rounded-xl p-4 flex flex-col justify-between transition-opacity duration-200 opacity-0 group-hover/bento:opacity-100">
-              <div className="overflow-auto">
-                <div className="overflow-auto">
-                  <h3 className="font-sans font-bold text-lg text-gray-800 dark:text-gray-100 mb-3">
-                    {title}
-                  </h3>
-                  <p className="font-sans text-sm text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
-                    {description}
-                  </p>
-                  <div className="space-y-2 mb-4">
-                    <p className="font-sans text-xs text-gray-600 dark:text-gray-400">
-                      <span className="font-semibold text-gray-800 dark:text-gray-200">
-                        SKILLS:
-                      </span>{" "}
-                      {skills}
-                    </p>
-                    <p className="font-sans text-xs text-gray-600 dark:text-gray-400">
-                      <span className="font-semibold text-gray-800 dark:text-gray-200">
-                        TOOLS:
-                      </span>{" "}
-                      {tools}
-                    </p>
+              <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 pb-2">
+                <h3 className="font-sans font-bold text-lg text-gray-800 dark:text-gray-100 mb-3 sticky -top-1 bg-white/70 dark:bg-black/50 backdrop-blur-sm p-1 rounded">
+                  {title}
+                </h3>
+                <p className="font-sans text-sm text-gray-600 dark:text-gray-300 mb-4">
+                  {description}
+                </p>
+                <div className="space-y-2">
+                  <div className="font-sans text-xs text-gray-600 dark:text-gray-400">
+                    <span className="font-semibold text-gray-800 dark:text-gray-200 block mb-1">
+                      SKILLS
+                    </span>
+                    <div className="flex flex-wrap gap-1">
+                      {(skills ?? [])
+                        .join(",")
+                        .split(",")
+                        .map((skill, index) => (
+                          <span
+                            key={index}
+                            className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded-md"
+                          >
+                            {skill.trim()}
+                          </span>
+                        ))}
+                    </div>
+                  </div>
+                  <div className="font-sans text-xs text-gray-600 dark:text-gray-400">
+                    <span className="font-semibold text-gray-800 dark:text-gray-200 block mb-1">
+                      TOOLS
+                    </span>
+                    <div className="flex flex-wrap gap-1">
+                      {(tools ?? [])
+                        .join(",")
+                        .split(",")
+                        .map((tool, index) => (
+                          <span
+                            key={index}
+                            className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded-md"
+                          >
+                            {tool.trim()}
+                          </span>
+                        ))}
+                    </div>
                   </div>
                 </div>
               </div>
               <Link
                 href={link ? link : ""}
-                className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4"
+                className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background dark:bg-white bg-black text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4"
               >
                 Visit Project
                 <ChevronRight className="ml-2 h-4 w-4" />
