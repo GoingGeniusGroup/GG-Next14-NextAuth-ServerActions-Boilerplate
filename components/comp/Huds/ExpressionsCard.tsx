@@ -29,6 +29,7 @@ export default function ExpressionCard({
                 className={`w-[60px] h-[75px] rounded-lg flex hover:border-2 items-center justify-center transition-colors duration-300 border`}
                 style={{
                   borderColor: expression.bg,
+                  backgroundColor: "white",
                   transition: "border-color 0.3s ease",
                 }}
                 onMouseEnter={(e) => {
@@ -43,8 +44,8 @@ export default function ExpressionCard({
                     src={expression.icon}
                     className="object-cover"
                     alt={expression.label}
-                    height={31}
-                    width={31}
+                    height={72}
+                    width={72}
                   />
                 </div>
               </Card>

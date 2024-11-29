@@ -54,34 +54,34 @@ const AvatarContext = createContext<AvatarContextType | undefined>(undefined);
 // Expression data
 const defaultExpressions: Expression[] = [
   {
-    label: "neutral",
-    icon: "/emojis/neutral.svg",
+    label: "angry",
+    icon: "/emote/angry.svg",
     bg: "#FCBB3F",
-    animation: "/male-idle-3.fbx",
+    animation: "/emote/animations/bodyblock.fbx",
   },
   {
-    label: "sad",
-    icon: "/emojis/sad.svg",
+    label: "servesyou",
+    icon: "/emote/servesyou.svg",
     bg: "#DC143C",
-    animation: "/M_Standing_Expressions_011.fbx",
+    animation: "/emote/animations/rumbadancing.fbx",
   },
   {
-    label: "happy",
-    icon: "/emojis/happy.svg",
+    label: "twerk",
+    icon: "/emote/twerk.svg",
     bg: "#AA25B6",
-    animation: "/M_Standing_Expressions_012.fbx",
+    animation: "/emote/animations/dancingtwerk.fbx",
   },
   {
-    label: "amazed",
-    icon: "/emojis/amazed.svg",
+    label: "hiphop",
+    icon: "/emote/hiphop.svg",
     bg: "#129FE0",
-    animation: "/M_Standing_Expressions_013.fbx",
+    animation: "/emote/animations/hiphop.fbx",
   },
   {
     label: "angry",
     icon: "/emojis/angry.svg",
     bg: "#14C620",
-    animation: "/M_Standing_Expressions_016.fbx",
+    animation: "/male-idle-3.fbx ",
   },
   {
     label: "angry",
