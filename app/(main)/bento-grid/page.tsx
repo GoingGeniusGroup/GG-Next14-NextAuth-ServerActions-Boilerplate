@@ -3,7 +3,7 @@
 import BentoGridDemo from "@/components/comp/AceternityUI/bento-grid/bento-grid-demo";
 import BentoGridSecondDemo from "@/components/comp/AceternityUI/bento-grid/bento-grid-demo-2";
 import BentoGridThirdDemo from "@/components/comp/AceternityUI/bento-grid/bento-grid-demo-3";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button/button";
 import { useState } from "react";
 
 export default function BentoGrid() {
