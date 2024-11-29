@@ -9,6 +9,7 @@ import { UserRound } from "lucide-react";
 import { toTitleCase } from "@/utils/string-utils";
 import { useMobileSimulator } from "../MobileSimulator/provider/MobileSimulatorContext";
 import { Button } from "@/components/ui/button/button";
+import { UserProfilesCarousel } from "../GeniusUserProfile/ProfileCard/user-profile-carousel";
 
 export default function HomePage({
   user,
@@ -76,6 +77,9 @@ export default function HomePage({
               <div className="absolute right-0 top-0 size-3 animate-ping rounded-full bg-blue-300"></div>
             </Button>
           </div>
+        </div>
+        <div className="absolute bottom-2 right-2 w-[60%] h-[140px] rounded flex justify-center">
+          <UserProfilesCarousel />
         </div>
       </div>
       <div className="absolute bottom-4 left-10 bg-gradient-to-b bg-white/70 to-gray-100/30 p-4 rounded-lg shadow-sm flex flex-col items-center max-w-xs w-full">
