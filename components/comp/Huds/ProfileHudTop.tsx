@@ -28,7 +28,7 @@ export default function ProfileHudTop({
   const { data: session, status } = useSession();
   const usernameContext = useUser();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
-  const { showMobile, setShowMobile } = useMobileSimulator();
+  const { toggleScreen, setShowMobile } = useMobileSimulator();
 
   const username = usernameContext ? usernameContext.username : "";
   const profilePic = usernameContext ? usernameContext.image : "";
@@ -59,7 +59,7 @@ export default function ProfileHudTop({
       // Dismiss loading toast and show success message
       toast.dismiss(loadingToast);
       await delay(500);
-      toast.success("Logged out successfully! Redirecting...");
+      toast.success("Redirecting...");
 
       // Add delay to ensure toast is visible
       await delay(1000);

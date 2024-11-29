@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useTransition } from "react";
 import {
   Dialog,
   DialogContent,
@@ -12,60 +12,181 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import Link from "next/link";
+import { getSocialsbyUserId, postSocial, deleteSocial } from "@/actions/social";
+import { socialType, social } from "@prisma/client";
+import { toast } from "sonner";
+import { SpinningButton } from "@/components/ui/spinning-button";
+import { useRouter } from "next/navigation";
+
+type ResponseType = {
+  success: boolean;
+  message?: string;
+  code: number;
+  data?: {
+    data: social;
+  };
+  error?: {
+    code: number;
+    message: string;
+  };
+};
 
 const SocialMediaDialog = ({
   social,
-  userLinks,
-  onSave,
   ifOwnProfile,
+  userId,
 }: {
-  social: { name: string; icon: JSX.Element };
-  userLinks: Record<string, string>;
-  onSave: (name: string, url: string) => void;
+  social: { name: socialType; icon: JSX.Element; link: string };
   ifOwnProfile: boolean;
+  userId: string;
 }) => {
-  const [url, setUrl] = useState(userLinks[social.name.toLowerCase()] || "");
-  const socialUrl = userLinks[social.name.toLowerCase()];
+  const [url, setUrl] = useState<string>("");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const router = useRouter();
+  const [socialvals, setSocialVals] = useState<
+    { key: socialType; value: string; social_id?: string }[]
+  >([]);
+  const [ispending, startTransition] = useTransition();
 
-  const handleSave = () => {
-    onSave(social.name.toLowerCase(), url);
+  const UrlValue = socialvals.find((s) => s.key === social.name)?.value || null;
+  const SocialId = socialvals.find((s) => s.key === social.name)?.social_id;
+
+  useEffect(() => {
+    const fetchSocials = async () => {
+      try {
+        const data = await getSocialsbyUserId(userId);
+        if (data) {
+          const formattedSocials = data.map((socialD: social) => ({
+            key: socialD.key,
+            value: socialD.value,
+            social_id: socialD.social_id,
+          }));
+          setSocialVals(formattedSocials);
+        }
+      } catch (error) {
+        console.error("Error fetching socials:", error);
+      }
+    };
+
+    fetchSocials();
+  }, [userId]);
+
+  const handleSave = async () => {
+    if (!url.trim()) {
+      toast.error("Please enter a valid URL");
+      return;
+    }
+
+    startTransition(async () => {
+      try {
+        const res = (await postSocial(
+          url.trim(),
+          social.name,
+          SocialId
+        )) as ResponseType;
+
+        if (res && res.success) {
+          setSocialVals((prevSocials) => {
+            const existingIndex = prevSocials.findIndex(
+              (s) => s.key === social.name
+            );
+            if (existingIndex !== -1) {
+              const updatedSocials = [...prevSocials];
+              updatedSocials[existingIndex] = {
+                key: social.name,
+                value: url.trim(),
+                social_id: res.data?.data?.social_id || SocialId,
+              };
+              return updatedSocials;
+            } else {
+              return [
+                ...prevSocials,
+                {
+                  key: social.name,
+                  value: url.trim(),
+                  social_id: res.data?.data?.social_id,
+                },
+              ];
+            }
+          });
+
+          setIsDialogOpen(false);
+          toast.success(
+            `Successfully ${SocialId ? "updated" : "added"} ${social.name} URL`
+          );
+          router.refresh();
+        } else {
+          toast.error(res?.error?.message || "Failed to save URL");
+        }
+      } catch (error) {
+        toast.error("Failed to save URL");
+      }
+    });
+  };
+
+  const handleRemove = async () => {
+    if (!SocialId) return;
+
+    startTransition(async () => {
+      try {
+        const res = (await deleteSocial(SocialId)) as ResponseType;
+        if (res && res.success) {
+          setSocialVals((prevSocials) =>
+            prevSocials.filter((s) => s.key !== social.name)
+          );
+          setUrl("");
+          setIsDialogOpen(false);
+          toast.success(`Successfully removed ${social.name} URL`);
+          router.refresh();
+        } else {
+          toast.error(res?.error?.message || "Failed to remove URL");
+        }
+      } catch (error) {
+        toast.error("Failed to remove URL");
+      }
+    });
   };
 
   const SocialIcon = () => (
     <div
       className={`size-[52px] rounded-full flex items-center justify-center transition-all duration-300 ${
-        socialUrl
-          ? " bg-white hover:border-2 hover:border-green-500"
-          : "bg-transparent border-2 border-black/20 dark:border-white/20 hover:border-red-600/60"
+        UrlValue
+          ? "bg-gray-300 hover:bg-gray-400"
+          : "bg-gray-200 hover:bg-gray-300"
       }`}
     >
       {React.cloneElement(social.icon, {
-        className: socialUrl ? "grayscale-0" : "grayscale",
+        className: UrlValue ? "" : "grayscale",
       })}
     </div>
   );
 
-  if (!ifOwnProfile) {
-    if (!socialUrl) {
-      return <SocialIcon />;
-    }
+  if (!ifOwnProfile && !UrlValue) {
+    return <SocialIcon />;
+  }
+
+  if (!ifOwnProfile && UrlValue) {
     return (
-      <Link href={socialUrl} target="_blank" rel="noopener noreferrer">
+      <Link href={UrlValue} target="_blank" rel="noopener noreferrer">
         <SocialIcon />
       </Link>
     );
   }
 
   return (
-    <Dialog>
+    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
-        <button>
+        <button onClick={() => setUrl(UrlValue || "")}>
           <SocialIcon />
         </button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Add {social.name} Link (Demo)</DialogTitle>
+          <DialogTitle>
+            {UrlValue
+              ? `Update ${social.name} Link`
+              : `Add ${social.name} Link`}
+          </DialogTitle>
         </DialogHeader>
         <div className="flex flex-col gap-4">
           <Input
@@ -73,8 +194,19 @@ const SocialMediaDialog = ({
             value={url}
             onChange={(e) => setUrl(e.target.value)}
           />
-          <div className="flex justify-end">
-            <Button onClick={handleSave}>Save</Button>
+          <div className="flex justify-end gap-2">
+            {UrlValue && (
+              <Button
+                variant="destructive"
+                onClick={handleRemove}
+                disabled={ispending}
+              >
+                Remove
+              </Button>
+            )}
+            <SpinningButton onClick={handleSave} isLoading={ispending}>
+              {UrlValue ? "Update" : "Save"}
+            </SpinningButton>
           </div>
         </div>
       </DialogContent>

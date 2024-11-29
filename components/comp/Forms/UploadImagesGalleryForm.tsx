@@ -1,8 +1,9 @@
 "use client";
 
-import { updateImagesGallery } from "@/actions/update-images-gallery";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import { toast } from "sonner";
 import { FileUploaderMinimal } from "@uploadcare/react-uploader";
 import "@uploadcare/react-uploader/core.css";
@@ -19,107 +20,147 @@ import { Button } from "@/components/ui/button";
 import { LabelInputContainer } from "@/components/ui/animated-input/label-input-container";
 import { Label } from "@/components/ui/animated-input/label";
 import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { updateImagesGallery } from "@/actions/image-post";
+
+// Zod schema for form validation
+const imageSchema = z.object({
+  image_url: z.string().url({ message: "Invalid image URL" }),
+  caption: z.string().optional(),
+  description: z.string().optional(),
+});
+
+const formSchema = z.object({
+  image: imageSchema,
+});
 
 interface UploadImagesGalleryFormProps {
   setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
   gg_id: string;
-  currentGalleryImages: string[];
+  currentGalleryImages?: imagePostType[];
 }
+
+export type imagePostType = {
+  image_url: string;
+  caption?: string | null;
+  description?: string | null;
+};
 
 export default function UploadImagesGalleryForm({
   setOpen,
   gg_id,
-  currentGalleryImages,
+  currentGalleryImages = [],
 }: UploadImagesGalleryFormProps) {
   const router = useRouter();
   const [isUploading, setIsUploading] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [processedFiles, setProcessedFiles] = useState(new Set());
 
-  const form = useForm({
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
-      image_urls: currentGalleryImages || [],
+      image: {
+        image_url: "",
+        caption: "",
+        description: "",
+      },
     },
   });
 
   const handleImageUpload = (info: { allEntries: any[] }) => {
-    setIsProcessing(true); // Start processing when files are selected
+    setIsProcessing(true);
 
-    // Check if any files are still uploading
     const hasUploadingFiles = info.allEntries.some(
       (file) => file.status === "uploading"
     );
     setIsUploading(hasUploadingFiles);
 
-    const successfulFiles = info.allEntries.filter(
-      (file) => file.status === "success" && !processedFiles.has(file.uuid)
+    const successfulFile = info.allEntries.find(
+      (file) => file.status === "success"
     );
 
-    if (successfulFiles.length > 0) {
-      successfulFiles.forEach((file) => {
-        setProcessedFiles((prev) => new Set([...prev, file.uuid]));
-      });
-
-      const newImageUrls = successfulFiles.map((file) => file.cdnUrl);
-      const currentUrls = form.getValues("image_urls");
-      const uniqueUrls = Array.from(new Set([...currentUrls, ...newImageUrls]));
-      form.setValue("image_urls", uniqueUrls);
+    if (successfulFile) {
+      form.setValue("image.image_url", successfulFile.cdnUrl);
     }
 
-    // Only set processing to false if all files are done uploading
     if (!hasUploadingFiles) {
       setIsProcessing(false);
       setIsUploading(false);
     }
   };
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
     if (isUploading || isProcessing) return;
 
     try {
       const formData = {
-        gg_id,
-        image_urls: data.image_urls,
+        gg_id: gg_id,
+        image_urls: [data.image.image_url],
+        imageposts: [data.image],
       };
 
       const result = await updateImagesGallery(formData);
 
       if (result.success) {
-        toast.success("Images uploaded successfully");
+        toast.success("Image uploaded successfully");
         router.refresh();
-        setOpen && setOpen(false);
+        setOpen?.(false);
         form.reset();
-        setProcessedFiles(new Set());
       } else {
         toast.error(result.error.message);
       }
     } catch (error) {
-      console.error("Error uploading images:", error);
-      toast.error("An error occurred while uploading images.");
+      console.error("Error uploading image:", error);
+      toast.error("An error occurred while uploading the image.");
     }
   };
-
-  // Check if there are any images selected/uploaded
-  const hasImages = form.getValues("image_urls").length > 0;
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
-          name="image_urls"
+          name="image.image_url"
           render={({ field }) => (
             <FormItem>
               <LabelInputContainer>
-                <Label>Gallery Images</Label>
+                <Label>Gallery Image</Label>
                 <FileUploaderMinimal
                   onChange={handleImageUpload}
                   pubkey={process.env.NEXT_PUBLIC_UPLOADCARE_PUBLIC_KEY}
                   imgOnly
+                  multiple={false}
                   className="text-sm font-medium text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
-                  multiple={true}
                 />
               </LabelInputContainer>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="image.caption"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Caption</FormLabel>
+              <FormControl>
+                <Input {...field} placeholder="Enter image caption" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="image.description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Textarea {...field} placeholder="Enter image description" />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
@@ -129,7 +170,7 @@ export default function UploadImagesGalleryForm({
           <Button
             type="button"
             variant="outline"
-            onClick={() => setOpen && setOpen(false)}
+            onClick={() => setOpen?.(false)}
           >
             Cancel
           </Button>
@@ -139,14 +180,14 @@ export default function UploadImagesGalleryForm({
               isUploading ||
               isProcessing ||
               form.formState.isSubmitting ||
-              !hasImages
+              !form.getValues("image.image_url")
             }
           >
             {isUploading || isProcessing
               ? "Processing..."
               : form.formState.isSubmitting
               ? "Submitting..."
-              : "Upload Images"}
+              : "Upload Image"}
           </Button>
         </div>
       </form>

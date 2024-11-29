@@ -34,7 +34,6 @@ const DragCloseDrawer = ({ open, setOpen, children }: Props) => {
     });
 
     setOpen(false);
-    history.back();
   };
 
   return (
@@ -45,7 +44,7 @@ const DragCloseDrawer = ({ open, setOpen, children }: Props) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           onClick={handleClose}
-          className="fixed inset-0 z-50 dark:bg-black/10 bg-white/10 backdrop-blur-md"
+          className="fixed inset-0 z-50 flex justify-center dark:bg-black/10 bg-white/10 backdrop-blur-md"
         >
           <motion.div
             id="drawer"
@@ -56,7 +55,7 @@ const DragCloseDrawer = ({ open, setOpen, children }: Props) => {
             transition={{
               ease: "easeInOut",
             }}
-            className="absolute bottom-0 h-[75vh] w-full overflow-hidden rounded-t-3xl dark:bg-black bg-white"
+            className="absolute bottom-0 h-[85vh] w-[85%] overflow-hidden rounded-t-3xl dark:bg-black bg-white"
             style={{ y }}
             drag="y"
             dragControls={controls}
@@ -80,9 +79,13 @@ const DragCloseDrawer = ({ open, setOpen, children }: Props) => {
                 onPointerDown={(e) => {
                   controls.start(e);
                 }}
-                className="h-2 w-14 cursor-grab touch-none rounded-full bg-neutral-700 active:cursor-grabbing"
+                className="h-2 w-20 cursor-grab touch-none rounded-full bg-neutral-700 active:cursor-grabbing"
               ></button>
             </div>
+
+            <button className="absolute top-3 right-3 z-20">
+              <div className="size-4 text-red-500 bg-red-600 rounded-full"></div>
+            </button>
             <div className="relative z-0 h-full overflow-y-scroll p-4 pt-12">
               {children}
             </div>

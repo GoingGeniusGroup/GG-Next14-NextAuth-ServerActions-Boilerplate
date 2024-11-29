@@ -11,7 +11,8 @@ import {
 import { IconEdit, IconPlus } from "@tabler/icons-react";
 import { Button as MovingBorderButton } from "@/components/ui/border/moving-border";
 import ExperienceForm from "../../Forms/AddExperienceForm";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button/button";
+import CustomToolTip from "../../CustomComponents/CustomToolTip";
 
 interface ExperienceDialogProps {
   gg_id: string;
@@ -37,22 +38,30 @@ const ExperienceDialog: React.FC<ExperienceDialogProps> = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        {!experience_id ? (
-          <MovingBorderButton
-            borderRadius="1.75rem"
-            className="bg-white size-10 dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800"
-          >
-            <IconPlus size={20} />
-          </MovingBorderButton>
-        ) : (
-          <Button
-            variant="ghost"
-            size="mini"
-            className="hover:bg-white/10 hover:text-sky-500"
-          >
-            <IconEdit className="h-4 w-4" />
-          </Button>
-        )}
+        <div className="group">
+          {!experience_id ? (
+            <MovingBorderButton
+              borderRadius="1.75rem"
+              className="bg-white size-10 dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800"
+            >
+              <IconPlus size={20} />
+            </MovingBorderButton>
+          ) : (
+            <Button
+              variant="ghost"
+              size="mini"
+              className="hover:bg-white/10 hover:text-sky-500"
+            >
+              <IconEdit className="h-4 w-4" />
+            </Button>
+          )}
+          <CustomToolTip
+            content="Add Projects"
+            top="-30"
+            left="-35"
+            translateY="2"
+          />
+        </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md h-[80%] overflow-auto">
         <DialogHeader>

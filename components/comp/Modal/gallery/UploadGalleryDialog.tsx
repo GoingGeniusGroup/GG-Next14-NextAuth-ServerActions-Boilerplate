@@ -11,12 +11,14 @@ import {
 
 import { Button as MovingBorderButton } from "@/components/ui/border/moving-border";
 
-import UploadImagesGalleryForm from "../../Forms/UploadImagesGalleryForm";
+import UploadImagesGalleryForm, {
+  imagePostType,
+} from "../../Forms/UploadImagesGalleryForm";
 import { IconPhotoAi } from "@tabler/icons-react";
 
 interface UploadGalleryDialogProps {
   gg_id: string;
-  currentGalleryImages: string[];
+  currentGalleryImages: imagePostType[];
 }
 
 const UploadGalleryDialog: React.FC<UploadGalleryDialogProps> = ({

@@ -1,8 +1,10 @@
-import { getCurrentUser } from "@/actions/userAndGuild";
-import { LayoutGrid } from "@/components/ui/grids/layout-grid";
-import { getUserByUsername } from "@/services/user";
-import UploadGalleryDialog from "../Modal/gallery/UploadGalleryDialog";
 import GalleryGridSkeleton from "./GalleryGridSkeleton";
+import UploadGalleryDialog from "../Modal/gallery/UploadGalleryDialog";
+import { getCurrentUser } from "@/actions/userAndGuild";
+import { getImageUrls } from "@/actions/image-post";
+import { getUserByUsername } from "@/services/user";
+import { imagePostType } from "../Forms/UploadImagesGalleryForm";
+import { GalleryGrid } from "@/components/ui/grids/gallery-grid";
 
 export default async function CustomGalleryComponent({
   username,
@@ -10,34 +12,53 @@ export default async function CustomGalleryComponent({
   username: string;
 }) {
   const currentUser = await getCurrentUser();
+  const imageposts = await getImageUrls();
   const LoggedUserProfile = currentUser?.username === username;
   const profileOwner = await getUserByUsername(username);
-
   const images = LoggedUserProfile
     ? currentUser?.image_urls
     : profileOwner?.image_urls;
 
+  // Convert incoming data to imagePostType
+  const convertedImagePosts: imagePostType[] =
+    imageposts?.map(
+      (img_post: {
+        description: string | null;
+        image_url: string;
+        caption: string;
+      }) => ({
+        image_url: img_post.image_url,
+        caption: img_post.caption,
+        description: img_post.description,
+      })
+    ) || [];
+
   const cards =
-    images?.map((url, index) => ({
-      id: index + 1,
-      content: <DynamicSkeleton index={index} />,
+    convertedImagePosts.map((img_post, index) => ({
+      id: index,
+      content: (
+        <DynamicSkeleton
+          caption={img_post.caption || ""}
+          des={img_post.description || ""}
+        />
+      ),
       className: index % 2 === 0 ? "md:col-span-2" : "col-span-1",
-      thumbnail: url,
+      thumbnail: img_post.image_url,
     })) || [];
 
   return (
-    <div className="relative h-screen w-full px-2">
-      {LoggedUserProfile && currentUser && (
+    <div className="relative h-full overflow-auto w-full px-2">
+      {LoggedUserProfile && currentUser && imageposts && (
         <div className="absolute top-2 right-2 z-50">
           <UploadGalleryDialog
             gg_id={currentUser.gg_id}
-            currentGalleryImages={currentUser.image_urls}
+            currentGalleryImages={convertedImagePosts}
           />
         </div>
       )}
       {images ? (
         images.length > 0 ? (
-          <LayoutGrid cards={cards} />
+          <GalleryGrid cards={cards} />
         ) : (
           <>
             <div className="flex justify-center font-bold w-full text-yellow-500">
@@ -58,28 +79,18 @@ export default async function CustomGalleryComponent({
   );
 }
 
-const DynamicSkeleton = ({ index }: { index: number }) => {
-  const titles = [
-    "House in the woods",
-    "House above the clouds",
-    "Greens all over",
-    "Rivers are serene",
-  ];
-
-  const descriptions = [
-    "A serene and tranquil retreat, this house in the woods offers a peaceful escape from city life.",
-    "Perched high above the world, this house offers breathtaking views and a unique living experience.",
-    "A house surrounded by greenery and nature's beauty, perfect for relaxing and unwinding.",
-    "A house by the river that offers peace and tranquility.",
-  ];
-
+const DynamicSkeleton = ({
+  caption,
+  des,
+}: {
+  caption: string;
+  des: string;
+}) => {
   return (
     <div>
-      <p className="font-bold md:text-4xl text-xl text-white">
-        {titles[index % titles.length]}
-      </p>
+      <p className="font-bold md:text-4xl text-xl text-white">{caption}</p>
       <p className="font-normal text-base my-4 max-w-lg text-neutral-200">
-        {descriptions[index % descriptions.length]}
+        {des}
       </p>
     </div>
   );

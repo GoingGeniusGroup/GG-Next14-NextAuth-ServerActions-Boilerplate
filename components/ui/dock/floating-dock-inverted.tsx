@@ -137,8 +137,8 @@ function IconContainer({
         className={cn(
           "aspect-square rounded-xl flex items-center justify-center relative",
           isActive
-            ? "border-2 border-blue-500 dark:border-blue-700" // Apply highlight style when active
-            : "bg-gray-200 dark:bg-black" // Default background
+            ? "border-2 border-blue-500 dark:border-blue-700 text-white" // Apply highlight style when active
+            : "bg-gray-200 dark:bg-black " // Default background
         )}
       >
         <motion.div
