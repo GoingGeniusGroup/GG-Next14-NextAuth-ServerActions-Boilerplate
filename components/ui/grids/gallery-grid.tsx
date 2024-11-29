@@ -53,13 +53,14 @@ export const GalleryGrid = ({ cards }: { cards: Card[] }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90"
-            onClick={() => setSelectedImage(null)}
+            onClick={() => setSelectedImage(null)} // Close the modal on outer click
           >
             <motion.div
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.8 }}
               className="relative max-w-4xl max-h-[90vh] w-full h-full"
+              onClick={(e) => e.stopPropagation()} // Prevent click events from propagating to the parent
             >
               <Image
                 src={selectedImage.thumbnail}
@@ -69,10 +70,10 @@ export const GalleryGrid = ({ cards }: { cards: Card[] }) => {
                 unoptimized
               />
               <button
-                className="absolute top-4 right-4 text-white hover:text-gray-300"
+                className="absolute top-8 right-0 text-white hover:text-gray-300"
                 onClick={() => setSelectedImage(null)}
               >
-                <XIcon size={24} />
+                <div className="size-4 bg-red-600 rounded-full"></div>
               </button>
               <div className="absolute bottom-4 left-4 right-4 text-white bg-black bg-opacity-50 p-4 rounded">
                 {typeof selectedImage.content === "string" ? (
