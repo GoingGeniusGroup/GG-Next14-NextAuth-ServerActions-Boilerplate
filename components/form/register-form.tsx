@@ -10,7 +10,7 @@ import { FormInput } from "@/components/comp/auth/form-input";
 import { Button } from "@/components/ui/button/button";
 import { useTransition } from "react";
 import { register } from "@/actions/register";
-import { login } from "@/actions/login"; // Import the login action
+import { login } from "@/actions/login";
 import { toast } from "sonner";
 
 export const RegisterForm = ({ isMobile }: { isMobile: boolean }) => {
@@ -21,14 +21,34 @@ export const RegisterForm = ({ isMobile }: { isMobile: boolean }) => {
       username: "",
       email: "",
       password: "",
-      phone_number: "", // Adding default value for optional phone number
+      phone_number: "",
     },
-    mode: "onChange", // Enable real-time validation
+    mode: "onChange",
   });
+
+  // Custom handler for username to replace spaces with hyphens
+  const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value.replace(/\s+/g, "-");
+    form.setValue("username", value, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
+  };
+
+  // Custom handler for phone number to ensure backspace works
+  const handlePhoneNumberChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const input = event.target.value;
+    const cleaned = input.replace(/\D/g, "");
+    form.setValue("phone_number", cleaned, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
+  };
 
   const handleSubmit = form.handleSubmit((values) => {
     startTransition(() => {
-      // Normalize the phone number before registration
       const normalizedPhoneNumber = normalizePhoneNumber(values.phone_number);
       const registrationData = {
         ...values,
@@ -37,9 +57,8 @@ export const RegisterForm = ({ isMobile }: { isMobile: boolean }) => {
 
       register(registrationData).then((data) => {
         if (data.success) {
-          // Use the normalized phone number for login
           login({
-            login: normalizedPhoneNumber, // Use normalized phone number
+            login: normalizedPhoneNumber,
             password: values.password,
           })
             .then((loginData) => {
@@ -85,16 +104,18 @@ export const RegisterForm = ({ isMobile }: { isMobile: boolean }) => {
               name="username"
               label="Username"
               type="text"
-              placeholder="e.g. John Doe"
+              placeholder="e.g. John-Doe"
               isPending={isPending}
+              onChange={handleUsernameChange}
             />
             <FormInput
               control={form.control}
               name="phone_number"
               label="Phone Number"
               type="tel"
-              placeholder="e.g. +1234567890"
+              placeholder="e.g. 1234567890"
               isPending={isPending}
+              onChange={handlePhoneNumberChange}
             />
             <FormInput
               control={form.control}
