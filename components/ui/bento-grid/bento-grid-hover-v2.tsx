@@ -63,7 +63,7 @@ export const BentoGridHoverItemV2 = ({
       <AnimatePresence>
         {isHovered && (
           <motion.span
-            className="absolute inset-0 h-full w-full bg-zinc-400 dark:bg-zinc-600/[0.8] block  rounded-xl"
+            className="absolute inset-0 h-full w-full bg-zinc-400 dark:bg-zinc-600/[0.8] block  rounded-lg"
             layoutId="hoverBackground"
             initial={{ opacity: 0 }}
             animate={{
@@ -79,18 +79,18 @@ export const BentoGridHoverItemV2 = ({
       </AnimatePresence>
 
       <div
-        className="rounded-2xl h-full w-full overflow-hidden"
+        className="rounded-lg h-full w-full overflow-hidden"
         onMouseEnter={() => setSubCardIsHovered(true)}
         onMouseLeave={() => setSubCardIsHovered(false)}
       >
-        <div className="relative z-50 h-full rounded-xl group/bento hover:shadow-xl transition duration-200 shadow-input dark:shadow-none dark:p-4 p-2 dark:bg-black dark:border-white/[0.2] bg-gray-300 border border-transparent flex flex-col">
+        <div className="relative z-50 h-full rounded-lg group/bento hover:shadow-xl transition duration-200 shadow-input dark:shadow-none dark:p-4 p-2 dark:bg-black dark:border-white/[0.2] bg-gray-300 border border-transparent flex flex-col">
           <div className="relative w-full aspect-[4/3] mb-4">
             <Image
               src={header ?? ""}
               alt={typeof title === "string" ? title : ""}
               layout="fill"
               objectFit="cover"
-              className="rounded-xl"
+              className="rounded-lg"
               unoptimized
             />
           </div>
