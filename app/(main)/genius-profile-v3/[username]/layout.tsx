@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
@@ -8,10 +8,9 @@ import { PublicAvatarProvider } from "@/components/comp/AvatarManager/provider/A
 import { Button } from "@/components/ui/button";
 
 import CustomToolTip from "@/components/comp/CustomComponents/CustomToolTip";
+
 interface GeniusProfileLayoutProps {
-  userinfo: ReactNode;
   children: ReactNode;
-  otherroutes: ReactNode;
   params: {
     username: string;
   };
@@ -24,22 +23,14 @@ export default function GeniusProfileLayout({
   const { username } = params;
   const pathname = usePathname();
 
-  const [open, setOpen] = useState(false);
-  const [hasAutoOpened, setHasAutoOpened] = useState(false);
-
-  const isGalleryOrProjects =
-    pathname.includes("/gallery") || pathname.includes("/projects");
-
-  useEffect(() => {
-    if (isGalleryOrProjects && !hasAutoOpened) {
-      const timer = setTimeout(() => {
-        setOpen(true);
-        setHasAutoOpened(true);
-      }, 200);
-
-      return () => clearTimeout(timer);
-    }
-  }, [isGalleryOrProjects, hasAutoOpened]);
+  // Determine the active tab
+  const isHomeActive = pathname === `/genius-profile-v3/${username}`;
+  const isGalleryActive = pathname.includes(
+    `/genius-profile-v3/${username}/gallery`
+  );
+  const isProjectsActive = pathname.includes(
+    `/genius-profile-v3/${username}/projects`
+  );
 
   return (
     <PublicAvatarProvider username={username}>
@@ -56,23 +47,41 @@ export default function GeniusProfileLayout({
                 className={`absolute -bottom-2 z-40 left-1/2 -translate-x-1/2 flex space-x-4 mb-4 transition-all duration-300 ease-in-out`}
               >
                 <ul className="relative mx-auto flex w-fit gap-1 rounded-full bg-black/20 dark:bg-white/20 p-1">
+                  {/* Home Link */}
                   <Link
-                    href={`/genius-profile/${username}/gallery`}
+                    href={`/genius-profile-v3/${username}`}
                     className="group"
                   >
                     <Button
-                      className={`rounded-full size-[32px] flex justify-center items-center bg-gray-200 dark:bg-white text-black hover:bg-black hover:text-white transition-color duration-300 ease-in-out `}
-                      onClick={() => setOpen(true)}
+                      className={`rounded-full size-[32px] flex justify-center items-center transition-color duration-300 ease-in-out ${
+                        isHomeActive
+                          ? "bg-black text-sky-500  hover:bg-black/80 hover:text-white"
+                          : "dark:bg-white bg-gray-200 text-black  hover:bg-black hover:text-white"
+                      }`}
                     >
-                      <span
-                        className={`${
-                          isGalleryOrProjects && pathname.includes("gallery")
-                            ? "animate-pulse text-sky-500"
-                            : ""
-                        }`}
-                      >
-                        G
-                      </span>
+                      H
+                    </Button>
+                    <CustomToolTip
+                      content="Home"
+                      top="-30"
+                      left="-16"
+                      translateY="2"
+                    />
+                  </Link>
+
+                  {/* Gallery Link */}
+                  <Link
+                    href={`/genius-profile-v3/${username}/gallery`}
+                    className="group"
+                  >
+                    <Button
+                      className={`rounded-full size-[32px] flex justify-center items-center transition-color duration-300 ease-in-out ${
+                        isGalleryActive
+                          ? "bg-black text-sky-500  hover:bg-black/80 hover:text-white"
+                          : "dark:bg-white bg-gray-200 text-black  hover:bg-black hover:text-white"
+                      }`}
+                    >
+                      G
                     </Button>
                     <CustomToolTip
                       content="Gallery"
@@ -81,23 +90,20 @@ export default function GeniusProfileLayout({
                       translateY="2"
                     />
                   </Link>
+
+                  {/* Projects Link */}
                   <Link
-                    href={`/genius-profile/${username}/projects`}
+                    href={`/genius-profile-v3/${username}/projects`}
                     className="group"
                   >
                     <Button
-                      className={`rounded-full size-[32px] flex justify-center items-center bg-gray-200 dark:bg-white text-black hover:bg-black hover:text-white transition-color duration-300 ease-in-out`}
-                      onClick={() => setOpen(true)}
+                      className={`rounded-full size-[32px] flex justify-center items-center transition-color duration-300 ease-in-out ${
+                        isProjectsActive
+                          ? "bg-black text-sky-500  hover:bg-black/80 hover:text-white"
+                          : "dark:bg-white bg-gray-200 text-black  hover:bg-black hover:text-white"
+                      }`}
                     >
-                      <span
-                        className={`${
-                          isGalleryOrProjects && pathname.includes("projects")
-                            ? "animate-pulse text-sky-500"
-                            : ""
-                        }`}
-                      >
-                        P
-                      </span>
+                      P
                     </Button>
                     <CustomToolTip
                       content="Projects"
