@@ -20,9 +20,9 @@ export function UserProfile({
       href={`/genius-profile/${username}`}
       className="block transition-transform hover:scale-105"
     >
-      <Card className="group w-[160px] h-[160px] bg-white dark:bg-black rounded-lg overflow-hidden">
-        <CardContent className="relative overflow-hidden  size-full flex items-center p-2">
-          <div className="size-full">
+      <Card className="group w-[160px] h-[160px] bg-white dark:bg-black rounded-lg overflow-hidden relative">
+        <CardContent className="relative overflow-hidden w-full h-full flex items-center p-0">
+          <div className="w-full h-full relative">
             <Image
               src={avatarUrl}
               alt={name}
@@ -33,6 +33,7 @@ export function UserProfile({
               }}
             />
           </div>
+          <div className="absolute inset-0 bg-white/5 group-hover:bg-white/60 dark:bg-black/5 dark:group-hover:bg-black/70 transition-all duration-300"></div>
           <h3 className="absolute inset-0 opacity-50 group-hover:opacity-100 flex justify-center items-center text-xl font-bold uppercase text-black dark:text-white transition-all duration-300">
             {username}
           </h3>
