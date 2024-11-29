@@ -5,6 +5,11 @@ import { getUserByUsername } from "@/services/user";
 import AvatarManagerClientProfile from "../AvatarManager/avatar-manager-client-profile";
 import PublicAvatarManagerClientProfile from "../AvatarManager/public-avatar-manager-client-profile";
 
+async function getUserWithUsername(username: string) {
+  const user = await getUserByUsername(username);
+  return user;
+}
+
 export default async function GeniusUserHome({
   username,
 }: {
@@ -15,6 +20,8 @@ export default async function GeniusUserHome({
   const LoggedUserProfile = currentUser?.username === username;
 
   const profileOwner = await getUserByUsername(username);
+
+  const user = await getUserWithUsername(username);
 
   if (!profileOwner || !currentUser) {
     return <div>User with this username not found</div>;
@@ -41,6 +48,7 @@ export default async function GeniusUserHome({
               fov={40}
               cameraInitialDistance={5}
               cameraTarget={0}
+              user={user}
             />
           )}
         </div>

@@ -1,4 +1,5 @@
 import GeniusUserHome from "@/components/comp/GeniusUserProfile/GeniusUserHome";
+import { getUserByUsername } from "@/services/user";
 
 interface GeniusUserInfoProps {
   params: {

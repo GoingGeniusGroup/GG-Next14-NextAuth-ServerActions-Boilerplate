@@ -94,16 +94,16 @@ export function PublicAvatarProvider({
     const fetchAvatars = async () => {
       const profileOwner = await getUserByUsername(username);
       setCurrentProfileOwner(profileOwner);
-      if (profileOwner) {
-        const avatarsResponse = await getUserAvatars(profileOwner.gg_id);
-        const avatars: AvatarType[] =
-          avatarsResponse.success && Array.isArray(avatarsResponse.data)
-            ? avatarsResponse.data
-            : [];
-        setCurrentUserAvatar(avatars);
-      }
+      // if (profileOwner) {
+      //   console.log("if statement working------->");
+      //   const avatarsResponse = await getUserAvatars(profileOwner.gg_id);
+      //   const avatars: AvatarType[] =
+      //     avatarsResponse.success && Array.isArray(avatarsResponse.data)
+      //       ? avatarsResponse.data
+      //       : [];
+      //   setCurrentUserAvatar(avatars);
+      // }
     };
-
     fetchAvatars();
   }, [username]);
 

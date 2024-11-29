@@ -32,8 +32,10 @@ export const getUserByUsername = async (username: string) => {
   try {
     const user = await db.user.findUnique({
       where: { username },
+      select: {
+        avatar: true,
+      },
     });
-
     return user;
   } catch (error) {
     console.error("Error in getUserByUsername:", error);
