@@ -56,9 +56,7 @@ export const updateImagesGallery = async (
   }
 
   const { gg_id, image_urls,imageposts } = validatedFields.data;
- console.log('====================================');
- console.log(imageposts,'imgposts');
- console.log('====================================');
+
   try {
   
 
@@ -73,9 +71,7 @@ export const updateImagesGallery = async (
         skipDuplicates: true,
         
     })
-    console.log('====================================');
-    console.log("after creatin",res);
-    console.log('====================================');
+
     await updateUserById(gg_id, {
         image_urls,
       });

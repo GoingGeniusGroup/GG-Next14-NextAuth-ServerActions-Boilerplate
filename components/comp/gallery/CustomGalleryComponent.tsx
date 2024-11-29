@@ -15,9 +15,6 @@ export default async function CustomGalleryComponent({
   const imageposts = await getImageUrls()
   const LoggedUserProfile = currentUser?.username === username;
   const profileOwner = await getUserByUsername(username);
-  console.log('====================================');
-  console.log(imageposts);
-  console.log('====================================');
   const images = LoggedUserProfile
     ? currentUser?.image_urls
     : profileOwner?.image_urls;

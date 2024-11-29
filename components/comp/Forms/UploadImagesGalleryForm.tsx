@@ -69,9 +69,6 @@ export default function UploadImagesGalleryForm({
   });
   
 
-  console.log('====================================');
-  console.log(form.watch('images'),currentGalleryImages);
-  console.log('====================================');
   const handleImageUpload = (info: { allEntries: any[] }) => {
     setIsProcessing(true);
 
@@ -124,9 +121,7 @@ export default function UploadImagesGalleryForm({
         image_urls: final_urls.map(img => img.image_url),
         imageposts: data.images
       };
-    console.log('====================================');
-    console.log(formData,data,final_urls,'from onsubmi');
-    console.log('====================================');
+   
       const result = await updateImagesGallery(formData);
 
       if (result.success) {

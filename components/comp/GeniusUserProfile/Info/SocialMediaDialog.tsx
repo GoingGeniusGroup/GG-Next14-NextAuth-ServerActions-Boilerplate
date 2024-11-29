@@ -19,16 +19,12 @@ import { SpinningButton } from "@/components/ui/spinning-button";
 
 const SocialMediaDialog = ({
   social,
-  userLinks,
-
   ifOwnProfile,
 }: {
-  social: { name: socialType; icon: JSX.Element };
-  userLinks: Record<string, string>;
+  social: { name: socialType; icon: JSX.Element; link:string };
   ifOwnProfile: boolean;
 }) => {
-  const [url, setUrl] = useState(userLinks[social.name.toLowerCase()] || "");
-  const socialUrl = userLinks[social.name.toLowerCase()];
+  const [url, setUrl] = useState<string>("");
   const [socialvals, setSocialVals] = useState<
     { key: socialType; value: string }[]
   >([]);
@@ -39,11 +35,11 @@ const SocialMediaDialog = ({
     const fetchSocials = async () => {
       try {
         const data = await getSocialsbyUserId();
-        const formattedSocials = data.map((socialD: social) => ({
+        const formattedSocials = data?.map((socialD: social) => ({
           key: socialD.key,
           value: socialD.value,
         }));
-        setSocialVals(formattedSocials);
+        setSocialVals(formattedSocials!);
       } catch (error) {
         console.error("Error fetching socials:", error);
       }

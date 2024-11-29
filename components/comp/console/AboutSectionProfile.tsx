@@ -26,9 +26,15 @@ import { Button as MovingBorderButton } from "@/components/ui/border/moving-bord
 import { socialType,social} from "@prisma/client"
 import { getSocialsbyUserId } from "@/actions/social";
 
-const socials = [
+type socialvalueType ={
+  name: socialType;
+  icon: JSX.Element;
+  link: string;
+}
+
+const socials:socialvalueType[] = [
   {
-    name: socialType.GOOGLE,
+    name: socialType.GOOGLE  ,
     icon: <FcGoogle size={38} />,
     link: "https://google.com",
   },
@@ -57,16 +63,8 @@ const socials = [
     icon: <IoLogoLinkedin color="#0a66c2" size={38} />,
     link: "https://linkedin.com",
   },
-  {
-    name: "Twitter",
-    icon: <FaXTwitter color="black" size={38} />,
-    link: "https://twitter.com",
-  },
-  {
-    name: "Genius",
-    icon: <FaGgCircle size={38} color="#c500c7" />,
-    link: "https://genius.com",
-  },
+ 
+  
 ];
 
 export default function AboutSectionProfile({
@@ -76,17 +74,7 @@ export default function AboutSectionProfile({
   userInfo: any | null;
   ifOwnProfile: boolean;
 }) {
-  const [userLinks, setUserLinks] = useState<Record<string, string>>({});
 
-
-
-
-  const handleSaveLink = (socialName: string, url: string) => {
-    setUserLinks((prev) => ({
-      ...prev,
-      [socialName]: url,
-    }));
-  };
 
   return (
     <>
@@ -192,7 +180,6 @@ export default function AboutSectionProfile({
                 <Card>
                   <SocialMediaDialog
                     social={social}
-                    userLinks={userLinks}
                     ifOwnProfile={ifOwnProfile}
                   />
                 </Card>
