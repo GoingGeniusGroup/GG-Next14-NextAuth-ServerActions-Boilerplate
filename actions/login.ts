@@ -38,7 +38,11 @@ export const login = async (payload: z.infer<typeof loginSchema>) => {
     (await getUserByPhone(login)) ||
     (await getUserByUsername(login));
 
-  if (!existingUser || !existingUser.password) {
+  if (
+    !existingUser ||
+    !("password" in existingUser) ||
+    !existingUser.password
+  ) {
     return response({
       success: false,
       error: {

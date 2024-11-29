@@ -107,8 +107,11 @@ export const BentoGridHoverItemV2 = ({
           </div>
 
           {isSubCardHovered && (
-            <div className="absolute inset-0 bg-white dark:bg-black bg-opacity-90 dark:bg-opacity-90 rounded-xl p-4 flex flex-col justify-between transition-opacity duration-200 opacity-0 group-hover/bento:opacity-100">
-              <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 pb-2">
+            <div className="absolute inset-0 bg-white dark:bg-black bg-opacity-90 dark:bg-opacity-90 rounded-xl p-4 flex flex-col justify-between transition-opacity duration-200 opacity-0 group-hover/bento:opacity-100 overflow-hidden">
+              <div
+                className="flex-1 overflow-y-auto overflow-x-hidden
+               scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 pb-2"
+              >
                 <h3 className="font-sans font-bold text-lg text-gray-800 dark:text-gray-100 mb-3 sticky -top-1 bg-white/70 dark:bg-black/50 backdrop-blur-sm p-1 rounded">
                   {title}
                 </h3>

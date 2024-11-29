@@ -1,28 +1,42 @@
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Image from "next/image";
 
 interface UserProfileProps {
-  id: string;
+  username: string;
   name: string;
   role: string;
   avatarUrl: string;
 }
 
-export function UserProfile({ id, name, role, avatarUrl }: UserProfileProps) {
+export function UserProfile({
+  username,
+  name,
+  role,
+  avatarUrl,
+}: UserProfileProps) {
   return (
     <Link
-      href={`/profile/${id}`}
+      href={`/genius-profile/${username}`}
       className="block transition-transform hover:scale-105"
     >
-      <Card className="w-[160px] h-[130px] bg-white dark:bg-black rounded-lg overflow-hidden">
-        <CardContent className="flex flex-col items-center p-2">
-          <Avatar className="size-[70px] mb-2">
-            <AvatarImage src={avatarUrl} alt={name} />
-            <AvatarFallback>{name.charAt(0)}</AvatarFallback>
-          </Avatar>
-          <h3 className="text-sm font-semibold">{name}</h3>
-          <p className="text-xs text-muted-foreground">{role}</p>
+      <Card className="group w-[160px] h-[160px] bg-white dark:bg-black rounded-lg overflow-hidden relative">
+        <CardContent className="relative overflow-hidden w-full h-full flex items-center p-0">
+          <div className="w-full h-full relative">
+            <Image
+              src={avatarUrl}
+              alt={name}
+              fill
+              unoptimized
+              onError={(e) => {
+                e.currentTarget.style.display = "none"; // Hide broken image
+              }}
+            />
+          </div>
+          <div className="absolute inset-0 bg-white/5 group-hover:bg-white/60 dark:bg-black/5 dark:group-hover:bg-black/70 transition-all duration-300"></div>
+          <h3 className="absolute inset-0 opacity-50 group-hover:opacity-100 flex justify-center items-center text-xl font-bold uppercase text-black dark:text-white transition-all duration-300">
+            {username}
+          </h3>
         </CardContent>
       </Card>
     </Link>

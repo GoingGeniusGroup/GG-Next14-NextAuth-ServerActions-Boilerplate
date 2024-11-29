@@ -29,6 +29,11 @@ export default async function GeniusUserProject({
 
   return (
     <>
+      {experiences.length === 0 && (
+        <div className="text-center text-lg text-yellow-600 uppercase font-semibold">
+          No projects found
+        </div>
+      )}
       <GeniusUserProjectsV2
         userInfo={{
           gg_id: gg_id,

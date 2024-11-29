@@ -9,12 +9,14 @@ export default function PublicAvatarManagerClientProfile({
   fov,
   cameraInitialDistance,
   cameraTarget,
+  user,
 }: {
   fov: number;
   cameraInitialDistance: number;
   cameraTarget: number;
+  user: any;
 }) {
-  const { selectedPublicAvatar, currentPublicEmote } = usePublicAvatar();
+  const { currentPublicEmote } = usePublicAvatar();
 
   return (
     <>
@@ -22,7 +24,7 @@ export default function PublicAvatarManagerClientProfile({
         <Avatar
           key="avatar publicx"
           modelSrc={
-            selectedPublicAvatar ||
+            user.avatar[0].avatar_url ||
             "https://models.readyplayer.me/66fbd22e36a151e549ea8397.glb?morphTargets=ARKit,Eyes Extra&textureAtlas=none&lod=0"
           }
           shadows={false}

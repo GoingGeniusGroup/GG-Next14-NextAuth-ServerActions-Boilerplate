@@ -118,7 +118,6 @@ export const deleteAvatar = async (avatar_id: string) => {
 
 export const getUserAvatars = async (gg_id: string) => {
   const avatars = await getAvatarsByUserId(gg_id);
-
   if (!avatars) {
     return response({
       success: false,

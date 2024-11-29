@@ -14,9 +14,11 @@ import { UserProfilesCarousel } from "../GeniusUserProfile/ProfileCard/user-prof
 export default function HomePage({
   user,
   profilePic,
+  staticUsers,
 }: {
   user: any;
   profilePic: string;
+  staticUsers: any[];
 }) {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -54,16 +56,17 @@ export default function HomePage({
       setShowMobile((prev) => !prev);
     }
   };
+
   return (
     <div className="flex justify-center items-center">
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <div className="w-[800px]">
-          <h1 className="text-center text-2xl font-bold leading-10 text-black dark:text-white lg:text-6xl">
+          <h1 className="text-center text-2xl font-bold leading-10 text-white lg:text-6xl">
             One Genius ID for every
             <br />
             <p className="mt-4">Genius Tech</p>
           </h1>
-          <p className="mt-10 text-center text-sm text-black dark:text-white lg:text-2xl">
+          <p className="mt-10 text-center text-sm text-white lg:text-2xl">
             Keep all your Genius Services secured with 1 Genius ID <br />{" "}
             Developer Features Coming Soon
           </p>
@@ -78,8 +81,11 @@ export default function HomePage({
             </Button>
           </div>
         </div>
-        <div className="absolute bottom-2 right-2 w-[60%] h-[140px] rounded flex justify-center">
-          <UserProfilesCarousel />
+        <div className="absolute bottom-6 right-4 w-[350px] h-[170px] rounded flex flex-col justify-center">
+          <div className="flex justify-center font-semibold text-md text-white">
+            GENIUS PROFILES
+          </div>
+          <UserProfilesCarousel users={staticUsers} />
         </div>
       </div>
       <div className="absolute bottom-4 left-10 bg-gradient-to-b bg-white/70 to-gray-100/30 p-4 rounded-lg shadow-sm flex flex-col items-center max-w-xs w-full">

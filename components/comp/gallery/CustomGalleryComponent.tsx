@@ -1,4 +1,3 @@
-import GalleryGridSkeleton from "./GalleryGridSkeleton";
 import UploadGalleryDialog from "../Modal/gallery/UploadGalleryDialog";
 import { getCurrentUser } from "@/actions/userAndGuild";
 import { getImageUrls } from "@/actions/image-post";
@@ -49,35 +48,39 @@ export default async function CustomGalleryComponent({
     })) || [];
 
   return (
-    <div className="relative h-full overflow-auto w-full px-2">
-      {LoggedUserProfile && currentUser && convertedImagePosts && (
-        <div className="absolute -top-7 -right-3 z-40">
-          <UploadGalleryDialog
-            gg_id={currentUser.gg_id}
-            currentGalleryImages={convertedImagePosts}
-          />
-        </div>
-      )}
-      {imagePosts ? (
-        imagePosts.length > 0 ? (
-          <GalleryGrid cards={cards} />
-        ) : (
-          <>
-            <div className="flex justify-center font-bold w-full text-yellow-500">
-              GALLERY IS EMPTY
-            </div>
-            <GalleryGridSkeleton />
-          </>
-        )
-      ) : (
-        <>
-          <div className="flex justify-center font-bold w-full text-yellow-500">
-            GALLERY IS EMPTY
+    <>
+      <div className="relative h-full">
+        {LoggedUserProfile && currentUser && convertedImagePosts && (
+          <div className="absolute -top-7 -right-3 z-40">
+            <UploadGalleryDialog
+              gg_id={currentUser.gg_id}
+              currentGalleryImages={convertedImagePosts}
+            />
           </div>
-          <GalleryGridSkeleton />
-        </>
-      )}
-    </div>
+        )}
+        <div className="flex-1 size-full overflow-x-hidden overflow-y-auto">
+          {imagePosts ? (
+            imagePosts.length > 0 ? (
+              <>
+                <GalleryGrid cards={cards} />
+              </>
+            ) : (
+              <>
+                <div className="flex justify-center font-bold w-full text-yellow-500">
+                  GALLERY IS EMPTY
+                </div>
+              </>
+            )
+          ) : (
+            <>
+              <div className="flex justify-center font-bold w-full text-yellow-500">
+                GALLERY IS EMPTY
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </>
   );
 }
 

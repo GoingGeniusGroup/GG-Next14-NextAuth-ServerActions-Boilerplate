@@ -38,6 +38,7 @@ export default async function AvatarSection({ params }: AvatarSectionProps) {
             fov={35}
             cameraInitialDistance={5}
             cameraTarget={0}
+            user={profileOwner}
           />
         </div>
       </>
