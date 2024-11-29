@@ -89,14 +89,49 @@ model User {
   accounts              Account?
   Cart                  Cart[]
   Color                 Color[]
+  ImagePost             ImagePost[]
   Order                 Order[]
   twoFactorConfirmation TwoFactorConfirmation?
   UserPaymentMethod     UserPaymentMethod[]
   avatar                avatar[]
   cards                 cards[]
+  comment               comment[]
   coordinate            coordinate[]
   experience            experience[]
   skills                skills[]
+  social                social[]
+}
+
+model ImagePost {
+  img_id      String         @id @default(uuid()) @db.Uuid
+  image_url   String
+  caption     String
+  description String?
+  reactions   ReactionType[] @default([])
+  gg_id       String         @db.Uuid
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  users       User           @relation(fields: [gg_id], references: [gg_id], onDelete: Cascade, onUpdate: NoAction)
+  comments    comment[]
+}
+
+model comment {
+  cmt_id    String    @id @default(uuid()) @db.Uuid
+  text      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  gg_id     String    @db.Uuid
+  img_id    String    @db.Uuid
+  users     User      @relation(fields: [gg_id], references: [gg_id], onDelete: Cascade)
+  imagePost ImagePost @relation(fields: [img_id], references: [img_id], onDelete: Cascade)
+}
+
+model social {
+  social_id String     @id @default(uuid()) @db.Uuid
+  key       socialType
+  value     String
+  gg_id     String     @db.Uuid
+  users     User       @relation(fields: [gg_id], references: [gg_id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model avatar {
@@ -345,6 +380,23 @@ model Color {
   userId String    @db.Uuid
   status Boolean   @default(false)
   user   User      @relation(fields: [userId], references: [gg_id], onDelete: Cascade)
+}
+
+enum ReactionType {
+  GOODIDEA
+  THANKS
+  WOW
+  HAHA
+  LOVE
+}
+
+enum socialType {
+  FACEBOOK
+  INSTAGRAM
+  GITHUB
+  STEAM
+  LINKDN
+  GOOGLE
 }
 
 enum UserRole {
