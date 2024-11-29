@@ -1,2 +1,2 @@
-export { AvatarCreator } from './avatar-creator';
-export { AvatarCreatorRaw } from './avatar-creator-raw';
+export { AvatarCreator } from "./avatar-creator";
+export { AvatarCreatorRaw } from "./avatar-creator-raw";
