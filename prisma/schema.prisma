@@ -104,6 +104,7 @@ model User {
   experience            experience[]
   skills                skills[]
   social                social[]
+  visitprofile          visitprofile[]
 }
 
 model ImagePost {
@@ -142,6 +143,7 @@ model avatar {
   avatar_id  String  @id @default(uuid()) @db.Uuid
   gg_id      String  @db.Uuid
   avatar_url String? @db.VarChar(255)
+  isactive   Boolean @default(false)
   users      User    @relation(fields: [gg_id], references: [gg_id], onDelete: Cascade, onUpdate: NoAction)
 }
 
@@ -384,6 +386,17 @@ model Color {
   userId String    @db.Uuid
   status Boolean   @default(false)
   user   User      @relation(fields: [userId], references: [gg_id], onDelete: Cascade)
+}
+
+model visitprofile {
+  visit_id  String        @id @db.Uuid
+  gg_id     String        @db.Uuid
+  visit_by  String?
+  type      ReactionType?
+  count     Int
+  createdAt DateTime      @default(now())
+  updatedAt DateTime
+  User      User          @relation(fields: [gg_id], references: [gg_id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 enum ReactionType {
