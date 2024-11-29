@@ -29,14 +29,14 @@ export default async function GeniusUserHome({
 
   return (
     <>
-      <div className="flex w-full justify-between">
-        <div className="w-[33%] px-4">
+      <div className="relative flex w-full justify-between">
+        <div className="w-[33%] px-4 z-10">
           <AboutSectionProfile
             userInfo={LoggedUserProfile ? currentUser : profileOwner}
             ifOwnProfile={LoggedUserProfile}
           />
         </div>
-        <div className="relative w-[33%] h-[510px] flex justify-center flex-col z-20">
+        <div className="absolute inset-0 w-full h-[510px] flex justify-center flex-col z-0">
           {LoggedUserProfile ? (
             <AvatarManagerClientProfile
               fov={40}
@@ -52,7 +52,7 @@ export default async function GeniusUserHome({
             />
           )}
         </div>
-        <div className="w-[33%] px-4">
+        <div className="w-[33%] px-4 z-10">
           {/* Projects Grid */}
           <BottomSection
             userInfo={LoggedUserProfile ? currentUser : profileOwner}

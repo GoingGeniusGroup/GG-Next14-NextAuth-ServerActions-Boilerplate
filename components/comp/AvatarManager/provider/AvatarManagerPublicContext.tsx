@@ -43,34 +43,40 @@ const PublicAvatarContext = createContext<PublicAvatarContextType | undefined>(
 // Expression data
 const defaultExpressions: Expression[] = [
   {
-    label: "neutral",
-    icon: "/emojis/neutral.svg",
-    bg: "#FFFFFF",
-    animation: "/male-idle-3.fbx",
-  },
-  {
-    label: "sad",
-    icon: "/emojis/sad.svg",
-    bg: "#0C2E5C",
-    animation: "/M_Standing_Expressions_011.fbx",
-  },
-  {
-    label: "happy",
-    icon: "/emojis/happy.svg",
-    bg: "#007F13",
-    animation: "/M_Standing_Expressions_012.fbx",
-  },
-  {
-    label: "amazed",
-    icon: "/emojis/amazed.svg",
-    bg: "#F8BF43",
-    animation: "/M_Standing_Expressions_013.fbx",
-  },
-  {
     label: "angry",
-    icon: "/emojis/angry.svg",
-    bg: "#A20325",
-    animation: "/M_Standing_Expressions_016.fbx",
+    icon: "/emote/angry.svg",
+    bg: "#FCBB3F",
+    animation: "/emote/animations/bodyblock.fbx",
+  },
+  {
+    label: "servesyou",
+    icon: "/emote/servesyou.svg",
+    bg: "#DC143C",
+    animation: "/emote/animations/rumbadancing.fbx",
+  },
+  {
+    label: "twerk",
+    icon: "/emote/twerk.svg",
+    bg: "#AA25B6",
+    animation: "/emote/animations/dancingtwerk.fbx",
+  },
+  {
+    label: "hiphop",
+    icon: "/emote/hiphop.svg",
+    bg: "#129FE0",
+    animation: "/emote/animations/hiphop.fbx",
+  },
+  {
+    label: "thriller",
+    icon: "/emote/thriller.svg",
+    bg: "#14C620",
+    animation: "/emote/animations/thriller.fbx",
+  },
+  {
+    label: "breakdance",
+    icon: "/emote/breakdance.svg",
+    bg: "#ACACAC",
+    animation: "/emote/animations/breakdance.fbx",
   },
 ];
 
