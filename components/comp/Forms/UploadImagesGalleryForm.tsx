@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -25,7 +24,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { updateImagesGallery } from "@/actions/image-post";
 
-
 // Zod schema for form validation
 const imageSchema = z.object({
   image_url: z.string().url({ message: "Invalid image URL" }),
@@ -34,9 +32,10 @@ const imageSchema = z.object({
 });
 
 const formSchema = z.object({
-  images: z.array(imageSchema).min(1, { message: "At least one image is required" }),
+  images: z
+    .array(imageSchema)
+    .min(1, { message: "At least one image is required" }),
 });
-
 
 interface UploadImagesGalleryFormProps {
   setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -46,9 +45,10 @@ interface UploadImagesGalleryFormProps {
 
 export type imagePostType = {
   image_url: string;
-  caption?: string;
-  description?: string;
-}
+  caption?: string | null;
+  description?: string | null;
+};
+
 export default function UploadImagesGalleryForm({
   setOpen,
   gg_id,
@@ -59,15 +59,12 @@ export default function UploadImagesGalleryForm({
   const [isProcessing, setIsProcessing] = useState(false);
   const [processedFiles, setProcessedFiles] = useState<Set<string>>(new Set());
 
-  
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       images: [],
     },
   });
-  
 
   const handleImageUpload = (info: { allEntries: any[] }) => {
     setIsProcessing(true);
@@ -90,7 +87,10 @@ export default function UploadImagesGalleryForm({
 
       const currentImages = form.getValues("images");
       const uniqueImagesMap = new Map(
-        [...currentImages, ...newImages].map((image) => [image.image_url, image])
+        [...currentImages, ...newImages].map((image) => [
+          image.image_url,
+          image,
+        ])
       );
       const uniqueImages = Array.from(uniqueImagesMap.values());
 
@@ -110,18 +110,20 @@ export default function UploadImagesGalleryForm({
     if (isUploading || isProcessing) return;
 
     try {
-      const final_images_urls= new Map (
-        [...currentGalleryImages, ...data.images].map((image) => [image.image_url, image])
-      )
+      const final_images_urls = new Map(
+        [...currentGalleryImages, ...data.images].map((image) => [
+          image.image_url,
+          image,
+        ])
+      );
       const final_urls = Array.from(final_images_urls.values());
 
-
       const formData = {
-        gg_id:gg_id,
-        image_urls: final_urls.map(img => img.image_url),
-        imageposts: data.images
+        gg_id: gg_id,
+        image_urls: final_urls.map((img) => img.image_url),
+        imageposts: data.images,
       };
-   
+
       const result = await updateImagesGallery(formData);
 
       if (result.success) {

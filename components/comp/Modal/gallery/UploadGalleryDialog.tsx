@@ -11,7 +11,9 @@ import {
 
 import { Button as MovingBorderButton } from "@/components/ui/border/moving-border";
 
-import UploadImagesGalleryForm, { imagePostType } from "../../Forms/UploadImagesGalleryForm";
+import UploadImagesGalleryForm, {
+  imagePostType,
+} from "../../Forms/UploadImagesGalleryForm";
 import { IconPhotoAi } from "@tabler/icons-react";
 
 interface UploadGalleryDialogProps {
