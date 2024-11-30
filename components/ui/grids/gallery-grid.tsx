@@ -10,7 +10,7 @@ import { Button } from "../button/button";
 import { IconTrash } from "@tabler/icons-react";
 
 type Card = {
-  img_id: string;
+  img_id?: string;
   index: number;
   content: JSX.Element | React.ReactNode | string;
   className: string;
