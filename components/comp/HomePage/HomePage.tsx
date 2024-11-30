@@ -1,15 +1,16 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { UserRound } from "lucide-react";
 
 import { toTitleCase } from "@/utils/string-utils";
-import { useMobileSimulator } from "../MobileSimulator/provider/MobileSimulatorContext";
 import { Button } from "@/components/ui/button/button";
 import { UserProfilesCarousel } from "../GeniusUserProfile/ProfileCard/user-profile-carousel";
+import { LoginForm } from "@/components/form/login-form";
+import { RegisterForm } from "@/components/form/register-form";
 
 export default function HomePage({
   user,
@@ -22,7 +23,11 @@ export default function HomePage({
 }) {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const { setShowMobile } = useMobileSimulator();
+
+  const [showModal, setShowModal] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
+
+  const isUserLoggedIn = user ? true : false;
 
   useEffect(() => {
     // Only proceed if we have auth_redirect parameter
@@ -53,9 +58,11 @@ export default function HomePage({
     if (user) {
       router.push(`/genius-profile/${user.username}`);
     } else {
-      setShowMobile((prev) => !prev);
+      setShowModal(true);
     }
   };
+
+  const toggleModal = () => setShowModal((prev) => !prev);
 
   return (
     <div className="flex justify-center items-center">
@@ -85,7 +92,11 @@ export default function HomePage({
           <div className="flex justify-center font-semibold text-md text-white">
             GENIUS PROFILES
           </div>
-          <UserProfilesCarousel users={staticUsers} />
+          <UserProfilesCarousel
+            users={staticUsers}
+            toggleModal={toggleModal}
+            isUserLoggedIn={isUserLoggedIn}
+          />
         </div>
       </div>
       <div className="absolute bottom-4 left-10 bg-gradient-to-b bg-white/70 to-gray-100/30 p-4 rounded-lg shadow-sm flex flex-col items-center max-w-xs w-full">
@@ -105,6 +116,29 @@ export default function HomePage({
           )}
         </div>
       </div>
+      {/* Modal */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg w-[90%] max-w-md shadow-lg">
+            <h2 className="text-xl font-bold mb-4">
+              {isLogin ? "Login" : "Register"}
+            </h2>
+            {isLogin ? (
+              <LoginForm isMobile={true} />
+            ) : (
+              <RegisterForm isMobile={true} />
+            )}
+            <div className="mt-4 flex justify-between">
+              <Button variant="outline" onClick={toggleModal}>
+                Close
+              </Button>
+              <Button variant="black" onClick={() => setIsLogin(!isLogin)}>
+                {isLogin ? "Go to Register" : "Go to Login"}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

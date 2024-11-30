@@ -13,10 +13,8 @@ import {
 import { createContext } from "react";
 import {
   FaBell,
-  FaEnvelope,
   FaShoppingCart,
   FaSignInAlt,
-  FaUser,
   FaUserPlus,
 } from "react-icons/fa";
 import ShopSection from "../../shop/ShopSection";
