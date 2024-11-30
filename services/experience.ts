@@ -27,14 +27,28 @@ export const createExperience = async (data: Prisma.experienceCreateInput) => {
 
     await Promise.all(
       skills.map(async (skill) => {
-        return await db.skills.create({
-          data: {
-            skill_name: skill,
-            skill_percentage: 0,
-            gg_id: experience.gg_id,
-            experience_id: experience.experience_id,
-          },
-        });
+        try {
+          // Use upsert instead of create to handle existing skills
+          return await db.skills.upsert({
+            where: {
+              skill_name: skill,
+            },
+            update: {
+              // Add any fields you want to update if the skill already exists
+              experience_id: experience.experience_id,
+            },
+            create: {
+              skill_name: skill,
+              skill_percentage: 0,
+              gg_id: experience.gg_id,
+              experience_id: experience.experience_id,
+            },
+          });
+        } catch (error) {
+          console.error(`Error creating skill ${skill}:`, error);
+          // Optionally, you can choose to continue or throw
+          return null;
+        }
       })
     );
     return experience;
