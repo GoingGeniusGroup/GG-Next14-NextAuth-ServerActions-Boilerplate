@@ -2,11 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { UserRound } from "lucide-react";
 
-import { toTitleCase } from "@/utils/string-utils";
 import { Button } from "@/components/ui/button/button";
 import { UserProfilesCarousel } from "../GeniusUserProfile/ProfileCard/user-profile-carousel";
 import { LoginForm } from "@/components/form/login-form";
@@ -32,11 +31,9 @@ export default function HomePage({
   useEffect(() => {
     // Only proceed if we have auth_redirect parameter
     if (searchParams.get("auth_redirect") === "true") {
-      const attemptedPath = searchParams.get("attempted_path") || "this";
-      const formattedPath = toTitleCase(attemptedPath);
-
       // Show the toast
-      toast.error(`Please log in to access ${formattedPath} page`, {
+      toast.error(`Please log in to access this page`, {
+        position: "top-center",
         icon: "🔒",
         duration: 4000,
         style: {
@@ -51,6 +48,10 @@ export default function HomePage({
       // Clean up URL parameters
       const newUrl = window.location.pathname;
       router.replace(newUrl);
+
+      setTimeout(() => {
+        setShowModal(true);
+      }, 500);
     }
   }, [searchParams, router]);
 
