@@ -24,8 +24,9 @@ export default function PublicAvatarManagerClientProfile({
         <Avatar
           key="avatar publicx"
           modelSrc={
-            user.avatar[0].avatar_url ||
-            "https://models.readyplayer.me/66fbd22e36a151e549ea8397.glb?morphTargets=ARKit,Eyes Extra&textureAtlas=none&lod=0"
+            user?.avatar && user.avatar.length > 0 && user.avatar[0]?.avatar_url
+              ? user.avatar[0].avatar_url
+              : "https://models.readyplayer.me/66fbd22e36a151e549ea8397.glb?morphTargets=ARKit,Eyes Extra&textureAtlas=none&lod=0"
           }
           shadows={false}
           animationSrc={currentPublicEmote}

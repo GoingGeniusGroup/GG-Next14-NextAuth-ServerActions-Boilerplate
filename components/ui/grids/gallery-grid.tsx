@@ -3,13 +3,14 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { XIcon } from "lucide-react";
 import { removeImage } from "@/actions/image-post";
 import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
+import { Button } from "../button/button";
+import { IconTrash } from "@tabler/icons-react";
 
 type Card = {
-  img_id?: string;
+  img_id: string;
   index: number;
   content: JSX.Element | React.ReactNode | string;
   className: string;
@@ -27,6 +28,7 @@ export const GalleryGrid = ({
 }) => {
   const [selectedImage, setSelectedImage] = useState<Card | null>(null);
   const router = useRouter();
+  const [isDeleting, setIsDeleting] = useState(true);
 
   const removeSelectedImage = async (
     gg_id: string,
@@ -34,8 +36,10 @@ export const GalleryGrid = ({
     index: number
   ) => {
     try {
+      setIsDeleting(false);
       await removeImage(gg_id, img_id, index);
       toast.success("Image removed successfully.");
+      setIsDeleting(true);
       router.refresh();
     } catch (error) {
       toast.error("Failed to remove image.");
@@ -69,16 +73,19 @@ export const GalleryGrid = ({
                 )}
               </div>
               {loggedUserProfile && (
-                <button
-                  className="absolute top-2 right-2 text-white z-50"
+                <Button
+                  variant="transparent_rounded"
+                  className="hover:text-yellow-500 hover:bg-transparent absolute top-2 right-2 text-red-600 p-[1px]"
+                  size="mini2"
+                  disabled={!isDeleting}
                   onClick={(e) => {
                     e.stopPropagation(); // Prevent the parent click event
                     card.img_id &&
                       removeSelectedImage(gg_id, card.img_id, card.index);
                   }}
                 >
-                  X
-                </button>
+                  <IconTrash size={12} />
+                </Button>
               )}
             </div>
           </motion.div>
