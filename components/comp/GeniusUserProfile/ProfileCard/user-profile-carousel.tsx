@@ -6,7 +6,15 @@ import {
 } from "@/components/ui/carousel";
 import { UserProfile } from "./user-profile";
 
-export function UserProfilesCarousel({ users }: { users: Array<any> }) {
+export function UserProfilesCarousel({
+  users,
+  toggleModal,
+  isUserLoggedIn,
+}: {
+  users: Array<any>;
+  toggleModal: () => void;
+  isUserLoggedIn: boolean;
+}) {
   return (
     <Carousel
       opts={{
@@ -24,6 +32,8 @@ export function UserProfilesCarousel({ users }: { users: Array<any> }) {
                 name={user.firstName}
                 role={user.role}
                 avatarUrl={user.image}
+                isUserLoggedIn={isUserLoggedIn}
+                toggleModal={toggleModal}
               />
             </div>
           </CarouselItem>

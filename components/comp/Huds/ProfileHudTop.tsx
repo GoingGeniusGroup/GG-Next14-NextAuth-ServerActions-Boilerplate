@@ -113,7 +113,7 @@ export default function ProfileHudTop({
               onClick={handleMobileButtonClick}
             >
               <CgProfile className="mr-2 size-4" />
-              Login
+              Open Mobile
             </DropdownMenuItem>
           ) : (
             <DropdownMenuItem

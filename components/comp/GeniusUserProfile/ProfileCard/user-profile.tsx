@@ -1,12 +1,16 @@
-import Link from "next/link";
+"use client";
+
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface UserProfileProps {
   username: string;
   name: string;
   role: string;
   avatarUrl: string;
+  isUserLoggedIn: boolean;
+  toggleModal: () => void;
 }
 
 export function UserProfile({
@@ -14,10 +18,22 @@ export function UserProfile({
   name,
   role,
   avatarUrl,
+  isUserLoggedIn,
+  toggleModal,
 }: UserProfileProps) {
+  const router = useRouter();
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (!isUserLoggedIn) {
+      e.preventDefault(); // Prevent navigation
+      toggleModal(); // Open the login/register modal
+    } else {
+      router.push(`/genius-profile/${username}`);
+    }
+  };
   return (
-    <Link
-      href={`/genius-profile/${username}`}
+    <div
+      onClick={handleClick}
       className="block transition-transform hover:scale-105"
     >
       <Card className="group w-[160px] h-[160px] bg-white dark:bg-black rounded-lg overflow-hidden relative">
@@ -39,6 +55,6 @@ export function UserProfile({
           </h3>
         </CardContent>
       </Card>
-    </Link>
+    </div>
   );
 }
