@@ -118,21 +118,36 @@ export default function HomePage({
       </div>
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg w-[90%] max-w-md shadow-lg">
-            <h2 className="text-xl font-bold mb-4">
-              {isLogin ? "Login" : "Register"}
-            </h2>
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50"
+          onClick={toggleModal}
+        >
+          <div
+            className="bg-transprent backdrop-blur-md border-2 dark:border-white/20 border:white hover:border-yellow-600 transition-all duration-300 ease-in-out p-6 rounded-lg w-[90%] max-w-md shadow-lg text-white"
+            onClick={(e) => e.stopPropagation()}
+          >
             {isLogin ? (
               <LoginForm isMobile={true} />
             ) : (
               <RegisterForm isMobile={true} />
             )}
-            <div className="mt-4 flex justify-between">
-              <Button variant="outline" onClick={toggleModal}>
-                Close
-              </Button>
-              <Button variant="black" onClick={() => setIsLogin(!isLogin)}>
+
+            <div
+              className="size-4 absolute top-3 right-3 cursor-pointer bg-red-600 rounded-full"
+              onClick={toggleModal}
+            ></div>
+
+            <div className="mt-2 flex flex-col justify-center gap-2">
+              <span className="w-full flex justify-center text-xs">
+                {isLogin
+                  ? "Not Yet a Genius User? Register Here"
+                  : "Already a Genius User? Login Here"}
+              </span>
+              <Button
+                variant="black"
+                className="border hover:bg-black/60"
+                onClick={() => setIsLogin(!isLogin)}
+              >
                 {isLogin ? "Go to Register" : "Go to Login"}
               </Button>
             </div>
