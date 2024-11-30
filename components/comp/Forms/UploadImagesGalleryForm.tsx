@@ -42,6 +42,7 @@ interface UploadImagesGalleryFormProps {
 }
 
 export type imagePostType = {
+  img_id?: string;
   image_url: string;
   caption?: string | null;
   description?: string | null;
