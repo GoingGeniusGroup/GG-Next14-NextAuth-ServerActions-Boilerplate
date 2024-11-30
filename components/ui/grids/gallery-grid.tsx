@@ -3,31 +3,62 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { XIcon } from "lucide-react";
+import { removeImage } from "@/actions/image-post";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { Button } from "../button/button";
+import { IconTrash } from "@tabler/icons-react";
 
 type Card = {
-  id: number;
+  img_id: string;
+  index: number;
   content: JSX.Element | React.ReactNode | string;
   className: string;
   thumbnail: string;
 };
 
-export const GalleryGrid = ({ cards }: { cards: Card[] }) => {
+export const GalleryGrid = ({
+  cards,
+  gg_id,
+  loggedUserProfile,
+}: {
+  cards: Card[];
+  gg_id: any;
+  loggedUserProfile: boolean;
+}) => {
   const [selectedImage, setSelectedImage] = useState<Card | null>(null);
+  const router = useRouter();
+  const [isDeleting, setIsDeleting] = useState(true);
+
+  const removeSelectedImage = async (
+    gg_id: string,
+    img_id: string,
+    index: number
+  ) => {
+    try {
+      setIsDeleting(false);
+      await removeImage(gg_id, img_id, index);
+      toast.success("Image removed successfully.");
+      setIsDeleting(true);
+      router.refresh();
+    } catch (error) {
+      toast.error("Failed to remove image.");
+    }
+  };
 
   return (
     <div className="container size-full overflow-y-auto overflow-x-hidden mx-auto px-4 pb-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {cards.map((card) => (
           <motion.div
-            key={card.id}
+            key={card.index}
             className="relative overflow-hidden rounded-lg shadow-lg cursor-pointer"
             whileHover={{ scale: 1.05 }}
             onClick={() => setSelectedImage(card)}
           >
             <Image
               src={card.thumbnail}
-              alt={`Gallery image ${card.id}`}
+              alt={`Gallery image ${card.index}`}
               width={500}
               height={500}
               className="object-cover w-full h-full"
@@ -41,6 +72,21 @@ export const GalleryGrid = ({ cards }: { cards: Card[] }) => {
                   card.content
                 )}
               </div>
+              {loggedUserProfile && (
+                <Button
+                  variant="transparent_rounded"
+                  className="hover:text-yellow-500 hover:bg-transparent absolute top-2 right-2 text-red-600 p-[1px]"
+                  size="mini2"
+                  disabled={!isDeleting}
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent the parent click event
+                    card.img_id &&
+                      removeSelectedImage(gg_id, card.img_id, card.index);
+                  }}
+                >
+                  <IconTrash size={12} />
+                </Button>
+              )}
             </div>
           </motion.div>
         ))}
@@ -64,7 +110,7 @@ export const GalleryGrid = ({ cards }: { cards: Card[] }) => {
             >
               <Image
                 src={selectedImage.thumbnail}
-                alt={`Full size image ${selectedImage.id}`}
+                alt={`Full size image ${selectedImage.index}`}
                 fill
                 className="object-contain "
                 unoptimized

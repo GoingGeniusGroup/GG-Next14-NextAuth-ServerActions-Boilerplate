@@ -7,7 +7,14 @@ export const metadata: Metadata = {
   title: "Home",
 };
 
-const staticUsernames = ["haleatus", "satkar", "ramu", "gg.yush", "rohit"];
+const staticUsernames = [
+  "haleatus",
+  "satkar",
+  "gglama",
+  "ramu",
+  "gg.yush",
+  "rohit",
+];
 
 export default async function Home() {
   const user = await getCurrentUser();

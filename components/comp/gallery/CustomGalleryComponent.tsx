@@ -24,10 +24,12 @@ export default async function CustomGalleryComponent({
   const convertedImagePosts: imagePostType[] =
     imagePosts?.map(
       (img_post: {
+        img_id: string;
         description: string | null;
         image_url: string;
         caption: string;
       }) => ({
+        img_id: img_post.img_id,
         image_url: img_post.image_url,
         caption: img_post.caption || "",
         description: img_post.description || "",
@@ -36,7 +38,8 @@ export default async function CustomGalleryComponent({
 
   const cards =
     convertedImagePosts.map((img_post, index) => ({
-      id: index,
+      img_id: img_post.img_id,
+      index: index,
       content: (
         <DynamicSkeleton
           caption={img_post.caption || ""}
@@ -62,7 +65,11 @@ export default async function CustomGalleryComponent({
           {imagePosts ? (
             imagePosts.length > 0 ? (
               <>
-                <GalleryGrid cards={cards} />
+                <GalleryGrid
+                  cards={cards}
+                  gg_id={profileOwner?.gg_id}
+                  loggedUserProfile={LoggedUserProfile}
+                />
               </>
             ) : (
               <>

@@ -22,11 +22,6 @@ export const getImageUrls = async (isu: boolean = true, gg_id?: string) => {
       where: {
         gg_id: userId,
       },
-      select: {
-        image_url: true,
-        caption: true,
-        description: true,
-      },
     });
 
     return imgeObj;
@@ -34,6 +29,22 @@ export const getImageUrls = async (isu: boolean = true, gg_id?: string) => {
     console.error("Error fetching image URLs:", error);
     return null;
   }
+};
+
+export const removeImage = async (
+  gg_id: string,
+  img_id: string,
+  index: number
+) => {
+  const user = await db.user.findUnique({ where: { gg_id: gg_id } });
+  const image_urls = user?.image_urls;
+  await db.imagePost.delete({ where: { img_id: img_id } });
+  await db.user.update({
+    where: { gg_id: user?.gg_id },
+    data: {
+      image_urls: image_urls?.splice(index, 1),
+    },
+  });
 };
 
 const updateProfileSchema = z.object({
