@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button/button";
 import { Form } from "@/components/ui/form";
 import { loginSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -84,14 +83,14 @@ export const LoginForm = ({ isMobile }: { isMobile: boolean }) => {
                 placeholder="******"
                 isPending={isPending}
               />
-              <Button
+              {/* <Button
                 size="sm"
                 variant="anylink"
                 className={`-mt-6 p-0 text-xs w-full justify-end`}
                 asChild
               >
                 <Link href="/reset">Forgot password?</Link>
-              </Button>
+              </Button> */}
             </div>
           </div>
           <Button type="submit" disabled={isPending} className="w-full">

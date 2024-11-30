@@ -1,22 +1,23 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { string, z } from "zod";
+import { z } from "zod";
 import { AnimatedInput } from "@/components/ui/animated-input/animated-input";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Label } from "@/components/ui/animated-input/label";
+
+import "@uploadcare/react-uploader/core.css";
 import { LabelInputContainer } from "@/components/ui/animated-input/label-input-container";
 import { FileUploaderMinimal } from "@uploadcare/react-uploader";
 import { addExperience, updateUserExperience } from "@/actions/experience";
@@ -131,6 +132,7 @@ const ExperienceForm: React.FC<ExperienceFormProps> = ({
       }
 
       if (result.success) {
+        form.reset();
         toast.success(
           experience_id
             ? "Experience updated successfully"
@@ -138,7 +140,6 @@ const ExperienceForm: React.FC<ExperienceFormProps> = ({
         );
         router.refresh();
         setOpen(false);
-        form.reset();
       } else {
         toast.error(result.error?.message || "An unknown error occurred");
       }

@@ -19,7 +19,7 @@ export default function ExpressionBottomMidHud({
         {expressions.map((expression, i) => (
           <div
             key={i}
-            className={`flex size-[32px] items-center justify-center cursor-pointer rounded-full shadow-black drop-shadow-lg transition-transform duration-300 ease-in-out `}
+            className={`flex size-[32px] items-center justify-center cursor-pointer rounded-full bg-white shadow-black drop-shadow-lg transition-transform duration-300 ease-in-out `}
             onClick={() => handleEmote(expression.animation)}
           >
             <div className="flex size-full items-center justify-center rounded-full hover:bg-black/50 border border-black/20 dark:border-white/20 hover:border-yellow-500/70 transition-all duration-300 ease-in-out">

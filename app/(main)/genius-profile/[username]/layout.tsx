@@ -44,7 +44,7 @@ export default function GeniusProfileLayout({
             >
               {children}
               <div
-                className={`absolute -bottom-2 z-40 left-1/2 -translate-x-1/2 flex space-x-4 mb-4 transition-all duration-300 ease-in-out`}
+                className={`absolute -bottom-2 z-50 left-1/2 -translate-x-1/2 flex space-x-4 mb-4 transition-all duration-300 ease-in-out`}
               >
                 <ul className="relative mx-auto flex w-fit gap-1 rounded-full bg-white/20 dark:bg-black/20 p-1 transition-all duration-300 ease-in-out">
                   {/* Home Link */}

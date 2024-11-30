@@ -34,53 +34,55 @@ export default function GeniusUserProjects({
   let [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <BentoGridHoverV2 className="relative pb-10">
+    <>
       {LoggedUserProfile && (
-        <div className="absolute -top-7 -right-3 z-40">
+        <div className="absolute top-2 right-2 z-40">
           <ExperienceDialog gg_id={userInfo.gg_id} />
         </div>
       )}
-      {items.map((item, idx) => (
-        <BentoGridHoverItemV2
-          key={idx}
-          topTitle={item.title}
-          title={
-            <div className="flex justify-between items-center gap-2">
-              <span>{item.title}</span>
-              {LoggedUserProfile && (
-                <div className="flex gap-2 items-center">
-                  <ExperienceDialog
-                    gg_id={userInfo.gg_id}
-                    experience_id={item.experience_id}
-                    defaultValues={{
-                      type: item.type,
-                      name: item.title,
-                      description: item.description,
-                      tools: item.tools,
-                      project_skills: item.project_skills,
-                      project_pictures: [item.image],
-                      link: item.link,
-                    }}
-                  />
-                  <DeleteExperienceDialog
-                    experienceId={item.experience_id}
-                    experienceName={item.title}
-                  />
-                </div>
-              )}
-            </div>
-          }
-          description={item.description}
-          header={item.image}
-          skills={item.project_skills}
-          tools={item.tools}
-          link={item.link}
-          className={idx === 3 || idx === 6 ? "md:col-span-2" : ""}
-          onMouseEnter={() => setHoveredIndex(idx)}
-          onMouseLeave={() => setHoveredIndex(null)}
-          isHovered={hoveredIndex === idx}
-        />
-      ))}
-    </BentoGridHoverV2>
+      <BentoGridHoverV2 className="relative pb-10 h-full overflow-x-hidden overflow-y-auto z-10">
+        {items.map((item, idx) => (
+          <BentoGridHoverItemV2
+            key={idx}
+            topTitle={item.title}
+            title={
+              <div className="flex justify-between items-center gap-2">
+                <span>{item.title}</span>
+                {LoggedUserProfile && (
+                  <div className="flex gap-2 items-center">
+                    <ExperienceDialog
+                      gg_id={userInfo.gg_id}
+                      experience_id={item.experience_id}
+                      defaultValues={{
+                        type: item.type,
+                        name: item.title,
+                        description: item.description,
+                        tools: item.tools,
+                        project_skills: item.project_skills,
+                        project_pictures: [item.image],
+                        link: item.link,
+                      }}
+                    />
+                    <DeleteExperienceDialog
+                      experienceId={item.experience_id}
+                      experienceName={item.title}
+                    />
+                  </div>
+                )}
+              </div>
+            }
+            description={item.description}
+            header={item.image}
+            skills={item.project_skills}
+            tools={item.tools}
+            link={item.link}
+            className={idx === 3 || idx === 6 ? "md:col-span-2" : ""}
+            onMouseEnter={() => setHoveredIndex(idx)}
+            onMouseLeave={() => setHoveredIndex(null)}
+            isHovered={hoveredIndex === idx}
+          />
+        ))}
+      </BentoGridHoverV2>
+    </>
   );
 }

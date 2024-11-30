@@ -71,7 +71,6 @@ export default function AboutSectionProfile({
   ifOwnProfile: boolean;
 }) {
   let ref = useRef<HTMLDivElement>(null);
-  const [hovered, setHovered] = useState(false);
   const [isPopupOpen, setPopupOpen] = useState(false);
   const currentPageUrl =
     typeof window !== "undefined" ? window.location.href : "";
@@ -84,29 +83,27 @@ export default function AboutSectionProfile({
       <div
         ref={ref}
         className="relative flex flex-col gap-4 border p-4 rounded-lg backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out"
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
       >
         <div className="absolute top-2 right-2 z-40 flex gap-2">
           {ifOwnProfile && (
             <>
-              {hovered && (
-                <div className="flex gap-2 transition-all duration-300">
-                  <UpdateCoverPhotoDialog
-                    gg_id={userInfo.gg_id}
-                    currentCoverImage={userInfo.cover_images?.[0] ?? ""}
-                  />
-                  <UpdateProfileDialog
-                    gg_id={userInfo.gg_id}
-                    currentFirstName={userInfo.first_name ?? ""}
-                    currentLastName={userInfo.last_name ?? ""}
-                    currentAddress={userInfo.address ?? ""}
-                    currentDescription={userInfo.description ?? ""}
-                    currentDob={userInfo.dob ? new Date(userInfo.dob) : null}
-                    currentImage={userInfo.image ?? ""}
-                  />
-                </div>
-              )}
+              <div className="flex gap-2 transition-all duration-300">
+                <UpdateCoverPhotoDialog
+                  gg_id={userInfo.gg_id}
+                  currentCoverImage={userInfo.cover_images?.[0] ?? ""}
+                />
+                <UpdateProfileDialog
+                  gg_id={userInfo.gg_id}
+                  defaultValues={{
+                    first_name: userInfo.first_name ?? "",
+                    last_name: userInfo.last_name ?? "",
+                    address: userInfo.address ?? "",
+                    description: userInfo.description ?? "",
+                    dob: userInfo.dob ? new Date(userInfo.dob) : null,
+                    image: userInfo.image ?? "",
+                  }}
+                />
+              </div>
             </>
           )}
 

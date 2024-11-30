@@ -151,7 +151,7 @@ const SocialMediaDialog = ({
     <div
       className={`size-[52px] rounded-full flex items-center justify-center transition-all duration-300 ${
         UrlValue
-          ? "bg-sky-300 hover:bg-sky-400"
+          ? "bg-gray-200 hover:bg-gray-300 border-4 border-yellow-600"
           : "bg-gray-200 hover:bg-gray-300"
       }`}
     >
