@@ -195,7 +195,7 @@ const VirtualShop = () => {
             />
           )}
         </div>
-        <div className="md:w-[30%] px-4 py-2 h-full overflow-auto">
+        <div className="md:w-[30%] px-4 py-2 h-full overflow-auto z-40">
           <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200/30">
             <ProductDetail product={selectedProduct} onAddToCart={addToCart} />
           </div>
