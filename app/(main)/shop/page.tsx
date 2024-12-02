@@ -6,5 +6,9 @@ export const metadata: Metadata = {
 };
 
 export default function Shop2() {
-  return <VirtualShop />;
+  return (
+    <div className="flex-1 overflow-hidden size-full">
+      <VirtualShop />
+    </div>
+  );
 }

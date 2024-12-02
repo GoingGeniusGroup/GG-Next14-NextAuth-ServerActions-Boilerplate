@@ -41,7 +41,7 @@ export default function FloatingDockInvertedComponent() {
     {
       title: "Virtual Shop",
       icon: <IconShoppingBagHeart className="size-full" />,
-      href: "/shop-2",
+      href: "/shop",
     },
     {
       title: "Steam",

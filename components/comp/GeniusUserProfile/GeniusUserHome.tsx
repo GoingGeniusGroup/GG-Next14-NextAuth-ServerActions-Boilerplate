@@ -30,7 +30,7 @@ export default async function GeniusUserHome({
   return (
     <>
       <div className="relative flex w-full justify-between">
-        <div className="w-[33%] px-4 z-10">
+        <div className="w-[415px] px-4 z-10">
           <AboutSectionProfile
             userInfo={LoggedUserProfile ? currentUser : profileOwner}
             ifOwnProfile={LoggedUserProfile}
@@ -52,7 +52,7 @@ export default async function GeniusUserHome({
             />
           )}
         </div>
-        <div className="w-[33%] px-4">
+        <div className="w-[415px] px-4">
           {/* Projects Grid */}
           <BottomSection
             userInfo={LoggedUserProfile ? currentUser : profileOwner}
