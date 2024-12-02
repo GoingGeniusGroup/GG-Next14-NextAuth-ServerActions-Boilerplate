@@ -102,7 +102,10 @@ const SteamProfile = forwardRef<HTMLDivElement, SteamProfileProps>(
 
     return (
       <div ref={ref} className="max-w-4xl mx-auto p-4">
-        <form onSubmit={handleSubmit} className="mb-6 flex gap-2 items-center">
+        <form
+          onSubmit={handleSubmit}
+          className="mb-6 flex gap-2 items-center md:flex-row flex-col"
+        >
           <Input
             type="text"
             value={steamId}
