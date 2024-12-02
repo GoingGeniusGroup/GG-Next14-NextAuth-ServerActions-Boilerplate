@@ -7,7 +7,7 @@ import { removeImage } from "@/actions/image-post";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "../button/button";
-import { IconTrash } from "@tabler/icons-react";
+import { IconTrash, IconX } from "@tabler/icons-react";
 import {
   Dialog,
   DialogContent,
@@ -63,16 +63,15 @@ export const GalleryGrid = ({
         {cards.map((card) => (
           <motion.div
             key={card.index}
-            className="relative overflow-hidden rounded-lg shadow-lg cursor-pointer"
+            className="relative aspect-square overflow-hidden rounded-lg shadow-lg cursor-pointer"
             whileHover={{ scale: 1.05 }}
             onClick={() => setSelectedImage(card)}
           >
             <Image
               src={card.thumbnail}
               alt={`Gallery image ${card.index}`}
-              width={500}
-              height={500}
-              className="object-cover w-full h-full"
+              fill
+              className="object-cover"
               unoptimized
             />
             <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
@@ -94,6 +93,7 @@ export const GalleryGrid = ({
                   }}
                 >
                   <IconTrash size={20} />
+                  <span className="sr-only">Delete image</span>
                 </Button>
               )}
             </div>
@@ -107,55 +107,45 @@ export const GalleryGrid = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4"
             onClick={() => setSelectedImage(null)}
           >
             <motion.div
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.8 }}
-              className="relative max-w-4xl max-h-[90vh] w-full h-full rounded-lg overflow-hidden"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              className="relative w-full max-w-4xl max-h-[90vh] bg-gray-800 rounded-lg shadow-xl overflow-hidden flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="absolute inset-0 bg-white dark:bg-gray-800 rounded-lg shadow-xl overflow-hidden flex flex-col">
-                <div className="relative flex-grow">
-                  <Image
-                    src={selectedImage.thumbnail}
-                    alt={`Full size image ${selectedImage.index}`}
-                    fill
-                    className="object-contain"
-                    unoptimized
-                  />
-                </div>
-                <div className="p-4 bg-white dark:bg-gray-900">
-                  {typeof selectedImage.content === "string" ? (
-                    <p className="text-gray-800 dark:text-gray-200">
-                      {selectedImage.content}
-                    </p>
-                  ) : (
-                    selectedImage.content
-                  )}
-                </div>
-                <button
-                  className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-                  onClick={() => setSelectedImage(null)}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
+              <div
+                className="relative flex-grow bg-gray-900 w-full"
+                style={{ minHeight: "60vh" }}
+              >
+                <Image
+                  src={selectedImage.thumbnail}
+                  alt={`Full size image ${selectedImage.index}`}
+                  fill
+                  className="object-contain"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  priority
+                />
               </div>
+              <div className="p-6 bg-gray-900">
+                {typeof selectedImage.content === "string" ? (
+                  <p className="text-gray-800 dark:text-gray-200 text-lg">
+                    {selectedImage.content}
+                  </p>
+                ) : (
+                  selectedImage.content
+                )}
+              </div>
+              <button
+                className="absolute top-4 right-4 text-white bg-gray-800 dark:bg-gray-200 dark:text-gray-800 rounded-full p-2 hover:bg-gray-700 dark:hover:bg-gray-300 transition-colors"
+                onClick={() => setSelectedImage(null)}
+                aria-label="Close image preview"
+              >
+                <IconX size={24} />
+              </button>
             </motion.div>
           </motion.div>
         )}
