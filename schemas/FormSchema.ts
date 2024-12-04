@@ -20,3 +20,9 @@ export const ProfileFormSchema = z.object({
 export const GalleryImageUploadFormSchema = z.object({
   image_urls: z.array(z.string()),
 });
+
+export const skillsFormSchema = z.object({
+  skill_name: z.string(),
+  skill_percentage: z.number(),
+  certifications: z.array(z.string()).optional(),
+});

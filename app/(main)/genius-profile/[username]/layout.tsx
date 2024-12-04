@@ -32,6 +32,10 @@ export default function GeniusProfileLayout({
     `/genius-profile/${username}/projects`
   );
 
+  const isSkillsActive = pathname.includes(
+    `/genius-profile/${username}/skills`
+  );
+
   return (
     <PublicAvatarProvider username={username}>
       <div className="relative size-full">
@@ -96,6 +100,23 @@ export default function GeniusProfileLayout({
                       {isProjectsActive ? "PROJECTS" : "P"}
                     </Button>
                     {!isProjectsActive && <CustomToolTip content="Projects" />}
+                  </Link>
+
+                  {/* Skills Link */}
+                  <Link
+                    href={`/genius-profile/${username}/skills`}
+                    className="group"
+                  >
+                    <Button
+                      className={`rounded-full  flex justify-center items-center transition-color duration-300 ease-in-out ${
+                        isSkillsActive
+                          ? "bg-black text-sky-500  hover:bg-black/80 hover:text-white h-[32px]"
+                          : "dark:bg-white bg-gray-200 text-black  hover:bg-black hover:text-white size-[32px]"
+                      }`}
+                    >
+                      {isSkillsActive ? "SKILLS" : "S"}
+                    </Button>
+                    {!isSkillsActive && <CustomToolTip content="Skills" />}
                   </Link>
                 </ul>
               </div>
