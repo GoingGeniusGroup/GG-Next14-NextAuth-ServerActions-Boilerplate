@@ -102,21 +102,26 @@ const SteamProfile = forwardRef<HTMLDivElement, SteamProfileProps>(
 
     return (
       <div ref={ref} className="max-w-4xl mx-auto p-4">
-        <form onSubmit={handleSubmit} className="mb-6 flex gap-2">
+        <form
+          onSubmit={handleSubmit}
+          className="mb-6 flex gap-2 items-center md:flex-row flex-col"
+        >
           <Input
             type="text"
             value={steamId}
             onChange={(e) => setSteamId(e.target.value)}
             placeholder="Enter Steam ID"
-            className="flex-grow dark:text-white text-black"
+            className="flex-grow text-white"
           />
-          <Button type="submit">Fetch Profile</Button>
+          <Button type="submit" className="border border-white">
+            Fetch Profile
+          </Button>
         </form>
 
         {error && <p className="text-red-500 mb-4">{error}</p>}
 
         {profile && (
-          <Card className="mb-6">
+          <Card className="mb-6 text-white">
             <CardHeader>
               <CardTitle>{profile.personaname}&apos;s Steam Profile</CardTitle>
             </CardHeader>
@@ -131,7 +136,7 @@ const SteamProfile = forwardRef<HTMLDivElement, SteamProfileProps>(
                 </Avatar>
                 <div>
                   <h2 className="text-2xl font-bold">{profile.personaname}</h2>
-                  <p className="text-muted-foreground">
+                  <p className="font-light">
                     Status: {getPersonaState(profile.personastate)}
                   </p>
                 </div>
@@ -186,7 +191,7 @@ const SteamProfile = forwardRef<HTMLDivElement, SteamProfileProps>(
         )}
 
         {ownedGames && (
-          <Card className="mb-6">
+          <Card className="mb-6 text-white">
             <CardHeader>
               <CardTitle>Owned Games ({ownedGames.game_count})</CardTitle>
             </CardHeader>
@@ -222,7 +227,7 @@ const SteamProfile = forwardRef<HTMLDivElement, SteamProfileProps>(
                 ))}
               </div>
               {ownedGames.game_count > 12 && (
-                <p className="mt-4 text-center text-muted-foreground">
+                <p className="mt-4 text-center font-light">
                   Showing 12 of {ownedGames.game_count} games
                 </p>
               )}

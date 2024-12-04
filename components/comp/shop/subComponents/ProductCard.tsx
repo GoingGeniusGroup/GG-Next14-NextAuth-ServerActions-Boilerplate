@@ -23,7 +23,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   return (
     <div
-      className={`border border-gray-200/30 rounded-lg bg-white dark:bg-transparent  text-black shadow-sm cursor-pointer ${
+      className={`border border-gray-200/30 rounded-lg bg-white text-black shadow-sm cursor-pointer ${
         isMobile ? "h-[220px]" : "h-[300px]"
       } flex flex-col`}
       onClick={onSelectProduct ? () => onSelectProduct(product) : () => {}}
@@ -39,7 +39,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         />
       </div>
       <div className="p-2 flex flex-col justify-between flex-grow">
-        <h3 className="font-semibold dark:text-white text-black text-xs sm:text-sm truncate">
+        <h3 className="font-semibold text-xs sm:text-sm truncate">
           {product.name}
         </h3>
         <Button
@@ -57,7 +57,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             {cartQuantity > 0 && (
               <Badge
                 variant="cool"
-                className="ml-1 text-xs rounded-md dark:text-black"
+                className="ml-1 text-xs rounded-md text-black"
               >
                 {cartQuantity}
               </Badge>

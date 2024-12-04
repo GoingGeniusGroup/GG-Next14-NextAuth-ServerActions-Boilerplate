@@ -61,7 +61,7 @@ export default async function CustomGalleryComponent({
             />
           </div>
         )}
-        <div className="flex-1 size-full overflow-x-hidden overflow-y-auto">
+        <div className="flex-1 size-full overflow-x-hidden overflow-y-auto py-2">
           {imagePosts ? (
             imagePosts.length > 0 ? (
               <>
