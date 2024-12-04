@@ -35,9 +35,12 @@ export const addSkills = async (
 
   const validatedFields = skillsSchema.safeParse({
     skill_name: formData.get("skill_name"),
-    skill_percentage: formData.get("skill_percentage"),
+    skill_percentage: parseInt(formData.get("skill_percentage") as string, 10),
     certifications: formData.getAll("certifications"),
   });
+
+  // console.log("skills name: ", formData.get("skill_name"));
+  // console.log("skills percentage: ", formData.get("skill_percentage"));
 
   if (!validatedFields.success) {
     return response({

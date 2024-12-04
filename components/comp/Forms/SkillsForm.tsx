@@ -20,6 +20,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { AnimatedInput } from "@/components/ui/animated-input/animated-input";
 import { SkillsFormPropsInterface } from "@/core/interface/form/skillsFormInterface";
 import { skillsFormSchema } from "@/schemas/FormSchema";
+import { z } from "zod";
+import { addSkills, updateUserSkills } from "@/actions/skills";
+import { toast } from "sonner";
 
 const SkillsForm: React.FC<SkillsFormPropsInterface> = ({
   //   setOpen,
@@ -39,9 +42,44 @@ const SkillsForm: React.FC<SkillsFormPropsInterface> = ({
     },
   });
 
+  const onSubmit = async (data: z.infer<typeof skillsFormSchema>) => {
+    try {
+      const formData = new FormData();
+
+      formData.append("gg_id", gg_id);
+      formData.append("skill_id", skill_id || "");
+      formData.append("skill_name", data.skill_name);
+      formData.append("skill_percentage", data.skill_percentage.toString());
+      // formData.append("certifications", (data.certifications || []).join(","));
+
+      let result;
+
+      if (skill_id) {
+        result = await updateUserSkills(skill_id, formData);
+      } else {
+        result = await addSkills(formData);
+      }
+
+      console.log("result", result);
+
+      if (result.success) {
+        form.reset();
+        toast.success(
+          skill_id ? "Skill updated successfully" : "Skill created successfully"
+        );
+        router.refresh();
+      } else {
+        toast.error(result.error?.message || "An unknown error occurred");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong");
+    }
+  };
+
   return (
     <Form {...form}>
-      <form className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         {/* <form className="space-y-4"> */}
         <FormField
           control={form.control}
@@ -66,13 +104,31 @@ const SkillsForm: React.FC<SkillsFormPropsInterface> = ({
               <LabelInputContainer>
                 <Label>Skill Percentage</Label>
                 <FormControl>
-                  <AnimatedInput {...field} placeholder="Eg. Web Development" />
+                  <AnimatedInput
+                    {...field}
+                    type="number"
+                    placeholder="Eg. 90"
+                  />
                 </FormControl>
               </LabelInputContainer>
               <FormMessage />
             </FormItem>
           )}
         />
+        <Button
+          type="submit"
+          disabled={isUploading || form.formState.isSubmitting}
+        >
+          {isUploading
+            ? "Uploading Images..."
+            : form.formState.isSubmitting
+            ? skill_id
+              ? "Updating..."
+              : "Creating..."
+            : skill_id
+            ? "Update"
+            : "Create"}
+        </Button>
       </form>
     </Form>
   );

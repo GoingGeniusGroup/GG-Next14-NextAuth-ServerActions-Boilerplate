@@ -23,37 +23,20 @@ import {
 } from "@/components/ui/chart";
 
 interface SkillDataPoint {
-  subject: string;
-  skill1: number;
-  skill2: number;
-  skill3: number;
+  skill_name: string;
+  skill_percentage: number;
   [key: string]: string | number; // Allow string indexing for dynamic access
 }
 
 interface SpaceRadarChartProps {
   data: SkillDataPoint[];
   dataKeys: string[];
-  title: string;
-  description?: string;
 }
 
-export function SpaceRadarChart({
-  data,
-  dataKeys,
-  title,
-  description,
-}: SpaceRadarChartProps) {
+export function SpaceRadarChart({ data, dataKeys }: SpaceRadarChartProps) {
   if (!dataKeys?.length) {
     return (
       <Card className="w-full max-w-3xl border-[#1a2b4b] bg-[#0a0f1f]/80 backdrop-blur-sm">
-        <CardHeader>
-          <CardTitle className="text-[#00f2fe]">{title}</CardTitle>
-          {description && (
-            <CardDescription className="text-[#4facfe]/80">
-              {description}
-            </CardDescription>
-          )}
-        </CardHeader>
         <CardContent>
           <p className="text-[#4facfe]">
             No data available to display the chart.
@@ -73,14 +56,6 @@ export function SpaceRadarChart({
 
   return (
     <Card className="w-full max-w-3xl border-[#1a2b4b] bg-[#0a0f1f]/80 backdrop-blur-sm">
-      <CardHeader>
-        <CardTitle className="text-[#00f2fe]">{title}</CardTitle>
-        {description && (
-          <CardDescription className="text-[#4facfe]/80">
-            {description}
-          </CardDescription>
-        )}
-      </CardHeader>
       <CardContent>
         <ChartContainer
           config={chartConfig}
@@ -89,7 +64,7 @@ export function SpaceRadarChart({
           <RadarChart data={data}>
             <PolarGrid className="stroke-[#1a2b4b]" />
             <PolarAngleAxis
-              dataKey="subject"
+              dataKey="skill_name"
               tick={{ fill: "#4facfe", fontSize: 12 }}
             />
             <PolarRadiusAxis
