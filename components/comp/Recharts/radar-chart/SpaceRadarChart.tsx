@@ -6,14 +6,13 @@ import {
   PolarAngleAxis,
   PolarRadiusAxis,
   Radar,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
 } from "recharts";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   ChartContainer,
   ChartLegend,
@@ -25,16 +24,16 @@ import {
 interface SkillDataPoint {
   skill_name: string;
   skill_percentage: number;
-  [key: string]: string | number; // Allow string indexing for dynamic access
+  [key: string]: string | number;
 }
 
-interface SpaceRadarChartProps {
+interface SpaceChartProps {
   data: SkillDataPoint[];
   dataKeys: string[];
 }
 
-export function SpaceRadarChart({ data, dataKeys }: SpaceRadarChartProps) {
-  if (!dataKeys?.length) {
+export default function SpaceRadarChart({ data, dataKeys }: SpaceChartProps) {
+  if (!dataKeys?.length || !data.length) {
     return (
       <Card className="w-full max-w-3xl border-[#1a2b4b] bg-[#0a0f1f]/80 backdrop-blur-sm">
         <CardContent>
@@ -46,54 +45,94 @@ export function SpaceRadarChart({ data, dataKeys }: SpaceRadarChartProps) {
     );
   }
 
-  const chartConfig = dataKeys.reduce((acc, key, index) => {
-    acc[key] = {
-      label: key,
-      color: index === 0 ? "#00f2fe" : index === 1 ? "#4facfe" : "#0011ff",
-    };
-    return acc;
-  }, {} as Record<string, { label: string; color: string }>);
+  const chartConfig = {
+    skill_percentage: {
+      label: "Skill Percentage",
+      color: "#00f2fe",
+    },
+  };
+
+  const isBarChart = data.length <= 4;
+
+  const formattedData = data.map((item) => ({
+    ...item,
+    skill_percentage: Number(item.skill_percentage),
+  }));
 
   return (
     <Card className="w-full max-w-3xl border-[#1a2b4b] bg-[#0a0f1f]/80 backdrop-blur-sm">
       <CardContent>
         <ChartContainer
           config={chartConfig}
-          className="aspect-square h-[400px] [&_.recharts-polar-grid-line]:stroke-[#1a2b4b] [&_.recharts-polar-angle-axis-tick-value]:fill-[#4facfe]"
+          className={`${
+            isBarChart ? "h-[300px]" : "aspect-square h-[400px]"
+          } [&_.recharts-polar-grid-line]:stroke-[#1a2b4b] [&_.recharts-polar-angle-axis-tick-value]:fill-[#4facfe]`}
         >
-          <RadarChart data={data}>
-            <PolarGrid className="stroke-[#1a2b4b]" />
-            <PolarAngleAxis
-              dataKey="skill_name"
-              tick={{ fill: "#4facfe", fontSize: 12 }}
-            />
-            <PolarRadiusAxis
-              angle={30}
-              domain={[0, "auto"]}
-              tick={{ fill: "#4facfe" }}
-              stroke="#1a2b4b"
-            />
-            <ChartTooltip
-              content={
-                <ChartTooltipContent className="bg-[#0a0f1f]/95 border-[#1a2b4b] text-[#00f2fe]" />
-              }
-            />
-            {dataKeys.map((key) => (
+          {isBarChart ? (
+            <BarChart data={formattedData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#1a2b4b" />
+              <XAxis
+                dataKey="skill_name"
+                tick={{ fill: "#4facfe", fontSize: 12 }}
+              />
+              <YAxis
+                tick={{ fill: "#4facfe" }}
+                domain={[0, 100]}
+                label={{
+                  value: "Skill Percentage",
+                  angle: -90,
+                  position: "insideLeft",
+                  fill: "#4facfe",
+                }}
+              />
+              <ChartTooltip
+                content={
+                  <ChartTooltipContent className="bg-[#0a0f1f]/95 border-[#1a2b4b] text-[#00f2fe]" />
+                }
+              />
+              <Bar
+                dataKey="skill_percentage"
+                fill={chartConfig.skill_percentage.color}
+                name={chartConfig.skill_percentage.label}
+              />
+              <ChartLegend
+                content={
+                  <ChartLegendContent className="[&_.recharts-legend-item-text]:text-[#4facfe]" />
+                }
+              />
+            </BarChart>
+          ) : (
+            <RadarChart data={formattedData}>
+              <PolarGrid className="stroke-[#1a2b4b]" />
+              <PolarAngleAxis
+                dataKey="skill_name"
+                tick={{ fill: "#4facfe", fontSize: 12 }}
+              />
+              <PolarRadiusAxis
+                angle={30}
+                domain={[0, 100]}
+                tick={{ fill: "#4facfe" }}
+                stroke="#1a2b4b"
+              />
+              <ChartTooltip
+                content={
+                  <ChartTooltipContent className="bg-[#0a0f1f]/95 border-[#1a2b4b] text-[#00f2fe]" />
+                }
+              />
               <Radar
-                key={key}
-                name={key}
-                dataKey={key}
-                stroke={chartConfig[key].color}
-                fill={chartConfig[key].color}
+                name={chartConfig.skill_percentage.label}
+                dataKey="skill_percentage"
+                stroke={chartConfig.skill_percentage.color}
+                fill={chartConfig.skill_percentage.color}
                 fillOpacity={0.3}
               />
-            ))}
-            <ChartLegend
-              content={
-                <ChartLegendContent className="[&_.recharts-legend-item-text]:text-[#4facfe]" />
-              }
-            />
-          </RadarChart>
+              <ChartLegend
+                content={
+                  <ChartLegendContent className="[&_.recharts-legend-item-text]:text-[#4facfe]" />
+                }
+              />
+            </RadarChart>
+          )}
         </ChartContainer>
       </CardContent>
     </Card>

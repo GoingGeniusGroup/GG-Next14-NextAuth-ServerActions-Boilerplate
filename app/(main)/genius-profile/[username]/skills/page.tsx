@@ -1,4 +1,4 @@
-import { SpaceRadarChart } from "@/components/comp/Recharts/radar-chart/SpaceRadarChart";
+import SpaceRadarChart from "@/components/comp/Recharts/radar-chart/SpaceRadarChart";
 import SkillsForm from "@/components/comp/Forms/SkillsForm";
 import { getCurrentUser } from "@/actions/userAndGuild";
 import { getUserSkills } from "@/actions/skills";
