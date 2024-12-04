@@ -3,10 +3,6 @@ import SkillsForm from "@/components/comp/Forms/SkillsForm";
 import { getCurrentUser } from "@/actions/userAndGuild";
 import { getUserSkills } from "@/actions/skills";
 
-const data = [{ skill_name: "example", skill_percentage: 55 }];
-
-const dataKeys = ["skill1", "skill2", "skill3"];
-
 const defaultValues = {
   skill_name: "",
   skill_percentage: 0,
@@ -31,8 +27,11 @@ const GeniusUserSkills = async () => {
     <>
       <div className="flex gap-1">
         <SpaceRadarChart
-          data={skills_data ? skills_data : data}
-          dataKeys={dataKeys}
+          data={
+            skills_data
+              ? skills_data
+              : [{ skill_name: "", skill_percentage: 0 }]
+          }
         />
         <SkillsForm gg_id={gg_id} skill_id="" defaultValues={defaultValues} />
       </div>

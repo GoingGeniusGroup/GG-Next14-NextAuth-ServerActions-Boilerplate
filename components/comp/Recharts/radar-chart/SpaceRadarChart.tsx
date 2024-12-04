@@ -29,11 +29,10 @@ interface SkillDataPoint {
 
 interface SpaceChartProps {
   data: SkillDataPoint[];
-  dataKeys: string[];
 }
 
-export default function SpaceRadarChart({ data, dataKeys }: SpaceChartProps) {
-  if (!dataKeys?.length || !data.length) {
+export default function SpaceRadarChart({ data }: SpaceChartProps) {
+  if (!data.length) {
     return (
       <Card className="w-full max-w-3xl border-[#1a2b4b] bg-[#0a0f1f]/80 backdrop-blur-sm">
         <CardContent>
