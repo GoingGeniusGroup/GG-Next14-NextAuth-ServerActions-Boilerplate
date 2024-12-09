@@ -90,7 +90,7 @@ export default async function RootLayout({
         <Providers>
           <MobileSimulatorProvider>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              <AuroraBackground>
+              {/* <AuroraBackground> */}
                 <UserProvider>
                   <AvatarProvider initialAvatars={avatars} user={user.gg_id}>
                     {/* Theme switcher */}
@@ -112,7 +112,7 @@ export default async function RootLayout({
                   </AvatarProvider>
                 </UserProvider>
                 <ToastProvider />
-              </AuroraBackground>
+              {/* </AuroraBackground> */}
             </ThemeProvider>
           </MobileSimulatorProvider>
         </Providers>

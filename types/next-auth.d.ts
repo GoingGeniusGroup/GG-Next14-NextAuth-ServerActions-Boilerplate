@@ -10,6 +10,7 @@ export interface User {
   isTwoFactorEnabled: boolean;
   isOAuth: boolean;
   username?: string | null; // Make username optional
+  encodedToken?: string | null
 }
 
 export type ExtendedUser = User;

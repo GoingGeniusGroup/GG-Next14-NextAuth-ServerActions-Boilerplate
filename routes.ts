@@ -1,4 +1,4 @@
-export const publicRoutes: string[] = ["/verify", "/"];
+export const publicRoutes: string[] = ["/verify", "/","/api/login-qr","/api/generate-qr","/qr-login"];
 
 export const authRoutes: string[] = [
   "/login",
@@ -9,6 +9,8 @@ export const authRoutes: string[] = [
   "/new-password",
   "/two-factor",
   "/hi",
+  
+  
 ];
 
 export const apiAuthPrefix: string = "/api/auth";

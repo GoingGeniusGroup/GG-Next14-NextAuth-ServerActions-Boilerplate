@@ -1,6 +1,7 @@
 import { loginSchema } from "@/schemas";
 import {
   getUserByEmail,
+  getUserById,
   getUserByPhone,
   getUserByUsername,
 } from "@/services/user";
@@ -12,31 +13,53 @@ import Google from "next-auth/providers/google";
 
 export const CredentialsProvider = Credentials({
   async authorize(credentials) {
-    const validatedFields = loginSchema.safeParse(credentials);
 
-    if (validatedFields.success) {
-      const { login, password } = validatedFields.data;
-
-      let user =
-        (await getUserByEmail(login)) ||
-        (await getUserByPhone(login)) ||
-        (await getUserByUsername(login));
-
-      if (!user || !user.password) return null;
-
-      const passwordsMatch = await bcrypt.compare(password, user.password);
-
-      if (passwordsMatch) {
-        return {
-          id: user.gg_id,
-          name: user.username,
-          email: user.email,
-          role: user.role,
-          isTwoFactorEnabled: user.isTwoFactorEnabled,
-          isOAuth: false,
-        };
-      }
+    
+     if (credentials.userId) {
+      let user = await getUserById(credentials.userId as string);
+      if (!user) return null;
+      
+      return {
+        id: user.gg_id,
+        name: user.username,
+        email: user.email,
+        role: user.role,
+        isTwoFactorEnabled: user.isTwoFactorEnabled,
+        isOAuth: false,
+      };
     }
+    else{
+      const validatedFields = loginSchema.safeParse(credentials);
+     
+      if (validatedFields.success) {
+        const { login, password } = validatedFields.data;
+  
+        let user =
+          (await getUserByEmail(login)) ||
+          (await getUserByPhone(login)) ||
+          (await getUserByUsername(login));
+  
+        if (!user || !user.password) return null;
+  
+        const passwordsMatch = await bcrypt.compare(password, user.password);
+  
+        if (passwordsMatch) {
+          return {
+            id: user.gg_id,
+            name: user.username,
+            email: user.email,
+            role: user.role,
+            isTwoFactorEnabled: user.isTwoFactorEnabled,
+            isOAuth: false,
+          };
+        }
+      }
+    
+
+    }
+
+      
+   
 
     return null;
   },

@@ -24,6 +24,6 @@
     },
     "typeRoots": ["types"]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/(main)/qr-login/qr-reader"],
   "exclude": ["node_modules"]
 }

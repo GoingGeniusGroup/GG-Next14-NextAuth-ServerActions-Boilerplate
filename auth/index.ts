@@ -7,6 +7,7 @@ import { getUserById, updateUserById } from "@/services/user";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { UserRole } from "@prisma/client";
 import NextAuth from "next-auth";
+import { encode } from "@auth/core/jwt";
 
 export const {
   handlers: { GET, POST },
@@ -50,7 +51,9 @@ export const {
       token.role = existingUser.role;
       token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
       token.isOAuth = !!existingAccount;
-
+      console.log('====================================');
+      console.log("token from jwt", token);
+      console.log('====================================');
       return token;
     },
     async session({ token, session }) {
@@ -62,8 +65,14 @@ export const {
         session.user.role = token.role as UserRole;
         session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
         session.user.isOAuth = token.isOAuth as boolean;
+        session.user.encodedToken = await encode({ 
+          token: { ...token },
+          secret: process.env.JWT_SECRET!,
+          salt:"89hf2"
+        });
       }
 
+      
       return session;
     },
     async signIn({ user, account }) {
