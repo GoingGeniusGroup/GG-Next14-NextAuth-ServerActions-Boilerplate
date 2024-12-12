@@ -1,4 +1,5 @@
 "use client";
+
 import React, { PureComponent } from "react";
 import {
   BarChart,
