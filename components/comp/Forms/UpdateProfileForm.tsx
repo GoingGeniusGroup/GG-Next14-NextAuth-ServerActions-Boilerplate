@@ -12,7 +12,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { ProfileFormSchema } from "@/schemas/FormSchema";
-import { updateProfile } from "@/actions/update-profile";
+import { updateProfile } from "@/actions/genius-profile/update-profile";
 import { toast } from "sonner";
 import { AnimatedInput } from "@/components/ui/animated-input/animated-input";
 import DatePicker from "react-datepicker";

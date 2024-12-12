@@ -1,6 +1,10 @@
 "use client";
 
-import { addAvatar, deleteAvatar, updateAvatar } from "@/actions/avatar";
+import {
+  addAvatar,
+  deleteAvatar,
+  updateAvatar,
+} from "@/actions/genius-profile/avatar";
 import { Avatar } from "@/components/comp/Avatar";
 import {
   AvatarCreator,

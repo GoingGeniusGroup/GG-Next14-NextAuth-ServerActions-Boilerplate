@@ -9,7 +9,11 @@ import {
   useEffect,
 } from "react";
 
-import { addAvatar, deleteAvatar, updateAvatar } from "@/actions/avatar";
+import {
+  addAvatar,
+  deleteAvatar,
+  updateAvatar,
+} from "@/actions/genius-profile/avatar";
 import { AvatarExportedEvent } from "@/components/comp/AvatarComponents/avatar_creator/events";
 import { AvatarResponse } from "@/types/utils";
 import { toast } from "sonner";

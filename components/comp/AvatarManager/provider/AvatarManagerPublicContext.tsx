@@ -10,7 +10,7 @@ import {
 
 import { getAvatarsByUserId } from "@/services/avatar";
 import { getUserByUsername } from "@/services/user";
-import { getUserAvatars } from "@/actions/avatar";
+import { getUserAvatars } from "@/actions/genius-profile/avatar";
 
 // Types
 export type AvatarType = {

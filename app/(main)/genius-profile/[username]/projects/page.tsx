@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/actions/userAndGuild";
+import { getCurrentUser } from "@/actions/genius-profile/userAndGuild";
 import GeniusUserProjectsV2 from "@/components/comp/GeniusUserProfile/GeniusUserProjectsV2";
 import { getExperiencesByUserId } from "@/services/experience";
 import { getUserByUsername } from "@/services/user";

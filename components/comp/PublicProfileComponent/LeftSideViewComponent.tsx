@@ -1,7 +1,7 @@
 "use client";
 
-import { getUserAvatars } from "@/actions/avatar";
-import { getCurrentUser } from "@/actions/userAndGuild";
+import { getUserAvatars } from "@/actions/genius-profile/avatar";
+import { getCurrentUser } from "@/actions/genius-profile/userAndGuild";
 import { Avatar } from "@/components/comp/Avatar";
 import { useEffect, useState } from "react";
 

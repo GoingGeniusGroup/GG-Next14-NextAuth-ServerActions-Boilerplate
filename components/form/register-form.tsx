@@ -9,8 +9,8 @@ import { z } from "zod";
 import { FormInput } from "@/components/comp/auth/form-input";
 import { Button } from "@/components/ui/button/button";
 import { useTransition } from "react";
-import { register } from "@/actions/register";
-import { login } from "@/actions/login";
+import { register } from "@/actions/auth/register";
+import { login } from "@/actions/auth/login";
 import { toast } from "sonner";
 
 export const RegisterForm = ({ isMobile }: { isMobile: boolean }) => {

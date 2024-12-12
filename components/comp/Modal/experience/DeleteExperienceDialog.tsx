@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/alert-dialog/alert-dialog";
 import { IconTrash } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button/button";
-import { deleteUserExperience } from "@/actions/experience";
+import { deleteUserExperience } from "@/actions/genius-profile/experience";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 

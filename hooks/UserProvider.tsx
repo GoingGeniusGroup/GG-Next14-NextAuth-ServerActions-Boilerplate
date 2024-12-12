@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { getCurrentUser } from "@/actions/userAndGuild";
+import { getCurrentUser } from "@/actions/genius-profile/userAndGuild";
 
 // Define the context type
 interface UserContextType {

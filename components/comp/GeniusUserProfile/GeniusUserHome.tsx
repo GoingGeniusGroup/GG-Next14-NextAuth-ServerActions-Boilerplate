@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/actions/userAndGuild";
+import { getCurrentUser } from "@/actions/genius-profile/userAndGuild";
 import AboutSectionProfile from "../console/AboutSectionProfile";
 import BottomSection from "../console/BottomSection";
 import { getUserByUsername } from "@/services/user";

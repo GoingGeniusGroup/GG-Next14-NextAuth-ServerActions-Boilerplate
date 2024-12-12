@@ -1,6 +1,6 @@
 "use client";
 
-import { profile } from "@/actions/profile";
+import { profile } from "@/actions/genius-profile/profile";
 import { FormInput } from "@/components/comp/auth/form-input";
 import { FormToggle } from "@/components/comp/auth/form-toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";

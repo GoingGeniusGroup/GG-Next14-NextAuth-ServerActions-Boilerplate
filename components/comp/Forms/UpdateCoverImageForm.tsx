@@ -13,7 +13,7 @@ import { FileUploaderMinimal } from "@uploadcare/react-uploader";
 import "@uploadcare/react-uploader/core.css";
 import Image from "next/image";
 import { useState } from "react";
-import { updateCoverPhoto } from "@/actions/update-cover-photo";
+import { updateCoverPhoto } from "@/actions/genius-profile/update-cover-photo";
 
 // Define the form schema
 const ProfileFormSchema = z.object({

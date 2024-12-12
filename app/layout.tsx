@@ -11,7 +11,7 @@ import { UserProvider } from "@/hooks/UserProvider";
 import { ToastProvider } from "./providers/toast-provider";
 import { MobileSimulatorProvider } from "@/components/comp/MobileSimulator/provider/MobileSimulatorContext";
 import { currentUser } from "@/lib/auth";
-import { getUserAvatars } from "@/actions/avatar";
+import { getUserAvatars } from "@/actions/genius-profile/avatar";
 import {
   AvatarProvider,
   AvatarType,

@@ -9,7 +9,7 @@ import { resetPasswordSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button/button";
-import { resetPassword } from "@/actions/reset-password";
+import { resetPassword } from "@/actions/auth/reset-password";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 

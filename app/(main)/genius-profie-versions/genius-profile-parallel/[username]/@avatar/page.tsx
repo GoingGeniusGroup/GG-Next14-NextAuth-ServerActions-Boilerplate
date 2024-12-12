@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/actions/userAndGuild";
+import { getCurrentUser } from "@/actions/genius-profile/userAndGuild";
 import AvatarManagerClientProfile from "@/components/comp/AvatarManager/avatar-manager-client-profile";
 import PublicAvatarManagerClientProfile from "@/components/comp/AvatarManager/public-avatar-manager-client-profile";
 import { getUserByUsername } from "@/services/user";

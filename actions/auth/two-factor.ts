@@ -1,6 +1,6 @@
 "use server";
 
-import { signInCredentials } from "@/actions/login";
+import { signInCredentials } from "@/actions/auth/login";
 import { isExpired, response } from "@/lib/utils";
 import { loginSchema, twoFactorSchema } from "@/schemas";
 import { sendTwoFactorEmail } from "@/services/mail";

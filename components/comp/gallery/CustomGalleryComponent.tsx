@@ -1,5 +1,5 @@
 import UploadGalleryDialog from "../Modal/gallery/UploadGalleryDialog";
-import { getCurrentUser } from "@/actions/userAndGuild";
+import { getCurrentUser } from "@/actions/genius-profile/userAndGuild";
 import { getImageUrls } from "@/actions/image-post";
 import { getUserByUsername } from "@/services/user";
 import { imagePostType } from "../Forms/UploadImagesGalleryForm";

@@ -20,7 +20,10 @@ import { Label } from "@/components/ui/animated-input/label";
 import "@uploadcare/react-uploader/core.css";
 import { LabelInputContainer } from "@/components/ui/animated-input/label-input-container";
 import { FileUploaderMinimal } from "@uploadcare/react-uploader";
-import { addExperience, updateUserExperience } from "@/actions/experience";
+import {
+  addExperience,
+  updateUserExperience,
+} from "@/actions/genius-profile/experience";
 
 const experienceSchema = z.object({
   type: z.string().min(3, "Type must be at least 3 characters"),

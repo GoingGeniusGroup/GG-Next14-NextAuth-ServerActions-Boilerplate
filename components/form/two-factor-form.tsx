@@ -1,6 +1,6 @@
 "use client";
 
-import { resendTwoFactor, twoFactor } from "@/actions/two-factor";
+import { resendTwoFactor, twoFactor } from "@/actions/auth/two-factor";
 import { CardWrapper } from "@/components/comp/auth/card-wrapper";
 import { FormInput } from "@/components/comp/auth/form-input";
 import { Button } from "@/components/ui/button/button";

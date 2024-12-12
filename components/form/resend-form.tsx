@@ -7,7 +7,7 @@ import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import { FormInput } from "@/components/comp/auth/form-input";
 import { useTransition } from "react";
-import { resendToken } from "@/actions/resend";
+import { resendToken } from "@/actions/auth/resend";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button/button";
 import { zodResolver } from "@hookform/resolvers/zod";

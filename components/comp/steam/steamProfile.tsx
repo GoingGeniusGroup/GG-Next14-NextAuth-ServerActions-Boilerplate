@@ -4,7 +4,7 @@ import {
   fetchOwnedGames,
   fetchSteamProfile,
   fetchUserStatsForGame,
-} from "@/actions/steam";
+} from "@/actions/genius-profile/steam";
 import {
   Accordion,
   AccordionContent,

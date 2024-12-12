@@ -1,4 +1,4 @@
-import { getUserAvatars } from "@/actions/avatar";
+import { getUserAvatars } from "@/actions/genius-profile/avatar";
 import { currentUser } from "@/lib/auth";
 import AvatarManagerClient from "./avatar-manager-client";
 
