@@ -13,7 +13,7 @@ import {
 import Image from "next/image";
 import { useMusicPlayer } from "@/src/context/music-player-context";
 
-const MusicPlayer: React.FC = () => {
+const MusicPlayerMinimized: React.FC = () => {
   const {
     currentSong,
     isPlaying,
@@ -49,87 +49,79 @@ const MusicPlayer: React.FC = () => {
   if (!currentSong) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 w-full bg-white/10 dark:bg-black/20 backdrop-blur-lg border-t border-white/10 p-2">
-      <div className="max-w-6xl mx-auto">
+    <div className="fixed bottom-0 left-0 w-full bg-white/10 dark:bg-black/20 backdrop-blur-lg border-t border-white/10 p-1">
+      <div className="max-w-4xl mx-auto flex flex-col items-center space-y-1">
         {/* Progress Bar */}
-        <div className="w-full mb-4">
-          <input
-            type="range"
-            min="0"
-            max={duration || 0}
-            value={currentTime}
-            onChange={handleSeek}
-            className="w-full h-1 bg-gray-200 dark:bg-gray-700 rounded-full 
-                     [&::-webkit-slider-thumb]:appearance-none 
-                     [&::-webkit-slider-thumb]:w-3 
-                     [&::-webkit-slider-thumb]:h-3 
-                     [&::-webkit-slider-thumb]:bg-blue-500 
-                     [&::-webkit-slider-thumb]:rounded-full 
-                     hover:[&::-webkit-slider-thumb]:bg-blue-600"
-          />
-          <div className="flex justify-between mt-1">
-            <span className="text-xs text-gray-400">
-              {formatTime(currentTime)}
-            </span>
-            <span className="text-xs text-gray-400">
-              {formatTime(duration)}
-            </span>
-          </div>
+        <input
+          type="range"
+          min="0"
+          max={duration || 0}
+          value={currentTime}
+          onChange={handleSeek}
+          className="w-full h-1 bg-gray-200 dark:bg-gray-700 rounded-full 
+                [&::-webkit-slider-thumb]:appearance-none 
+                [&::-webkit-slider-thumb]:w-2 
+                [&::-webkit-slider-thumb]:h-2 
+                [&::-webkit-slider-thumb]:bg-blue-500 
+                [&::-webkit-slider-thumb]:rounded-full 
+                hover:[&::-webkit-slider-thumb]:bg-blue-600"
+        />
+        <div className="flex justify-between w-full text-[10px] text-gray-400">
+          <span>{formatTime(currentTime)}</span>
+          <span>{formatTime(duration)}</span>
         </div>
 
-        <div className="grid grid-cols-3 items-center gap-4">
+        {/* Compact Controls */}
+        <div className="flex items-center justify-between w-full px-2">
           {/* Song Info */}
-          <div className="flex items-center space-x-4">
-            <div className="relative group">
-              <Image
-                src={currentSong.imageUrl}
-                alt={currentSong.title}
-                className="w-14 h-14 rounded-lg object-cover shadow-lg group-hover:shadow-xl transition-all duration-300"
-                height={56}
-                width={56}
-              />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 rounded-lg transition-all duration-300" />
-            </div>
-            <div>
-              <h4 className="font-semibold text-gray-800 dark:text-white truncate max-w-[200px]">
+          <div className="flex items-center space-x-1">
+            <Image
+              src={currentSong.imageUrl}
+              alt={currentSong.title}
+              className="w-8 h-8 rounded object-cover shadow"
+              height={32}
+              width={32}
+            />
+            <div className="flex flex-col">
+              <h4 className="text-xs font-medium text-gray-800 dark:text-white truncate max-w-[80px]">
                 {currentSong.title}
               </h4>
-              <p className="text-sm text-gray-500 dark:text-gray-400 truncate max-w-[200px]">
+              <p className="text-[10px] text-gray-500 dark:text-gray-400 truncate max-w-[80px]">
                 {currentSong.artist}
               </p>
             </div>
           </div>
 
           {/* Player Controls */}
-          <div className="flex items-center justify-center space-x-6">
+          <div className="flex items-center space-x-3">
             <button
               onClick={playPrevious}
-              className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors"
+              className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white"
             >
-              <TrackPreviousIcon className="w-5 h-5" />
+              <TrackPreviousIcon className="w-3 h-3" />
             </button>
 
             <button
               onClick={isPlaying ? pause : play}
-              className="bg-blue-500 hover:bg-blue-600 text-white rounded-full p-3 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
+              className="bg-blue-500 hover:bg-blue-600 text-white rounded-full p-1.5 transition-transform transform hover:scale-105"
             >
               {isPlaying ? (
-                <PauseIcon className="w-6 h-6" />
+                <PauseIcon className="w-4 h-4" />
               ) : (
-                <PlayIcon className="w-6 h-6" />
+                <PlayIcon className="w-4 h-4" />
               )}
             </button>
 
             <button
               onClick={playNext}
-              className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors"
+              className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white"
             >
-              <TrackNextIcon className="w-5 h-5" />
+              <TrackNextIcon className="w-3 h-3" />
             </button>
           </div>
 
-          {/* Volume Control and Repeat */}
-          <div className="flex items-center justify-end space-x-3">
+          {/* Volume and Loop */}
+          <div className="flex items-center space-x-2">
             <button
               onClick={toggleRepeat}
               className={`transition-colors ${
@@ -138,16 +130,16 @@ const MusicPlayer: React.FC = () => {
                   : "text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white"
               }`}
             >
-              <LoopIcon className="w-5 h-5" />
+              <LoopIcon className="w-3 h-3" />
             </button>
             <button
               onClick={() => setVolume(volume > 0 ? 0 : 0.5)}
-              className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors"
+              className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white"
             >
               {volume === 0 ? (
-                <SpeakerQuietIcon className="w-5 h-5" />
+                <SpeakerQuietIcon className="w-3 h-3" />
               ) : (
-                <SpeakerLoudIcon className="w-5 h-5" />
+                <SpeakerLoudIcon className="w-3 h-3" />
               )}
             </button>
             <input
@@ -156,13 +148,13 @@ const MusicPlayer: React.FC = () => {
               max="100"
               value={volume * 100}
               onChange={handleVolumeChange}
-              className="w-24 h-1 bg-gray-200 dark:bg-gray-700 rounded-full
-                       [&::-webkit-slider-thumb]:appearance-none 
-                       [&::-webkit-slider-thumb]:w-3 
-                       [&::-webkit-slider-thumb]:h-3 
-                       [&::-webkit-slider-thumb]:bg-blue-500 
-                       [&::-webkit-slider-thumb]:rounded-full 
-                       hover:[&::-webkit-slider-thumb]:bg-blue-600"
+              className="w-16 h-1 bg-gray-200 dark:bg-gray-700 rounded-full
+                   [&::-webkit-slider-thumb]:appearance-none 
+                   [&::-webkit-slider-thumb]:w-2 
+                   [&::-webkit-slider-thumb]:h-2 
+                   [&::-webkit-slider-thumb]:bg-blue-500 
+                   [&::-webkit-slider-thumb]:rounded-full 
+                   hover:[&::-webkit-slider-thumb]:bg-blue-600"
             />
           </div>
         </div>
@@ -171,4 +163,4 @@ const MusicPlayer: React.FC = () => {
   );
 };
 
-export default MusicPlayer;
+export default MusicPlayerMinimized;

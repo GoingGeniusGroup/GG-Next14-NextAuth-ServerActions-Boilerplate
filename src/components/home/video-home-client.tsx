@@ -21,6 +21,7 @@ import { Song } from "@/src/core/types/songs.js";
 import { MusicPlayerProvider } from "@/src/context/music-player-context";
 import SongList from "../music-player/song-lists";
 import MusicPlayer from "../music-player/music-player-component";
+import MusicPlayerMinimized from "../music-player/music-player-component-minimized";
 
 interface VideoHomeClientProps {
   user: any;
@@ -133,7 +134,8 @@ const VideoHomeClient: React.FC<VideoHomeClientProps> = ({
 
             {/* Music Player */}
             <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-30 w-[50%]">
-              <MusicPlayer />
+              {/* <MusicPlayer /> */}
+              <MusicPlayerMinimized />
             </div>
 
             {/* HUD at the bottom */}
