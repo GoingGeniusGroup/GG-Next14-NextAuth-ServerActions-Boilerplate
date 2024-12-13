@@ -1,4 +1,4 @@
-import VirtualShop from "@/components/comp/shop/VirtualShop";
+import VirtualShop from "@/src/components/comp/shop/VirtualShop";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

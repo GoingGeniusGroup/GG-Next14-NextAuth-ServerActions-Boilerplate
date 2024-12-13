@@ -20,9 +20,9 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*", "./app/*", "./components/*"]
+      "@/*": ["./*", "./app/*", "./src/core/lib/*", "./src/*"]
     },
-    "typeRoots": ["types"]
+    "typeRoots": ["src/core/types"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]

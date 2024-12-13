@@ -1,10 +1,10 @@
-import CustomGalleryComponent from "@/components/comp/gallery/CustomGalleryComponent";
-import ParallexGridScroll1 from "@/components/comp/gallery/ParallexGridScroll1";
-import ParallexGridScroll2 from "@/components/comp/gallery/ParallexGridScroll2";
-import GeniusUserExperience from "@/components/comp/GeniusUserProfile/GeniusUserExperience";
-import GeniusUserHome from "@/components/comp/GeniusUserProfile/GeniusUserHome";
-import GeniusUserProjectsComponent from "@/components/comp/GeniusUserProfile/GeniusUserProjectsComponent";
-import { CollapsibleSidebarTabs } from "@/components/ui/tabs/custom-tabs";
+import CustomGalleryComponent from "@/src/components/comp/gallery/CustomGalleryComponent";
+import ParallexGridScroll1 from "@/src/components/comp/gallery/ParallexGridScroll1";
+import ParallexGridScroll2 from "@/src/components/comp/gallery/ParallexGridScroll2";
+import GeniusUserExperience from "@/src/components/comp/GeniusUserProfile/GeniusUserExperience";
+import GeniusUserHome from "@/src/components/comp/GeniusUserProfile/GeniusUserHome";
+import GeniusUserProjectsComponent from "@/src/components/comp/GeniusUserProfile/GeniusUserProjectsComponent";
+import { CollapsibleSidebarTabs } from "@/src/ui/tabs/custom-tabs";
 import {
   IconArrowWaveRightUp,
   IconBoxAlignRightFilled,
