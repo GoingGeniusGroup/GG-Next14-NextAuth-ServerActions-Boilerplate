@@ -1,3 +1,4 @@
+'use cache'
 import GeniusUserHome from "@/src/components/comp/GeniusUserProfile/GeniusUserHome";
 import { getUserByUsername } from "@/services/user";
 
