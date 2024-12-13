@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import {
   PlayIcon,
   PauseIcon,
@@ -8,6 +8,7 @@ import {
   TrackPreviousIcon,
   SpeakerLoudIcon,
   SpeakerQuietIcon,
+  LoopIcon,
 } from "@radix-ui/react-icons";
 import Image from "next/image";
 import { useMusicPlayer } from "@/src/context/music-player-context";
@@ -27,6 +28,23 @@ const MusicPlayer: React.FC = () => {
     seekTo,
   } = useMusicPlayer();
 
+  const [isRepeat, setIsRepeat] = React.useState(false);
+
+  // Add debug logging
+  useEffect(() => {
+    if (currentSong) {
+      // Attempt to preload the audio
+      const audio = new Audio(currentSong.audioUrl);
+      audio.preload = "auto";
+
+      audio.onerror = (e) => {
+        console.error("Audio Error:", e);
+        console.error("Audio Source:", currentSong.audioUrl);
+      };
+    }
+  }, [currentSong, isRepeat]);
+
+  // Rest of the component remains the same as in the previous implementation
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = Math.floor(seconds % 60);
@@ -46,100 +64,123 @@ const MusicPlayer: React.FC = () => {
   if (!currentSong) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 w-full bg-gray-100 dark:bg-gray-800 p-4 shadow-lg flex items-center">
-      {/* Song Info */}
-      <div className="flex items-center mr-6">
-        <Image
-          src={currentSong.imageUrl}
-          alt={currentSong.title}
-          width={60}
-          height={60}
-          className="rounded-md mr-4"
-        />
-        <div>
-          <h4 className="font-medium text-gray-800 dark:text-white">
-            {currentSong.title}
-          </h4>
-          <p className="text-sm text-gray-600 dark:text-gray-300">
-            {currentSong.artist}
-          </p>
-        </div>
-      </div>
-
-      {/* Player Controls */}
-      <div className="flex-grow flex flex-col items-center">
-        {/* Playback Controls */}
-        <div className="flex items-center space-x-4 mb-2">
-          <button
-            onClick={playPrevious}
-            className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white"
-          >
-            <TrackPreviousIcon className="w-6 h-6" />
-          </button>
-
-          {isPlaying ? (
-            <button
-              onClick={pause}
-              className="bg-blue-500 text-white rounded-full p-2 hover:bg-blue-600"
-            >
-              <PauseIcon className="w-8 h-8" />
-            </button>
-          ) : (
-            <button
-              onClick={play}
-              className="bg-blue-500 text-white rounded-full p-2 hover:bg-blue-600"
-            >
-              <PlayIcon className="w-8 h-8" />
-            </button>
-          )}
-
-          <button
-            onClick={playNext}
-            className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white"
-          >
-            <TrackNextIcon className="w-6 h-6" />
-          </button>
-        </div>
-
-        {/* Progress Bar */}
-        <div className="flex items-center space-x-2 w-full max-w-md">
-          <span className="text-xs text-gray-500 dark:text-gray-400">
-            {formatTime(currentTime)}
-          </span>
+    <div className="fixed bottom-0 left-0 w-full bg-white/10 dark:bg-black/20 backdrop-blur-lg border-t border-white/10 p-2">
+      <div className="max-w-6xl mx-auto">
+        {/* Progress Bar - Moved to top */}
+        <div className="w-full mb-4">
           <input
             type="range"
             min="0"
             max={duration || 0}
             value={currentTime}
             onChange={handleSeek}
-            className="flex-grow appearance-none h-2 bg-gray-200 dark:bg-gray-700 rounded-full"
+            className="w-full h-1 bg-gray-200 dark:bg-gray-700 rounded-full 
+                     [&::-webkit-slider-thumb]:appearance-none 
+                     [&::-webkit-slider-thumb]:w-3 
+                     [&::-webkit-slider-thumb]:h-3 
+                     [&::-webkit-slider-thumb]:bg-blue-500 
+                     [&::-webkit-slider-thumb]:rounded-full 
+                     hover:[&::-webkit-slider-thumb]:bg-blue-600"
           />
-          <span className="text-xs text-gray-500 dark:text-gray-400">
-            {formatTime(duration)}
-          </span>
+          <div className="flex justify-between mt-1">
+            <span className="text-xs text-gray-400">
+              {formatTime(currentTime)}
+            </span>
+            <span className="text-xs text-gray-400">
+              {formatTime(duration)}
+            </span>
+          </div>
         </div>
-      </div>
 
-      {/* Volume Control */}
-      <div className="flex items-center space-x-2">
-        <button
-          onClick={() => setVolume(volume > 0 ? 0 : 0.5)}
-          className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white"
-        >
-          {volume === 0 ? (
-            <SpeakerQuietIcon className="w-6 h-6" />
-          ) : (
-            <SpeakerLoudIcon className="w-6 h-6" />
-          )}
-        </button>
-        <input
-          type="range"
-          min="0"
-          max="100"
-          value={volume * 100}
-          onChange={handleVolumeChange}
-          className="w-24 appearance-none h-2 bg-gray-200 dark:bg-gray-700 rounded-full"
-        />
+        <div className="grid grid-cols-3 items-center gap-4">
+          {/* Song Info */}
+          <div className="flex items-center space-x-4">
+            <div className="relative group">
+              <Image
+                src={currentSong.imageUrl}
+                alt={currentSong.title}
+                className="w-14 h-14 rounded-lg object-cover shadow-lg group-hover:shadow-xl transition-all duration-300"
+                height={56}
+                width={56}
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 rounded-lg transition-all duration-300" />
+            </div>
+            <div>
+              <h4 className="font-semibold text-gray-800 dark:text-white truncate max-w-[200px]">
+                {currentSong.title}
+              </h4>
+              <p className="text-sm text-gray-500 dark:text-gray-400 truncate max-w-[200px]">
+                {currentSong.artist}
+              </p>
+            </div>
+          </div>
+
+          {/* Player Controls */}
+          <div className="flex items-center justify-center space-x-6">
+            <button
+              onClick={playPrevious}
+              className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors"
+            >
+              <TrackPreviousIcon className="w-5 h-5" />
+            </button>
+
+            <button
+              onClick={isPlaying ? pause : play}
+              className="bg-blue-500 hover:bg-blue-600 text-white rounded-full p-3 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
+            >
+              {isPlaying ? (
+                <PauseIcon className="w-6 h-6" />
+              ) : (
+                <PlayIcon className="w-6 h-6" />
+              )}
+            </button>
+
+            <button
+              onClick={playNext}
+              className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors"
+            >
+              <TrackNextIcon className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Volume Control */}
+          <div className="flex items-center justify-end space-x-3">
+            <button
+              onClick={() => setIsRepeat(!isRepeat)}
+              className={`transition-colors ${
+                isRepeat
+                  ? "text-blue-500 hover:text-blue-600"
+                  : "text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white"
+              }`}
+            >
+              <LoopIcon className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => setVolume(volume > 0 ? 0 : 0.5)}
+              className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors"
+            >
+              {volume === 0 ? (
+                <SpeakerQuietIcon className="w-5 h-5" />
+              ) : (
+                <SpeakerLoudIcon className="w-5 h-5" />
+              )}
+            </button>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={volume * 100}
+              onChange={handleVolumeChange}
+              className="w-24 h-1 bg-gray-200 dark:bg-gray-700 rounded-full
+                       [&::-webkit-slider-thumb]:appearance-none 
+                       [&::-webkit-slider-thumb]:w-3 
+                       [&::-webkit-slider-thumb]:h-3 
+                       [&::-webkit-slider-thumb]:bg-blue-500 
+                       [&::-webkit-slider-thumb]:rounded-full 
+                       hover:[&::-webkit-slider-thumb]:bg-blue-600"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -148,15 +148,15 @@ const VideoHomeClient: React.FC<VideoHomeClientProps> = ({
                 <MdOutlineNavigateBefore size={30} />
               </motion.button>
 
-              <div className="flex gap-2 rounded-full px-2 py-1 shadow shadow-white dark:shadow-purple-700">
+              <div className="flex gap-2 rounded-full px-2 py-1 shadow shadow-white">
                 {paginationLabels.map((label, index) => (
                   <motion.div
                     key={index}
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
-                    className={`size-4 cursor-pointer rounded-full border-b border-white text-center text-xs font-semibold backdrop-blur-lg lg:size-fit lg:px-4 lg:py-2 dark:border-violet-700 ${
+                    className={`size-4 cursor-pointer rounded-full border-b border-white text-center text-xs font-semibold backdrop-blur-lg lg:size-fit lg:px-4 lg:py-2 ${
                       currentSlide === index
-                        ? "bg-pink-300 text-black"
+                        ? "bg-gradient-to-b from-sky-300/50 to-black/50 text-white"
                         : "text-white"
                     }`}
                     onClick={() => handleHudClick(index)}

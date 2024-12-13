@@ -16,15 +16,15 @@ const staticUsernames = [
 const songs: Song[] = [
   {
     id: "1",
-    title: "Song Title 1",
-    artist: "Artist Name",
-    imageUrl: "/path/to/image.jpg",
-    audioUrl: "/path/to/audio.mp3",
+    title: "Six Days",
+    artist: "Tokyo Drift",
+    imageUrl: "/music/images/sixdays.svg",
+    audioUrl: "/music/music/sixdays.mp3",
     duration: 240, // in seconds
   },
   {
     id: "2",
-    title: "Song Title 1",
+    title: "Song Title 2",
     artist: "Artist Name",
     imageUrl: "/path/to/image.jpg",
     audioUrl: "/path/to/audio.mp3",
@@ -32,7 +32,7 @@ const songs: Song[] = [
   },
   {
     id: "3",
-    title: "Song Title 1",
+    title: "Song Title 3",
     artist: "Artist Name",
     imageUrl: "/path/to/image.jpg",
     audioUrl: "/path/to/audio.mp3",
@@ -40,7 +40,7 @@ const songs: Song[] = [
   },
   {
     id: "4",
-    title: "Song Title 1",
+    title: "Song Title 4",
     artist: "Artist Name",
     imageUrl: "/path/to/image.jpg",
     audioUrl: "/path/to/audio.mp3",
