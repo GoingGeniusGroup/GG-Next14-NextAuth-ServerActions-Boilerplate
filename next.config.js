@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    dynamicIO: true,
+  },
   images: {
     remotePatterns: [
       {
@@ -22,8 +25,11 @@ const nextConfig = {
         protocol: "https",
         hostname: "fakestoreapi.com",
       },
+      {
+        protocol: "https",
+        hostname: "media.steampowered.com",
+      },
     ],
-    domains: ["media.steampowered.com"],
   },
   transpilePackages: ["swiper"],
 };
