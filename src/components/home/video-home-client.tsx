@@ -23,6 +23,13 @@ import SongList from "../music-player/song-lists";
 import MusicPlayerMinimized from "../music-player/music-player-component-minimized";
 import { Music2Icon } from "lucide-react";
 
+import { Orbitron } from "next/font/google";
+
+const orbitronFont = Orbitron({
+  subsets: ["latin"],
+  weight: ["400", "700", "600"],
+});
+
 interface VideoHomeClientProps {
   user: any;
   profilePic: string;
@@ -83,7 +90,9 @@ const VideoHomeClient: React.FC<VideoHomeClientProps> = ({
 
   return (
     <MusicPlayerProvider songs={songs}>
-      <div className="flex justify-center items-center">
+      <div
+        className={`flex justify-center items-center ${orbitronFont.className}`}
+      >
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <Swiper
             spaceBetween={0}
