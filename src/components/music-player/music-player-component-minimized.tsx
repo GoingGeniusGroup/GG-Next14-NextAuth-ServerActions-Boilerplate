@@ -58,7 +58,7 @@ const MusicPlayerMinimized: React.FC = () => {
           max={duration || 0}
           value={currentTime}
           onChange={handleSeek}
-          className="w-full h-1 bg-gray-200 dark:bg-gray-700 rounded-full 
+          className="w-full h-1 bg-gradient-to-r from-sky-700 to-sky-400 rounded-full 
                 [&::-webkit-slider-thumb]:appearance-none 
                 [&::-webkit-slider-thumb]:w-2 
                 [&::-webkit-slider-thumb]:h-2 
@@ -83,10 +83,10 @@ const MusicPlayerMinimized: React.FC = () => {
               width={32}
             />
             <div className="flex flex-col">
-              <h4 className="text-xs font-medium text-gray-800 dark:text-white truncate max-w-[80px]">
+              <h4 className="text-xs font-medium text-white truncate max-w-[80px]">
                 {currentSong.title}
               </h4>
-              <p className="text-[10px] text-gray-500 dark:text-gray-400 truncate max-w-[80px]">
+              <p className="text-[10px] text-gray-400 truncate max-w-[80px]">
                 {currentSong.artist}
               </p>
             </div>
@@ -96,14 +96,14 @@ const MusicPlayerMinimized: React.FC = () => {
           <div className="flex items-center space-x-3">
             <button
               onClick={playPrevious}
-              className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white"
+              className=" text-gray-300 hover:text-white"
             >
               <TrackPreviousIcon className="w-3 h-3" />
             </button>
 
             <button
               onClick={isPlaying ? pause : play}
-              className="bg-blue-500 hover:bg-blue-600 text-white rounded-full p-1.5 transition-transform transform hover:scale-105"
+              className="bg-sky-500 hover:bg-sky-600 text-white rounded-full p-1.5 transition-transform transform hover:scale-105"
             >
               {isPlaying ? (
                 <PauseIcon className="w-4 h-4" />
@@ -114,7 +114,7 @@ const MusicPlayerMinimized: React.FC = () => {
 
             <button
               onClick={playNext}
-              className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white"
+              className=" text-gray-300 hover:text-white"
             >
               <TrackNextIcon className="w-3 h-3" />
             </button>
@@ -127,14 +127,14 @@ const MusicPlayerMinimized: React.FC = () => {
               className={`transition-colors ${
                 isRepeat
                   ? "text-blue-500 hover:text-blue-600"
-                  : "text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white"
+                  : "text-gray-300 hover:text-white"
               }`}
             >
               <LoopIcon className="w-3 h-3" />
             </button>
             <button
               onClick={() => setVolume(volume > 0 ? 0 : 0.5)}
-              className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white"
+              className="text-gray-300 hover:text-white"
             >
               {volume === 0 ? (
                 <SpeakerQuietIcon className="w-3 h-3" />
@@ -148,13 +148,13 @@ const MusicPlayerMinimized: React.FC = () => {
               max="100"
               value={volume * 100}
               onChange={handleVolumeChange}
-              className="w-16 h-1 bg-gray-200 dark:bg-gray-700 rounded-full
+              className="w-16 h-1 bg-gradient-to-r from-green-600 to-red-600 rounded-full
                    [&::-webkit-slider-thumb]:appearance-none 
                    [&::-webkit-slider-thumb]:w-2 
                    [&::-webkit-slider-thumb]:h-2 
-                   [&::-webkit-slider-thumb]:bg-blue-500 
+                   [&::-webkit-slider-thumb]:bg-sky-600 
                    [&::-webkit-slider-thumb]:rounded-full 
-                   hover:[&::-webkit-slider-thumb]:bg-blue-600"
+                   hover:[&::-webkit-slider-thumb]:bg-sky-700"
             />
           </div>
         </div>

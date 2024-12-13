@@ -20,7 +20,6 @@ import { PauseIcon, PlayIcon } from "@radix-ui/react-icons";
 import { Song } from "@/src/core/types/songs.js";
 import { MusicPlayerProvider } from "@/src/context/music-player-context";
 import SongList from "../music-player/song-lists";
-import MusicPlayer from "../music-player/music-player-component";
 import MusicPlayerMinimized from "../music-player/music-player-component-minimized";
 
 interface VideoHomeClientProps {
