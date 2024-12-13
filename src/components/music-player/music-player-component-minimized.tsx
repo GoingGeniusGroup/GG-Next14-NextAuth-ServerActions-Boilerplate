@@ -49,7 +49,8 @@ const MusicPlayerMinimized: React.FC = () => {
   if (!currentSong) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 w-full bg-white/10 dark:bg-black/20 backdrop-blur-lg border-t border-white/10 p-1">
+    // <div className="fixed bottom-0 left-0 w-full bg-white/10 rounded-lg dark:bg-black/20 backdrop-blur-lg border-t border-white/10 p-1">
+    <div className="w-full bg-white/10 rounded-lg dark:bg-black/20 backdrop-blur-lg border-t border-white/10 p-1">
       <div className="max-w-4xl mx-auto flex flex-col items-center space-y-1">
         {/* Progress Bar */}
         <input

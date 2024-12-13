@@ -21,6 +21,7 @@ import { Song } from "@/src/core/types/songs.js";
 import { MusicPlayerProvider } from "@/src/context/music-player-context";
 import SongList from "../music-player/song-lists";
 import MusicPlayerMinimized from "../music-player/music-player-component-minimized";
+import { Music2Icon } from "lucide-react";
 
 interface VideoHomeClientProps {
   user: any;
@@ -132,11 +133,10 @@ const VideoHomeClient: React.FC<VideoHomeClientProps> = ({
             </SwiperSlide>
 
             {/* Music Player */}
-            <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-30 w-[50%]">
+            <div className="absolute bottom-6 left-6 z-30 w-[400px] flex">
               {/* <MusicPlayer /> */}
               <MusicPlayerMinimized />
             </div>
-
             {/* HUD at the bottom */}
             <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex gap-2">
               <motion.button
@@ -178,7 +178,7 @@ const VideoHomeClient: React.FC<VideoHomeClientProps> = ({
             </div>
 
             {/* Play/Pause Button */}
-            <div className="absolute bottom-6 right-6 z-30">
+            <div className="absolute bottom-6 right-6 z-30 flex flex-col gap-2 items-center">
               <IconButton
                 onClick={togglePlayPause}
                 icon={
@@ -190,20 +190,17 @@ const VideoHomeClient: React.FC<VideoHomeClientProps> = ({
                 }
                 label="Play/Pause"
               />
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
+              <IconButton
                 onClick={toggleSongList}
-                className="text-white bg-gray-700/50 rounded-full p-2"
-              >
-                🎵
-              </motion.button>
+                icon={<Music2Icon size={20} />}
+                label="music toggle button"
+              />
             </div>
           </Swiper>
         </div>
         {/* Song List Modal */}
         {showSongList && (
-          <div className="fixed bottom-6 left-6 z-50">
+          <div className="fixed right-20 bottom-6 z-50">
             <SongList songs={songs} />
           </div>
         )}
