@@ -16,6 +16,7 @@ import VideoHomeAvatarSlide from "./video-home-slides/video-home-avatar-slide";
 import VideoHomeSlide from "./video-home-slides/video-home-slide";
 
 import VideoHomeGeniusProfilesSlide from "./video-home-slides/video-home-genius-profiles-slide";
+import IconButton from "@/src/layout/base/button/icon-button";
 
 interface VideoHomeClientProps {
   user: any;
@@ -161,16 +162,17 @@ const VideoHomeClient: React.FC<VideoHomeClientProps> = ({
 
           {/* Play/Pause Button */}
           <div className="absolute bottom-6 right-6 z-30">
-            <button
-              className="rounded-full border-2 bg-white text-black shadow-lg"
+            <IconButton
               onClick={togglePlayPause}
-            >
-              {isPlaying ? (
-                <FaPauseCircle size={20} />
-              ) : (
-                <FaPlayCircle size={20} />
-              )}
-            </button>
+              icon={
+                isPlaying ? (
+                  <FaPauseCircle size={20} />
+                ) : (
+                  <FaPlayCircle size={20} />
+                )
+              }
+              label="Play/Pause"
+            />
           </div>
         </Swiper>
       </div>

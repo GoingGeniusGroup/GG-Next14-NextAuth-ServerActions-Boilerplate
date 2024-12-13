@@ -60,6 +60,14 @@ export default function VideoHomeGeniusProfilesSlide({
 
   return (
     <>
+      <video
+        className="absolute inset-0 size-full object-cover"
+        autoPlay
+        loop
+        muted
+      >
+        <source src="/livewallpapers/earth.mp4" type="video/mp4" />
+      </video>
       <div className="absolute inset-0 z-0">
         <MouseImageTrail
           renderImageBuffer={50}
