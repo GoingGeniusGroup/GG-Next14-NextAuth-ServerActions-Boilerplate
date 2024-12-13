@@ -1,3 +1,5 @@
+"use client";
+
 import React, {
   createContext,
   useState,
@@ -13,6 +15,7 @@ interface MusicPlayerContextType {
   volume: number;
   currentTime: number;
   duration: number;
+  isRepeat: boolean;
   play: () => void;
   pause: () => void;
   setVolume: (volume: number) => void;
@@ -20,6 +23,7 @@ interface MusicPlayerContextType {
   playPrevious: () => void;
   seekTo: (time: number) => void;
   setSong: (song: Song) => void;
+  toggleRepeat: () => void;
 }
 
 const MusicPlayerContext = createContext<MusicPlayerContextType | undefined>(
@@ -38,22 +42,20 @@ export const MusicPlayerProvider: React.FC<
   const [volume, setVolume] = useState(0.5);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [isRepeat, setIsRepeat] = useState(false);
 
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  // Play current song
   const play = () => {
     audioRef.current?.play();
     setIsPlaying(true);
   };
 
-  // Pause current song
   const pause = () => {
     audioRef.current?.pause();
     setIsPlaying(false);
   };
 
-  // Set volume
   const handleVolumeChange = (newVolume: number) => {
     if (audioRef.current) {
       audioRef.current.volume = newVolume;
@@ -61,25 +63,20 @@ export const MusicPlayerProvider: React.FC<
     }
   };
 
-  // Play next song
   const playNext = () => {
     if (!currentSong) return;
     const currentIndex = songs.findIndex((song) => song.id === currentSong.id);
     const nextIndex = (currentIndex + 1) % songs.length;
     setCurrentSong(songs[nextIndex]);
-    setIsPlaying(true);
   };
 
-  // Play previous song
   const playPrevious = () => {
     if (!currentSong) return;
     const currentIndex = songs.findIndex((song) => song.id === currentSong.id);
     const prevIndex = (currentIndex - 1 + songs.length) % songs.length;
     setCurrentSong(songs[prevIndex]);
-    setIsPlaying(true);
   };
 
-  // Seek to specific time
   const seekTo = (time: number) => {
     if (audioRef.current) {
       audioRef.current.currentTime = time;
@@ -87,10 +84,21 @@ export const MusicPlayerProvider: React.FC<
     }
   };
 
-  // Set a specific song
   const setSong = (song: Song) => {
     setCurrentSong(song);
     setIsPlaying(true);
+  };
+
+  const toggleRepeat = () => {
+    setIsRepeat((prev) => !prev);
+  };
+
+  // Restart current song
+  const restartCurrentSong = () => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.play();
+    }
   };
 
   // Update current time and duration
@@ -115,20 +123,31 @@ export const MusicPlayerProvider: React.FC<
     };
   }, [currentSong]);
 
-  // Autoplay next song when current song ends
+  // Handle song ending
   useEffect(() => {
     const audioElement = audioRef.current;
     if (!audioElement) return;
 
     const handleEnded = () => {
-      playNext();
+      if (isRepeat) {
+        restartCurrentSong();
+      } else {
+        playNext();
+      }
     };
 
     audioElement.addEventListener("ended", handleEnded);
     return () => {
       audioElement.removeEventListener("ended", handleEnded);
     };
-  }, [currentSong, songs]);
+  }, [isRepeat, currentSong]);
+
+  // Auto-play when song changes
+  useEffect(() => {
+    if (audioRef.current && isPlaying) {
+      audioRef.current.play();
+    }
+  }, [currentSong]);
 
   return (
     <MusicPlayerContext.Provider
@@ -138,6 +157,7 @@ export const MusicPlayerProvider: React.FC<
         volume,
         currentTime,
         duration,
+        isRepeat,
         play,
         pause,
         setVolume: handleVolumeChange,
@@ -145,15 +165,15 @@ export const MusicPlayerProvider: React.FC<
         playPrevious,
         seekTo,
         setSong,
+        toggleRepeat,
       }}
     >
       {children}
-      <audio ref={audioRef} src={currentSong?.audioUrl} autoPlay={isPlaying} />
+      <audio ref={audioRef} src={currentSong?.audioUrl} />
     </MusicPlayerContext.Provider>
   );
 };
 
-// Custom hook to use the MusicPlayerContext
 export const useMusicPlayer = () => {
   const context = useContext(MusicPlayerContext);
   if (context === undefined) {

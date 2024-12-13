@@ -24,10 +24,10 @@ const songs: Song[] = [
   },
   {
     id: "2",
-    title: "Song Title 2",
-    artist: "Artist Name",
-    imageUrl: "/path/to/image.jpg",
-    audioUrl: "/path/to/audio.mp3",
+    title: "Smack That",
+    artist: "Akon ft. Eminem",
+    imageUrl: "/music/images/sixdays.svg",
+    audioUrl: "/music/music/SmackThat.mp3",
     duration: 240, // in seconds
   },
   {
