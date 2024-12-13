@@ -1,6 +1,23 @@
+import { Button } from "@/src/ui/button";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-export default function VideoHomeDiscoverSlide() {
+export default function VideoHomeDiscoverSlide({
+  isUserLoggedIn,
+  toggleModal,
+}: {
+  isUserLoggedIn: boolean;
+  toggleModal: () => void;
+}) {
+  const router = useRouter();
+
+  const handleGetStarted = () => {
+    if (isUserLoggedIn) {
+      router.push("#");
+    } else {
+      toggleModal();
+    }
+  };
   return (
     <>
       <div
@@ -23,13 +40,13 @@ export default function VideoHomeDiscoverSlide() {
           Hidden in Different dimension on the basis of Guild Theory
         </p>
         <div className="flex justify-center">
-          <Link
+          <Button
             className="relative mt-8 rounded-full bg-white px-6 py-2 text-sm font-medium text-black transition-transform duration-300 hover:scale-105 hover:bg-gray-200 "
-            href="/regions"
+            onClick={handleGetStarted}
           >
             Regions
             <div className="absolute right-0 top-0 size-3 animate-ping rounded-full bg-blue-300"></div>
-          </Link>
+          </Button>
         </div>
       </div>
     </>

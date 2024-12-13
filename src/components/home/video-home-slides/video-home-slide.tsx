@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 const VideoHomeSlide = () => {
   return (
     <>
@@ -23,16 +21,6 @@ const VideoHomeSlide = () => {
             Keep all your Genius Services secured with 1 Genius ID <br />{" "}
             Developer Features Coming Soon
           </p>
-          <div className="flex justify-center">
-            <Link
-              className="relative mt-8 rounded-full bg-white px-6 py-2 text-sm font-medium text-black transition-transform duration-300 hover:scale-105 hover:bg-gray-200 "
-              href="/hud"
-              aria-label="get started button"
-            >
-              Get Started
-              <div className="absolute right-0 top-0 size-3 animate-ping rounded-full bg-blue-300"></div>
-            </Link>
-          </div>
         </div>
       </div>
     </>
