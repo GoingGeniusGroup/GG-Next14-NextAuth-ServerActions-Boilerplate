@@ -7,7 +7,6 @@ import type { Swiper as SwiperType } from "swiper";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import { MdOutlineNavigateNext, MdOutlineNavigateBefore } from "react-icons/md";
-import { FaPauseCircle, FaPlayCircle } from "react-icons/fa";
 import { motion } from "framer-motion";
 
 import VideoHomeDiscoverSlide from "./video-home-slides/video-home-discover-slide.tsx";
@@ -17,6 +16,7 @@ import VideoHomeSlide from "./video-home-slides/video-home-slide";
 
 import VideoHomeGeniusProfilesSlide from "./video-home-slides/video-home-genius-profiles-slide";
 import IconButton from "@/src/layout/base/button/icon-button";
+import { PauseIcon, PlayIcon } from "@radix-ui/react-icons";
 
 interface VideoHomeClientProps {
   user: any;
@@ -166,9 +166,9 @@ const VideoHomeClient: React.FC<VideoHomeClientProps> = ({
               onClick={togglePlayPause}
               icon={
                 isPlaying ? (
-                  <FaPauseCircle size={20} />
+                  <PauseIcon className="size-[20px]" />
                 ) : (
-                  <FaPlayCircle size={20} />
+                  <PlayIcon className="size-[20px]" />
                 )
               }
               label="Play/Pause"
