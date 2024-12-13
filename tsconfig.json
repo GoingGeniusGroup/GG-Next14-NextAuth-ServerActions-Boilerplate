@@ -20,7 +20,7 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*", "./app/*", "src/components/*"]
+      "@/*": ["./*", "./app/*", "./src/core/lib/*", "./src/*"]
     },
     "typeRoots": ["src/core/types"]
   },
