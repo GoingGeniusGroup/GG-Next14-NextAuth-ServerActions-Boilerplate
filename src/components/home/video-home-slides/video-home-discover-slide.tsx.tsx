@@ -18,37 +18,48 @@ export default function VideoHomeDiscoverSlide({
       toggleModal();
     }
   };
+
   return (
-    <>
+    <div className="relative h-screen w-full">
+      {/* Background Image */}
       <div
-        className="size-full lg:ml-auto"
+        className="absolute inset-0 h-full w-full"
         style={{
-          backgroundImage: "url(/homepage/img2.png)", // Updated background image
+          backgroundImage: "url(/homepage/img2.png)",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}
       ></div>
-      <div className="absolute inset-0 bg-black/65"></div>
-      <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <h1 className="bg-custom-gradient-two bg-clip-text text-center text-lg font-extrabold text-transparent drop-shadow-sm lg:text-6xl">
+
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
+
+      {/* Content */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 lg:px-0">
+        <h1 className="text-4xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600 lg:text-6xl drop-shadow-lg">
           Find Genius People
           <br />
-          <p className="mt-4">Around the Universe</p>
+          <span className="mt-4 block text-lg lg:text-2xl text-gray-200">
+            Around the Universe
+          </span>
         </h1>
-        <p className="mt-7 text-center text-white lg:text-2xl ">
-          Hidden in Different dimension on the basis of Guild Theory
+
+        <p className="mt-6 text-base text-gray-300 lg:text-lg">
+          Hidden in different dimensions, guided by the principles of Guild
+          Theory
         </p>
-        <div className="flex justify-center">
+
+        <div className="mt-8 flex justify-center">
           <Button
-            className="relative mt-8 rounded-full bg-white px-6 py-2 text-sm font-medium text-black transition-transform duration-300 hover:scale-105 hover:bg-gray-200 "
+            className="relative inline-flex items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-purple-600 px-8 py-3 text-white font-medium shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
             onClick={handleGetStarted}
           >
-            Regions
-            <div className="absolute right-0 top-0 size-3 animate-ping rounded-full bg-blue-300"></div>
+            Explore Regions
+            <div className="absolute right-1 -top-1 h-3 w-3 animate-ping rounded-full bg-white"></div>
           </Button>
         </div>
       </div>
-    </>
+    </div>
   );
 }
