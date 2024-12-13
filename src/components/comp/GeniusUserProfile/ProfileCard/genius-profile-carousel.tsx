@@ -42,6 +42,9 @@ function ProfileCard({
   // Calculate scale based on z position for perspective effect
   const scale = z < 0 ? 0.8 : 1;
 
+  // Determine if the card is in the middle or front
+  const isMiddleOrFront = z >= 0;
+
   return (
     <motion.div
       initial={false}
@@ -54,8 +57,8 @@ function ProfileCard({
       }}
       transition={{
         type: "spring",
-        stiffness: 100,
-        damping: 20,
+        stiffness: 70,
+        damping: 15,
         mass: 1,
       }}
       style={{
@@ -63,12 +66,12 @@ function ProfileCard({
         transformStyle: "preserve-3d",
         transform: `translate3d(${x}px, 0, ${z}px)`,
       }}
-      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+      className="absolute inset-0 flex items-center justify-center"
     >
       <div
-        className={`w-72 h-96 transition-all duration-300 ${
+        className={`transition-all duration-300 ${
           index === active ? "z-10" : "z-0"
-        }`}
+        } ${isMiddleOrFront ? "group" : ""}`} // Add group class for middle/front cards
       >
         <UserProfile
           username={user.username}
@@ -77,6 +80,13 @@ function ProfileCard({
           avatarUrl={user.image}
           isUserLoggedIn={isUserLoggedIn}
           toggleModal={toggleModal}
+          className={`
+            ${
+              isMiddleOrFront
+                ? "group-hover:scale-105 group-hover:shadow-xl transition-transform duration-300"
+                : ""
+            }
+          `}
         />
       </div>
     </motion.div>
@@ -103,7 +113,11 @@ export function GeniusProfileCarousel({
   const rotateToIndex = useCallback(
     (index: number) => {
       const targetRotation = -((2 * Math.PI) / users.length) * index;
-      setRotation(targetRotation);
+      setRotation((prevRotation) => {
+        const shortestRotation =
+          ((targetRotation - prevRotation + Math.PI) % (2 * Math.PI)) - Math.PI;
+        return prevRotation + shortestRotation;
+      });
       setActiveIndex(index);
     },
     [users.length]
@@ -131,7 +145,7 @@ export function GeniusProfileCarousel({
       if (!isDragging) return;
 
       const x = "touches" in e ? e.touches[0].clientX : e.clientX;
-      const delta = (x - dragStartX.current) * 0.01;
+      const delta = (x - dragStartX.current) * 0.005; // Reduced sensitivity
       const newRotation = dragStartRotation.current + delta;
       setRotation(newRotation);
 
@@ -153,7 +167,7 @@ export function GeniusProfileCarousel({
   // Auto-play functionality
   useEffect(() => {
     if (isAutoPlaying) {
-      autoPlayIntervalRef.current = setInterval(handleNext, 3000);
+      autoPlayIntervalRef.current = setInterval(handleNext, 5000); // Increased interval
     }
     return () => {
       if (autoPlayIntervalRef.current) {
@@ -207,11 +221,11 @@ export function GeniusProfileCarousel({
       </div>
 
       {/* Controls */}
-      <div className="absolute inset-x-0 bottom-8 flex items-center justify-center gap-4">
+      <div className="absolute inset-x-0 top-20 flex items-center justify-center gap-4">
         <Button
           variant="ghost"
           size="icon"
-          className="text-white hover:bg-white/20"
+          className="text-white hover:bg-white/20 cursor-pointer"
           onClick={handlePrev}
         >
           <ChevronLeft className="h-8 w-8" />
