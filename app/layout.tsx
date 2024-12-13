@@ -1,21 +1,21 @@
-import { Toaster } from "@/ui/sonner";
+import { Toaster } from "@/src/ui/sonner";
 import type { Metadata } from "next";
-import Providers from "@/app/providers/SessionProvider";
+import Providers from "@/src/providers/SessionProvider";
 import { Inter } from "next/font/google";
 import "@/styles/globals.css";
-import { AuroraBackground } from "@/components/ui/background/aurora-background";
-import { ThemeSwitcher } from "@/components/comp/ThemeToggler/ThemeSwitcher";
+import { AuroraBackground } from "@/src/ui/background/aurora-background";
+import { ThemeSwitcher } from "@/src/components/comp/ThemeToggler/ThemeSwitcher";
 import { ThemeProvider } from "next-themes";
-import FloatingDockInvertedComponent from "@/components/comp/dock/FloatingDockInverted";
-import { UserProvider } from "@/hooks/UserProvider";
-import { ToastProvider } from "./providers/toast-provider";
-import { MobileSimulatorProvider } from "@/components/comp/MobileSimulator/provider/MobileSimulatorContext";
+import FloatingDockInvertedComponent from "@/src/components/comp/dock/FloatingDockInverted";
+import { UserProvider } from "@/src/hooks/UserProvider";
+import { ToastProvider } from "../src/providers/toast-provider";
+import { MobileSimulatorProvider } from "@/src/components/comp/MobileSimulator/provider/MobileSimulatorContext";
 import { currentUser } from "@/lib/auth";
 import { getUserAvatars } from "@/actions/genius-profile/avatar";
 import {
   AvatarProvider,
   AvatarType,
-} from "@/components/comp/AvatarManager/provider/AvatarManagerContext";
+} from "@/src/components/comp/AvatarManager/provider/AvatarManagerContext";
 
 const inter = Inter({ subsets: ["latin"] });
 

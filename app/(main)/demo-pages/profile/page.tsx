@@ -1,6 +1,6 @@
 // "use client";
 
-import PublicProfile from "@/components/comp/PublicProfileComponent/PublicProfile";
+import PublicProfile from "@/src/components/comp/PublicProfileComponent/PublicProfile";
 
 // import { ProfileForm } from "@/components/form/profile-form";
 // import { ExtendedUser } from "@/types/next-auth";

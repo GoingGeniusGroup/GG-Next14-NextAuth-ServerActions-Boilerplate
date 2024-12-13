@@ -1,4 +1,4 @@
-import { LoginForm } from "@/components/form/login-form";
+import { LoginForm } from "@/src/components/form/login-form";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 

@@ -1,4 +1,4 @@
-import SteamProfile from "@/components/comp/steam/steamProfile";
+import SteamProfile from "@/src/components/comp/steam/steamProfile";
 
 export const metadata = {
   title: "Steam Profile Lookup",

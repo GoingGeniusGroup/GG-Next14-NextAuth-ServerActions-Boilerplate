@@ -1,4 +1,4 @@
-import { ParallaxScrollSecond } from "@/components/ui/grids/parallax-scroll-2";
+import { ParallaxScrollSecond } from "@/src/ui/grids/parallax-scroll-2";
 
 export default function Parallax() {
   return <ParallaxScrollSecond images={images} />;

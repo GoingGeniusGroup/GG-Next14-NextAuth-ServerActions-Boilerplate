@@ -4,11 +4,11 @@ import { ReactNode, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
-import { PublicAvatarProvider } from "@/components/comp/AvatarManager/provider/AvatarManagerPublicContext";
-import { Button } from "@/components/ui/button";
-import DragCloseDrawer from "@/components/comp/CustomComponents/DragCloseDrawer";
+import { PublicAvatarProvider } from "@/src/components/comp/AvatarManager/provider/AvatarManagerPublicContext";
+import { Button } from "@/src/ui/button";
+import DragCloseDrawer from "@/src/components/comp/CustomComponents/DragCloseDrawer";
 
-import CustomToolTip from "@/components/comp/CustomComponents/CustomToolTip";
+import CustomToolTip from "@/src/components/comp/CustomComponents/CustomToolTip";
 interface GeniusProfileLayoutProps {
   userinfo: ReactNode;
   children: ReactNode;

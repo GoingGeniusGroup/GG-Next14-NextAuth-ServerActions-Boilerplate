@@ -1,5 +1,5 @@
-import AboutSection from "@/components/comp/console/AboutSection";
-import BottomSectionConsole from "@/components/comp/console/BottomSectionConsole";
+import AboutSection from "@/src/components/comp/console/AboutSection";
+import BottomSectionConsole from "@/src/components/comp/console/BottomSectionConsole";
 
 interface AboutItemProp {
   name: string;

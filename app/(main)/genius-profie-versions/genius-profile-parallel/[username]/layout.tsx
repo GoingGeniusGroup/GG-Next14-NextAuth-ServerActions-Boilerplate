@@ -8,8 +8,8 @@ import {
   IconTool,
   IconUser,
 } from "@tabler/icons-react";
-import TopFloatingDock2 from "@/components/ui/dock/top-floating-dock2";
-import { PublicAvatarProvider } from "@/components/comp/AvatarManager/provider/AvatarManagerPublicContext";
+import TopFloatingDock2 from "@/src/ui/dock/top-floating-dock2";
+import { PublicAvatarProvider } from "@/src/components/comp/AvatarManager/provider/AvatarManagerPublicContext";
 
 // Define the expected props for the component
 interface GeniusProfileLayoutProps {

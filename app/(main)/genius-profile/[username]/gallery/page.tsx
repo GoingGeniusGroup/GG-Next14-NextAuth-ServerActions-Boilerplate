@@ -1,4 +1,4 @@
-import CustomGalleryComponent from "@/components/comp/gallery/CustomGalleryComponent";
+import CustomGalleryComponent from "@/src/components/comp/gallery/CustomGalleryComponent";
 
 interface GeniusUserGalleryProps {
   params: {

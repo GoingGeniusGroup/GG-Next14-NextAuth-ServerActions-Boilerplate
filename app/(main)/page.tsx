@@ -1,5 +1,5 @@
 import { getCurrentUser } from "@/actions/genius-profile/userAndGuild";
-import HomePage from "@/components/comp/HomePage/HomePage";
+import HomePage from "@/src/components/comp/HomePage/HomePage";
 import { getUserByUsername } from "@/services/user";
 import { Metadata } from "next";
 

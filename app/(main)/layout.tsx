@@ -1,5 +1,5 @@
-import { Layout } from "@/components/comp/dom/Layout";
-import { TooltipProvider } from "@/components/ui/tooltip/tooltip";
+import { Layout } from "@/src/components/comp/dom/Layout";
+import { TooltipProvider } from "@/src/ui/tooltip/tooltip";
 import { signOut } from "@/auth";
 import { revalidatePath } from "next/cache";
 

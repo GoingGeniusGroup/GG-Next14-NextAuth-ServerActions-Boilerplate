@@ -1,6 +1,6 @@
 "use client";
 
-import TopFloatingDock from "@/components/ui/dock/top-radial-dock";
+import TopFloatingDock from "@/src/ui/dock/top-radial-dock";
 import {
   IconExposure,
   IconHome,

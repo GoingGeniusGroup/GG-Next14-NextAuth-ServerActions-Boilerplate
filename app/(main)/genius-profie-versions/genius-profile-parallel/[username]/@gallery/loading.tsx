@@ -1,4 +1,4 @@
-import GalleryGridSkeleton from "@/components/comp/gallery/GalleryGridSkeleton";
+import GalleryGridSkeleton from "@/src/components/comp/gallery/GalleryGridSkeleton";
 
 export default function GalleryLoading() {
   return (
