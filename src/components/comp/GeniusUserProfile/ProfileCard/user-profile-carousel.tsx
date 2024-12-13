@@ -2,6 +2,7 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  CarouselNext,
   CarouselPrevious,
 } from "@/src/ui/carousel";
 import { UserProfile } from "./user-profile";
@@ -40,6 +41,7 @@ export function UserProfilesCarousel({
         ))}
       </CarouselContent>
       <CarouselPrevious className="bg-black text-white dark:text-black border-none hover:bg-white dark:bg-white dark:hover:bg-black" />
+      <CarouselNext className="bg-black text-white dark:text-black border-none hover:bg-white dark:bg-white dark:hover:bg-black" />
     </Carousel>
   );
 }

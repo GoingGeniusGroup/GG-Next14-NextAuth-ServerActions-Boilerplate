@@ -46,13 +46,14 @@ export function UserProfile({
       onClick={handleCardClick}
       className={`block transition-transform hover:scale-105 relative ${className}`}
     >
-      <Card className="group size-[300px] bg-white dark:bg-black rounded-lg overflow-hidden relative">
+      <Card className="group size-[160px] bg-white dark:bg-black rounded-lg overflow-hidden relative">
         <CardContent className="relative overflow-hidden w-full h-full flex items-center p-0">
           <div className="w-full h-full relative">
             <Image
               src={avatarUrl}
               alt={name}
               fill
+              className="object-cover"
               unoptimized
               onError={(e) => {
                 e.currentTarget.style.display = "none";

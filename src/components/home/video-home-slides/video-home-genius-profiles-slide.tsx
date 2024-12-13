@@ -5,9 +5,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 
 import { Button } from "@/src/ui/button/button";
+import { UserProfilesCarousel } from "../../comp/GeniusUserProfile/ProfileCard/user-profile-carousel";
 import { LoginForm } from "@/src/components/form/login-form";
 import { RegisterForm } from "@/src/components/form/register-form";
-import { GeniusProfileCarousel } from "../../comp/GeniusUserProfile/ProfileCard/genius-profile-carousel";
+import { MouseImageTrail } from "../../animated/mouse-trail-card";
 
 export default function VideoHomeGeniusProfilesSlide({
   user,
@@ -53,26 +54,31 @@ export default function VideoHomeGeniusProfilesSlide({
     }
   }, [searchParams, router]);
 
-  const handleGetStarted = () => {
-    if (user) {
-      router.push(`/genius-profile/${user.username}`);
-    } else {
-      setShowModal(true);
-    }
-  };
-
   const toggleModal = () => setShowModal((prev) => !prev);
 
+  const userImages = staticUsers.map((user) => user.image);
+
   return (
-    <div className="flex justify-center items-center">
-      <div className="absolute inset-0 flex items-center justify-center">
-        <GeniusProfileCarousel
+    <>
+      <div className="absolute inset-0 z-0">
+        <MouseImageTrail
+          renderImageBuffer={50}
+          rotationRange={25}
+          images={userImages}
+        >
+          <section className="grid h-screen w-screen place-content-center "></section>
+        </MouseImageTrail>
+      </div>
+      <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-[356px] h-fit rounded-lg flex flex-col justify-center z-50 border border-white/35 backdrop-blur-md p-2">
+        <div className="flex justify-center font-semibold text-md text-white">
+          GENIUS PROFILES
+        </div>
+        <UserProfilesCarousel
           users={staticUsers}
           toggleModal={toggleModal}
           isUserLoggedIn={isUserLoggedIn}
         />
       </div>
-
       {/* Modal */}
       {showModal && (
         <div
@@ -111,6 +117,6 @@ export default function VideoHomeGeniusProfilesSlide({
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
