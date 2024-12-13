@@ -19,7 +19,7 @@ const SongList: React.FC<SongListProps> = ({ songs }) => {
   const { currentSong, setSong } = useMusicPlayer();
 
   return (
-    <div className="w-80 bg-gray-100 dark:bg-gray-800 rounded-lg p-4 ">
+    <div className="w-80 bg-white/20 dark:bg-black/20 backdrop-blur-md border border-white/35 rounded-lg p-4 ">
       <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-white">
         Playlist
       </h3>
@@ -29,7 +29,7 @@ const SongList: React.FC<SongListProps> = ({ songs }) => {
             key={song.id}
             className={`flex items-center p-2 rounded-lg cursor-pointer transition-colors duration-200 ${
               currentSong?.id === song.id
-                ? "bg-blue-200 dark:bg-blue-700"
+                ? "bg-blue-200/80 dark:bg-sky-700/80"
                 : "hover:bg-gray-200 dark:hover:bg-gray-700"
             }`}
             onClick={() => setSong(song)}

@@ -23,6 +23,23 @@ import SongList from "../music-player/song-lists";
 import MusicPlayerMinimized from "../music-player/music-player-component-minimized";
 import { Music2Icon } from "lucide-react";
 
+import { Orbitron, Poppins } from "next/font/google";
+import { useRouter, useSearchParams } from "next/navigation";
+import { toast } from "sonner";
+import { Button } from "@/src/ui/button/button";
+import { LoginForm } from "../form/login-form";
+import { RegisterForm } from "../form/register-form";
+
+const orbitronFont = Orbitron({
+  subsets: ["latin"],
+  weight: ["400", "700", "600"],
+});
+
+const poppinsFont = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "700", "600"],
+});
+
 interface VideoHomeClientProps {
   user: any;
   profilePic: string;
@@ -36,18 +53,54 @@ const VideoHomeClient: React.FC<VideoHomeClientProps> = ({
   staticUsers,
   songs,
 }) => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const paginationLabels: string[] = [
     "HOME",
     "AVATAR",
     "GENIUS",
-    "GGONE",
     "DISCOVER",
+    "GGONE",
   ];
   const swiperRefs = useRef<SwiperType | null>(null);
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const [showSongList, setShowSongList] = useState<boolean>(false);
+
+  const [showModal, setShowModal] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
+
+  const isUserLoggedIn = user ? true : false;
+
+  useEffect(() => {
+    // Only proceed if we have auth_redirect parameter
+    if (searchParams.get("auth_redirect") === "true") {
+      // Show the toast
+      toast.error(`Please log in to access this page`, {
+        position: "top-center",
+        icon: "🔒",
+        duration: 4000,
+        style: {
+          background: "#DC262690",
+          backdropFilter: "blur(4px)",
+          color: "#fff",
+          padding: "8px",
+          borderRadius: "8px",
+        },
+      });
+
+      // Clean up URL parameters
+      const newUrl = window.location.pathname;
+      router.replace(newUrl);
+
+      setTimeout(() => {
+        setShowModal(true);
+      }, 500);
+    }
+  }, [searchParams, router]);
+
+  const toggleModal = () => setShowModal((prev) => !prev);
 
   // Handle the click on the HUD on the bottom of the screen
   const handleHudClick = (index: number) => {
@@ -83,7 +136,9 @@ const VideoHomeClient: React.FC<VideoHomeClientProps> = ({
 
   return (
     <MusicPlayerProvider songs={songs}>
-      <div className="flex justify-center items-center">
+      <div
+        className={`flex justify-center items-center ${orbitronFont.className}`}
+      >
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <Swiper
             spaceBetween={0}
@@ -117,19 +172,26 @@ const VideoHomeClient: React.FC<VideoHomeClientProps> = ({
             {/* Genius Slide */}
             <SwiperSlide className="bg-cover bg-center">
               <VideoHomeGeniusProfilesSlide
-                user={user}
-                profilePic={profilePic}
                 staticUsers={staticUsers}
+                isUserLoggedIn={isUserLoggedIn}
+                toggleModal={toggleModal}
               />
             </SwiperSlide>
 
-            {/* GG One */}
-            <SwiperSlide className="bg-cover bg-center">
-              <VideoHomeGGOneSlide />
-            </SwiperSlide>
             {/* Discover */}
             <SwiperSlide className="bg-cover bg-center">
-              <VideoHomeDiscoverSlide />
+              <VideoHomeDiscoverSlide
+                isUserLoggedIn={isUserLoggedIn}
+                toggleModal={toggleModal}
+              />
+            </SwiperSlide>
+            {/* GG One */}
+            <SwiperSlide className="bg-cover bg-center">
+              <VideoHomeGGOneSlide
+                user={user}
+                isUserLoggedIn={isUserLoggedIn}
+                toggleModal={toggleModal}
+              />
             </SwiperSlide>
 
             {/* Music Player */}
@@ -202,6 +264,44 @@ const VideoHomeClient: React.FC<VideoHomeClientProps> = ({
         {showSongList && (
           <div className="fixed right-20 bottom-6 z-50">
             <SongList songs={songs} />
+          </div>
+        )}
+
+        {showModal && (
+          <div
+            className={`fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 ${poppinsFont.className}`}
+            onClick={toggleModal}
+          >
+            <div
+              className="bg-transprent backdrop-blur-md border-2 dark:border-white/20 border:white hover:border-yellow-600 transition-all duration-300 ease-in-out p-6 rounded-lg w-[90%] max-w-md shadow-lg text-white"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {isLogin ? (
+                <LoginForm isMobile={true} />
+              ) : (
+                <RegisterForm isMobile={true} />
+              )}
+
+              <div
+                className="size-4 absolute top-3 right-3 cursor-pointer bg-red-600 rounded-full"
+                onClick={toggleModal}
+              ></div>
+
+              <div className="mt-2 flex flex-col justify-center gap-2">
+                <span className="w-full flex justify-center text-xs">
+                  {isLogin
+                    ? "Not Yet a Genius User? Register Here"
+                    : "Already a Genius User? Login Here"}
+                </span>
+                <Button
+                  variant="black"
+                  className="border hover:bg-black/60"
+                  onClick={() => setIsLogin(!isLogin)}
+                >
+                  {isLogin ? "Go to Register" : "Go to Login"}
+                </Button>
+              </div>
+            </div>
           </div>
         )}
       </div>
