@@ -15,7 +15,7 @@ import {
   updateAvatar,
 } from "@/actions/genius-profile/avatar";
 import { AvatarExportedEvent } from "@/components/comp/AvatarComponents/avatar_creator/events";
-import { AvatarResponse } from "@/types/utils";
+import { AvatarResponse } from "@/core/types/utils";
 import { toast } from "sonner";
 import { getAvatarsByUserId } from "@/services/avatar";
 
