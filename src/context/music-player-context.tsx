@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import React, {
@@ -140,14 +141,14 @@ export const MusicPlayerProvider: React.FC<
     return () => {
       audioElement.removeEventListener("ended", handleEnded);
     };
-  }, [isRepeat, currentSong, playNext]);
+  }, [isRepeat, currentSong]);
 
   // Auto-play when song changes
   useEffect(() => {
     if (audioRef.current && isPlaying) {
       audioRef.current.play();
     }
-  }, [currentSong, isPlaying]);
+  }, [currentSong]);
 
   return (
     <MusicPlayerContext.Provider
