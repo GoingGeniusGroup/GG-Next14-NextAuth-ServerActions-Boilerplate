@@ -19,6 +19,11 @@ import { getUserData } from "./actions/auth/user-data";
 import ProfileHudTop from "@/src/components/comp/Huds/ProfileHudTop";
 import { signOut } from "./auth";
 import { revalidatePath } from "next/cache";
+import { Song } from "@/src/core/types/songs";
+import { MusicPlayerProvider } from "@/src/context/music-player-context";
+import MusicPlayerMinimized from "@/src/components/music-player/music-player-component-minimized";
+import SongList from "@/src/components/music-player/song-lists";
+import SongListToggleClient from "@/src/components/music-player/song-list-toggle-client";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -56,60 +61,225 @@ export default async function RootLayout({
     }
   }
 
+  const songs: Song[] = [
+    {
+      id: "1",
+      title: "Six Days",
+      artist: "Tokyo Drift",
+      imageUrl: "/music/images/sixdays.svg",
+      audioUrl: "/music/music/sixdays.mp3",
+      duration: 232, // in seconds
+    },
+    {
+      id: "2",
+      title: "Thriller",
+      artist: "Michael Jackson",
+      imageUrl: "/music/images/sixdays.svg",
+      audioUrl: "/music/music/Michael Jackson - Thriller (Lyrics).mp3",
+      duration: 358, // in seconds
+    },
+    {
+      id: "3",
+      title: "GALZ XYPHER",
+      artist: "COCONA, MAYA, HARVEY, JURIN",
+      imageUrl: "/music/images/sixdays.svg",
+      audioUrl:
+        "/music/music/[XG TAPE @2] GALZ XYPHER (COCONA, MAYA, HARVEY, JURIN).mp3",
+      duration: 330, // in seconds
+    },
+    {
+      id: "4",
+      title: "Mockingbird",
+      artist: "Eminem",
+      imageUrl: "/music/images/sixdays.svg",
+      audioUrl: "/music/music/Eminem - Mockingbird [Official Music Video].mp3",
+      duration: 257, // in seconds
+    },
+    {
+      id: "5",
+      title: "Nothin'",
+      artist: "JURIN, COCONA",
+      imageUrl: "/music/images/sixdays.svg",
+      audioUrl: "/music/music/[XG TAPE @3-B] Nothin' (JURIN, COCONA).mp3",
+      duration: 180, // in seconds
+    },
+    {
+      id: "6",
+      title: "Beautiful Things",
+      artist: "Benson Boone",
+      imageUrl: "/music/images/sixdays.svg",
+      audioUrl:
+        "/music/music/Benson Boone - Beautiful Things (Official Music Video).mp3",
+      duration: 192, // in seconds
+    },
+    {
+      id: "7",
+      title: "BIRDS OF A FEATHER",
+      artist: "Billie Eilish",
+      imageUrl: "/music/images/sixdays.svg",
+      audioUrl:
+        "/music/music/Billie Eilish - BIRDS OF A FEATHER (Official Music Video).mp3",
+      duration: 230, // in seconds
+    },
+    {
+      id: "8",
+      title: "SPICY",
+      artist: "CL",
+      imageUrl: "/music/images/sixdays.svg",
+      audioUrl: "/music/music/CL - SPICY (Official Video).mp3",
+      duration: 203, // in seconds
+    },
+    {
+      id: "9",
+      title: "Daylight",
+      artist: "David Kushner",
+      imageUrl: "/music/images/sixdays.svg",
+      audioUrl:
+        "/music/music/David Kushner - Daylight (Official Music Video).mp3",
+      duration: 229, // in seconds
+    },
+    {
+      id: "10",
+      title: "When I'm Gone",
+      artist: "Eminem",
+      imageUrl: "/music/images/sixdays.svg",
+      audioUrl:
+        "/music/music/Eminem - When I'm Gone (Official Music Video).mp3",
+      duration: 369, // in seconds
+    },
+    {
+      id: "11",
+      title: "Mount Everest",
+      artist: "Labrinth",
+      imageUrl: "/music/images/sixdays.svg",
+      audioUrl: "/music/music/Labrinth - Mount Everest (Official Video).mp3",
+      duration: 146, // in seconds
+    },
+    {
+      id: "12",
+      title: "Smack That",
+      artist: "Akon ft. Eminem",
+      imageUrl: "/music/images/sixdays.svg",
+      audioUrl: "/music/music/SmackThat.mp3",
+      duration: 251, // in seconds
+    },
+    {
+      id: "13",
+      title: "APT.",
+      artist: "ROSÉ & Bruno Mars",
+      imageUrl: "/music/images/sixdays.svg",
+      audioUrl:
+        "/music/music/ROSÉ & Bruno Mars - APT. (Official Music Video).mp3",
+      duration: 173, // in seconds
+    },
+    {
+      id: "14",
+      title: "Espresso",
+      artist: "Sabrina Carpenter",
+      imageUrl: "/music/images/sixdays.svg",
+      audioUrl:
+        "/music/music/Sabrina Carpenter - Espresso (Official Video).mp3",
+      duration: 200, // in seconds
+    },
+    {
+      id: "15",
+      title: "Running through the night",
+      artist: "Seori",
+      imageUrl: "/music/images/sixdays.svg",
+      audioUrl:
+        "/music/music/Seori - Running through the night [Music Video].mp3",
+      duration: 275, // in seconds
+    },
+    {
+      id: "16",
+      title: "Lose Control",
+      artist: "Teddy Swims",
+      imageUrl: "/music/images/sixdays.svg",
+      audioUrl: "/music/music/Teddy Swims - Lose Control (Lyric Video).mp3",
+      duration: 210, // in seconds
+    },
+    {
+      id: "17",
+      title: "Where Is The Love_",
+      artist: "The Black Eyed Peas",
+      imageUrl: "/music/images/sixdays.svg",
+      audioUrl:
+        "/music/music/The Black Eyed Peas - Where Is The Love_ (Official Music Video).mp3",
+      duration: 250, // in seconds
+    },
+  ];
+
   return (
     <html lang="en" className="h-full">
       <body className={inter.className}>
         <Toaster position="bottom-left" richColors theme="light" />
         <Providers>
-          <MobileSimulatorProvider>
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              <AuroraBackground>
-                <UserProvider>
-                  {user ? (
-                    <AvatarProvider initialAvatars={avatars} user={user.gg_id}>
-                      {/* Theme switcher */}
-                      <div className="absolute top-[8px] right-[73px] z-50">
-                        <ThemeSwitcher />
-                        <ProfileHudTop handleSignOut={handleServerSignOut} />
-                      </div>
-
-                      {/* Dock section */}
-                      <div className="w-full z-40">
-                        <div className="p-4 text-black dark:text-white">
-                          <FloatingDockInvertedComponent />
+          <MusicPlayerProvider songs={songs}>
+            <MobileSimulatorProvider>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+              >
+                <AuroraBackground>
+                  <UserProvider>
+                    {user ? (
+                      <AvatarProvider
+                        initialAvatars={avatars}
+                        user={user.gg_id}
+                      >
+                        {/* Theme switcher */}
+                        <div className="absolute top-[8px] right-[73px] z-50">
+                          <ThemeSwitcher />
+                          <ProfileHudTop handleSignOut={handleServerSignOut} />
                         </div>
-                      </div>
 
-                      {/* Content section */}
-                      <div className="flex-1 px-8 py-4 w-full overflow-auto">
-                        {children}
-                      </div>
-                    </AvatarProvider>
-                  ) : (
-                    <>
-                      {/* Theme switcher */}
-                      <div className="absolute top-[8px] right-[73px] z-50">
-                        <ThemeSwitcher />
-                      </div>
-
-                      {/* Dock section */}
-                      <div className="w-full z-40">
-                        <div className="p-4 text-black dark:text-white">
-                          <FloatingDockInvertedComponent />
+                        {/* Music Player */}
+                        <div className="absolute bottom-6 left-6 z-50 w-[400px] flex">
+                          {/* <MusicPlayer /> */}
+                          <MusicPlayerMinimized />
                         </div>
-                      </div>
+                        <div className="fixed right-6 bottom-6 z-50">
+                          <SongListToggleClient songs={songs} />
+                        </div>
+                        {/* Dock section */}
+                        <div className="w-full z-40">
+                          <div className="p-4 text-black dark:text-white">
+                            <FloatingDockInvertedComponent />
+                          </div>
+                        </div>
 
-                      {/* Content section */}
-                      <div className="flex-1 px-8 py-4 w-full overflow-auto">
-                        {children}
-                      </div>
-                    </>
-                  )}
-                </UserProvider>
-                <ToastProvider />
-              </AuroraBackground>
-            </ThemeProvider>
-          </MobileSimulatorProvider>
+                        {/* Content section */}
+                        <div className="flex-1 px-8 py-4 w-full overflow-auto">
+                          {children}
+                        </div>
+                      </AvatarProvider>
+                    ) : (
+                      <>
+                        {/* Theme switcher */}
+                        <div className="absolute top-[8px] right-[73px] z-50">
+                          <ThemeSwitcher />
+                        </div>
+
+                        {/* Dock section */}
+                        <div className="w-full z-40">
+                          <div className="p-4 text-black dark:text-white">
+                            <FloatingDockInvertedComponent />
+                          </div>
+                        </div>
+
+                        {/* Content section */}
+                        <div className="flex-1 px-8 py-4 w-full overflow-auto">
+                          {children}
+                        </div>
+                      </>
+                    )}
+                  </UserProvider>
+                  <ToastProvider />
+                </AuroraBackground>
+              </ThemeProvider>
+            </MobileSimulatorProvider>
+          </MusicPlayerProvider>
         </Providers>
       </body>
     </html>

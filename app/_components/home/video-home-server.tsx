@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/app/actions/genius-profile/userAndGuild";
+import { getUserData } from "@/app/actions/auth/user-data";
 import { getUserByUsername } from "@/app/services/user";
 import VideoHomeClient from "@/src/components/home/video-home-client";
 import { Song } from "@/src/core/types/songs";
@@ -160,7 +160,7 @@ const songs: Song[] = [
 ];
 
 const VideoHomeServer = async () => {
-  const user = await getCurrentUser();
+  const user = await getUserData();
 
   // Fetch all static users whose usernames are in the list
   const staticUsers = await Promise.all(
