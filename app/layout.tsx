@@ -65,6 +65,7 @@ export default async function RootLayout({
                       {/* Content section */}
                       <div className="flex-1 px-8 py-4 w-full overflow-auto">
                         {children}
+                        <SpeedInsights/>
                       </div>
                     </UserProvider>
                     <ToastProvider />
@@ -109,10 +110,8 @@ export default async function RootLayout({
                     {/* Content section */}
                     <div className="flex-1 px-8 py-4 w-full overflow-auto">
                       {children}
+                      <SpeedInsights/>
                     </div>
-                    
-                    {/* Speed Insights */}
-                    <SpeedInsights/>
                   </AvatarProvider>
                 </UserProvider>
                 <ToastProvider />
