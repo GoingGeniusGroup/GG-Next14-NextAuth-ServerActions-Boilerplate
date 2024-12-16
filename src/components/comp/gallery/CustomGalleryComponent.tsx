@@ -1,16 +1,18 @@
 import UploadGalleryDialog from "../Modal/gallery/UploadGalleryDialog";
-import { getCurrentUser } from "@/actions/genius-profile/userAndGuild";
 import { getImageUrls } from "@/actions/image-post";
 import { getUserByUsername } from "@/services/user";
 import { imagePostType } from "../Forms/UploadImagesGalleryForm";
 import { GalleryGrid } from "@/src/ui/grids/gallery-grid";
+import { getUserData } from "@/app/actions/auth/user-data";
 
 export default async function CustomGalleryComponent({
   username,
 }: {
   username: string;
 }) {
-  const currentUser = await getCurrentUser();
+  // const currentUser = await getCurrentUser();
+
+  const currentUser = await getUserData();
   const LoggedUserProfile = currentUser?.username === username;
   const profileOwner = await getUserByUsername(username);
 

@@ -7,7 +7,13 @@ const page = () => {
   return (
     <div className="flex size-full items-center justify-center text-white">
       <div>
-        {userData ? <>{userData.firstName}</> : <div>No data Found</div>}
+        {userData ? (
+          <>
+            {userData.firstName} {userData.username}
+          </>
+        ) : (
+          <div>No data Found</div>
+        )}
       </div>
     </div>
   );

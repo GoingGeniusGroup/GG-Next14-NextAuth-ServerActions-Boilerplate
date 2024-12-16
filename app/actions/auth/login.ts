@@ -29,6 +29,7 @@ const extractUserData = (user: any): SerializableUser => ({
   role: user.role,
   image: user.image,
   phone: user.phone_number,
+  gg_id: user.gg_id,
 });
 
 // Helper to set secure cookies

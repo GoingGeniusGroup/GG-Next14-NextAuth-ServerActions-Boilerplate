@@ -7,4 +7,5 @@ export type SerializableUser = {
   role: string;
   image: string;
   phone: string | null;
+  gg_id: string;
 };
