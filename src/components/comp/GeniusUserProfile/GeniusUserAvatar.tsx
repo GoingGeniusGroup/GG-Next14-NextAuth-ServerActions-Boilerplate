@@ -1,5 +1,5 @@
 "use client";
-
+'use cache'
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import AvatarSkeleton from "./skeleton/AvatarSkeleton";
