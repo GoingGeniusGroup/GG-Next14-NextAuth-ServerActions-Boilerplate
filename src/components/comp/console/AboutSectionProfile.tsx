@@ -1,5 +1,5 @@
 "use client";
-
+'use cache'
 import UpdateProfileDialog from "../Modal/profile/UpdateProfileDialog";
 import Image from "next/image";
 import SmallPreviewCard from "../card/SmallPreviewCard";
