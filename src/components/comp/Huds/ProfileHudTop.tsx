@@ -19,12 +19,10 @@ import { useState } from "react";
 import { useMobileSimulator } from "../MobileSimulator/provider/MobileSimulatorContext";
 
 interface ProfileHudProps {
-  handleServerSignOut: () => Promise<{ success: boolean; error?: string }>;
+  handleSignOut: () => Promise<{ success: boolean; error?: string }>;
 }
 
-export default function ProfileHudTop({
-  handleServerSignOut,
-}: ProfileHudProps) {
+export default function ProfileHudTop({ handleSignOut }: ProfileHudProps) {
   const { data: session, status } = useSession();
   const usernameContext = useUser();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
@@ -50,7 +48,7 @@ export default function ProfileHudTop({
       const loadingToast = toast.loading("Logging out...");
 
       // First handle server-side session cleanup
-      const serverResult = await handleServerSignOut();
+      const serverResult = await handleSignOut();
 
       if (!serverResult.success) {
         throw new Error(serverResult.error || "Server logout failed");

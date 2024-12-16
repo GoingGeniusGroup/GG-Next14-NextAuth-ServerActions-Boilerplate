@@ -10,12 +10,15 @@ import FloatingDockInvertedComponent from "@/src/components/comp/dock/FloatingDo
 import { UserProvider } from "@/src/hooks/UserProvider";
 import { ToastProvider } from "../src/providers/toast-provider";
 import { MobileSimulatorProvider } from "@/src/components/comp/MobileSimulator/provider/MobileSimulatorContext";
-import { currentUser } from "@/lib/auth";
 import { getUserAvatars } from "@/actions/genius-profile/avatar";
 import {
   AvatarProvider,
   AvatarType,
 } from "@/src/components/comp/AvatarManager/provider/AvatarManagerContext";
+import { getUserData } from "./actions/auth/user-data";
+import ProfileHudTop from "@/src/components/comp/Huds/ProfileHudTop";
+import { signOut } from "./auth";
+import { revalidatePath } from "next/cache";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,23 +35,58 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const user = await currentUser();
+  const user = await getUserData();
 
-  if (!user) {
-    return (
-      <>
-        <html lang="en" className="h-full">
-          <body className={inter.className}>
-            <Toaster position="bottom-left" richColors theme="light" />
-            <Providers>
-              <MobileSimulatorProvider>
-                <ThemeProvider
-                  attribute="class"
-                  defaultTheme="system"
-                  enableSystem
-                >
-                  <AuroraBackground>
-                    <UserProvider>
+  const avatarsResponse = await getUserAvatars(user ? user.gg_id : "");
+  const avatars: AvatarType[] =
+    avatarsResponse.success && Array.isArray(avatarsResponse.data)
+      ? avatarsResponse.data
+      : [];
+
+  async function handleServerSignOut() {
+    "use server";
+
+    try {
+      await signOut({ redirect: false });
+      revalidatePath("/");
+      return { success: true };
+    } catch (error) {
+      console.error("Server logout error:", error);
+      return { success: false, error: "Failed to logout" };
+    }
+  }
+
+  return (
+    <html lang="en" className="h-full">
+      <body className={inter.className}>
+        <Toaster position="bottom-left" richColors theme="light" />
+        <Providers>
+          <MobileSimulatorProvider>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              <AuroraBackground>
+                <UserProvider>
+                  {user ? (
+                    <AvatarProvider initialAvatars={avatars} user={user.gg_id}>
+                      {/* Theme switcher */}
+                      <div className="absolute top-[8px] right-[73px] z-50">
+                        <ThemeSwitcher />
+                        <ProfileHudTop handleSignOut={handleServerSignOut} />
+                      </div>
+
+                      {/* Dock section */}
+                      <div className="w-full z-40">
+                        <div className="p-4 text-black dark:text-white">
+                          <FloatingDockInvertedComponent />
+                        </div>
+                      </div>
+
+                      {/* Content section */}
+                      <div className="flex-1 px-8 py-4 w-full overflow-auto">
+                        {children}
+                      </div>
+                    </AvatarProvider>
+                  ) : (
+                    <>
                       {/* Theme switcher */}
                       <div className="absolute top-[8px] right-[73px] z-50">
                         <ThemeSwitcher />
@@ -65,51 +103,8 @@ export default async function RootLayout({
                       <div className="flex-1 px-8 py-4 w-full overflow-auto">
                         {children}
                       </div>
-                    </UserProvider>
-                    <ToastProvider />
-                  </AuroraBackground>
-                </ThemeProvider>
-              </MobileSimulatorProvider>
-            </Providers>
-          </body>
-        </html>
-      </>
-    );
-  }
-
-  const avatarsResponse = await getUserAvatars(user.gg_id);
-  const avatars: AvatarType[] =
-    avatarsResponse.success && Array.isArray(avatarsResponse.data)
-      ? avatarsResponse.data
-      : [];
-
-  return (
-    <html lang="en" className="h-full">
-      <body className={inter.className}>
-        <Toaster position="bottom-left" richColors theme="light" />
-        <Providers>
-          <MobileSimulatorProvider>
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              <AuroraBackground>
-                <UserProvider>
-                  <AvatarProvider initialAvatars={avatars} user={user.gg_id}>
-                    {/* Theme switcher */}
-                    <div className="absolute top-[8px] right-[73px] z-50">
-                      <ThemeSwitcher />
-                    </div>
-
-                    {/* Dock section */}
-                    <div className="w-full z-40">
-                      <div className="p-4 text-black dark:text-white">
-                        <FloatingDockInvertedComponent />
-                      </div>
-                    </div>
-
-                    {/* Content section */}
-                    <div className="flex-1 px-8 py-4 w-full overflow-auto">
-                      {children}
-                    </div>
-                  </AvatarProvider>
+                    </>
+                  )}
                 </UserProvider>
                 <ToastProvider />
               </AuroraBackground>
