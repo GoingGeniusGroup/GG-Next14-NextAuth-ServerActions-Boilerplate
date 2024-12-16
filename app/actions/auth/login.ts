@@ -14,10 +14,38 @@ import {
   getUserByPhone,
   getUserByUsername,
 } from "@/services/user";
+import { SerializableUser } from "@/src/core/types/serializable-user";
 import bcrypt from "bcryptjs";
 import { AuthError } from "next-auth";
 import { cookies } from "next/headers";
 import { z } from "zod";
+
+/// Helper to extract only serializable user data
+const extractUserData = (user: any): SerializableUser => ({
+  email: user.email,
+  username: user.username,
+  firstName: user.first_name,
+  lastName: user.last_name,
+  role: user.role,
+  image: user.image,
+  phone: user.phone_number,
+});
+
+// Helper to set secure cookies
+const setSecureCookie = (
+  cookieStore: ReturnType<typeof cookies>,
+  name: string,
+  value: string,
+  maxAge: number = 7 * 24 * 60 * 60
+) => {
+  cookieStore.set(name, value, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    maxAge,
+    path: "/",
+  });
+};
 
 export const login = async (payload: z.infer<typeof loginSchema>) => {
   const validatedFields = loginSchema.safeParse(payload);
@@ -90,6 +118,13 @@ export const login = async (payload: z.infer<typeof loginSchema>) => {
       });
     }
   }
+
+  // Store user data in cookies and proceed with sign in
+  const cookieStore = cookies();
+  const userData = extractUserData(existingUser);
+
+  // Store user data in an encrypted cookie
+  setSecureCookie(cookieStore, "user_data", JSON.stringify(userData));
 
   // Then try to sign in with next-auth credentials.
   return await signInCredentials(login, password);
