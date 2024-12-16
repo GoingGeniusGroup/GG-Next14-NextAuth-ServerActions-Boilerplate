@@ -296,7 +296,7 @@ export default function BottomSection({
             </div>
             <div className="relative mt-4 flex border p-2 rounded-xl overflow-auto backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
               <ExpressionCard
-                expressions={expressions}
+                expressions={publicExpressions}
                 handleEmote={handleEmote}
               />
             </div>

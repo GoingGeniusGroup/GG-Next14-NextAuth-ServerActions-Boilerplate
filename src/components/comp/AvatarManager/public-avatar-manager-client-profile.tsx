@@ -22,7 +22,7 @@ export default function PublicAvatarManagerClientProfile({
     <>
       <Suspense fallback={<AvatarSkeleton />}>
         <Avatar
-          key="avatar publicx"
+          key="avatar public"
           modelSrc={
             user?.avatar && user.avatar.length > 0 && user.avatar[0]?.avatar_url
               ? user.avatar[0].avatar_url
