@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Button as MovingBorderButton } from "@/src/ui/border/moving-border";
 import { Card, CardContent } from "@/src/ui/card";
 import { Button } from "@/src/ui/button/button";
-import { IconEdit, IconTrash } from "@tabler/icons-react";
+import { IconTrash } from "@tabler/icons-react";
 import ExpressionBottomMidHud from "../Huds/ExpressionBottomMidHud";
 import { Dialog, DialogContent, DialogTrigger } from "@/src/ui/dialog";
 import {
@@ -117,6 +117,7 @@ export default function BottomSection({
     editingAvatar,
     setSelectedAvatar,
     getAvatarCreatorUrl,
+    privateExpressions,
   } = useAvatar();
 
   const { publicExpressions, handlePublicEmote } = usePublicAvatar();
@@ -296,7 +297,7 @@ export default function BottomSection({
             </div>
             <div className="relative mt-4 flex border p-2 rounded-xl overflow-auto backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
               <ExpressionCard
-                expressions={publicExpressions}
+                expressions={privateExpressions}
                 handleEmote={handleEmote}
               />
             </div>

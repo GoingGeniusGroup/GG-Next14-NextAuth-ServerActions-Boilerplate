@@ -40,6 +40,7 @@ interface AvatarContextType {
   editingAvatar: AvatarType | null;
   isProcessing: boolean;
   expressions: Expression[];
+  privateExpressions: Expression[];
   setSelectedAvatar: (url: string | undefined) => void;
   setIsAvatarCreatorOpen: (isOpen: boolean) => void;
   handleCreateAvatar: () => void;
@@ -89,6 +90,45 @@ const defaultExpressions: Expression[] = [
   },
 ];
 
+// Expression on own profile page
+const defaultPrivateExpressions: Expression[] = [
+  {
+    label: "angry",
+    icon: "/emote/angry.svg",
+    bg: "#FCBB3F",
+    animation: "/male-idle-3.fbx",
+  },
+  {
+    label: "servesyou",
+    icon: "/emote/servesyou.svg",
+    bg: "#DC143C",
+    animation: "/M_Standing_Expressions_011.fbx",
+  },
+  {
+    label: "twerk",
+    icon: "/emote/twerk.svg",
+    bg: "#AA25B6",
+    animation: "/M_Standing_Expressions_012.fbx",
+  },
+  {
+    label: "hiphop",
+    icon: "/emote/hiphop.svg",
+    bg: "#129FE0",
+    animation: "/M_Standing_Expressions_013.fbx",
+  },
+  {
+    label: "thriller",
+    icon: "/emote/thriller.svg",
+    bg: "#14C620",
+    animation: "/M_Standing_Expressions_016.fbx",
+  },
+  {
+    label: "breakdance",
+    icon: "/emote/breakdance.svg",
+    bg: "#ACACAC",
+    animation: "/male-spawn-animation.fbx",
+  },
+];
 interface AvatarProviderProps {
   children: ReactNode;
   initialAvatars: AvatarType[];
@@ -251,6 +291,7 @@ export function AvatarProvider({
     editingAvatar,
     isProcessing,
     expressions: defaultExpressions,
+    privateExpressions: defaultPrivateExpressions,
     setSelectedAvatar,
     setIsAvatarCreatorOpen,
     handleCreateAvatar,
