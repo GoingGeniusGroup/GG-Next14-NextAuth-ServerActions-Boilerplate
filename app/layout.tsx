@@ -1,21 +1,22 @@
-import { Toaster } from "@/src/ui/sonner";
-import type { Metadata } from "next";
-import Providers from "@/src/providers/SessionProvider";
-import { Inter } from "next/font/google";
-import "@/styles/globals.css";
-import { AuroraBackground } from "@/src/ui/background/aurora-background";
-import { ThemeSwitcher } from "@/src/components/comp/ThemeToggler/ThemeSwitcher";
-import { ThemeProvider } from "next-themes";
-import FloatingDockInvertedComponent from "@/src/components/comp/dock/FloatingDockInverted";
-import { UserProvider } from "@/src/hooks/UserProvider";
-import { ToastProvider } from "../src/providers/toast-provider";
-import { MobileSimulatorProvider } from "@/src/components/comp/MobileSimulator/provider/MobileSimulatorContext";
-import { currentUser } from "@/lib/auth";
 import { getUserAvatars } from "@/actions/genius-profile/avatar";
+import { currentUser } from "@/lib/auth";
 import {
   AvatarProvider,
   AvatarType,
 } from "@/src/components/comp/AvatarManager/provider/AvatarManagerContext";
+import FloatingDockInvertedComponent from "@/src/components/comp/dock/FloatingDockInverted";
+import { MobileSimulatorProvider } from "@/src/components/comp/MobileSimulator/provider/MobileSimulatorContext";
+import { ThemeSwitcher } from "@/src/components/comp/ThemeToggler/ThemeSwitcher";
+import { UserProvider } from "@/src/hooks/UserProvider";
+import Providers from "@/src/providers/SessionProvider";
+import { AuroraBackground } from "@/src/ui/background/aurora-background";
+import { Toaster } from "@/src/ui/sonner";
+import "@/styles/globals.css";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import type { Metadata } from "next";
+import { ThemeProvider } from "next-themes";
+import { Inter } from "next/font/google";
+import { ToastProvider } from "../src/providers/toast-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -109,6 +110,9 @@ export default async function RootLayout({
                     <div className="flex-1 px-8 py-4 w-full overflow-auto">
                       {children}
                     </div>
+                    
+                    {/* Speed Insights */}
+                    <SpeedInsights/>
                   </AvatarProvider>
                 </UserProvider>
                 <ToastProvider />
