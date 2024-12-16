@@ -3,7 +3,7 @@
 import { FaEdit } from "react-icons/fa";
 import GGCard from "../card/GGCard";
 import CustomCardStack from "../card/CustomCardStack";
-import CustomToolTipLeftRight from "@/src/components/comp/CustomComponents/CustomToolTipLeftRight";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/src/ui/tooltip";
 
 const publicUser = {
   name: "John Doe",
@@ -54,15 +54,14 @@ export default function ProfileMobileView({ username }: { username: string }) {
           <h1 className="text-[16px] font-bold">BIO</h1>
           {username === publicUser.username && (
             <div className="absolute right-2 top-2">
-              <div className="group">
-                <FaEdit size={14} className="cursor-pointer" />
-                <CustomToolTipLeftRight
-                  content="Edit Bio"
-                  top="-4"
-                  left={-20}
-                  translateY="0"
-                />
-              </div>
+              <Tooltip>
+                <TooltipTrigger>
+                  <div>
+                    <FaEdit size={14} className="cursor-pointer" />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>Edit Bio</TooltipContent>
+              </Tooltip>
             </div>
           )}
           <p className="h-[60px] w-full overflow-auto text-[12px] font-semibold">

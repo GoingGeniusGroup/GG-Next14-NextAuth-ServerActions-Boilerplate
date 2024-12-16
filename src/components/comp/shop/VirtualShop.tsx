@@ -12,11 +12,7 @@ import { Product, CartItem } from "./subComponents/types";
 import { Switch } from "../../../ui/switch/switch";
 import { GiEarthAmerica } from "react-icons/gi";
 import { TbHexagon3D } from "react-icons/tb";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/src/ui/tooltip/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/src/ui/tooltip";
 import { Label } from "@/src/ui/label";
 import VirtualProductList from "./subComponents/VirtualProductList";
 

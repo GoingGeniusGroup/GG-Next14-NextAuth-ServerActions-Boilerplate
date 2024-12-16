@@ -7,7 +7,7 @@ import { GiBarbedStar, GiShipWheel } from "react-icons/gi";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { RiEarthFill } from "react-icons/ri";
 import Hamburger from "hamburger-react";
-import CustomToolTipLeftRight from "../CustomComponents/CustomToolTipLeftRight";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/src/ui/tooltip";
 
 const NavbarClient = () => {
   const [isOpen, setOpen] = useState(false);
@@ -46,56 +46,53 @@ const NavbarClient = () => {
         <div className="fixed left-[5px] md:left-[20px] z-50 flex w-[33px] top-1/2 -translate-y-1/2 select-none flex-col items-center space-y-[6px] rounded-full px-[6px] py-[4px] transition-all duration-500 ease-in-out">
           <div className="hidden text-black/70 lg:flex">
             <div className="flex flex-col w-10 items-center justify-center gap-2 rounded-full bg-white py-1 shadow-lg backdrop-blur-md  md:gap-y-3">
-              <Link
-                href="#"
-                className={`group ${
-                  pathname === "/hud"
-                    ? "scale-110 py-2 text-2xl font-bold text-pink-700"
-                    : "py-2 font-semibold transition-all duration-300 ease-out hover:scale-105 hover:text-purple-600"
-                }`}
-              >
-                <GiShipWheel size={25} className="drop-shadow" />
-                <CustomToolTipLeftRight
-                  content="HUD"
-                  top="0"
-                  left={29}
-                  translateY="10"
-                />
-              </Link>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Link
+                    href="#"
+                    className={`${
+                      pathname === "/hud"
+                        ? "scale-110 py-2 text-2xl font-bold text-pink-700"
+                        : "py-2 font-semibold transition-all duration-300 ease-out hover:scale-105 hover:text-purple-600"
+                    }`}
+                  >
+                    <GiShipWheel size={25} className="drop-shadow" />
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent>HUD</TooltipContent>
+              </Tooltip>
 
-              <Link
-                href="/"
-                className={`group ${
-                  pathname === "/discover"
-                    ? "scale-110 py-2 text-2xl font-bold  text-pink-700 drop-shadow"
-                    : "py-2 font-semibold transition duration-300 ease-out hover:scale-105 hover:text-purple-600"
-                }`}
-              >
-                <GiBarbedStar size={30} className="drop-shadow" />
-                <CustomToolTipLeftRight
-                  content="DISCOVER"
-                  top="0"
-                  left={29}
-                  translateY="10"
-                />
-              </Link>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Link
+                    href="/"
+                    className={`group ${
+                      pathname === "/discover"
+                        ? "scale-110 py-2 text-2xl font-bold  text-pink-700 drop-shadow"
+                        : "py-2 font-semibold transition duration-300 ease-out hover:scale-105 hover:text-purple-600"
+                    }`}
+                  >
+                    <GiBarbedStar size={30} className="drop-shadow" />
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent>DISCOVER</TooltipContent>
+              </Tooltip>
 
-              <Link
-                href="#"
-                className={`group ${
-                  pathname.startsWith("/regions")
-                    ? "scale-110 py-2 text-2xl font-bold text-pink-700 drop-shadow"
-                    : "py-2 font-semibold transition duration-300 ease-out hover:scale-105 hover:text-purple-600"
-                }`}
-              >
-                <RiEarthFill size={25} className="drop-shadow" />
-                <CustomToolTipLeftRight
-                  content="REGIONS"
-                  top="0"
-                  left={29}
-                  translateY="10"
-                />
-              </Link>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Link
+                    href="#"
+                    className={`group ${
+                      pathname.startsWith("/regions")
+                        ? "scale-110 py-2 text-2xl font-bold text-pink-700 drop-shadow"
+                        : "py-2 font-semibold transition duration-300 ease-out hover:scale-105 hover:text-purple-600"
+                    }`}
+                  >
+                    <RiEarthFill size={25} className="drop-shadow" />
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent>REGIONS</TooltipContent>
+              </Tooltip>
             </div>
           </div>
         </div>

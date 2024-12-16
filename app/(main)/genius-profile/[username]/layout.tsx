@@ -1,13 +1,12 @@
 "use client";
-'use cache'
+"use cache";
 import { ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 import { PublicAvatarProvider } from "@/src/components/comp/AvatarManager/provider/AvatarManagerPublicContext";
 import { Button } from "@/src/ui/button";
-
-import CustomToolTip from "@/src/components/comp/CustomComponents/CustomToolTip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/src/ui/tooltip";
 
 interface GeniusProfileLayoutProps {
   children: ReactNode;
@@ -52,16 +51,22 @@ export default function GeniusProfileLayout({
                     href={`/genius-profile/${username}`}
                     className="group relative"
                   >
-                    <Button
-                      className={`rounded-full flex justify-center items-center transition-color duration-300 ease-in-out ${
-                        isHomeActive
-                          ? "bg-black text-sky-500 hover:bg-black/80 hover:text-white h-[32px]"
-                          : "dark:bg-white bg-gray-200 text-black hover:bg-black hover:text-white size-[32px]"
-                      }`}
-                    >
-                      {isHomeActive ? "HOME" : "H"}
-                    </Button>
-                    {!isHomeActive && <CustomToolTip content="Home" />}
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <Button
+                          className={`rounded-full flex justify-center items-center transition-color duration-300 ease-in-out ${
+                            isHomeActive
+                              ? "bg-black text-sky-500 hover:bg-black/80 hover:text-white h-[32px]"
+                              : "dark:bg-white bg-gray-200 text-black hover:bg-black hover:text-white size-[32px]"
+                          }`}
+                        >
+                          {isHomeActive ? "HOME" : "H"}
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Home</p>
+                      </TooltipContent>
+                    </Tooltip>
                   </Link>
 
                   {/* Gallery Link */}
@@ -69,16 +74,22 @@ export default function GeniusProfileLayout({
                     href={`/genius-profile/${username}/gallery`}
                     className="group"
                   >
-                    <Button
-                      className={`rounded-full  flex justify-center items-center transition-color duration-300 ease-in-out ${
-                        isGalleryActive
-                          ? "bg-black text-sky-500  hover:bg-black/80 hover:text-white h-[32px]"
-                          : "dark:bg-white bg-gray-200 text-black  hover:bg-black hover:text-white size-[32px]"
-                      }`}
-                    >
-                      {isGalleryActive ? "GALLERY" : "G"}
-                    </Button>
-                    {!isGalleryActive && <CustomToolTip content="Gallery" />}
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <Button
+                          className={`rounded-full  flex justify-center items-center transition-color duration-300 ease-in-out ${
+                            isGalleryActive
+                              ? "bg-black text-sky-500  hover:bg-black/80 hover:text-white h-[32px]"
+                              : "dark:bg-white bg-gray-200 text-black  hover:bg-black hover:text-white size-[32px]"
+                          }`}
+                        >
+                          {isGalleryActive ? "GALLERY" : "G"}
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Gallery</p>
+                      </TooltipContent>
+                    </Tooltip>
                   </Link>
 
                   {/* Projects Link */}
@@ -86,16 +97,22 @@ export default function GeniusProfileLayout({
                     href={`/genius-profile/${username}/projects`}
                     className="group"
                   >
-                    <Button
-                      className={`rounded-full  flex justify-center items-center transition-color duration-300 ease-in-out ${
-                        isProjectsActive
-                          ? "bg-black text-sky-500  hover:bg-black/80 hover:text-white h-[32px]"
-                          : "dark:bg-white bg-gray-200 text-black  hover:bg-black hover:text-white size-[32px]"
-                      }`}
-                    >
-                      {isProjectsActive ? "PROJECTS" : "P"}
-                    </Button>
-                    {!isProjectsActive && <CustomToolTip content="Projects" />}
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <Button
+                          className={`rounded-full  flex justify-center items-center transition-color duration-300 ease-in-out ${
+                            isProjectsActive
+                              ? "bg-black text-sky-500  hover:bg-black/80 hover:text-white h-[32px]"
+                              : "dark:bg-white bg-gray-200 text-black  hover:bg-black hover:text-white size-[32px]"
+                          }`}
+                        >
+                          {isProjectsActive ? "PROJECTS" : "P"}
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Projects</p>
+                      </TooltipContent>
+                    </Tooltip>
                   </Link>
                 </ul>
               </div>

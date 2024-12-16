@@ -21,8 +21,8 @@ import { RiShareLine } from "react-icons/ri";
 import { Button as MovingBorderButton } from "@/src/ui/border/moving-border";
 import { socialType } from "@prisma/client";
 import { useRef, useState } from "react";
-import CustomToolTip from "../CustomComponents/CustomToolTip";
 import SharePopup from "../GeniusUserProfile/share/SharePopUp";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/src/ui/tooltip";
 
 type socialvalueType = {
   name: socialType;
@@ -70,7 +70,7 @@ export default function AboutSectionProfile({
   userInfo: any | null;
   ifOwnProfile: boolean;
 }) {
-  'use cache'
+  "use cache";
   let ref = useRef<HTMLDivElement>(null);
   const [isPopupOpen, setPopupOpen] = useState(false);
   const currentPageUrl =
@@ -108,16 +108,20 @@ export default function AboutSectionProfile({
             </>
           )}
 
-          <div className="group">
-            <MovingBorderButton
-              borderRadius="1.75rem"
-              className="bg-gray-200 size-10 dark:bg-black text-black dark:text-white hover:text-yellow-600 transition-colors duration-300 border-neutral-200 dark:border-slate-800"
-              onClick={() => setPopupOpen(true)}
-            >
-              <RiShareLine size={22} />
-            </MovingBorderButton>
-            <CustomToolTip content="Share Profile" />
-          </div>
+          <Tooltip>
+            <TooltipTrigger>
+              <MovingBorderButton
+                borderRadius="1.75rem"
+                className="bg-gray-200 size-10 dark:bg-black text-black dark:text-white hover:text-yellow-600 transition-colors duration-300 border-neutral-200 dark:border-slate-800"
+                onClick={() => setPopupOpen(true)}
+              >
+                <RiShareLine size={22} />
+              </MovingBorderButton>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Share Profile</p>
+            </TooltipContent>
+          </Tooltip>
         </div>
 
         {/* User profile content */}

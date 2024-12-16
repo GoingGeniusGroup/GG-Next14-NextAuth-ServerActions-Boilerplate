@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Button } from "../../../ui/button/button";
 import { Smartphone } from "lucide-react";
 import { RxCross2 } from "react-icons/rx";
-import CustomToolTipLeftRight from "../CustomComponents/CustomToolTipLeftRight";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/src/ui/tooltip";
 
 interface SimulatorToggleButtonProps {
   showMobile: boolean;
@@ -19,19 +19,18 @@ export default function SimulatorToggleButton({
       className="fixed right-[5px] md:right-[20px] z-50 flex w-[33px] top-[47%] select-none flex-col items-center space-y-[6px] rounded-full dark:bg-black bg-white px-[6px] py-[4px] shadow-lg shadow-black/50 transition-all duration-500 ease-in-out"
     >
       {/* Toggle button for mobile view */}
-      <Button
-        onClick={() => setShowMobile(!showMobile)}
-        className="group rounded-full size-6 p-0 bg-transparent z-20 hover:border-yellow-600 hover:border hover:bg-transparent"
-        size="mini"
-      >
-        <Smartphone className="size-4 text-black dark:text-white" />
-        <CustomToolTipLeftRight
-          content="Mobile SIM"
-          top="0"
-          left={-35}
-          translateY="2"
-        />
-      </Button>
+      <Tooltip>
+        <TooltipTrigger>
+          <Button
+            onClick={() => setShowMobile(!showMobile)}
+            className="group rounded-full size-6 p-0 bg-transparent z-20 hover:border-yellow-600 hover:border hover:bg-transparent"
+            size="mini"
+          >
+            <Smartphone className="size-4 text-black dark:text-white" />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>Mobile SIM</TooltipContent>
+      </Tooltip>
 
       {showMobile && (
         <motion.div

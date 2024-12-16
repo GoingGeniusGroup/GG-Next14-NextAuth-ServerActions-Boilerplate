@@ -1,4 +1,4 @@
-import { TooltipProvider } from "@/src/ui/tooltip/tooltip";
+import { TooltipProvider } from "@/src/ui/tooltip";
 
 export default async function MainLayoutClient({
   children,

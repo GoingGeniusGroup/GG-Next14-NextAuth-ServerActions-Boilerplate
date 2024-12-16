@@ -2,8 +2,7 @@
 
 import React from "react";
 import { Button } from "@/src/ui/button/button";
-import { Play, SkipBack, SkipForward, Sun, CheckCircle } from "lucide-react";
-import CustomToolTip from "../CustomComponents/CustomToolTip";
+import { Play, SkipBack, SkipForward, Sun } from "lucide-react";
 import { MobileInterfaceProps } from "./interface/MobileInterface.interface";
 
 //icon
@@ -11,6 +10,7 @@ import { RxCross2 } from "react-icons/rx";
 import { ColorPicker } from "../CustomComponents/ColorPicker";
 import { useMobileSimulator } from "@/src/components/comp/MobileSimulator/provider/MobileSimulatorContext";
 import { ThemeType } from "@prisma/client";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/src/ui/tooltip";
 
 const scheduleData = [
   { day: "S", schedule: [1, 0, 1, 1, 0, 1, 0] },
@@ -189,20 +189,23 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
       {/* Bottom nav bar */}
       <div className="fixed right-0 left-0 bottom-6 z-40 flex h-[34px] mx-7 select-none justify-between space-x-[6px] rounded-full bg-white px-4 py-[4px] shadow-lg shadow-black/50">
         {sections.map((section) => (
-          <Button
-            key={`${section.id}-${section.title}`}
-            variant="ghost"
-            size="small"
-            className={`group transition-all bg-black text-white p-2 rounded-full ${
-              screens.some((screen) => screen.id === section.id)
-                ? "bg-blue-400 hover:bg-black/40 hover:bg-opacity-70"
-                : "hover:bg-black/40"
-            }`}
-            onClick={() => toggleScreen(section)}
-          >
-            {section.icon}
-            <CustomToolTip content={section.title} />
-          </Button>
+          <Tooltip key={`${section.id}-${section.title}`}>
+            <TooltipTrigger>
+              <Button
+                variant="ghost"
+                size="small"
+                className={`transition-all bg-black text-white p-2 rounded-full ${
+                  screens.some((screen) => screen.id === section.id)
+                    ? "bg-blue-400 hover:bg-black/40 hover:bg-opacity-70"
+                    : "hover:bg-black/40"
+                }`}
+                onClick={() => toggleScreen(section)}
+              >
+                {section.icon}
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>{section.title}</TooltipContent>
+          </Tooltip>
         ))}
       </div>
       <Button

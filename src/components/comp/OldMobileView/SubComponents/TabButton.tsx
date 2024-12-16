@@ -6,8 +6,8 @@ import {
   FaUserCircle,
   FaUsers,
 } from "react-icons/fa";
-import CustomToolTipLeftRight from "@/src/components/comp/CustomComponents/CustomToolTipLeftRight";
 import { Tab } from "../RightSideHud";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/src/ui/tooltip";
 
 interface TabButtonProps {
   tab: Tab;
@@ -31,15 +31,19 @@ const getIcon = (tab: Tab) => {
 };
 
 const TabButton: React.FC<TabButtonProps> = ({ tab, isSelected, onClick }) => (
-  <div
-    onClick={onClick}
-    className={`group flex size-[26px] items-center justify-center rounded-full font-semibold shadow-black drop-shadow-lg hover:bg-blue-100 ${
-      isSelected ? "bg-blue-400" : "bg-gray-300"
-    }`}
-  >
-    {getIcon(tab)}
-    <CustomToolTipLeftRight content={tab} top="0" left={-35} translateY="0" />
-  </div>
+  <Tooltip>
+    <TooltipTrigger>
+      <div
+        onClick={onClick}
+        className={`flex size-[26px] items-center justify-center rounded-full font-semibold shadow-black drop-shadow-lg hover:bg-blue-100 ${
+          isSelected ? "bg-blue-400" : "bg-gray-300"
+        }`}
+      >
+        {getIcon(tab)}
+      </div>
+    </TooltipTrigger>
+    <TooltipContent>{tab}</TooltipContent>
+  </Tooltip>
 );
 
 export default TabButton;

@@ -13,11 +13,7 @@ import {
 } from "lucide-react";
 import { gsap } from "gsap";
 import { Product } from "./types";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/src/ui/tooltip/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/src/ui/tooltip";
 import { Avatar } from "@/src/components/comp/Avatar";
 import { Slider } from "@/src/ui/slider/slider";
 

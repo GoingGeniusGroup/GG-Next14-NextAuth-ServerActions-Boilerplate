@@ -7,8 +7,8 @@ import Link from "next/link";
 import { PublicAvatarProvider } from "@/src/components/comp/AvatarManager/provider/AvatarManagerPublicContext";
 import { Button } from "@/src/ui/button";
 import DragCloseDrawer from "@/src/components/comp/CustomComponents/DragCloseDrawer";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/src/ui/tooltip";
 
-import CustomToolTip from "@/src/components/comp/CustomComponents/CustomToolTip";
 interface GeniusProfileLayoutProps {
   userinfo: ReactNode;
   children: ReactNode;
@@ -59,45 +59,49 @@ export default function GeniusProfileLayout({
                 className={`absolute -bottom-2 z-40 left-1/2 -translate-x-1/2 flex space-x-4 mb-4 transition-all duration-300 ease-in-out`}
               >
                 <ul className="relative mx-auto flex w-fit gap-1 rounded-full bg-black/20 dark:bg-white/20 p-1">
-                  <Link
-                    href={`/genius-profile/${username}/gallery`}
-                    className="group"
-                  >
-                    <Button
-                      className={`rounded-full size-[32px] flex justify-center items-center bg-gray-200 dark:bg-white text-black hover:bg-black hover:text-white transition-color duration-300 ease-in-out `}
-                      onClick={() => setOpen(true)}
-                    >
-                      <span
-                        className={`${
-                          isGalleryOrProjects && pathname.includes("gallery")
-                            ? "animate-pulse text-sky-500"
-                            : ""
-                        }`}
-                      >
-                        G
-                      </span>
-                    </Button>
-                    <CustomToolTip content="Gallery" />
+                  <Link href={`/genius-profile/${username}/gallery`}>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <Button
+                          className={`rounded-full size-[32px] flex justify-center items-center bg-gray-200 dark:bg-white text-black hover:bg-black hover:text-white transition-color duration-300 ease-in-out `}
+                          onClick={() => setOpen(true)}
+                        >
+                          <span
+                            className={`${
+                              isGalleryOrProjects &&
+                              pathname.includes("gallery")
+                                ? "animate-pulse text-sky-500"
+                                : ""
+                            }`}
+                          >
+                            G
+                          </span>
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>Gallery</TooltipContent>
+                    </Tooltip>
                   </Link>
-                  <Link
-                    href={`/genius-profile/${username}/projects`}
-                    className="group"
-                  >
-                    <Button
-                      className={`rounded-full size-[32px] flex justify-center items-center bg-gray-200 dark:bg-white text-black hover:bg-black hover:text-white transition-color duration-300 ease-in-out`}
-                      onClick={() => setOpen(true)}
-                    >
-                      <span
-                        className={`${
-                          isGalleryOrProjects && pathname.includes("projects")
-                            ? "animate-pulse text-sky-500"
-                            : ""
-                        }`}
-                      >
-                        P
-                      </span>
-                    </Button>
-                    <CustomToolTip content="Projects" />
+                  <Link href={`/genius-profile/${username}/projects`}>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <Button
+                          className={`rounded-full size-[32px] flex justify-center items-center bg-gray-200 dark:bg-white text-black hover:bg-black hover:text-white transition-color duration-300 ease-in-out`}
+                          onClick={() => setOpen(true)}
+                        >
+                          <span
+                            className={`${
+                              isGalleryOrProjects &&
+                              pathname.includes("projects")
+                                ? "animate-pulse text-sky-500"
+                                : ""
+                            }`}
+                          >
+                            P
+                          </span>
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>Projects</TooltipContent>
+                    </Tooltip>
                   </Link>
                 </ul>
               </div>
@@ -109,35 +113,37 @@ export default function GeniusProfileLayout({
                       className={`sticky top-0 z-50 flex justify-center transition-all duration-300 ease-in-out`}
                     >
                       <ul className="relative mx-auto flex w-fit gap-1 rounded-full bg-white/20 p-1">
-                        <Link
-                          href={`/genius-profile/${username}/gallery`}
-                          className="group"
-                        >
-                          <Button
-                            className={`rounded-full size-[32px] flex justify-center items-center transition-color duration-300 ease-in-out ${
-                              pathname.includes("gallery")
-                                ? "bg-black text-white hover:bg-white hover:text-black "
-                                : "bg-white text-black hover:bg-black hover:text-white"
-                            }`}
-                          >
-                            G
-                          </Button>
-                          <CustomToolTip content="Gallery" />
+                        <Link href={`/genius-profile/${username}/gallery`}>
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <Button
+                                className={`rounded-full size-[32px] flex justify-center items-center transition-color duration-300 ease-in-out ${
+                                  pathname.includes("gallery")
+                                    ? "bg-black text-white hover:bg-white hover:text-black "
+                                    : "bg-white text-black hover:bg-black hover:text-white"
+                                }`}
+                              >
+                                G
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>Gallery</TooltipContent>
+                          </Tooltip>
                         </Link>
-                        <Link
-                          href={`/genius-profile/${username}/projects`}
-                          className="group"
-                        >
-                          <Button
-                            className={`rounded-full size-[32px] flex justify-center items-center transition-color duration-300 ease-in-out ${
-                              pathname.includes("projects")
-                                ? "bg-black text-white hover:bg-white hover:text-black "
-                                : "bg-white text-black hover:bg-black hover:text-white"
-                            }`}
-                          >
-                            P
-                          </Button>
-                          <CustomToolTip content="Projects" />
+                        <Link href={`/genius-profile/${username}/projects`}>
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <Button
+                                className={`rounded-full size-[32px] flex justify-center items-center transition-color duration-300 ease-in-out ${
+                                  pathname.includes("projects")
+                                    ? "bg-black text-white hover:bg-white hover:text-black "
+                                    : "bg-white text-black hover:bg-black hover:text-white"
+                                }`}
+                              >
+                                P
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>Projects</TooltipContent>
+                          </Tooltip>
                         </Link>
                       </ul>
                     </div>
