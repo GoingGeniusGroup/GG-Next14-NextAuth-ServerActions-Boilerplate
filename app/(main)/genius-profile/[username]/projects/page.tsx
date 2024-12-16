@@ -1,3 +1,4 @@
+'use cache'
 import { getCurrentUser } from "@/actions/genius-profile/userAndGuild";
 import GeniusUserProjectsV2 from "@/src/components/comp/GeniusUserProfile/GeniusUserProjectsV2";
 import { getExperiencesByUserId } from "@/services/experience";

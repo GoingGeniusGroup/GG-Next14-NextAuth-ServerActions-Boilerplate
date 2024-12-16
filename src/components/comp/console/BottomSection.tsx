@@ -101,6 +101,7 @@ export default function BottomSection({
   userInfo: any;
   ifOwnProfile: boolean;
 }) {
+  "use cache";
   const {
     avatars,
     selectedAvatar,

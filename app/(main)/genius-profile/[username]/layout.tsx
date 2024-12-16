@@ -1,5 +1,5 @@
 "use client";
-
+'use cache'
 import { ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";

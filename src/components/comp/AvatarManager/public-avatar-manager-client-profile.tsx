@@ -16,6 +16,7 @@ export default function PublicAvatarManagerClientProfile({
   cameraTarget: number;
   user: any;
 }) {
+  'use cache'
   const { currentPublicEmote } = usePublicAvatar();
 
   return (

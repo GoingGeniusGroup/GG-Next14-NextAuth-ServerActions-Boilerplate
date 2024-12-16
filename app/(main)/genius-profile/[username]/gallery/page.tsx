@@ -1,6 +1,6 @@
-// import CustomGalleryComponent from "@/src/components/comp/gallery/CustomGalleryComponent";
+"use cache";
 
-import CustomGalleryComponent from "@/src/components/comp/gallery/custom-gallery-component";
+import CustomGalleryComponent from "@/src/components/comp/gallery/CustomGalleryComponent";
 
 interface GeniusUserGalleryProps {
   params: {

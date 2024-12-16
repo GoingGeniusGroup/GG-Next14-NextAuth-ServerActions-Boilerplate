@@ -70,6 +70,7 @@ export default function AboutSectionProfile({
   userInfo: any | null;
   ifOwnProfile: boolean;
 }) {
+  'use cache'
   let ref = useRef<HTMLDivElement>(null);
   const [isPopupOpen, setPopupOpen] = useState(false);
   const currentPageUrl =

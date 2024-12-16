@@ -2,14 +2,15 @@
 
 import {
   createContext,
-  ReactNode,
   useContext,
-  useEffect,
   useState,
+  ReactNode,
+  useEffect,
 } from "react";
 
 import { getAvatarsByUserId } from "@/services/avatar";
 import { getUserByUsername } from "@/services/user";
+import { getUserAvatars } from "@/actions/genius-profile/avatar";
 
 // Types
 export type AvatarType = {
@@ -45,37 +46,37 @@ const defaultExpressions: Expression[] = [
     label: "angry",
     icon: "/emote/angry.svg",
     bg: "#FCBB3F",
-    animation: "/male-idle-3.fbx",
+    animation: "/emote/animations/bodyblock.fbx",
   },
   {
     label: "servesyou",
     icon: "/emote/servesyou.svg",
     bg: "#DC143C",
-    animation: "/M_Standing_Expressions_011.fbx",
+    animation: "/emote/animations/rumbadancing.fbx",
   },
   {
     label: "twerk",
     icon: "/emote/twerk.svg",
     bg: "#AA25B6",
-    animation: "/M_Standing_Expressions_012.fbx",
+    animation: "/emote/animations/dancingtwerk.fbx",
   },
   {
     label: "hiphop",
     icon: "/emote/hiphop.svg",
     bg: "#129FE0",
-    animation: "/M_Standing_Expressions_013.fbx",
+    animation: "/emote/animations/hiphop.fbx",
   },
   {
     label: "thriller",
     icon: "/emote/thriller.svg",
     bg: "#14C620",
-    animation: "/M_Standing_Expressions_016.fbx",
+    animation: "/emote/animations/thriller.fbx",
   },
   {
     label: "breakdance",
     icon: "/emote/breakdance.svg",
     bg: "#ACACAC",
-    animation: "/male-spawn-animation.fbx",
+    animation: "/emote/animations/breakdance.fbx",
   },
 ];
 
