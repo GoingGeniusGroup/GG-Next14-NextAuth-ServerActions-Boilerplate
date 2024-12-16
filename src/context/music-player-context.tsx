@@ -140,14 +140,14 @@ export const MusicPlayerProvider: React.FC<
     return () => {
       audioElement.removeEventListener("ended", handleEnded);
     };
-  }, [isRepeat, currentSong]);
+  }, [isRepeat, currentSong, playNext]);
 
   // Auto-play when song changes
   useEffect(() => {
     if (audioRef.current && isPlaying) {
       audioRef.current.play();
     }
-  }, [currentSong]);
+  }, [currentSong, isPlaying]);
 
   return (
     <MusicPlayerContext.Provider
