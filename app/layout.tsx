@@ -17,6 +17,7 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { Inter } from "next/font/google";
 import { ToastProvider } from "../src/providers/toast-provider";
+import FullscreenButton from "@/src/ui/button/fullscreen-button";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -112,6 +113,7 @@ export default async function RootLayout({
                       {children}
                       <SpeedInsights/>
                     </div>
+                    <FullscreenButton />
                   </AvatarProvider>
                 </UserProvider>
                 <ToastProvider />
