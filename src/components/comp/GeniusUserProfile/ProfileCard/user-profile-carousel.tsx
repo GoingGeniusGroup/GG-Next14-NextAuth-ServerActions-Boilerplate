@@ -26,7 +26,7 @@ export function UserProfilesCarousel({
     >
       <CarouselContent>
         {users.map((user) => (
-          <CarouselItem key={user.username} className="md:basis-1/2">
+          <CarouselItem key={user.username} className="basis-1/2">
             <div className="p-1">
               <UserProfile
                 username={user.username}

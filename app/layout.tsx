@@ -144,6 +144,7 @@ export default async function RootLayout({
                       >
                         {/* Theme switcher */}
                         <div className="absolute flex gap-2 top-[8px] right-[5px] md:right-[20px] z-50">
+                          <FullscreenButton />
                           <ThemeSwitcher />
                           <ProfileHudTop
                             handleServerSignOut={handleServerSignOut}
@@ -171,7 +172,6 @@ export default async function RootLayout({
                           {children}
                           <SpeedInsights />
                         </div>
-                        <FullscreenButton />
                       </AvatarProvider>
                     </UserProvider>
                     <ToastProvider />
