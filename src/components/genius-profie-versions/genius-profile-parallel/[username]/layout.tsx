@@ -137,7 +137,7 @@ export default function GeniusProfileLayout({
             {/* Main content container with sliding animation */}
 
             <div
-              className={`flex-1 border-2 rounded-lg w-full mx-[69px] overflow-hidden transition-transform duration-300 ease-in-out`}
+              className={`flex-1 border-2 rounded-lg w-full md:mx-[69px] overflow-hidden transition-transform duration-300 ease-in-out`}
             >
               {/* <div className="fixed w-full top-20 flex items-center justify-center left-1/2 -translate-x-1/2">
                 {avatar}

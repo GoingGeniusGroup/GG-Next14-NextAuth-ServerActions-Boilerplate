@@ -16,21 +16,20 @@ export default function ExpressionCard({
   handleEmote: (emote: string) => void;
 }) {
   return (
-    <>
-      <Carousel className="w-full">
-        <CarouselContent className="-ml-1">
-          {expressions.map((expression, index) => (
-            <CarouselItem
-              key={index}
-              className="pl-1 basis-1/6"
-              onClick={() => handleEmote(expression.animation)}
-            >
+    <Carousel className="w-full max-w-screen-xl mx-auto px-2">
+      <CarouselContent className="-ml-2 md:-ml-3">
+        {expressions.map((expression, index) => (
+          <CarouselItem
+            key={index}
+            className="pl-2 md:pl-3 basis-1/3 sm:basis-1/4 md:basis-1/5 lg:basis-1/6"
+            onClick={() => handleEmote(expression.animation)}
+          >
+            <div className="flex items-center justify-center">
               <Card
-                className={`w-[60px] h-[75px] rounded-lg flex hover:border-2 items-center justify-center transition-colors duration-300 border`}
+                className="w-full aspect-square max-w-[72px] rounded-lg flex hover:border-2 items-center justify-center transition-all duration-300 border cursor-pointer"
                 style={{
                   borderColor: expression.bg,
                   backgroundColor: "white",
-                  transition: "border-color 0.3s ease",
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.borderColor = "white";
@@ -39,20 +38,22 @@ export default function ExpressionCard({
                   e.currentTarget.style.borderColor = expression.bg;
                 }}
               >
-                <div className="relative">
+                <div className="relative w-[90%] h-[90%]">
                   <Image
                     src={expression.icon}
-                    className="object-cover"
+                    className="object-contain"
                     alt={expression.label}
-                    height={72}
-                    width={72}
+                    fill
+                    sizes="(max-width: 768px) 33vw,
+                           (max-width: 1024px) 25vw,
+                           16vw"
                   />
                 </div>
               </Card>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-      </Carousel>
-    </>
+            </div>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+    </Carousel>
   );
 }

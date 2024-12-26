@@ -16,11 +16,8 @@ export default async function GeniusUserHome({
   username: string;
 }) {
   const currentUser = await getCurrentUser();
-
   const LoggedUserProfile = currentUser?.username === username;
-
   const profileOwner = await getUserByUsername(username);
-
   const user = await getUserWithUsername(username);
 
   if (!profileOwner || !currentUser) {
@@ -28,15 +25,22 @@ export default async function GeniusUserHome({
   }
 
   return (
-    <>
-      <div className="relative flex w-full justify-between">
-        <div className="w-[415px] px-4 z-10">
+    <div className="container mx-auto px-4 overflow-y-auto overflow-x-hidden h-full">
+      <div className="relative flex flex-col lg:flex-row w-full justify-between gap-8">
+        {/* Left Section */}
+        <div className="w-full lg:w-[415px] z-10 order-3 lg:order-1">
           <AboutSectionProfile
             userInfo={LoggedUserProfile ? currentUser : profileOwner}
             ifOwnProfile={LoggedUserProfile}
           />
         </div>
-        <div className="absolute inset-0 w-full h-[510px] flex justify-center flex-col z-0">
+
+        {/* Center Section - Avatar */}
+        <div
+          className="w-full h-[300px] md:h-[400px] lg:h-[510px] 
+                      lg:absolute lg:inset-0 flex justify-center items-center 
+                      order-1 lg:order-2 z-0"
+        >
           {LoggedUserProfile ? (
             <AvatarManagerClientProfile
               fov={40}
@@ -52,14 +56,15 @@ export default async function GeniusUserHome({
             />
           )}
         </div>
-        <div className="w-[415px] px-4">
-          {/* Projects Grid */}
+
+        {/* Right Section */}
+        <div className="w-full lg:w-[415px] z-10 order-2 lg:order-3">
           <BottomSection
             userInfo={LoggedUserProfile ? currentUser : profileOwner}
             ifOwnProfile={LoggedUserProfile}
           />
         </div>
       </div>
-    </>
+    </div>
   );
 }

@@ -1,5 +1,5 @@
 "use client";
-'use cache'
+"use cache";
 import { ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -36,7 +36,7 @@ export default function GeniusProfileLayout({
     <PublicAvatarProvider username={username}>
       <div className="relative size-full">
         <div className="flex h-full gap-x-3 text-black dark:text-white">
-          <div className="flex-1 border-2 rounded-lg w-full mx-[69px] overflow-hidden transition-transform duration-300 ease-in-out">
+          <div className="flex-1 border-2 rounded-lg w-full md:mx-[69px] overflow-hidden transition-transform duration-300 ease-in-out">
             <div
               key={pathname}
               className="px-4 pb-4 pt-8 h-full relative overflow-hidden scroll-container"
