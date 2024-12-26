@@ -54,7 +54,7 @@ const MusicPlayerMobile: React.FC = () => {
   if (!currentSong) return null;
 
   return (
-    <div className="w-full bg-white/10 rounded-lg dark:bg-black/20 backdrop-blur-lg border-t border-white/10 p-1">
+    <div className="w-full">
       {/* Song Info */}
       <div className="flex items-center justify-between  mb-3">
         <div className="flex space-x-1 items-center">
@@ -66,10 +66,10 @@ const MusicPlayerMobile: React.FC = () => {
             width={32}
           />
           <div className="flex flex-col">
-            <h4 className="text-xs font-medium text-white truncate max-w-[80px]">
+            <h4 className="text-xs font-medium truncate max-w-[80px]">
               {currentSong.title}
             </h4>
-            <p className="text-[10px] text-gray-400 truncate max-w-[80px]">
+            <p className="text-[10px] font-extralight truncate max-w-[80px]">
               {currentSong.artist}
             </p>
           </div>
@@ -84,7 +84,7 @@ const MusicPlayerMobile: React.FC = () => {
                 className={`transition-colors ${
                   isRepeat
                     ? "text-blue-500 hover:text-blue-600"
-                    : "text-gray-300 hover:text-white"
+                    : "hover:text-sky-600"
                 }`}
               >
                 <LoopIcon className="w-3 h-3" />
@@ -98,7 +98,7 @@ const MusicPlayerMobile: React.FC = () => {
             <TooltipTrigger>
               <button
                 onClick={() => setVolume(volume > 0 ? 0 : 0.5)}
-                className="text-gray-300 hover:text-white"
+                className="hover:text-sky-600"
               >
                 {volume === 0 ? (
                   <SpeakerQuietIcon className="w-3 h-3" />
@@ -150,15 +150,12 @@ const MusicPlayerMobile: React.FC = () => {
         </div>
 
         {/* Compact Controls */}
-        <div className="flex items-center justify-center w-full px-2 -mt-2">
+        <div className="flex items-center justify-center w-full px-2 -mt-1">
           {/* Player Controls */}
           <div className="flex items-center space-x-3">
             <Tooltip>
               <TooltipTrigger>
-                <button
-                  onClick={playPrevious}
-                  className=" text-gray-300 hover:text-white"
-                >
+                <button onClick={playPrevious} className=" hover:text-sky-600">
                   <TrackPreviousIcon className="w-3 h-3" />
                 </button>
               </TooltipTrigger>
@@ -170,7 +167,7 @@ const MusicPlayerMobile: React.FC = () => {
               <TooltipTrigger>
                 <button
                   onClick={isPlaying ? pause : play}
-                  className="bg-sky-500 hover:bg-sky-600 text-white rounded-full p-1.5 transition-transform transform hover:scale-105"
+                  className="bg-sky-500 hover:bg-sky-600 rounded-full p-1.5 transition-transform transform hover:scale-105"
                 >
                   {isPlaying ? (
                     <PauseIcon className="w-4 h-4" />
@@ -186,10 +183,7 @@ const MusicPlayerMobile: React.FC = () => {
 
             <Tooltip>
               <TooltipTrigger>
-                <button
-                  onClick={playNext}
-                  className=" text-gray-300 hover:text-white"
-                >
+                <button onClick={playNext} className=" hover:text-sky-600">
                   <TrackNextIcon className="w-3 h-3" />
                 </button>
               </TooltipTrigger>
