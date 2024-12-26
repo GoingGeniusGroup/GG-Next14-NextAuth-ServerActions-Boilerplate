@@ -1,7 +1,5 @@
 "use client";
 
-import React from "react";
-import { Button } from "@/src/ui/button";
 import { Battery, Signal, Wifi } from "lucide-react";
 import { useMobileSimulator } from "./provider/MobileSimulatorContext";
 import MusicPlayerMobile from "../music-player/music-player-mobile";
@@ -12,6 +10,7 @@ import {
   TooltipTrigger,
 } from "@/src/ui/tooltip/tooltip";
 import IconButton from "@/src/layout/base/button/icon-button";
+import React from "react";
 
 const scheduleData = [
   { day: "S", schedule: [1, 0, 1, 1, 0, 1, 0] },
@@ -56,33 +55,7 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
       {/* Status Bar */}
       <div className="flex justify-between items-center mb-2 px-5 py-2 text-xs font-medium">
         <div>9:41</div>
-
-        {/* Dynamic Island with animation and Easter egg */}
-        <div
-          className="relative w-[40%] h-[30px] bg-black rounded-full flex justify-center items-center 
-      transform -translate-x-1/2 
-      transition-all ease-out duration-300 hover:scale-105 hover:bg-gradient-to-r hover:from-blue-500 hover:to-pink-500"
-        >
-          {/* Easter egg icon that appears when hovered */}
-          <div className="absolute opacity-0 transition-opacity duration-500 hover:opacity-100">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-6 h-6 text-white"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M12 2l3 7h7l-5 5 2 7-6-4-6 4 2-7-5-5h7z"></path>
-            </svg>
-          </div>
-
-          {/* Bouncing animation */}
-          <div className="absolute bottom-1 animate-bounce w-2 h-2 bg-white rounded-full"></div>
-        </div>
-
+        <div className="absolute left-1/2 top-2 transform -translate-x-1/2 w-[40%] h-[30px] bg-black rounded-full "></div>
         <div className="flex items-center space-x-1">
           <Signal size={12} />
           <Wifi size={12} />
