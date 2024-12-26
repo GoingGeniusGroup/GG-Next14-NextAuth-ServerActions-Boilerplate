@@ -13,7 +13,7 @@ export function SpinningButton({
   ...props
 }: SpinningButtonProps) {
   return (
-    <Button disabled={isLoading} {...props}>
+    <Button size="sm" disabled={isLoading} {...props}>
       {isLoading ? (
         <>
           <Loader2 className="h-4 w-4 animate-spin" />

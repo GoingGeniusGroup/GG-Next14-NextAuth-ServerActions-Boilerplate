@@ -1,5 +1,5 @@
-'use cache'
-import GeniusUserHome from "@/src/components/comp/GeniusUserProfile/GeniusUserHome";
+"use cache";
+import GeniusUserHome from "@/src/components/GeniusUserProfile/GeniusUserHome";
 import { getUserByUsername } from "@/services/user";
 
 interface GeniusUserInfoProps {

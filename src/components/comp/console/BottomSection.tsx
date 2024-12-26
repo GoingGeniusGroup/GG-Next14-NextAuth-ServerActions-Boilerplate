@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Button as MovingBorderButton } from "@/src/ui/border/moving-border";
 import { Card, CardContent } from "@/src/ui/card";
 import { Button } from "@/src/ui/button/button";
-import { IconEdit, IconTrash } from "@tabler/icons-react";
+import { IconTrash } from "@tabler/icons-react";
 import ExpressionBottomMidHud from "../Huds/ExpressionBottomMidHud";
 import { Dialog, DialogContent, DialogTrigger } from "@/src/ui/dialog";
 import {
@@ -23,76 +23,7 @@ import {
 import AvatarManagerClientProfile from "../AvatarManager/avatar-manager-client-profile";
 import ExpressionCard from "../Huds/ExpressionsCard";
 import { usePublicAvatar } from "../AvatarManager/provider/AvatarManagerPublicContext";
-
-const AchievementSlider: React.FC = () => {
-  return (
-    <Carousel className="w-full">
-      <CarouselContent className="-ml-1">
-        <CarouselItem className="pl-1 basis-1/4">
-          <Card
-            className={`group relative size-[90px] rounded-lg dark:bg-black/40 hover:border-2 border-white bg-gray-200 flex items-center justify-center text-3xl transition-colors duration-300`}
-          >
-            <Image
-              src="/achievements/gg/GG-Beta-Tester.png"
-              alt="GG-Trophy"
-              width={74}
-              height={74}
-            />
-            <div className="absolute bottom-0 group-hover:opacity-100 opacity-0 uppercase text-yellow-500 text-xs font-bold">
-              Beta Tester
-            </div>
-          </Card>
-        </CarouselItem>
-
-        <CarouselItem className="pl-1 basis-1/4">
-          <Card
-            className={`group relative size-[90px] rounded-lg dark:bg-black/40 hover:border-2 border-white bg-gray-200 flex items-center justify-center text-3xl transition-colors duration-300`}
-          >
-            <Image
-              src="/achievements/gg/Globe.png"
-              alt="GG-Trophy"
-              width={64}
-              height={64}
-            />
-            <div className="absolute bottom-0 group-hover:opacity-100 opacity-0 uppercase text-yellow-500 text-xs font-bold">
-              GG-Globe
-            </div>
-          </Card>
-        </CarouselItem>
-        <CarouselItem className="pl-1 basis-1/4">
-          <Card
-            className={`group relative size-[90px] rounded-lg dark:bg-black/40 hover:border-2 border-white bg-gray-200 flex items-center justify-center text-3xl transition-colors duration-300`}
-          >
-            <Image
-              src="/achievements/gg/GG-Member-Trophy.png"
-              alt="GG-Trophy"
-              width={64}
-              height={64}
-            />
-            <div className="absolute bottom-0 group-hover:opacity-100 opacity-0 uppercase text-yellow-500 text-xs font-bold">
-              GG-Member
-            </div>
-          </Card>
-        </CarouselItem>
-        <CarouselItem className="pl-1 basis-1/4">
-          <Card
-            className={`group relative size-[90px] rounded-lg dark:bg-black/40 hover:border-2 border-white bg-gray-200 flex items-center justify-center text-3xl transition-colors duration-300`}
-          >
-            <Image
-              src="/achievements/gg/User-Profile-Achievement.png"
-              alt="User-Profile-Achievement"
-              width={66}
-              height={66}
-            />
-            <div className="absolute bottom-0 group-hover:opacity-100 opacity-0 uppercase text-yellow-500 text-xs font-bold">
-              GG-User
-            </div>
-          </Card>
-        </CarouselItem>
-      </CarouselContent>
-    </Carousel>
-  );
-};
+import AchievementSlider from "./achievement-slider";
 
 export default function BottomSection({
   userInfo,
@@ -101,7 +32,7 @@ export default function BottomSection({
   userInfo: any;
   ifOwnProfile: boolean;
 }) {
-  'use cache'
+  "use cache";
   const {
     avatars,
     selectedAvatar,
@@ -118,6 +49,7 @@ export default function BottomSection({
     editingAvatar,
     setSelectedAvatar,
     getAvatarCreatorUrl,
+    privateExpressions,
   } = useAvatar();
 
   const { publicExpressions, handlePublicEmote } = usePublicAvatar();
@@ -297,7 +229,7 @@ export default function BottomSection({
             </div>
             <div className="relative mt-4 flex border p-2 rounded-xl overflow-auto backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
               <ExpressionCard
-                expressions={expressions}
+                expressions={privateExpressions}
                 handleEmote={handleEmote}
               />
             </div>

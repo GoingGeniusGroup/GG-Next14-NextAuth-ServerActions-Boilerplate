@@ -2,7 +2,7 @@
 
 import { Avatar } from "@/src/components/comp/Avatar";
 import { Suspense } from "react";
-import AvatarSkeleton from "../GeniusUserProfile/skeleton/AvatarSkeleton";
+import AvatarSkeleton from "../../GeniusUserProfile/skeleton/AvatarSkeleton";
 import { usePublicAvatar } from "./provider/AvatarManagerPublicContext";
 
 export default function PublicAvatarManagerClientProfile({
@@ -16,7 +16,7 @@ export default function PublicAvatarManagerClientProfile({
   cameraTarget: number;
   user: any;
 }) {
-  'use cache'
+  "use cache";
   const { currentPublicEmote } = usePublicAvatar();
 
   return (

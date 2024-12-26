@@ -9,8 +9,6 @@ export default function VideoHomeAvatarSlide() {
   const avatars = [
     "/avatar-images/avatar-1.svg",
     "/avatar-images/avatar-2.svg",
-    "/avatar-images/avatar-1.svg",
-    "/avatar-images/avatar-2.svg",
   ];
 
   const handleAvatarClick = (index: any) => {

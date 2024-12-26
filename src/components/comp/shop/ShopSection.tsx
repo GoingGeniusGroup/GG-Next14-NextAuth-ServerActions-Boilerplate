@@ -73,7 +73,7 @@ const ShopSection = ({ isMobile }: { isMobile: boolean }) => {
         isMobile ? "h-full overflow-y-auto" : ""
       }`}
     >
-      <header className="sticky -top-4 mb-4 p-2 z-20 bg-white/40 dark:text-white text-black rounded-md backdrop-blur-md">
+      <header className="sticky top-0 mb-4 p-2 z-20 bg-white/40 rounded-md backdrop-blur-md">
         {isMobile ? (
           <>
             <div className="flex items-center justify-center mb-2 ">

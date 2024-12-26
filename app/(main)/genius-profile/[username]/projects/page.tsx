@@ -1,6 +1,6 @@
-'use cache'
+"use cache";
 import { getCurrentUser } from "@/actions/genius-profile/userAndGuild";
-import GeniusUserProjectsV2 from "@/src/components/comp/GeniusUserProfile/GeniusUserProjectsV2";
+import GeniusUserProjectsV2 from "@/components/GeniusUserProfile/GeniusUserProjectsV2";
 import { getExperiencesByUserId } from "@/services/experience";
 import { getUserByUsername } from "@/services/user";
 import { IconClipboardCopy } from "@tabler/icons-react";

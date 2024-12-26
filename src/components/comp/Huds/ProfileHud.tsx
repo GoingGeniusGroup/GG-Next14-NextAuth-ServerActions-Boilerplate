@@ -1,6 +1,6 @@
 "use client";
 
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { IoCart, IoDiamondSharp } from "react-icons/io5";
 import { FaCreditCard, FaMobile } from "react-icons/fa6";

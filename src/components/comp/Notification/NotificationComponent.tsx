@@ -65,10 +65,10 @@ export default function NotificationComponent() {
       <CardContent>
         <div className="flex flex-col sm:flex-row justify-between mb-4 space-y-2 sm:space-y-0">
           <Select value={filter} onValueChange={setFilter}>
-            <SelectTrigger className="w-full sm:w-[100px]">
+            <SelectTrigger className="w-full sm:w-[100px] bg-black text-white">
               <SelectValue placeholder="Filter by type" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-black text-white">
               <SelectItem value="all">All</SelectItem>
               <SelectItem value="info">Info</SelectItem>
               <SelectItem value="warning">Warning</SelectItem>
@@ -76,10 +76,10 @@ export default function NotificationComponent() {
             </SelectContent>
           </Select>
           <Select value={sort} onValueChange={setSort}>
-            <SelectTrigger className="w-full sm:w-[100px]">
+            <SelectTrigger className="w-full sm:w-[100px] bg-black text-white">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-black text-white">
               <SelectItem value="newest">Newest first</SelectItem>
               <SelectItem value="oldest">Oldest first</SelectItem>
             </SelectContent>

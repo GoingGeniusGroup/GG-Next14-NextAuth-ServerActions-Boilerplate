@@ -12,6 +12,11 @@ import {
 } from "@radix-ui/react-icons";
 import Image from "next/image";
 import { useMusicPlayer } from "@/src/context/music-player-context";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/src/ui/tooltip/tooltip";
 
 const MusicPlayerMinimized: React.FC = () => {
   const {
@@ -95,54 +100,89 @@ const MusicPlayerMinimized: React.FC = () => {
 
           {/* Player Controls */}
           <div className="flex items-center space-x-3">
-            <button
-              onClick={playPrevious}
-              className=" text-gray-300 hover:text-white"
-            >
-              <TrackPreviousIcon className="w-3 h-3" />
-            </button>
+            <Tooltip>
+              <TooltipTrigger>
+                <button
+                  onClick={playPrevious}
+                  className=" text-gray-300 hover:text-white"
+                >
+                  <TrackPreviousIcon className="w-3 h-3" />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <span>Back</span>
+              </TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger>
+                <button
+                  onClick={isPlaying ? pause : play}
+                  className="bg-sky-500 hover:bg-sky-600 text-white rounded-full p-1.5 transition-transform transform hover:scale-105"
+                >
+                  {isPlaying ? (
+                    <PauseIcon className="w-4 h-4" />
+                  ) : (
+                    <PlayIcon className="w-4 h-4" />
+                  )}
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <span>{isPlaying ? "Pause" : "Play"}</span>
+              </TooltipContent>
+            </Tooltip>
 
-            <button
-              onClick={isPlaying ? pause : play}
-              className="bg-sky-500 hover:bg-sky-600 text-white rounded-full p-1.5 transition-transform transform hover:scale-105"
-            >
-              {isPlaying ? (
-                <PauseIcon className="w-4 h-4" />
-              ) : (
-                <PlayIcon className="w-4 h-4" />
-              )}
-            </button>
-
-            <button
-              onClick={playNext}
-              className=" text-gray-300 hover:text-white"
-            >
-              <TrackNextIcon className="w-3 h-3" />
-            </button>
+            <Tooltip>
+              <TooltipTrigger>
+                <button
+                  onClick={playNext}
+                  className=" text-gray-300 hover:text-white"
+                >
+                  <TrackNextIcon className="w-3 h-3" />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <span>Next</span>
+              </TooltipContent>
+            </Tooltip>
           </div>
 
           {/* Volume and Loop */}
           <div className="flex items-center space-x-2">
-            <button
-              onClick={toggleRepeat}
-              className={`transition-colors ${
-                isRepeat
-                  ? "text-blue-500 hover:text-blue-600"
-                  : "text-gray-300 hover:text-white"
-              }`}
-            >
-              <LoopIcon className="w-3 h-3" />
-            </button>
-            <button
-              onClick={() => setVolume(volume > 0 ? 0 : 0.5)}
-              className="text-gray-300 hover:text-white"
-            >
-              {volume === 0 ? (
-                <SpeakerQuietIcon className="w-3 h-3" />
-              ) : (
-                <SpeakerLoudIcon className="w-3 h-3" />
-              )}
-            </button>
+            <Tooltip>
+              <TooltipTrigger>
+                <button
+                  onClick={toggleRepeat}
+                  className={`transition-colors ${
+                    isRepeat
+                      ? "text-blue-500 hover:text-blue-600"
+                      : "text-gray-300 hover:text-white"
+                  }`}
+                >
+                  <LoopIcon className="w-3 h-3" />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <span>{isRepeat ? "Repeat Off" : "Repeat On"}</span>
+              </TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger>
+                <button
+                  onClick={() => setVolume(volume > 0 ? 0 : 0.5)}
+                  className="text-gray-300 hover:text-white"
+                >
+                  {volume === 0 ? (
+                    <SpeakerQuietIcon className="w-3 h-3" />
+                  ) : (
+                    <SpeakerLoudIcon className="w-3 h-3" />
+                  )}
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <span>{volume === 0 ? "Unmute" : "Mute"}</span>
+              </TooltipContent>
+            </Tooltip>
+
             <input
               type="range"
               min="0"

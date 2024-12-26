@@ -16,7 +16,7 @@ import {
 import { useUser } from "@/src/hooks/UserProvider";
 import { IconArrowDown } from "@tabler/icons-react";
 import { useState } from "react";
-import { useMobileSimulator } from "../MobileSimulator/provider/MobileSimulatorContext";
+import { useMobileSimulator } from "../../MobileSimulator/provider/MobileSimulatorContext";
 
 interface ProfileHudProps {
   handleServerSignOut: () => Promise<{ success: boolean; error?: string }>;
@@ -77,7 +77,7 @@ export default function ProfileHudTop({
   };
 
   return (
-    <div className="fixed top-2 right-7 z-50 flex size-[40px] select-none items-center rounded-full">
+    <div className="z-50 flex size-[40px] select-none items-center rounded-full">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Avatar className="relative size-[40px] rounded-full bg-white dark:bg-gray-800 border transition-all duration-300 ease-in-out dark:border-white/20 hover:dark:border-white border-black/40 hover:border-black cursor-pointer">

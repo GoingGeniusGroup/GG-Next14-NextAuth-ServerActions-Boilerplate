@@ -5,7 +5,7 @@ import {
   AvatarType,
 } from "@/src/components/comp/AvatarManager/provider/AvatarManagerContext";
 import FloatingDockInvertedComponent from "@/src/components/comp/dock/FloatingDockInverted";
-import { MobileSimulatorProvider } from "@/src/components/comp/MobileSimulator/provider/MobileSimulatorContext";
+import { MobileSimulatorProvider } from "@/src/components/MobileSimulator/provider/MobileSimulatorContext";
 import { ThemeSwitcher } from "@/src/components/comp/ThemeToggler/ThemeSwitcher";
 import { UserProvider } from "@/src/hooks/UserProvider";
 import Providers from "@/src/providers/SessionProvider";
@@ -18,6 +18,17 @@ import { ThemeProvider } from "next-themes";
 import { Inter } from "next/font/google";
 import { ToastProvider } from "../src/providers/toast-provider";
 import FullscreenButton from "@/src/ui/button/fullscreen-button";
+
+import { songs } from "../data/songs";
+import { MusicPlayerProvider } from "@/src/context/music-player-context";
+import MusicPlayerMinimized from "@/src/components/music-player/music-player-component-minimized";
+
+import { TooltipProvider } from "@/src/ui/tooltip/tooltip";
+
+import { signOut } from "@/auth";
+import { revalidatePath } from "next/cache";
+import ProfileHudTop from "@/src/components/comp/Huds/ProfileHudTop";
+import SongListServer from "./_components/home/song-list-server";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,6 +47,19 @@ export default async function RootLayout({
 }) {
   const user = await currentUser();
 
+  async function handleServerSignOut() {
+    "use server";
+
+    try {
+      await signOut({ redirect: false });
+      revalidatePath("/");
+      return { success: true };
+    } catch (error) {
+      console.error("Server logout error:", error);
+      return { success: false, error: "Failed to logout" };
+    }
+  }
+
   if (!user) {
     return (
       <>
@@ -43,36 +67,49 @@ export default async function RootLayout({
           <body className={inter.className}>
             <Toaster position="bottom-left" richColors theme="light" />
             <Providers>
-              <MobileSimulatorProvider>
-                <ThemeProvider
-                  attribute="class"
-                  defaultTheme="system"
-                  enableSystem
-                >
-                  <AuroraBackground>
-                    <UserProvider>
-                      {/* Theme switcher */}
-                      <div className="absolute top-[8px] right-[73px] z-50">
-                        <ThemeSwitcher />
-                      </div>
+              <TooltipProvider>
+                <MusicPlayerProvider songs={songs}>
+                  <MobileSimulatorProvider>
+                    <ThemeProvider
+                      attribute="class"
+                      defaultTheme="system"
+                      enableSystem
+                    >
+                      <AuroraBackground>
+                        <UserProvider>
+                          {/* Theme switcher */}
+                          <div className="absolute top-[8px] right-7 z-50">
+                            <ThemeSwitcher />
+                          </div>
 
-                      {/* Dock section */}
-                      <div className="w-full z-40">
-                        <div className="p-4 text-black dark:text-white">
-                          <FloatingDockInvertedComponent />
-                        </div>
-                      </div>
+                          {/* Music Player */}
+                          <div className="absolute bottom-6 left-6 z-50 w-[400px] hidden xl:flex">
+                            {/* <MusicPlayer /> */}
+                            <MusicPlayerMinimized />
+                          </div>
+                          <div className="fixed hidden xl:flex right-6 bottom-6 z-50">
+                            <SongListServer />
+                          </div>
 
-                      {/* Content section */}
-                      <div className="flex-1 px-8 py-4 w-full overflow-auto">
-                        {children}
-                        <SpeedInsights/>
-                      </div>
-                    </UserProvider>
-                    <ToastProvider />
-                  </AuroraBackground>
-                </ThemeProvider>
-              </MobileSimulatorProvider>
+                          {/* Dock section */}
+                          <div className="w-full z-40">
+                            <div className="p-4 text-black dark:text-white">
+                              <FloatingDockInvertedComponent />
+                            </div>
+                          </div>
+
+                          {/* Content section */}
+                          <div className="flex-1 px-8 py-4 w-full overflow-auto">
+                            {children}
+                            <SpeedInsights />
+                          </div>
+                        </UserProvider>
+                        <ToastProvider />
+                      </AuroraBackground>
+                    </ThemeProvider>
+                  </MobileSimulatorProvider>
+                </MusicPlayerProvider>
+              </TooltipProvider>
             </Providers>
           </body>
         </html>
@@ -91,35 +128,58 @@ export default async function RootLayout({
       <body className={inter.className}>
         <Toaster position="bottom-left" richColors theme="light" />
         <Providers>
-          <MobileSimulatorProvider>
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              <AuroraBackground>
-                <UserProvider>
-                  <AvatarProvider initialAvatars={avatars} user={user.gg_id}>
-                    {/* Theme switcher */}
-                    <div className="absolute top-[8px] right-[73px] z-50">
-                      <ThemeSwitcher />
-                    </div>
+          <TooltipProvider>
+            <MusicPlayerProvider songs={songs}>
+              <MobileSimulatorProvider>
+                <ThemeProvider
+                  attribute="class"
+                  defaultTheme="system"
+                  enableSystem
+                >
+                  <AuroraBackground>
+                    <UserProvider>
+                      <AvatarProvider
+                        initialAvatars={avatars}
+                        user={user.gg_id}
+                      >
+                        {/* Theme switcher */}
+                        <div className="absolute flex gap-2 top-[8px] right-[5px] md:right-[20px] z-50">
+                          <FullscreenButton />
+                          <ThemeSwitcher />
+                          <ProfileHudTop
+                            handleServerSignOut={handleServerSignOut}
+                          />
+                        </div>
 
-                    {/* Dock section */}
-                    <div className="w-full z-40">
-                      <div className="p-4 text-black dark:text-white">
-                        <FloatingDockInvertedComponent />
-                      </div>
-                    </div>
+                        {/* Music Player */}
+                        <div className="absolute bottom-6 left-6 z-50 w-[400px] hidden xl:flex">
+                          {/* <MusicPlayer /> */}
+                          <MusicPlayerMinimized />
+                        </div>
+                        <div className="fixed hidden xl:flex right-6 bottom-6 z-50">
+                          <SongListServer />
+                        </div>
 
-                    {/* Content section */}
-                    <div className="flex-1 px-8 py-4 w-full overflow-auto">
-                      {children}
-                      <SpeedInsights/>
-                    </div>
-                    <FullscreenButton />
-                  </AvatarProvider>
-                </UserProvider>
-                <ToastProvider />
-              </AuroraBackground>
-            </ThemeProvider>
-          </MobileSimulatorProvider>
+                        {/* Dock section */}
+                        <div className="w-full z-40">
+                          <div className="p-4 text-black dark:text-white">
+                            <FloatingDockInvertedComponent />
+                          </div>
+                        </div>
+
+                        {/* Content section */}
+                        <div className="flex-1 px-8 py-4 w-full overflow-auto">
+                          {children}
+                          <SpeedInsights />
+                        </div>
+                      </AvatarProvider>
+                    </UserProvider>
+                    <ToastProvider />
+                  </AuroraBackground>
+                </ThemeProvider>
+              </MobileSimulatorProvider>
+            </MusicPlayerProvider>
+          </TooltipProvider>
         </Providers>
       </body>
     </html>

@@ -40,6 +40,7 @@ interface AvatarContextType {
   editingAvatar: AvatarType | null;
   isProcessing: boolean;
   expressions: Expression[];
+  privateExpressions: Expression[];
   setSelectedAvatar: (url: string | undefined) => void;
   setIsAvatarCreatorOpen: (isOpen: boolean) => void;
   handleCreateAvatar: () => void;
@@ -56,7 +57,7 @@ interface AvatarContextType {
 const AvatarContext = createContext<AvatarContextType | undefined>(undefined);
 
 // Expression data
-const defaultExpressions: Expression[] = [
+const defaultPrivateExpressions: Expression[] = [
   {
     label: "angry",
     icon: "/emote/angry.svg",
@@ -95,6 +96,39 @@ const defaultExpressions: Expression[] = [
   },
 ];
 
+// Expression on own profile page
+const defaultExpressions: Expression[] = [
+  {
+    label: "neutral",
+    icon: "/emojis/neutral.svg",
+    bg: "#FFFFFF",
+    animation: "/male-idle-3.fbx",
+  },
+  {
+    label: "sad",
+    icon: "/emojis/sad.svg",
+    bg: "#0C2E5C",
+    animation: "/M_Standing_Expressions_011.fbx",
+  },
+  {
+    label: "happy",
+    icon: "/emojis/happy.svg",
+    bg: "#007F13",
+    animation: "/M_Standing_Expressions_012.fbx",
+  },
+  {
+    label: "amazed",
+    icon: "/emojis/amazed.svg",
+    bg: "#F8BF43",
+    animation: "/M_Standing_Expressions_013.fbx",
+  },
+  {
+    label: "angry",
+    icon: "/emojis/angry.svg",
+    bg: "#A20325",
+    animation: "/M_Standing_Expressions_016.fbx",
+  },
+];
 interface AvatarProviderProps {
   children: ReactNode;
   initialAvatars: AvatarType[];
@@ -257,6 +291,7 @@ export function AvatarProvider({
     editingAvatar,
     isProcessing,
     expressions: defaultExpressions,
+    privateExpressions: defaultPrivateExpressions,
     setSelectedAvatar,
     setIsAvatarCreatorOpen,
     handleCreateAvatar,
