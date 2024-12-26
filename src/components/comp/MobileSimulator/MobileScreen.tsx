@@ -55,11 +55,11 @@ const MobileScreen = forwardRef<HTMLDivElement, MobileScreenProps>(
       >
         <Button
           variant="ghost"
-          size="mini"
-          className="absolute top-2 right-2 text-black hover:text-red-500 z-40 bg-white rounded-full"
+          size="mini2"
+          className="absolute top-2 right-2 text-black hover:text-red-500 z-40 bg-red-500 rounded-full flex justify-center items-center transition-colors duration-200 hover:rotate-45"
           onClick={() => removeScreen(screen.id)}
         >
-          <X className="size-4" />
+          <X size={16} />
         </Button>
 
         {screen.content}

@@ -20,17 +20,15 @@ const SongListMobile: React.FC<SongListProps> = ({ songs }) => {
 
   return (
     <div className="size-full p-2 ">
-      <h3 className="text-lg font-semibold mb-1 text-gray-800 dark:text-white">
-        Playlist
-      </h3>
+      <h3 className="text-lg font-semibold mb-1">Playlist</h3>
       <div className="flex flex-col gap-1 h-[98%] overflow-y-auto">
         {songs.map((song) => (
           <div
             key={song.id}
             className={`flex items-center p-2 rounded-lg cursor-pointer transition-colors duration-200 ${
               currentSong?.id === song.id
-                ? "bg-blue-200/80 dark:bg-sky-700/80"
-                : "hover:bg-gray-200 dark:hover:bg-gray-700"
+                ? "bg-sky-500/80"
+                : "hover:bg-pink-500/60"
             }`}
             onClick={() => setSong(song)}
           >
@@ -42,16 +40,10 @@ const SongListMobile: React.FC<SongListProps> = ({ songs }) => {
               className="rounded-md mr-4"
             />
             <div className="flex-grow">
-              <h4 className="font-medium text-gray-800 dark:text-white">
-                {song.title}
-              </h4>
-              <p className="text-sm text-gray-600 dark:text-gray-300">
-                {song.artist}
-              </p>
+              <h4 className="font-medium ">{song.title}</h4>
+              <p className="text-xs">{song.artist}</p>
             </div>
-            <span className="text-sm text-gray-500 dark:text-gray-400">
-              {formatTime(song.duration)}
-            </span>
+            <span className="text-sm">{formatTime(song.duration)}</span>
           </div>
         ))}
       </div>
