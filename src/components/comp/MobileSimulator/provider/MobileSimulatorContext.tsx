@@ -27,8 +27,9 @@ import SimulatorToggleButton from "../SimulatorToggleButton";
 import NotificationComponent from "@/src/components/comp/Notification/NotificationComponent";
 import { getColorsbyUserId } from "@/services/color";
 import { ThemeType } from "@prisma/client";
-import { MusicIcon } from "lucide-react";
+import { MusicIcon, SettingsIcon } from "lucide-react";
 import SongListMobileServer from "@/app/_components/mobile-simulator/song-list-mobile-server";
+import MobileSettingsClient from "@/src/components/settings/mobile-settings-client";
 
 interface MobileSimulatorContextType {
   showMobile: boolean;
@@ -211,6 +212,12 @@ export const MobileSimulatorProvider = ({
         title: "Music",
         icon: <MusicIcon />,
         content: <SongListMobileServer />,
+      },
+      {
+        id: 5,
+        title: "Settings",
+        icon: <SettingsIcon />,
+        content: <MobileSettingsClient />,
       },
     ],
     [isLoggedIn, showLogin, handleToggleAuth]

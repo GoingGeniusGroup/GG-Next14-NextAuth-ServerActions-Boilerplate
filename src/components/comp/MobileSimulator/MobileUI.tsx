@@ -3,10 +3,7 @@
 import React from "react";
 import { Button } from "@/src/ui/button";
 import { Battery, Signal, Sun, Wifi } from "lucide-react";
-import { ColorPicker } from "../CustomComponents/ColorPicker";
 import { useMobileSimulator } from "./provider/MobileSimulatorContext";
-import { ThemeType } from "@prisma/client";
-import SongListMobileServer from "@/app/_components/mobile-simulator/song-list-mobile-server";
 import MusicPlayerMobile from "../../music-player/music-player-mobile";
 import { MobileInterfaceProps } from "./interface/MobileInterface.interface";
 
@@ -29,17 +26,7 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
   updateCurrentBackground,
 }) => {
   const { ColorPickerAttrs } = useMobileSimulator();
-  const { currentBackground, textColor, handleTextColorChange } =
-    ColorPickerAttrs;
-
-  const handleColorChange = (color: string) => {
-    const formattedColor = color.startsWith("#") ? color : `#${color}`;
-    const newBackground = {
-      class: `bg-[${formattedColor}]`,
-      name: "Custom Color",
-    };
-    updateCurrentBackground(newBackground);
-  };
+  const { currentBackground, textColor } = ColorPickerAttrs;
 
   const backgroundStyle =
     currentBackground.name === "Custom Color"
@@ -108,34 +95,6 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
             <span className="text-[8px] mt-1">{section.title}</span>
           </Button>
         ))}
-      </div>
-
-      {/* Background Changer */}
-      <div className="bg-white bg-opacity-20 rounded-lg p-2 shadow-md mb-3">
-        <div className="flex justify-between items-center">
-          <div className="flex flex-col items-center">
-            <h1 className="text-[10px] font-bold mb-1">THEME</h1>
-            <ColorPicker
-              value={
-                currentBackground.name === "Custom Color"
-                  ? currentBackground.class.match(
-                      /bg-\[(#[0-9A-Fa-f]{6})\]/
-                    )?.[1] || ""
-                  : ""
-              }
-              onChange={handleColorChange}
-              typeColor={ThemeType.THEME}
-            />
-          </div>
-          <div className="flex flex-col items-center">
-            <h1 className="text-[10px] font-bold mb-1">TEXT</h1>
-            <ColorPicker
-              value={textColor}
-              onChange={handleTextColorChange}
-              typeColor={ThemeType.TEXT}
-            />
-          </div>
-        </div>
       </div>
 
       {/* Change Schedule */}
