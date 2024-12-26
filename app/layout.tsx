@@ -5,7 +5,7 @@ import {
   AvatarType,
 } from "@/src/components/comp/AvatarManager/provider/AvatarManagerContext";
 import FloatingDockInvertedComponent from "@/src/components/comp/dock/FloatingDockInverted";
-import { MobileSimulatorProvider } from "@/src/components/comp/MobileSimulator/provider/MobileSimulatorContext";
+import { MobileSimulatorProvider } from "@/src/components/MobileSimulator/provider/MobileSimulatorContext";
 import { ThemeSwitcher } from "@/src/components/comp/ThemeToggler/ThemeSwitcher";
 import { UserProvider } from "@/src/hooks/UserProvider";
 import Providers from "@/src/providers/SessionProvider";

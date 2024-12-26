@@ -4,7 +4,7 @@ import React, { forwardRef } from "react";
 import { Button } from "@/src/ui/button/button";
 import { X } from "lucide-react";
 import { motion } from "framer-motion";
-import { useMobileSimulator } from "@/src/components/comp/MobileSimulator/provider/MobileSimulatorContext";
+import { useMobileSimulator } from "./provider/MobileSimulatorContext";
 
 interface MobileScreenProps {
   screen: {

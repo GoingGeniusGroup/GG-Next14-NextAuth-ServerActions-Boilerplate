@@ -17,7 +17,7 @@ import { useTransform } from "framer-motion";
 import { postColors } from "@/services/color";
 import { toast } from "sonner";
 import { SpinningButton } from "@/src/ui/spinning-button";
-import { useMobileSimulator } from "@/src/components/comp/MobileSimulator/provider/MobileSimulatorContext";
+import { useMobileSimulator } from "../../MobileSimulator/provider/MobileSimulatorContext";
 
 interface ColorPickerProps {
   value: string;

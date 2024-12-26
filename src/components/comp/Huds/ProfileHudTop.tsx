@@ -16,7 +16,7 @@ import {
 import { useUser } from "@/src/hooks/UserProvider";
 import { IconArrowDown } from "@tabler/icons-react";
 import { useState } from "react";
-import { useMobileSimulator } from "../MobileSimulator/provider/MobileSimulatorContext";
+import { useMobileSimulator } from "../../MobileSimulator/provider/MobileSimulatorContext";
 
 interface ProfileHudProps {
   handleServerSignOut: () => Promise<{ success: boolean; error?: string }>;

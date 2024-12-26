@@ -2,7 +2,7 @@
 
 import React from "react";
 import { ColorPicker } from "../comp/CustomComponents/ColorPicker";
-import { useMobileSimulator } from "../comp/MobileSimulator/provider/MobileSimulatorContext";
+import { useMobileSimulator } from "../MobileSimulator/provider/MobileSimulatorContext";
 import { ThemeType } from "@prisma/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/src/ui/card";
 
