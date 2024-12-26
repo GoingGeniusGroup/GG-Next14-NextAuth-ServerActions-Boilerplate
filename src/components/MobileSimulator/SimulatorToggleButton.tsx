@@ -1,8 +1,7 @@
 import { motion } from "framer-motion";
-import { Button } from "../../../ui/button/button";
+import { Button } from "@/src/ui/button/button";
 import { Smartphone } from "lucide-react";
 import { RxCross2 } from "react-icons/rx";
-import CustomToolTipLeftRight from "../CustomComponents/CustomToolTipLeftRight";
 import {
   Tooltip,
   TooltipContent,

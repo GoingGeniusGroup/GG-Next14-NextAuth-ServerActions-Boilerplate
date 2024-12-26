@@ -8,5 +8,4 @@ export interface MobileInterfaceProps {
   screens: SectionProps[];
   backgrounds: BackgroundProps[];
   updateCurrentBackground: (newBackground: BackgroundProps) => void;
- 
 }

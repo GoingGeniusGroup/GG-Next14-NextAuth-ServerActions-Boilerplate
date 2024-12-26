@@ -136,7 +136,7 @@ const MusicPlayerMobile: React.FC = () => {
           max={duration || 0}
           value={currentTime}
           onChange={handleSeek}
-          className="w-full h-1 bg-gradient-to-r from-sky-700 to-sky-400 rounded-full 
+          className="w-full h-1 bg-blue-500 rounded-full 
                 [&::-webkit-slider-thumb]:appearance-none 
                 [&::-webkit-slider-thumb]:w-2 
                 [&::-webkit-slider-thumb]:h-2 

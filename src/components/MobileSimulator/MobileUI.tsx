@@ -4,7 +4,7 @@ import React from "react";
 import { Button } from "@/src/ui/button";
 import { Battery, Signal, Wifi } from "lucide-react";
 import { useMobileSimulator } from "./provider/MobileSimulatorContext";
-import MusicPlayerMobile from "../../music-player/music-player-mobile";
+import MusicPlayerMobile from "../music-player/music-player-mobile";
 import { MobileInterfaceProps } from "./interface/MobileInterface.interface";
 import {
   Tooltip,

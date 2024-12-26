@@ -17,7 +17,7 @@ import {
   FaSignInAlt,
   FaUserPlus,
 } from "react-icons/fa";
-import ShopSection from "../../shop/ShopSection";
+import ShopSection from "../../comp/shop/ShopSection";
 import { LoginForm } from "@/src/components/form/login-form";
 import { SectionProps } from "../interface/Section.interface";
 import { useSession } from "next-auth/react";
