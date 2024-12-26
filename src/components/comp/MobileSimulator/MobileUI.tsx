@@ -1,14 +1,14 @@
 import React from "react";
 import { Button } from "@/src/ui/button/button";
-import { Play, SkipBack, SkipForward, Sun, CheckCircle } from "lucide-react";
+import { Sun } from "lucide-react";
 import CustomToolTip from "../CustomComponents/CustomToolTip";
 import { MobileInterfaceProps } from "./interface/MobileInterface.interface";
 import { RxCross2 } from "react-icons/rx";
 import { ColorPicker } from "../CustomComponents/ColorPicker";
 import { useMobileSimulator } from "@/src/components/comp/MobileSimulator/provider/MobileSimulatorContext";
 import { ThemeType } from "@prisma/client";
-import MusicPlayerMinimized from "@/src/components/music-player/music-player-component-minimized";
 import SongListMobileServer from "@/app/_components/mobile-simulator/song-list-mobile-server";
+import MusicPlayerMobile from "../../music-player/music-player-mobile";
 
 const scheduleData = [
   { day: "S", schedule: [1, 0, 1, 1, 0, 1, 0] },
@@ -77,7 +77,7 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
         <h3 className="font-bold text-sm mb-2 uppercase">Now Playing</h3>
         <div className="flex flex-col gap-2">
           <div className="w-full">
-            <MusicPlayerMinimized />
+            <MusicPlayerMobile />
           </div>
           <div className="w-full flex justify-end">
             <SongListMobileServer />

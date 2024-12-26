@@ -25,6 +25,11 @@ import { toast } from "sonner";
 import { Button } from "@/src/ui/button/button";
 import { LoginForm } from "../form/login-form";
 import { RegisterForm } from "../form/register-form";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/src/ui/tooltip/tooltip";
 
 const orbitronFont = Orbitron({
   subsets: ["latin"],
@@ -225,17 +230,24 @@ const VideoHomeClient: React.FC<VideoHomeClientProps> = ({
 
           {/* Play/Pause Button */}
           <div className="absolute bottom-[68px] right-6 z-30 flex flex-col gap-2 items-center">
-            <IconButton
-              onClick={togglePlayPause}
-              icon={
-                isPlaying ? (
-                  <PauseIcon className="size-[20px] text-black dark:text-white " />
-                ) : (
-                  <PlayIcon className="size-[20px] text-black dark:text-white " />
-                )
-              }
-              label="Play/Pause"
-            />
+            <Tooltip>
+              <TooltipTrigger>
+                <IconButton
+                  onClick={togglePlayPause}
+                  icon={
+                    isPlaying ? (
+                      <PauseIcon className="size-[20px] text-black dark:text-white " />
+                    ) : (
+                      <PlayIcon className="size-[20px] text-black dark:text-white " />
+                    )
+                  }
+                  label="Play/Pause"
+                />
+              </TooltipTrigger>
+              <TooltipContent>
+                <span>{isPlaying ? "Auto Play Off" : "Auto Play On"}</span>
+              </TooltipContent>
+            </Tooltip>
           </div>
         </Swiper>
       </div>
