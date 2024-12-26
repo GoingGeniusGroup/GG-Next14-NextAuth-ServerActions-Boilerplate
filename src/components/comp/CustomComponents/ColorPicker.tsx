@@ -63,6 +63,7 @@ const ColorPicker = forwardRef<
           }
           if (res.success) {
             toast.success(res?.message);
+            setOpen(false);
           }
         } catch (error) {
           console.log(error);
@@ -129,13 +130,12 @@ const ColorPicker = forwardRef<
             ref={ref}
             value={parsedValue}
           />
-          <div className="flex gap-2">
+          <div className="flex gap-2 items-center pt-1">
             <Button size={"sm"} variant={"destructive"} onClick={handleCancel}>
               Cancel
             </Button>
             <SpinningButton
-              size={"sm"}
-              className="bg-indigo-500 hover:bg-indigo-700"
+              className="w-full h-[36px] bg-sky-500 hover:bg-indigo-700"
               onClick={() => postColor(value, typeColor)}
               isLoading={ispending}
             >
