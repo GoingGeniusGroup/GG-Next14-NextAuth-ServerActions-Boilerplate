@@ -5,8 +5,8 @@ import {
   BentoGridHover,
   BentoGridHoverItem,
 } from "@/src/ui/bento-grid/bento-grid-hover";
-import ExperienceDialog from "../Modal/experience/AddUpdateExperienceDialog";
-import { DeleteExperienceDialog } from "../Modal/experience/DeleteExperienceDialog";
+import ExperienceDialog from "../comp/Modal/experience/AddUpdateExperienceDialog";
+import { DeleteExperienceDialog } from "../comp/Modal/experience/DeleteExperienceDialog";
 
 interface ItemsProp {
   items: {

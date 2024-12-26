@@ -1,5 +1,5 @@
 import { getCurrentUser } from "@/actions/genius-profile/userAndGuild";
-import GeniusUserProjects from "@/src/components/comp/GeniusUserProfile/GeniusUserProjects";
+import GeniusUserProjects from "@/src/components/GeniusUserProfile/GeniusUserProjectsV2";
 import { getExperiencesByUserId } from "@/services/experience";
 import { getUserByUsername } from "@/services/user";
 import { IconClipboardCopy } from "@tabler/icons-react";

@@ -1,6 +1,6 @@
 "use client";
 
-import { UserProfilesCarousel } from "../../comp/GeniusUserProfile/ProfileCard/user-profile-carousel";
+import { UserProfilesCarousel } from "../../GeniusUserProfile/ProfileCard/user-profile-carousel";
 import { MouseImageTrail } from "../../animated/mouse-trail-card";
 
 export default function VideoHomeGeniusProfilesSlide({

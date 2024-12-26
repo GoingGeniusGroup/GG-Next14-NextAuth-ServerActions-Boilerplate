@@ -1,4 +1,4 @@
-import GeniusUserHome from "@/src/components/comp/GeniusUserProfile/GeniusUserHome";
+import GeniusUserHome from "@/src/components/GeniusUserProfile/GeniusUserHome";
 
 interface GeniusUserInfoProps {
   params: {

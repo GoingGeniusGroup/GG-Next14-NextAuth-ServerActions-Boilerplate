@@ -1,9 +1,9 @@
 import { getCurrentUser } from "@/actions/genius-profile/userAndGuild";
-import AboutSectionProfile from "../console/AboutSectionProfile";
-import BottomSection from "../console/BottomSection";
+import AboutSectionProfile from "../comp/console/AboutSectionProfile";
+import BottomSection from "../comp/console/BottomSection";
 import { getUserByUsername } from "@/services/user";
-import AvatarManagerClientProfile from "../AvatarManager/avatar-manager-client-profile";
-import PublicAvatarManagerClientProfile from "../AvatarManager/public-avatar-manager-client-profile";
+import AvatarManagerClientProfile from "../comp/AvatarManager/avatar-manager-client-profile";
+import PublicAvatarManagerClientProfile from "../comp/AvatarManager/public-avatar-manager-client-profile";
 
 async function getUserWithUsername(username: string) {
   const user = await getUserByUsername(username);
@@ -28,7 +28,7 @@ export default async function GeniusUserHome({
     <div className="container mx-auto px-4 overflow-y-auto overflow-x-hidden h-full">
       <div className="relative flex flex-col lg:flex-row w-full justify-between gap-8">
         {/* Left Section */}
-        <div className="w-full lg:w-[415px] z-10 order-3 lg:order-1">
+        <div className="w-full lg:w-[415px] z-10 order-3 lg:order-1 relative">
           <AboutSectionProfile
             userInfo={LoggedUserProfile ? currentUser : profileOwner}
             ifOwnProfile={LoggedUserProfile}
@@ -42,18 +42,28 @@ export default async function GeniusUserHome({
                       order-1 lg:order-2 z-0"
         >
           {LoggedUserProfile ? (
-            <AvatarManagerClientProfile
-              fov={40}
-              cameraInitialDistance={5}
-              cameraTarget={0}
-            />
+            <>
+              <div className="relative z-20 h-[300px] md:h-[400px] lg:h-[510px] lg:ml-10">
+                <AvatarManagerClientProfile
+                  fov={40}
+                  cameraInitialDistance={5}
+                  cameraTarget={0}
+                />
+              </div>
+              <div className="absolute top-20 uppercase text-4xl font-bold z-0">
+                {currentUser.username}
+              </div>
+            </>
           ) : (
-            <PublicAvatarManagerClientProfile
-              fov={40}
-              cameraInitialDistance={5}
-              cameraTarget={0}
-              user={user}
-            />
+            <>
+              <PublicAvatarManagerClientProfile
+                fov={40}
+                cameraInitialDistance={5}
+                cameraTarget={0}
+                user={user}
+              />
+              <div className="absolute top-0">{profileOwner.username}</div>
+            </>
           )}
         </div>
 

@@ -2,7 +2,7 @@
 
 import { Avatar } from "@/src/components/comp/Avatar";
 import { Suspense } from "react";
-import AvatarSkeleton from "../GeniusUserProfile/skeleton/AvatarSkeleton";
+import AvatarSkeleton from "../../GeniusUserProfile/skeleton/AvatarSkeleton";
 import { useAvatar } from "./provider/AvatarManagerContext";
 
 export default function AvatarManagerClientProfile({
@@ -14,7 +14,7 @@ export default function AvatarManagerClientProfile({
   cameraInitialDistance: number;
   cameraTarget: number;
 }) {
-  'use cache'
+  "use cache";
   const { selectedAvatar, currentEmote } = useAvatar();
 
   return (

@@ -1,4 +1,4 @@
-import GeniusUserAvatar from "@/src/components/comp/GeniusUserProfile/GeniusUserAvatar";
+import GeniusUserAvatar from "@/src/components/GeniusUserProfile/GeniusUserAvatar";
 
 export default async function DefaultAvatarSection() {
   return <GeniusUserAvatar />;

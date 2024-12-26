@@ -1,4 +1,4 @@
-'use cache'
+"use cache";
 import CustomGalleryComponent from "@/src/components/comp/gallery/CustomGalleryComponent";
 
 interface GeniusUserGalleryProps {

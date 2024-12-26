@@ -1,5 +1,5 @@
 "use client";
-'use cache'
+"use cache";
 import UpdateProfileDialog from "../Modal/profile/UpdateProfileDialog";
 import Image from "next/image";
 import SmallPreviewCard from "../card/SmallPreviewCard";
@@ -16,13 +16,13 @@ import { AiFillInstagram } from "react-icons/ai";
 import { IoLogoLinkedin } from "react-icons/io5";
 import { FaSteam } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
-import SocialMediaDialog from "../GeniusUserProfile/Info/SocialMediaDialog";
+import SocialMediaDialog from "../../GeniusUserProfile/Info/SocialMediaDialog";
 import { RiShareLine } from "react-icons/ri";
 import { Button as MovingBorderButton } from "@/src/ui/border/moving-border";
 import { socialType } from "@prisma/client";
 import { useRef, useState } from "react";
 import CustomToolTip from "../CustomComponents/CustomToolTip";
-import SharePopup from "../GeniusUserProfile/share/SharePopUp";
+import SharePopup from "../../GeniusUserProfile/share/SharePopUp";
 
 type socialvalueType = {
   name: socialType;
@@ -70,7 +70,7 @@ export default function AboutSectionProfile({
   userInfo: any | null;
   ifOwnProfile: boolean;
 }) {
-  'use cache'
+  "use cache";
   let ref = useRef<HTMLDivElement>(null);
   const [isPopupOpen, setPopupOpen] = useState(false);
   const currentPageUrl =

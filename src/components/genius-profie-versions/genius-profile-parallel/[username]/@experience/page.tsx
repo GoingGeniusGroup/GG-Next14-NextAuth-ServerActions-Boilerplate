@@ -1,4 +1,4 @@
-import GeniusUserExperience from "@/src/components/comp/GeniusUserProfile/GeniusUserExperience";
+import GeniusUserExperience from "@/src/components/GeniusUserProfile/GeniusUserExperience";
 
 export default async function GeniusUserExperiencePage() {
   return (

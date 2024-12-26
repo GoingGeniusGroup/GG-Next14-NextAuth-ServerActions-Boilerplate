@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import ExperienceDialog from "../Modal/experience/AddUpdateExperienceDialog";
-import { DeleteExperienceDialog } from "../Modal/experience/DeleteExperienceDialog";
+import ExperienceDialog from "../comp/Modal/experience/AddUpdateExperienceDialog";
+import { DeleteExperienceDialog } from "../comp/Modal/experience/DeleteExperienceDialog";
 import {
   BentoGridHoverItemV2,
   BentoGridHoverV2,
