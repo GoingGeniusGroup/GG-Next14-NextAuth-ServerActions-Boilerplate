@@ -22,13 +22,13 @@ import FullscreenButton from "@/src/ui/button/fullscreen-button";
 import { songs } from "../data/songs";
 import { MusicPlayerProvider } from "@/src/context/music-player-context";
 import MusicPlayerMinimized from "@/src/components/music-player/music-player-component-minimized";
-import SongListToggleClient from "@/src/components/music-player/song-list-toggle-client";
 
 import { TooltipProvider } from "@/src/ui/tooltip/tooltip";
 
 import { signOut } from "@/auth";
 import { revalidatePath } from "next/cache";
 import ProfileHudTop from "@/src/components/comp/Huds/ProfileHudTop";
+import SongListServer from "./_components/home/song-list-server";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -88,7 +88,7 @@ export default async function RootLayout({
                             <MusicPlayerMinimized />
                           </div>
                           <div className="fixed right-6 bottom-6 z-50">
-                            <SongListToggleClient songs={songs} />
+                            <SongListServer />
                           </div>
 
                           {/* Dock section */}
@@ -139,7 +139,7 @@ export default async function RootLayout({
                   <UserProvider>
                     <AvatarProvider initialAvatars={avatars} user={user.gg_id}>
                       {/* Theme switcher */}
-                      <div className="absolute flex gap-2 top-[8px] right-7 z-50">
+                      <div className="absolute flex gap-2 top-[8px] right-[5px] md:right-[20px] z-50">
                         <ThemeSwitcher />
                         <ProfileHudTop
                           handleServerSignOut={handleServerSignOut}
@@ -152,7 +152,7 @@ export default async function RootLayout({
                         <MusicPlayerMinimized />
                       </div>
                       <div className="fixed right-6 bottom-6 z-50">
-                        <SongListToggleClient songs={songs} />
+                        <SongListServer />
                       </div>
 
                       {/* Dock section */}

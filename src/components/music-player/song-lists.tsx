@@ -19,11 +19,11 @@ const SongList: React.FC<SongListProps> = ({ songs }) => {
   const { currentSong, setSong } = useMusicPlayer();
 
   return (
-    <div className="w-80 bg-white/20 dark:bg-black/20 backdrop-blur-md border border-white/35 rounded-lg p-4 ">
-      <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-white">
+    <div className="w-full bg-white/20 dark:bg-black/20 backdrop-blur-md border border-white/35 rounded-lg p-2 ">
+      <h3 className="text-lg font-semibold mb-1 text-gray-800 dark:text-white">
         Playlist
       </h3>
-      <div className="flex flex-col gap-1 max-h-72 overflow-y-auto">
+      <div className="flex flex-col gap-1 max-h-[250px] overflow-y-auto">
         {songs.map((song) => (
           <div
             key={song.id}

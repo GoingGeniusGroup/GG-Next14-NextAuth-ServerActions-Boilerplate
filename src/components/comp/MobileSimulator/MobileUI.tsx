@@ -1,16 +1,14 @@
-"use client";
-
 import React from "react";
 import { Button } from "@/src/ui/button/button";
 import { Play, SkipBack, SkipForward, Sun, CheckCircle } from "lucide-react";
 import CustomToolTip from "../CustomComponents/CustomToolTip";
 import { MobileInterfaceProps } from "./interface/MobileInterface.interface";
-
-//icon
 import { RxCross2 } from "react-icons/rx";
 import { ColorPicker } from "../CustomComponents/ColorPicker";
 import { useMobileSimulator } from "@/src/components/comp/MobileSimulator/provider/MobileSimulatorContext";
 import { ThemeType } from "@prisma/client";
+import MusicPlayerMinimized from "@/src/components/music-player/music-player-component-minimized";
+import SongListMobileServer from "@/app/_components/mobile-simulator/song-list-mobile-server";
 
 const scheduleData = [
   { day: "S", schedule: [1, 0, 1, 1, 0, 1, 0] },
@@ -28,7 +26,6 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
   closeAllScreens,
   backgrounds,
   screens,
-
   updateCurrentBackground,
 }) => {
   const { ColorPickerAttrs } = useMobileSimulator();
@@ -44,7 +41,6 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
     updateCurrentBackground(newBackground);
   };
 
-  // Check if the background is a custom color and apply it accordingly
   const backgroundStyle =
     currentBackground.name === "Custom Color"
       ? {
@@ -60,8 +56,8 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
         currentBackground.name !== "Custom Color" ? currentBackground.class : ""
       } border-1 border-white`}
       style={{
-        ...backgroundStyle, // Apply background color here
-        color: textColor, // Apply text color
+        ...backgroundStyle,
+        color: textColor,
       }}
     >
       {/* Top bar */}
@@ -76,17 +72,17 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
         </div>
       </div>
 
-      {/* Media controls */}
-      <div className="sticky top-1 flex justify-center space-x-4 mb-4 z-20">
-        <Button variant="ghost" size="mini">
-          <SkipBack />
-        </Button>
-        <Button variant="ghost" size="mini" className="text-green-400">
-          <Play />
-        </Button>
-        <Button variant="ghost" size="mini">
-          <SkipForward />
-        </Button>
+      {/* Music Player Integration */}
+      <div className="bg-white/20 backdrop-blur-sm rounded-lg p-3 mb-4">
+        <h3 className="font-bold text-sm mb-2 uppercase">Now Playing</h3>
+        <div className="flex flex-col gap-2">
+          <div className="w-full">
+            <MusicPlayerMinimized />
+          </div>
+          <div className="w-full flex justify-end">
+            <SongListMobileServer />
+          </div>
+        </div>
       </div>
 
       {/* Change Schedule */}
