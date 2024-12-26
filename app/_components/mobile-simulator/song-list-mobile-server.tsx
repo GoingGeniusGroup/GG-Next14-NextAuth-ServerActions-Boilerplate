@@ -3,11 +3,7 @@ import { songs } from "@/data/songs";
 import SongListMobileClient from "@/src/components/music-player/song-list-mobile-client";
 
 const SongListMobileServer = () => {
-  return (
-    <div>
-      <SongListMobileClient songs={songs} />
-    </div>
-  );
+  return <SongListMobileClient songs={songs} />;
 };
 
 export default SongListMobileServer;

@@ -5,7 +5,6 @@ import MobileScreen from "./MobileScreen";
 import MobileUI from "./MobileUI";
 import { BackgroundProps } from "./interface/Background.interface";
 import { SectionProps } from "./interface/Section.interface";
-import { useState } from "react";
 import { usePathname } from "next/navigation";
 
 interface MobileSimulatorContainerProps {
@@ -51,7 +50,7 @@ export default function MobileSimulatorContainer({
             } p-4 z-20`}
           >
             <div
-              className={`bg-none rounded-xl border-none overflow-hidden max-w-full h-full max-h-full flex gap-x-4 items-center ${
+              className={`bg-none rounded-xl border-none overflow-hidden max-w-full z-50 h-full max-h-full flex gap-x-4 items-center ${
                 isSmallScreen ? "size-full" : "gap-x-4"
               }`}
             >
@@ -69,7 +68,7 @@ export default function MobileSimulatorContainer({
               </AnimatePresence>
 
               <motion.div
-                className="relative mr-14 rounded-xl bg-white/20 backdrop-blur-md overflow-hidden flex-shrink-0 shadow-lg"
+                className="relative mr-14 rounded-[1.5rem] backdrop-blur-md overflow-hidden flex-shrink-0 shadow-lg"
                 style={{
                   width: isSmallScreen ? "100%" : "335px",
                   height: isSmallScreen ? "100%" : "75vh",
