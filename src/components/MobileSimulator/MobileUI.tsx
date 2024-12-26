@@ -151,7 +151,7 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
 
       {/* Home Indicator */}
       <div
-        className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-1/3 h-1 bg-sky-500 rounded-full"
+        className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-1/3 h-1 bg-red-500 rounded-full"
         onClick={closeAllScreens}
       ></div>
     </div>
