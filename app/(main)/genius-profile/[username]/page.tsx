@@ -1,6 +1,8 @@
 "use cache";
 
 import ProfilePageServer from "@/app/_components/genius-profile/profile-page-server";
+import { Suspense } from "react";
+import ProfileSkeleton from "./loading";
 
 interface GeniusUserInfoProps {
   params: {
@@ -13,8 +15,8 @@ export default async function GeniusUserProfile({
 }: GeniusUserInfoProps) {
   const { username } = params;
   return (
-    <>
+    <Suspense fallback={<ProfileSkeleton />}>
       <ProfilePageServer username={username} />
-    </>
+    </Suspense>
   );
 }
