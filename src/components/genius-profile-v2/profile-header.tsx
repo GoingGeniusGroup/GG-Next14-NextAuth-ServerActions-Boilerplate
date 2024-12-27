@@ -37,6 +37,7 @@ import SharePopup from "../GeniusUserProfile/share/SharePopUp";
 import { RiShareLine } from "react-icons/ri";
 import UpdateCoverPhotoDialog from "../comp/Modal/profile/UpdateCoverPhotoDialog";
 import UpdateProfileDialog from "../comp/Modal/profile/UpdateProfileDialog";
+import { IoShareSocialSharp } from "react-icons/io5";
 
 interface ProfileHeaderProps {
   username: string;
@@ -230,26 +231,6 @@ const ProfileHeader = ({
                 avatarUrl={!isLoggedUserProfile ? avatarUrl : selectedAvatar}
               />
 
-              <div className="absolute top-2 right-2 z-40 flex gap-2">
-                {isLoggedUserProfile && (
-                  <>
-                    <div className="flex gap-2 transition-all duration-300">
-                      <UpdateProfileDialog
-                        gg_id={gg_id}
-                        defaultValues={{
-                          first_name: firstName ?? "",
-                          last_name: lastName ?? "",
-                          address: address ?? "",
-                          description: bio ?? "",
-                          dob: dob ? new Date(dob) : null,
-                          image: profilePic ?? "",
-                        }}
-                      />
-                    </div>
-                  </>
-                )}
-              </div>
-
               {!isLoggedUserProfile ? (
                 <div className="absolute bottom-1 right-0 space-y-4 z-40">
                   <div className="size-[200px]">
@@ -338,17 +319,37 @@ const ProfileHeader = ({
                   <AvatarImage src={profilePic} alt={fullName} />
                   <AvatarFallback>{fullName.charAt(0)}</AvatarFallback>
                 </Avatar>
-                <div>
+                <div className="w-full">
                   <div className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text flex items-center gap-2">
-                    {fullName}
-                    <Button
-                      onClick={() => setPopupOpen(true)}
-                      variant="transparent"
-                      aria-label="Share Button"
-                      className="text-white hover:text-yellow-500"
-                    >
-                      <RiShareLine size={16} />
-                    </Button>
+                    <h1>{fullName}</h1>
+                    <div className="flex items-start -mt-6 gap-2">
+                      <Button
+                        onClick={() => setPopupOpen(true)}
+                        variant="transparent"
+                        size="mini2"
+                        aria-label="Share Button"
+                        className="text-cyan-500 dark:text-green-500 rounded-full hover:text-yellow-500"
+                      >
+                        <IoShareSocialSharp size={20} />
+                      </Button>
+                      {isLoggedUserProfile && (
+                        <>
+                          <div className="flex justify-end gap-2 transition-all duration-300">
+                            <UpdateProfileDialog
+                              gg_id={gg_id}
+                              defaultValues={{
+                                first_name: firstName ?? "",
+                                last_name: lastName ?? "",
+                                address: address ?? "",
+                                description: bio ?? "",
+                                dob: dob ? new Date(dob) : null,
+                                image: profilePic ?? "",
+                              }}
+                            />
+                          </div>
+                        </>
+                      )}
+                    </div>
                   </div>
                   <p className="text-xl text-gray-400">
                     @{username} | {address}
@@ -462,7 +463,7 @@ const ProfileHeader = ({
           </div>
         </div>
 
-        <div className="absolute top-6 right-6 md:top-2 md:right-4 lg:right-2">
+        <div className="absolute top-6 right-6 md:top-0 md:right-4">
           <SocialLinks />
         </div>
       </div>

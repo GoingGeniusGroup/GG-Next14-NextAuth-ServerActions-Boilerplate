@@ -9,9 +9,8 @@ import {
   DialogTrigger,
 } from "@/src/ui/dialog";
 import { IconUserEdit } from "@tabler/icons-react";
-import { Button as MovingBorderButton } from "@/src/ui/border/moving-border";
 import UpdateProfileForm from "../../Forms/UpdateProfileForm";
-import CustomToolTip from "../../CustomComponents/CustomToolTip";
+import { Button } from "@/src/ui/button/button";
 
 interface UpdateProfileDialogProps {
   gg_id: string;
@@ -34,15 +33,14 @@ const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <div className="group">
-          <MovingBorderButton
-            borderRadius="1.75rem"
-            className="bg-gray-200 size-10 dark:bg-black text-black dark:text-white border-neutral-200 dark:border-slate-800  hover:text-yellow-600 transition-colors duration-300"
-          >
-            <IconUserEdit size={20} />
-          </MovingBorderButton>
-          <CustomToolTip content="Edit Profile" />
-        </div>
+        <Button
+          variant="transparent"
+          size="mini2"
+          aria-label="Edit Info Button"
+          className="text-cyan-500 dark:text-pink-500 rounded-full hover:text-yellow-500"
+        >
+          <IconUserEdit size={20} />
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md h-[80%] overflow-auto">
         <DialogHeader>
