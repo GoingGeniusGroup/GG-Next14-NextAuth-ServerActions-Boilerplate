@@ -1,16 +1,8 @@
 import { Button } from "@/src/ui/button";
-import { Card } from "@/src/ui/card";
-import {
-  Facebook,
-  Twitch,
-  Twitter,
-  Youtube,
-  Instagram,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
+import { Facebook, Twitch, Twitter, Youtube, Instagram } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { Avatar, AvatarFallback, AvatarImage } from "@/src/ui/avatar";
 
 interface ProfileHeaderProps {
   username: string;
@@ -19,6 +11,8 @@ interface ProfileHeaderProps {
   bio: string;
   avatarUrl: string;
   onTabChange: (tab: string) => void;
+  profilePic: string;
+  coverPic: string;
 }
 
 // Helper function to calculate age
@@ -43,17 +37,36 @@ export default function ProfileHeader({
   bio,
   avatarUrl,
   onTabChange,
+  profilePic,
+  coverPic,
 }: ProfileHeaderProps) {
   const age = calculateAge(dob);
   return (
-    <div className="relative w-full h-full bg-gradient-to-br from-amber-500/20 to-slate-900 rounded-xl">
+    <div
+      className="relative w-full h-full rounded-xl"
+      style={{
+        backgroundImage: `url(${coverPic})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      <div className="absolute inset-0 size-full bg-black/20"></div>
       <div className="container mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <div className="space-y-6">
           <div>
             <h3 className="text-xl font-semibold text-amber-500 uppercase">
               {age} YEARS OLD
             </h3>
-            <h1 className="text-6xl font-bold tracking-tighter">{fullName}</h1>
+            <div className="flex gap-2 items-center">
+              <Avatar>
+                <AvatarImage src={profilePic} alt="profile picture" />
+                <AvatarFallback>{age}</AvatarFallback>
+              </Avatar>
+              <h1 className="text-6xl font-bold tracking-tighter">
+                {fullName}
+              </h1>
+            </div>
             <p className="text-xl text-muted-foreground mt-2">@{username}</p>
           </div>
           <p className="text-lg leading-relaxed max-w-xl">{bio}</p>

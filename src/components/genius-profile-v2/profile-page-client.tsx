@@ -30,6 +30,8 @@ export default function ProfilePageClient({
   loggedUserProfile,
   imagePosts,
   experiences,
+  profilePic,
+  coverPic,
 }: {
   username: string;
   fullName: string;
@@ -42,6 +44,8 @@ export default function ProfilePageClient({
   loggedUserProfile: boolean;
   imagePosts: any;
   experiences: any;
+  profilePic: string;
+  coverPic: string;
 }) {
   const [activeTab, setActiveTab] = useState("achievements");
 
@@ -49,13 +53,15 @@ export default function ProfilePageClient({
     switch (activeTab) {
       case "gallery":
         return (
-          <GalleryClient
-            gg_id={gg_id}
-            convertedImagePosts={convertedImagePosts}
-            cards={cards}
-            loggedUserProfile={loggedUserProfile}
-            imagePosts={imagePosts}
-          />
+          <div className="relative w-full pt-10">
+            <GalleryClient
+              gg_id={gg_id}
+              convertedImagePosts={convertedImagePosts}
+              cards={cards}
+              loggedUserProfile={loggedUserProfile}
+              imagePosts={imagePosts}
+            />
+          </div>
         );
       case "projects":
         return (
@@ -124,6 +130,8 @@ export default function ProfilePageClient({
         fullName={fullName}
         dob={dob.toString()}
         bio={bio}
+        profilePic={profilePic}
+        coverPic={coverPic}
         avatarUrl={avatarUrl}
         onTabChange={setActiveTab}
       />

@@ -48,6 +48,16 @@ export default async function ProfilePageServer({
     LoggedUserProfile ? undefined : profileOwner?.gg_id
   );
 
+  const profilePic = LoggedUserProfile
+    ? currentUser.image || "/default-pictures/profile.png"
+    : profileOwner.image || "/default-pictures/profile.png";
+
+  const coverPic = LoggedUserProfile
+    ? currentUser.cover_images[currentUser.cover_images.length - 1] ||
+      "/default-pictures/cover-image.png"
+    : profileOwner.cover_images[profileOwner.cover_images.length - 1] ||
+      "/default-pictures/cover-image.png";
+
   // Convert the images to imagePostType
   const convertedImagePosts: imagePostType[] =
     imagePosts?.map(
@@ -104,6 +114,8 @@ export default async function ProfilePageServer({
       loggedUserProfile={LoggedUserProfile}
       imagePosts={imagePosts}
       experiences={experiences}
+      profilePic={profilePic}
+      coverPic={coverPic}
     />
   );
 }
