@@ -23,6 +23,11 @@ import {
 } from "@readyplayerme/react-avatar-creator";
 import ExpressionCard from "../comp/Huds/ExpressionsCard";
 import ExpressionBottomMidHud from "../comp/Huds/ExpressionBottomMidHud";
+import AchievementSlider from "../comp/console/achievement-slider";
+import { Dialog, DialogContent, DialogTrigger } from "@/src/ui/dialog";
+import { Button } from "@/src/ui/button";
+import { AvatarCreator } from "../comp/AvatarComponents/avatar_creator";
+import IconButton from "@/src/layout/base/button/icon-button";
 
 interface ProfileHeaderProps {
   username: string;
@@ -174,10 +179,11 @@ const ProfileHeader = ({
             />
           </div>
         )}
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
           {/* Left column */}
           <div className="lg:sticky lg:top-10 lg:col-span-1 space-y-4">
-            <div className="relative w-full h-[380px] rounded-lg overflow-hidden border-4 border-cyan-500 shadow-lg shadow-cyan-500/50">
+            <div className="relative w-full h-[380px] rounded-lg overflow-hidden border-2 hover:border-yellow-600 border-cyan-500 shadow-lg hover:shadow-yellow-500/50 shadow-cyan-500/50 transition-colors duration-300 ease-in-out">
               <div
                 className="absolute inset-0"
                 style={{
@@ -195,7 +201,7 @@ const ProfileHeader = ({
                 avatarUrl={avatarUrl}
               />
 
-              {!isLoggedUserProfile && (
+              {!isLoggedUserProfile ? (
                 <div className="absolute bottom-1 right-0 space-y-4 z-40">
                   <div className="size-[200px]">
                     <AvatarManagerClientProfile
@@ -205,6 +211,58 @@ const ProfileHeader = ({
                       avatarUrl={loggedUserAvatarUrl}
                     />
                   </div>
+                </div>
+              ) : (
+                <div className="absolute bottom-1 right-1">
+                  <Dialog
+                    open={isAvatarCreatorOpen}
+                    onOpenChange={setIsAvatarCreatorOpen}
+                  >
+                    <DialogTrigger asChild>
+                      <IconButton
+                        onClick={handleCreateAvatar}
+                        icon={
+                          <Gamepad2 className="text-black dark:text-white" />
+                        }
+                        label="Create New Avatar"
+                      />
+                    </DialogTrigger>
+                    <DialogContent>
+                      <div className="h-[600px] w-full relative rounded-xl overflow-hidden">
+                        <AvatarCreator
+                          subdomain="gguser"
+                          config={
+                            editingAvatar
+                              ? {
+                                  ...editAvatarConfig,
+                                  avatarId: extractUserId(
+                                    editingAvatar.avatar_url
+                                  ),
+                                }
+                              : createAvatarConfig
+                          }
+                          onAvatarExported={
+                            editingAvatar
+                              ? handleUpdateAvatar
+                              : handleAvatarCreated
+                          }
+                          onUserSet={(event) => console.log("User set:", event)}
+                          iframeUrl={
+                            editingAvatar
+                              ? getAvatarCreatorUrl(editingAvatar.avatar_url)
+                              : undefined
+                          }
+                        />
+                        {isProcessing && (
+                          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                            {editingAvatar
+                              ? "Updating avatar..."
+                              : "Creating avatar..."}
+                          </div>
+                        )}
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                 </div>
               )}
             </div>
@@ -252,10 +310,15 @@ const ProfileHeader = ({
                 age={age}
               />
             </div>
+            <div className="grid grid-cols-2">
+              <div className="relative flex border p-2 mt-4 rounded-xl overflow-auto backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
+                <AchievementSlider />
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="absolute top-2 right-4 lg:right-2">
+        <div className="absolute top-6 right-6 md:top-2 md:right-4 lg:right-2">
           <SocialLinks />
         </div>
       </div>
