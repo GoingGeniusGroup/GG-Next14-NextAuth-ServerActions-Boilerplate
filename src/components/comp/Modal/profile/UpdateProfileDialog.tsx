@@ -11,6 +11,11 @@ import {
 import { IconUserEdit } from "@tabler/icons-react";
 import UpdateProfileForm from "../../Forms/UpdateProfileForm";
 import { Button } from "@/src/ui/button/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/src/ui/tooltip/tooltip";
 
 interface UpdateProfileDialogProps {
   gg_id: string;
@@ -33,14 +38,21 @@ const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button
-          variant="transparent"
-          size="mini2"
-          aria-label="Edit Info Button"
-          className="text-cyan-500 dark:text-pink-500 rounded-full hover:text-yellow-500 border border-cyan-500/50 dark:border-pink-500/50"
-        >
-          <IconUserEdit size={20} />
-        </Button>
+        <Tooltip>
+          <TooltipTrigger>
+            <Button
+              variant="transparent"
+              size="mini2"
+              aria-label="Edit Info Button"
+              className="text-cyan-500 dark:text-pink-500 rounded-full hover:text-yellow-500 border border-cyan-500/50 dark:border-pink-500/50"
+            >
+              <IconUserEdit size={20} />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <span className="text-pink-500">Edit Profile</span>
+          </TooltipContent>
+        </Tooltip>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md h-[80%] overflow-auto">
         <DialogHeader>

@@ -9,9 +9,13 @@ import {
   DialogTrigger,
 } from "@/src/ui/dialog";
 import { IconPhotoEdit } from "@tabler/icons-react";
-import { Button as MovingBorderButton } from "@/src/ui/border/moving-border";
 import UpdateCoverImageForm from "../../Forms/UpdateCoverImageForm";
 import IconButton from "@/src/layout/base/button/icon-button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/src/ui/tooltip/tooltip";
 
 interface UpdateCoverPhotoDialogProps {
   gg_id: string;
@@ -27,12 +31,22 @@ const UpdateProfileDialog: React.FC<UpdateCoverPhotoDialogProps> = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <IconButton
-          icon={
-            <IconPhotoEdit size={20} className="text-black dark:text-white" />
-          }
-          label="Edit Cover Picture"
-        />
+        <Tooltip>
+          <TooltipTrigger>
+            <IconButton
+              icon={
+                <IconPhotoEdit
+                  size={20}
+                  className="text-black dark:text-white hover:text-cyan-500"
+                />
+              }
+              label="Edit Cover Picture"
+            />
+          </TooltipTrigger>
+          <TooltipContent>
+            <span className="text-cyan-500">Edit Cover Image</span>
+          </TooltipContent>
+        </Tooltip>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>

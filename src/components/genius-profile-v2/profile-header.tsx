@@ -38,6 +38,11 @@ import { RiShareLine } from "react-icons/ri";
 import UpdateCoverPhotoDialog from "../comp/Modal/profile/UpdateCoverPhotoDialog";
 import UpdateProfileDialog from "../comp/Modal/profile/UpdateProfileDialog";
 import { IoShareSocialSharp } from "react-icons/io5";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/src/ui/tooltip/tooltip";
 
 interface ProfileHeaderProps {
   username: string;
@@ -257,11 +262,22 @@ const ProfileHeader = ({
                     onOpenChange={setIsAvatarCreatorOpen}
                   >
                     <DialogTrigger asChild>
-                      <IconButton
-                        onClick={handleCreateAvatar}
-                        icon={<Plus className="text-black dark:text-white" />}
-                        label="Create New Avatar"
-                      />
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <IconButton
+                            onClick={handleCreateAvatar}
+                            icon={
+                              <Plus className="text-black dark:text-white hover:text-green-500" />
+                            }
+                            label="Create New Avatar"
+                          />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <span className="text-green-500">
+                            Create New Avatar
+                          </span>
+                        </TooltipContent>
+                      </Tooltip>
                     </DialogTrigger>
                     <DialogContent>
                       <div className="h-[600px] w-full relative rounded-xl overflow-hidden">
@@ -323,15 +339,22 @@ const ProfileHeader = ({
                   <div className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text flex items-center gap-2">
                     <h1>{fullName}</h1>
                     <div className="flex items-start -mt-6 gap-2">
-                      <Button
-                        onClick={() => setPopupOpen(true)}
-                        variant="transparent"
-                        size="mini2"
-                        aria-label="Share Button"
-                        className="text-cyan-500 dark:text-green-500 rounded-full hover:text-yellow-500 border border-cyan-500/50 dark:border-green-500/50"
-                      >
-                        <IoShareSocialSharp size={20} />
-                      </Button>
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <Button
+                            onClick={() => setPopupOpen(true)}
+                            variant="transparent"
+                            size="mini2"
+                            aria-label="Share Button"
+                            className="text-cyan-500 dark:text-green-500 rounded-full hover:text-yellow-500 border border-cyan-500/50 dark:border-green-500/50"
+                          >
+                            <IoShareSocialSharp size={20} />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <span className="text-green-500">Share</span>
+                        </TooltipContent>
+                      </Tooltip>
                       {isLoggedUserProfile && (
                         <>
                           <div className="flex justify-end gap-2 transition-all duration-300">
@@ -351,7 +374,7 @@ const ProfileHeader = ({
                       )}
                     </div>
                   </div>
-                  <p className="text-xl text-gray-400">
+                  <p className="text-md text-gray-400">
                     @{username} | {address}
                   </p>
                 </div>
