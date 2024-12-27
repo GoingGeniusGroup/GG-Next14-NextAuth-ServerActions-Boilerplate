@@ -1,4 +1,5 @@
 "use client";
+"use cache";
 
 import { memo, useMemo, useRef, useState } from "react";
 import Link from "next/link";
@@ -34,15 +35,60 @@ import { Carousel, CarouselContent, CarouselItem } from "@/src/ui/carousel";
 import { Card, CardContent } from "@/src/ui/card";
 import Image from "next/image";
 import SharePopup from "../GeniusUserProfile/share/SharePopUp";
-import { RiShareLine } from "react-icons/ri";
 import UpdateCoverPhotoDialog from "../comp/Modal/profile/UpdateCoverPhotoDialog";
 import UpdateProfileDialog from "../comp/Modal/profile/UpdateProfileDialog";
-import { IoShareSocialSharp } from "react-icons/io5";
+import { IoLogoLinkedin, IoShareSocialSharp } from "react-icons/io5";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/src/ui/tooltip/tooltip";
+import SocialMediaDialog from "../GeniusUserProfile/Info/SocialMediaDialog";
+import { socialType } from "@prisma/client";
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub, FaSteam } from "react-icons/fa";
+import { AiFillInstagram } from "react-icons/ai";
+import { SiFacebook } from "react-icons/si";
+import { BsGoogle } from "react-icons/bs";
+
+type socialvalueType = {
+  name: socialType;
+  icon: JSX.Element;
+  link: string;
+};
+
+const socials: socialvalueType[] = [
+  {
+    name: socialType.GOOGLE,
+    icon: <BsGoogle />,
+    link: "https://google.com",
+  },
+  {
+    name: socialType.GITHUB,
+    icon: <FaGithub />,
+    link: "https://github.com",
+  },
+  {
+    name: socialType.STEAM,
+    icon: <FaSteam />,
+    link: "https://tiktok.com",
+  },
+  {
+    name: socialType.INSTAGRAM,
+    icon: <AiFillInstagram />,
+    link: "https://instagram.com",
+  },
+  {
+    name: socialType.FACEBOOK,
+    icon: <SiFacebook />,
+    link: "https://facebook.com",
+  },
+  {
+    name: socialType.LINKDN,
+    icon: <IoLogoLinkedin />,
+    link: "https://linkedin.com",
+  },
+];
 
 interface ProfileHeaderProps {
   username: string;
@@ -62,26 +108,27 @@ interface ProfileHeaderProps {
   loggedUserAvatarUrl: string;
 }
 
-const SocialLinks = memo(() => (
-  <div className="flex gap-3">
-    {[
-      { Icon: Twitter, name: "Twitter" },
-      { Icon: Youtube, name: "YouTube" },
-      { Icon: Instagram, name: "Instagram" },
-      { Icon: Facebook, name: "Facebook" },
-      { Icon: Twitch, name: "Twitch" },
-    ].map(({ Icon, name }, index) => (
-      <Link
-        key={index}
-        href="#"
-        className="text-gray-400 hover:text-cyan-500 transition-colors"
-        aria-label={`${name} profile`}
-      >
-        <Icon className="h-5 w-5" />
-      </Link>
-    ))}
-  </div>
-));
+const SocialLinks = memo(
+  ({
+    isLoggedUserProfile,
+    gg_id,
+  }: {
+    isLoggedUserProfile: boolean;
+    gg_id: string;
+  }) => (
+    <div className="flex gap-1">
+      {socials.map((social, index) => (
+        <Card key={index}>
+          <SocialMediaDialog
+            social={social}
+            ifOwnProfile={isLoggedUserProfile}
+            userId={gg_id}
+          />
+        </Card>
+      ))}
+    </div>
+  )
+);
 SocialLinks.displayName = "SocialLinks";
 
 const ProfileInfo = memo(
@@ -487,7 +534,10 @@ const ProfileHeader = ({
         </div>
 
         <div className="absolute top-6 right-6 md:top-0 md:right-4">
-          <SocialLinks />
+          <SocialLinks
+            isLoggedUserProfile={isLoggedUserProfile}
+            gg_id={gg_id}
+          />
         </div>
       </div>
     </>

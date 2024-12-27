@@ -5,7 +5,6 @@ import { getUserByUsername } from "@/app/services/user";
 import { getImageUrls } from "@/app/actions/image-post";
 import { getExperiencesByUserId } from "@/app/services/experience";
 import ProfilePageClient from "@/src/components/genius-profile-v2/profile-page-client";
-import ProfileSkeleton from "@/src/components/genius-profile-v2/profile-skeleton";
 
 export default async function ProfilePage({ username }: { username: string }) {
   const [currentUser, profileOwner] = await Promise.all([
@@ -49,7 +48,7 @@ export default async function ProfilePage({ username }: { username: string }) {
   };
 
   return (
-    <Suspense fallback={<ProfileSkeleton />}>
+    <Suspense fallback={<div className="text-cyan-500">Loading...</div>}>
       <ProfilePageClient
         profileData={profileData}
         isLoggedUserProfile={isLoggedUserProfile}
