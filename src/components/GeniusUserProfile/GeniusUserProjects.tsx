@@ -10,9 +10,9 @@ import { DeleteExperienceDialog } from "../comp/Modal/experience/DeleteExperienc
 
 interface ItemsProp {
   items: {
-    title: string;
+    name: string;
     description: string;
-    image: string;
+    project_pictures: string;
     icon: React.ReactNode;
     type: string;
     link: string;
@@ -45,7 +45,7 @@ export default function GeniusUserProjects({
           key={idx}
           title={
             <div className="flex justify-between items-center gap-2">
-              <span>{item.title}</span>
+              <span>{item.name}</span>
               {LoggedUserProfile && (
                 <div className="flex gap-2">
                   <ExperienceDialog
@@ -53,24 +53,25 @@ export default function GeniusUserProjects({
                     experience_id={item.experience_id}
                     defaultValues={{
                       type: item.type,
-                      name: item.title,
+                      name: item.name,
                       description: item.description,
                       tools: item.tools,
                       project_skills: item.project_skills,
-                      project_pictures: [item.image],
+
+                      project_pictures: [item.project_pictures],
                       link: item.link,
                     }}
                   />
                   <DeleteExperienceDialog
                     experienceId={item.experience_id}
-                    experienceName={item.title}
+                    experienceName={item.name}
                   />
                 </div>
               )}
             </div>
           }
           description={item.description}
-          header={item.image}
+          header={item.project_pictures[item.project_pictures.length - 1]}
           skills={item.project_skills}
           tools={item.tools}
           className={idx === 3 || idx === 6 ? "md:col-span-2" : ""}

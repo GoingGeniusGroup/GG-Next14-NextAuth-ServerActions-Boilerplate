@@ -72,7 +72,7 @@ export default function GeniusUserProjects({
               </div>
             }
             description={item.description}
-            header={item.project_pictures[0]}
+            header={item.project_pictures[item.project_pictures.length - 1]}
             skills={item.project_skills}
             tools={item.tools}
             link={item.link}
