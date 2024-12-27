@@ -90,11 +90,11 @@ export const MobileSimulatorProvider = ({
   const [showMobile, setShowMobile] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false);
   const [currentBackground, setCurrentBackground] = useState<BackgroundProps>(
-    backgrounds[4]
+    backgrounds[3]
   );
   const [showLogin, setShowLogin] = useState<boolean>(true);
   const [activeScreens, setActiveScreens] = useState<number[]>([]);
-  const [textColor, setTextColor] = useState("#000000");
+  const [textColor, setTextColor] = useState("#FFFFFF");
   const [tempColor, setTempColor] = useState<
     { value: string; typeColor: ThemeType }[]
   >([]);

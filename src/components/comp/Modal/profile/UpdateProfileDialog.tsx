@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import {
   Dialog,
@@ -24,7 +22,7 @@ interface UpdateProfileDialogProps {
     last_name?: string;
     address?: string;
     description?: string;
-    dob?: Date | null;
+    dob?: Date | string | null; // Allow for string dates
     image?: string;
   };
 }
@@ -34,6 +32,13 @@ const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
   defaultValues,
 }) => {
   const [open, setOpen] = React.useState(false);
+
+  // Ensure dob is always a valid Date object or null
+  const parseDob = (dob: Date | string | null) => {
+    if (!dob) return null;
+    const parsedDate = typeof dob === "string" ? new Date(dob) : dob;
+    return isNaN(parsedDate.getTime()) ? null : parsedDate;
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -69,7 +74,7 @@ const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
             last_name: defaultValues?.last_name || "",
             address: defaultValues?.address || "",
             description: defaultValues?.description || "",
-            dob: defaultValues?.dob || null,
+            dob: parseDob(defaultValues?.dob ?? null),
             image: defaultValues?.image || "",
           }}
           setOpen={setOpen}
