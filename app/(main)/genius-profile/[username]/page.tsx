@@ -1,6 +1,6 @@
 "use cache";
 import GeniusUserHome from "@/src/components/GeniusUserProfile/GeniusUserHome";
-import { getUserByUsername } from "@/services/user";
+import ProfilePageServer from "@/app/_components/genius-profile/profile-page-server";
 
 interface GeniusUserInfoProps {
   params: {
@@ -14,7 +14,8 @@ export default async function GeniusUserProfile({
   const { username } = params;
   return (
     <>
-      <GeniusUserHome username={username} />
+      {/* <GeniusUserHome username={username} /> */}
+      <ProfilePageServer username={username} />
     </>
   );
 }

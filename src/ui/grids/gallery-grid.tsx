@@ -72,7 +72,7 @@ export const GalleryGrid = ({
               alt={`Gallery image ${card.index}`}
               fill
               className="object-cover"
-              unoptimized
+              loading="eager"
             />
             <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
               <div className="text-white">

@@ -99,7 +99,7 @@ export const BentoGridHoverItemV2 = ({
               layout="fill"
               objectFit="cover"
               className="rounded-lg"
-              unoptimized
+              loading="eager"
             />
             <span className="uppercase text-sm font-semibold absolute top-1 left-1 opacity-30">
               {topTitle}
