@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, useMemo } from "react";
+import { memo, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import {
   Facebook,
@@ -9,6 +9,7 @@ import {
   Youtube,
   Instagram,
   Gamepad2,
+  Plus,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/src/ui/avatar";
 import { Progress } from "@/src/ui/progress";
@@ -32,12 +33,20 @@ import { IconTrash } from "@tabler/icons-react";
 import { Carousel, CarouselContent, CarouselItem } from "@/src/ui/carousel";
 import { Card, CardContent } from "@/src/ui/card";
 import Image from "next/image";
+import SharePopup from "../GeniusUserProfile/share/SharePopUp";
+import { RiShareLine } from "react-icons/ri";
+import UpdateCoverPhotoDialog from "../comp/Modal/profile/UpdateCoverPhotoDialog";
+import UpdateProfileDialog from "../comp/Modal/profile/UpdateProfileDialog";
 
 interface ProfileHeaderProps {
   username: string;
   fullName: string;
   dob: string | Date;
   bio: string;
+  firstName: string;
+  lastName: string;
+  gg_id: string;
+  address: string;
   avatarUrl: string;
   profilePic: string;
   coverPic: string;
@@ -115,20 +124,29 @@ const calculateXpProgress = (xp: number) => {
 const ProfileHeader = ({
   username,
   fullName,
+  firstName,
+  lastName,
   dob,
   bio,
   avatarUrl,
+  gg_id,
   loggedUserAvatarUrl,
   profilePic,
   coverPic,
+  address,
   isLoggedUserProfile,
   xp,
   level,
 }: ProfileHeaderProps) => {
+  "use cache";
   const age = useMemo(() => calculateAge(dob.toString()), [dob]);
   const xpProgress = useMemo(() => calculateXpProgress(xp), [xp]);
 
-  ("use cache");
+  let ref = useRef<HTMLDivElement>(null);
+  const [isPopupOpen, setPopupOpen] = useState(false);
+  const currentPageUrl =
+    typeof window !== "undefined" ? window.location.href : "";
+
   const {
     avatars,
     selectedAvatar,
@@ -184,6 +202,13 @@ const ProfileHeader = ({
           </div>
         )}
 
+        {isPopupOpen && (
+          <SharePopup
+            url={currentPageUrl}
+            onClose={() => setPopupOpen(false)}
+          />
+        )}
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
           {/* Left column */}
           <div className="lg:sticky lg:top-10 lg:col-span-1 space-y-4">
@@ -205,6 +230,26 @@ const ProfileHeader = ({
                 avatarUrl={!isLoggedUserProfile ? avatarUrl : selectedAvatar}
               />
 
+              <div className="absolute top-2 right-2 z-40 flex gap-2">
+                {isLoggedUserProfile && (
+                  <>
+                    <div className="flex gap-2 transition-all duration-300">
+                      <UpdateProfileDialog
+                        gg_id={gg_id}
+                        defaultValues={{
+                          first_name: firstName ?? "",
+                          last_name: lastName ?? "",
+                          address: address ?? "",
+                          description: bio ?? "",
+                          dob: dob ? new Date(dob) : null,
+                          image: profilePic ?? "",
+                        }}
+                      />
+                    </div>
+                  </>
+                )}
+              </div>
+
               {!isLoggedUserProfile ? (
                 <div className="absolute bottom-1 right-0 space-y-4 z-40">
                   <div className="size-[200px]">
@@ -221,7 +266,11 @@ const ProfileHeader = ({
                   </div>
                 </div>
               ) : (
-                <div className="absolute bottom-1 right-1">
+                <div className="absolute flex items-center gap-1 bottom-1 right-1">
+                  <UpdateCoverPhotoDialog
+                    gg_id={gg_id}
+                    currentCoverImage={coverPic ?? ""}
+                  />
                   <Dialog
                     open={isAvatarCreatorOpen}
                     onOpenChange={setIsAvatarCreatorOpen}
@@ -229,9 +278,7 @@ const ProfileHeader = ({
                     <DialogTrigger asChild>
                       <IconButton
                         onClick={handleCreateAvatar}
-                        icon={
-                          <Gamepad2 className="text-black dark:text-white" />
-                        }
+                        icon={<Plus className="text-black dark:text-white" />}
                         label="Create New Avatar"
                       />
                     </DialogTrigger>
@@ -292,10 +339,20 @@ const ProfileHeader = ({
                   <AvatarFallback>{fullName.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <div>
-                  <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text">
+                  <div className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text flex items-center gap-2">
                     {fullName}
-                  </h1>
-                  <p className="text-xl text-gray-400">@{username}</p>
+                    <Button
+                      onClick={() => setPopupOpen(true)}
+                      variant="transparent"
+                      aria-label="Share Button"
+                      className="text-white hover:text-yellow-500"
+                    >
+                      <RiShareLine size={16} />
+                    </Button>
+                  </div>
+                  <p className="text-xl text-gray-400">
+                    @{username} | {address}
+                  </p>
                 </div>
               </div>
               <ProfileInfo
@@ -305,6 +362,8 @@ const ProfileHeader = ({
                 age={age}
               />
             </div>
+
+            {/* Achievement And Avatar Select */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               <div className="relative flex border p-2 mt-4 rounded-xl overflow-auto backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
                 <AchievementSlider />
@@ -385,6 +444,7 @@ const ProfileHeader = ({
               )}
             </div>
 
+            {/* Level Progress */}
             <div className="bg-black py-6 px-4 rounded-lg">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">

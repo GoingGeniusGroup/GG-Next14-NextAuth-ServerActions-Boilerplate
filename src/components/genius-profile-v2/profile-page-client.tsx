@@ -23,6 +23,9 @@ import { StaticImport } from "next/dist/shared/lib/get-img-props";
 interface ProfileData {
   username: string;
   fullName: string;
+  firstName: string;
+  lastName: string;
+  address: string;
   dob: string | Date;
   bio: string;
   avatarUrl: string;
