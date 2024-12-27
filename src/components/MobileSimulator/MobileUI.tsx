@@ -44,7 +44,7 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
 
   return (
     <div
-      className={`relative p-2 rounded-[1.5rem] w-full max-w-[375px] mx-auto h-full overflow-hidden ${
+      className={`relative p-2 rounded-[1.5rem] w-full max-w-[375px] mx-auto h-full overflow-y-auto overflow-x-hidden ${
         currentBackground.name !== "Custom Color" ? currentBackground.class : ""
       } border-[4px] border-black relative`}
       style={{
@@ -53,7 +53,7 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
       }}
     >
       {/* Status Bar */}
-      <div className="flex justify-between items-center mb-2 px-5 py-2 text-xs font-medium">
+      <div className="flex justify-between items-center mb-2 px-5 py-2 text-xs font-medium ">
         <div>9:41</div>
         <div className="absolute left-1/2 top-2 transform -translate-x-1/2 w-[40%] h-[30px] bg-black rounded-full "></div>
         <div className="flex items-center space-x-1">
@@ -76,7 +76,7 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
       </div>
 
       {/* App Icons */}
-      <div className="grid grid-cols-4 gap-4 mb-4 px-2">
+      <div className="grid grid-cols-5 gap-2 mb-4 px-2 sticky top-2">
         {sections.slice(0, 8).map((section) => (
           <div
             key={`${section.id}-${section.title}`}
@@ -107,7 +107,7 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
       {/* Change Schedule Widget */}
       <div className=" rounded-2xl p-2">
         <h3 className="font-semibold text-sm mb-2">Weekly Schedule</h3>
-        <div className="grid grid-cols-7 gap-1">
+        <div className="grid grid-cols-7 gap-1 border rounded-lg p-1">
           {scheduleData.map((day, index) => (
             <div key={index} className="text-center">
               <p className="text-[10px] font-medium mb-1">{day.day}</p>
@@ -115,7 +115,7 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
                 {day.schedule.map((slot, slotIndex) => (
                   <div
                     key={slotIndex}
-                    className={`h-1 w-full rounded-sm ${
+                    className={`h-2 w-full rounded-sm ${
                       slot ? "bg-green-400" : "bg-pink-500/30"
                     }`}
                   ></div>
@@ -143,9 +143,11 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
       </div>
 
       {/* Music Player Widget */}
-      <div className="p-2 mb-4">
-        <h3 className="font-semibold text-sm mb-2 ">Now Playing ...</h3>
-        <MusicPlayerMobile />
+      <div className="p-2">
+        <h3 className="font-semibold text-sm mb-2 ">Now Playing</h3>
+        <div className="border rounded-lg p-1">
+          <MusicPlayerMobile />
+        </div>
       </div>
 
       {/* Home Indicator */}
