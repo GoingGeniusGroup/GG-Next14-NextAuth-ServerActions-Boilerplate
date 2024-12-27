@@ -40,7 +40,7 @@ export default function GeniusUserProjects({
           <ExperienceDialog gg_id={userInfo.gg_id} />
         </div>
       )}
-      <BentoGridHoverV2 className="pb-10 h-full overflow-x-hidden overflow-y-auto z-10">
+      <BentoGridHoverV2 className="pb-2 h-full overflow-x-hidden overflow-y-auto z-10">
         {items.map((item, idx) => (
           <BentoGridHoverItemV2
             key={idx}

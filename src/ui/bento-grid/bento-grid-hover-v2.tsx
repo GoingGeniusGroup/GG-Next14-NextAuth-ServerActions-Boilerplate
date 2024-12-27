@@ -17,7 +17,7 @@ export const BentoGridHoverV2 = ({
   return (
     <div
       className={cn(
-        "grid md:auto-rows-[18rem] grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4",
+        "grid md:auto-rows-[18rem] grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4",
         className
       )}
     >

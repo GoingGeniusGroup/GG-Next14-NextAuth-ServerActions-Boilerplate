@@ -160,7 +160,7 @@ export default function ProfilePageClient({
         loggedUserAvatarUrl={loggedUserAvatarUrl}
       />
       <div
-        className="z-40 bg-gray-900/95 backdrop-blur-sm py-4 mx-4 rounded-lg px-4"
+        className="z-40 bg-black backdrop-blur-sm py-4 mx-4 rounded-lg px-4"
         role="tablist"
         aria-label="Profile sections"
       >

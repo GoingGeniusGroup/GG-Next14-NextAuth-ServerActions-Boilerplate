@@ -26,13 +26,12 @@ export default function ExpressionCard({
           >
             <div className="flex items-center justify-center">
               <Card
-                className="w-full aspect-square max-w-[72px] rounded-lg flex hover:border-2 items-center justify-center transition-all duration-300 border cursor-pointer"
+                className="w-full aspect-square max-w-[72px] border-2 rounded-lg flex items-center justify-center transition-all duration-300 cursor-pointer hover:bg-black bg-gradient-to-t from-transparent to-white"
                 style={{
                   borderColor: expression.bg,
-                  backgroundColor: "white",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = "white";
+                  e.currentTarget.style.borderColor = "yellow";
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.borderColor = expression.bg;

@@ -275,20 +275,7 @@ const ProfileHeader = ({
               )}
             </div>
 
-            <div className="bg-gray-900 rounded-lg p-4 space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <Gamepad2 className="text-cyan-500" />
-                  <span className="text-lg font-semibold">Level {level}</span>
-                </div>
-                <span className="text-sm text-gray-400">{xp} XP</span>
-              </div>
-              <Progress
-                value={xpProgress}
-                className="h-2 bg-gray-700"
-                aria-label={`XP Progress: ${xpProgress.toFixed(2)}%`}
-              />
-
+            <div className="backdrop-blur-md border hover:border-yellow-600 shadow-md border-cyan-500 hover:shadow-yellow-500 shadow-cyan-500 rounded-lg px-2 py-3 transition-colors duration-300 ease-in-out">
               <ExpressionCard
                 expressions={publicExpressions}
                 handleEmote={handlePublicEmote}
@@ -297,10 +284,10 @@ const ProfileHeader = ({
           </div>
 
           {/* Right column */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-4">
             <div className="space-y-4">
               <div className="flex items-center space-x-4">
-                <Avatar className="w-20 h-20 border-4 border-cyan-500">
+                <Avatar className="w-20 h-20 border-2 border-cyan-500 hover:border-yellow-600 transition-colors duration-300 ease-in-out shadow shadow-cyan-500 hover:shadow-yellow-500">
                   <AvatarImage src={profilePic} alt={fullName} />
                   <AvatarFallback>{fullName.charAt(0)}</AvatarFallback>
                 </Avatar>
@@ -396,6 +383,21 @@ const ProfileHeader = ({
                   </Carousel>
                 </div>
               )}
+            </div>
+
+            <div className="bg-black py-6 px-4 rounded-lg">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <Gamepad2 className="text-cyan-500" />
+                  <span className="text-lg font-semibold">Level {level}</span>
+                </div>
+                <span className="text-sm text-gray-400">{xp} XP</span>
+              </div>
+              <Progress
+                value={xpProgress}
+                className="h-2 bg-gray-700"
+                aria-label={`XP Progress: ${xpProgress.toFixed(2)}%`}
+              />
             </div>
           </div>
         </div>
