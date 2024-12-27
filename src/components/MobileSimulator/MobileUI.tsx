@@ -12,6 +12,8 @@ import {
 import IconButton from "@/src/layout/base/button/icon-button";
 import React from "react";
 
+import { useSession } from "next-auth/react";
+
 const scheduleData = [
   { day: "S", schedule: [1, 0, 1, 1, 0, 1, 0] },
   { day: "M", schedule: [1, 1, 1, 0, 0, 1, 1] },
@@ -32,6 +34,10 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
 }) => {
   const { ColorPickerAttrs } = useMobileSimulator();
   const { currentBackground, textColor } = ColorPickerAttrs;
+
+  const { status } = useSession();
+  // Directly compute isLoggedIn from session status
+  const isLoggedIn = status === "authenticated";
 
   const backgroundStyle =
     currentBackground.name === "Custom Color"
@@ -76,7 +82,11 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
       </div>
 
       {/* App Icons */}
-      <div className="grid grid-cols-5 gap-2 mb-4 px-2 sticky top-2">
+      <div
+        className={`grid mb-4 px-2 sticky top-2 ${
+          isLoggedIn ? "grid-cols-4 gap-4" : "grid-cols-5 gap-2"
+        }`}
+      >
         {sections.slice(0, 8).map((section) => (
           <div
             key={`${section.id}-${section.title}`}
