@@ -58,7 +58,7 @@ export const GalleryGrid = ({
   };
 
   return (
-    <div className="container mx-auto px-4 pb-8">
+    <div className="container px-0">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {cards.map((card) => (
           <motion.div

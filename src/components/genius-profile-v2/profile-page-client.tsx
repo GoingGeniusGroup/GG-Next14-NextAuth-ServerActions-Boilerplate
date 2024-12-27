@@ -1,12 +1,24 @@
 "use client";
 
-import { useState, useEffect, useCallback, useMemo } from "react";
+import {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  JSXElementConstructor,
+  PromiseLikeOfReactNode,
+  ReactElement,
+  ReactNode,
+  ReactPortal,
+} from "react";
 import { useSearchParams } from "next/navigation";
 import ProfileHeader from "./profile-header";
 import GalleryClient from "../comp/gallery/gallery-client";
 import GeniusUserProjectsV2 from "../GeniusUserProfile/GeniusUserProjectsV2";
 import CardsSection from "./cards-section";
 import { Button } from "@/src/ui/button";
+import Image from "next/image";
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
 interface ProfileData {
   username: string;
@@ -36,7 +48,6 @@ export default function ProfilePageClient({
 }: ProfilePageClientProps) {
   const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState("gallery");
-  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const tab = searchParams.get("tab");
@@ -46,15 +57,6 @@ export default function ProfilePageClient({
       setActiveTab("gallery");
     }
   }, [searchParams]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 200);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   const handleTabChange = useCallback((tab: string) => {
     setActiveTab(tab);
@@ -78,16 +80,59 @@ export default function ProfilePageClient({
     [imagePosts]
   );
 
+  const cards = useMemo(
+    () =>
+      convertedImagePosts.map(
+        (
+          img_post: {
+            img_id: any;
+            image_url: string | StaticImport;
+            caption:
+              | string
+              | number
+              | boolean
+              | ReactElement<any, string | JSXElementConstructor<any>>
+              | Iterable<ReactNode>
+              | ReactPortal
+              | PromiseLikeOfReactNode
+              | null
+              | undefined;
+          },
+          index: number
+        ) => ({
+          img_id: img_post.img_id,
+          index: index,
+          content: (
+            <div className="flex flex-col justify-between h-full">
+              <div className="flex-1">
+                <Image
+                  src={img_post.image_url}
+                  alt="gallery"
+                  width={100}
+                  height={100}
+                  className="object-cover w-full h-full"
+                />
+              </div>
+              <div className="flex justify-between items-center py-2">
+                <div className="text-sm font-bold">{img_post.caption}</div>
+              </div>
+            </div>
+          ),
+          className: index % 2 === 0 ? "md:col-span-2" : "col-span-1",
+          thumbnail: img_post.image_url,
+        })
+      ) || [],
+    [convertedImagePosts]
+  );
+
   const renderTabContent = useCallback(() => {
     switch (activeTab) {
       case "gallery":
         return (
           <GalleryClient
             gg_id={profileData.gg_id}
-            convertedImagePosts={convertedImagePosts}
             loggedUserProfile={isLoggedUserProfile}
-            imagePosts={imagePosts}
-            cards={convertedImagePosts}
+            cards={cards}
           />
         );
       case "projects":
@@ -103,14 +148,7 @@ export default function ProfilePageClient({
       default:
         return null;
     }
-  }, [
-    activeTab,
-    profileData.gg_id,
-    convertedImagePosts,
-    isLoggedUserProfile,
-    imagePosts,
-    experiences,
-  ]);
+  }, [activeTab, profileData.gg_id, isLoggedUserProfile, cards, experiences]);
 
   return (
     <div className="overflow-x-hidden w-full rounded-lg relative text-white">
@@ -143,7 +181,7 @@ export default function ProfilePageClient({
           ))}
         </div>
       </div>
-      <div className="mt-6">{renderTabContent()}</div>
+      <div className="mt-6 px-2 mb-10">{renderTabContent()}</div>
     </div>
   );
 }
