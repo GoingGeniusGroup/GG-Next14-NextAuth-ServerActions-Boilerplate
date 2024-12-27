@@ -52,6 +52,26 @@ export default function ProfilePageClient({
   const [activeTab, setActiveTab] = useState("gallery");
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(
+    typeof window !== "undefined" ? window.innerWidth : 1024
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    // Only add the event listener on the client side
+    if (typeof window !== "undefined") {
+      window.addEventListener("resize", handleResize);
+      // Initialize width on mount
+      setWindowWidth(window.innerWidth);
+
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }
+  }, []);
 
   useEffect(() => {
     const tab = searchParams.get("tab");
@@ -66,7 +86,8 @@ export default function ProfilePageClient({
     const handleScroll = () => {
       if (scrollContainerRef.current) {
         const scrollPosition = scrollContainerRef.current.scrollTop;
-        setIsScrolled(scrollPosition > 800);
+        const threshold = windowWidth >= 1024 ? 200 : 800;
+        setIsScrolled(scrollPosition > threshold);
       }
     };
 
@@ -75,13 +96,13 @@ export default function ProfilePageClient({
       scrollContainer.addEventListener("scroll", handleScroll);
       return () => scrollContainer.removeEventListener("scroll", handleScroll);
     }
-  }, []);
+  }, [windowWidth]);
 
   const renderTabContent = () => {
     switch (activeTab) {
       case "gallery":
         return (
-          <div className="relative w-full pt-10">
+          <div className="relative w-full">
             <GalleryClient
               gg_id={gg_id}
               convertedImagePosts={convertedImagePosts}
@@ -93,7 +114,7 @@ export default function ProfilePageClient({
         );
       case "projects":
         return (
-          <div className="relative w-full pt-10">
+          <div className="relative w-full">
             <GeniusUserProjectsV2
               userInfo={{ gg_id: gg_id }}
               LoggedUserProfile={loggedUserProfile}
@@ -141,8 +162,8 @@ export default function ProfilePageClient({
   return (
     <div
       ref={scrollContainerRef}
-      className="overflow-y-auto overflow-x-hidden w-full rounded-lg relative"
-      style={{ height: "calc(100vh - 96px)" }} // Adjust based on your layout
+      className="overflow-y-auto overflow-x-hidden w-full rounded-lg relative text-white"
+      style={{ height: "calc(100vh - 96px)" }}
     >
       <ProfileHeader
         username={username}
