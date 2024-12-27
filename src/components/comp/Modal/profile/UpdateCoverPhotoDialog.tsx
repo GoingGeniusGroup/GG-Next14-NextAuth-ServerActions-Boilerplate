@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -9,9 +9,13 @@ import {
   DialogTrigger,
 } from "@/src/ui/dialog";
 import { IconPhotoEdit } from "@tabler/icons-react";
-import { Button as MovingBorderButton } from "@/src/ui/border/moving-border";
 import UpdateCoverImageForm from "../../Forms/UpdateCoverImageForm";
-import CustomToolTip from "../../CustomComponents/CustomToolTip";
+import IconButton from "@/src/layout/base/button/icon-button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/src/ui/tooltip/tooltip";
 
 interface UpdateCoverPhotoDialogProps {
   gg_id: string;
@@ -22,19 +26,28 @@ const UpdateProfileDialog: React.FC<UpdateCoverPhotoDialogProps> = ({
   gg_id,
   currentCoverImage,
 }) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <div className="group">
-          <MovingBorderButton
-            borderRadius="1.75rem"
-            className="bg-gray-200 size-10 dark:bg-black text-black dark:text-white border-neutral-200 dark:border-slate-800  hover:text-yellow-600 transition-colors duration-300"
-          >
-            <IconPhotoEdit size={20} />
-          </MovingBorderButton>
-          <CustomToolTip content="Edit Cover Picture" />
+        <div>
+          <Tooltip>
+            <TooltipTrigger>
+              <IconButton
+                icon={
+                  <IconPhotoEdit
+                    size={20}
+                    className="text-black dark:text-white hover:text-cyan-500"
+                  />
+                }
+                label="Edit Cover Picture"
+              />
+            </TooltipTrigger>
+            <TooltipContent>
+              <span className="text-cyan-500">Edit Cover Image</span>
+            </TooltipContent>
+          </Tooltip>
         </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">

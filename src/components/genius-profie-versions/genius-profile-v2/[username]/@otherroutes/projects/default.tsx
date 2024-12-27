@@ -35,9 +35,11 @@ export default async function GeniusUserProjectDefault({
         }}
         LoggedUserProfile={LoggedUserProfile}
         items={experiences.map((exp) => ({
-          title: exp.name ?? "Untitled",
+          name: exp.name ?? "Untitled",
           description: exp.description ?? "No description available",
-          image: exp.project_pictures[0] ?? "/default-pictures/cover-image.png",
+          project_pictures:
+            exp.project_pictures[exp.project_pictures.length - 1] ??
+            "/default-pictures/cover-image.png",
           icon: <IconClipboardCopy className="h-4 w-4 text-neutral-500" />,
           type: exp.type ?? "Unknown",
           link: exp.link ?? "",

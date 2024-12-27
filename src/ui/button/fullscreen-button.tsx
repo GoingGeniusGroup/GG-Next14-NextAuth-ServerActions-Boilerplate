@@ -93,7 +93,7 @@ export default function FullscreenButton() {
       <TooltipTrigger>
         <IconButton
           onClick={toggleFullscreenOrRotate}
-          icon={<ButtonIcon className="h-4 w-4" />}
+          icon={<ButtonIcon className="h-4 w-4 dark:text-white text-black" />}
           label={buttonText}
         />
       </TooltipTrigger>

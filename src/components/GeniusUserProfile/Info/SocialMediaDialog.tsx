@@ -1,6 +1,7 @@
 "use client";
+"use cache";
 
-import React, { useEffect, useTransition } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import {
   Dialog,
   DialogContent,
@@ -10,13 +11,19 @@ import {
 } from "@/src/ui/dialog";
 import { Input } from "@/src/ui/input";
 import { Button } from "@/src/ui/button";
-import { useState } from "react";
 import Link from "next/link";
 import { getSocialsbyUserId, postSocial, deleteSocial } from "@/actions/social";
 import { socialType, social } from "@prisma/client";
 import { toast } from "sonner";
 import { SpinningButton } from "@/src/ui/spinning-button";
 import { useRouter } from "next/navigation";
+
+type SocialIconProps = {
+  icon: JSX.Element;
+  link: string | null;
+  isOwnProfile: boolean;
+  onClick?: () => void;
+};
 
 type ResponseType = {
   success: boolean;
@@ -31,6 +38,27 @@ type ResponseType = {
   };
 };
 
+const SocialIcon = ({ icon, link, isOwnProfile, onClick }: SocialIconProps) => {
+  if (!isOwnProfile && !link) return null;
+
+  return (
+    <div
+      className={`size-5 flex items-center justify-center transition-all duration-300 ${
+        !isOwnProfile
+          ? link
+            ? "text-cyan-500 hover:text-cyan-400"
+            : "text-white"
+          : link
+          ? "text-cyan-500 hover:text-cyan-400"
+          : "text-gray-500 hover:text-gray-400"
+      }`}
+      onClick={onClick}
+    >
+      {icon}
+    </div>
+  );
+};
+
 const SocialMediaDialog = ({
   social,
   ifOwnProfile,
@@ -42,19 +70,18 @@ const SocialMediaDialog = ({
 }) => {
   const [url, setUrl] = useState<string>("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const router = useRouter();
   const [socialvals, setSocialVals] = useState<
     { key: socialType; value: string; social_id?: string }[]
   >([]);
-  const [ispending, startTransition] = useTransition();
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
   const UrlValue = socialvals.find((s) => s.key === social.name)?.value || null;
   const SocialId = socialvals.find((s) => s.key === social.name)?.social_id;
 
   useEffect(() => {
-    const fetchSocials = async () => {
-      try {
-        const data = await getSocialsbyUserId(userId);
+    getSocialsbyUserId(userId)
+      .then((data) => {
         if (data) {
           const formattedSocials = data.map((socialD: social) => ({
             key: socialD.key,
@@ -63,12 +90,10 @@ const SocialMediaDialog = ({
           }));
           setSocialVals(formattedSocials);
         }
-      } catch (error) {
+      })
+      .catch((error) => {
         console.error("Error fetching socials:", error);
-      }
-    };
-
-    fetchSocials();
+      });
   }, [userId]);
 
   const handleSave = async () => {
@@ -147,23 +172,7 @@ const SocialMediaDialog = ({
     });
   };
 
-  const SocialIcon = () => (
-    <div
-      className={`size-[52px] rounded-full flex items-center justify-center transition-all duration-300 ${
-        UrlValue
-          ? "bg-gray-200 hover:bg-gray-300 border-4 border-yellow-600"
-          : "bg-gray-200 hover:bg-gray-300"
-      }`}
-    >
-      {React.cloneElement(social.icon, {
-        className: UrlValue ? "" : "grayscale",
-      })}
-    </div>
-  );
-
-  if (!ifOwnProfile && !UrlValue) {
-    return <SocialIcon />;
-  }
+  if (!ifOwnProfile && !UrlValue) return null;
 
   if (!ifOwnProfile && UrlValue) {
     const formattedUrl =
@@ -172,9 +181,14 @@ const SocialMediaDialog = ({
         : `https://${UrlValue}`;
 
     return (
-      <a href={formattedUrl} target="_blank" rel="noopener noreferrer">
-        <SocialIcon />
-      </a>
+      <Link
+        href={formattedUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-block"
+      >
+        <SocialIcon icon={social.icon} link={UrlValue} isOwnProfile={false} />
+      </Link>
     );
   }
 
@@ -182,7 +196,11 @@ const SocialMediaDialog = ({
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
         <button onClick={() => setUrl(UrlValue || "")}>
-          <SocialIcon />
+          <SocialIcon
+            icon={social.icon}
+            link={UrlValue}
+            isOwnProfile={ifOwnProfile}
+          />
         </button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
@@ -204,12 +222,12 @@ const SocialMediaDialog = ({
               <Button
                 variant="destructive"
                 onClick={handleRemove}
-                disabled={ispending}
+                disabled={isPending}
               >
                 Remove
               </Button>
             )}
-            <SpinningButton onClick={handleSave} isLoading={ispending}>
+            <SpinningButton onClick={handleSave} isLoading={isPending}>
               {UrlValue ? "Update" : "Save"}
             </SpinningButton>
           </div>

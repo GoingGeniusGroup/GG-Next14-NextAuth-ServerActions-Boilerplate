@@ -4,6 +4,7 @@ import { getImageUrls } from "@/actions/image-post";
 import { getUserByUsername } from "@/services/user";
 import { imagePostType } from "../Forms/UploadImagesGalleryForm";
 import { GalleryGrid } from "@/src/ui/grids/gallery-grid";
+import Image from "next/image";
 
 export default async function CustomGalleryComponent({
   username,
@@ -41,10 +42,20 @@ export default async function CustomGalleryComponent({
       img_id: img_post.img_id,
       index: index,
       content: (
-        <DynamicSkeleton
-          caption={img_post.caption || ""}
-          des={img_post.description || ""}
-        />
+        <div className="flex flex-col justify-between h-full">
+          <div className="flex-1">
+            <Image
+              src={img_post.image_url}
+              alt="gallery"
+              width={100}
+              height={100}
+              className="object-cover w-full h-full"
+            />
+          </div>
+          <div className="flex justify-between items-center py-2">
+            <div className="text-sm font-bold">{img_post.caption}</div>
+          </div>
+        </div>
       ),
       className: index % 2 === 0 ? "md:col-span-2" : "col-span-1",
       thumbnail: img_post.image_url,
@@ -90,20 +101,3 @@ export default async function CustomGalleryComponent({
     </>
   );
 }
-
-const DynamicSkeleton = ({
-  caption,
-  des,
-}: {
-  caption: string;
-  des: string;
-}) => {
-  return (
-    <div>
-      <p className="font-bold md:text-4xl text-xl text-white">{caption}</p>
-      <p className="font-normal text-base my-4 max-w-lg text-neutral-200">
-        {des}
-      </p>
-    </div>
-  );
-};

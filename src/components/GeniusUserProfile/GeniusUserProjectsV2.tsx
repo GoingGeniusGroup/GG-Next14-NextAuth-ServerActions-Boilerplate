@@ -10,9 +10,9 @@ import {
 
 interface ItemsProp {
   items: {
-    title: string;
+    name: string;
     description: string;
-    image: string;
+    project_pictures: string;
     icon: React.ReactNode;
     type: string;
     link: string;
@@ -31,23 +31,18 @@ export default function GeniusUserProjects({
   userInfo,
   LoggedUserProfile,
 }: ItemsProp) {
-  let [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <>
-      {LoggedUserProfile && (
-        <div className="absolute top-2 right-2 z-40">
-          <ExperienceDialog gg_id={userInfo.gg_id} />
-        </div>
-      )}
-      <BentoGridHoverV2 className="relative pb-10 h-full overflow-x-hidden overflow-y-auto z-10">
+    <div className="relative px-2">
+      <BentoGridHoverV2 className="pb-2 h-full overflow-x-hidden overflow-y-auto z-10">
         {items.map((item, idx) => (
           <BentoGridHoverItemV2
             key={idx}
-            topTitle={item.title}
+            topTitle={item.name}
             title={
               <div className="flex justify-between items-center gap-2">
-                <span>{item.title}</span>
+                <span>{item.name}</span>
                 {LoggedUserProfile && (
                   <div className="flex gap-2 items-center">
                     <ExperienceDialog
@@ -55,24 +50,24 @@ export default function GeniusUserProjects({
                       experience_id={item.experience_id}
                       defaultValues={{
                         type: item.type,
-                        name: item.title,
+                        name: item.name,
                         description: item.description,
                         tools: item.tools,
                         project_skills: item.project_skills,
-                        project_pictures: [item.image],
+                        project_pictures: [item.project_pictures],
                         link: item.link,
                       }}
                     />
                     <DeleteExperienceDialog
                       experienceId={item.experience_id}
-                      experienceName={item.title}
+                      experienceName={item.name}
                     />
                   </div>
                 )}
               </div>
             }
             description={item.description}
-            header={item.image}
+            header={item.project_pictures[item.project_pictures.length - 1]}
             skills={item.project_skills}
             tools={item.tools}
             link={item.link}
@@ -83,6 +78,6 @@ export default function GeniusUserProjects({
           />
         ))}
       </BentoGridHoverV2>
-    </>
+    </div>
   );
 }

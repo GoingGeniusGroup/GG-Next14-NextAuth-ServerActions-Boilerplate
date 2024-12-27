@@ -10,8 +10,11 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/src/ui/tooltip/tooltip";
+import { usePathname } from "next/navigation";
 
 const SongListToggleClient = ({ songs }: { songs: Song[] }) => {
+  const pathname = usePathname();
+
   const [showSongList, setShowSongList] = useState<boolean>(false);
 
   // Toggle song list visibility
@@ -19,7 +22,7 @@ const SongListToggleClient = ({ songs }: { songs: Song[] }) => {
     setShowSongList(!showSongList);
   };
   return (
-    <div>
+    <div className={`${pathname == "/" ? "" : "hidden"}`}>
       <Tooltip>
         <TooltipTrigger>
           <IconButton

@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { removeImage } from "@/actions/image-post";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Button } from "../button/button";
-import { IconTrash, IconX } from "@tabler/icons-react";
+import { Button } from "@/src/ui/button";
+import { IconTrash, IconX, IconZoomIn, IconZoomOut } from "@tabler/icons-react";
 import {
   Dialog,
   DialogContent,
@@ -16,6 +16,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/src/ui/dialog";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/src/ui/tooltip/tooltip";
 
 type Card = {
   img_id?: string;
@@ -35,6 +40,7 @@ export const GalleryGrid = ({
   loggedUserProfile: boolean;
 }) => {
   const [selectedImage, setSelectedImage] = useState<Card | null>(null);
+  const [isZoomed, setIsZoomed] = useState(false);
   const router = useRouter();
   const [isDeleting, setIsDeleting] = useState(false);
   const [deleteConfirmation, setDeleteConfirmation] = useState<{
@@ -57,8 +63,18 @@ export const GalleryGrid = ({
     }
   };
 
+  const handleImageClick = useCallback((card: Card) => {
+    setSelectedImage(card);
+    setIsZoomed(false);
+  }, []);
+
+  const toggleZoom = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsZoomed((prev) => !prev);
+  }, []);
+
   return (
-    <div className="container px-0">
+    <div className="px-2">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {cards.map((card) => (
           <motion.div
@@ -66,7 +82,7 @@ export const GalleryGrid = ({
             className="relative aspect-square overflow-hidden rounded-lg shadow-lg cursor-pointer bg-gray-100 dark:bg-gray-800"
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.2 }}
-            onClick={() => setSelectedImage(card)}
+            onClick={() => handleImageClick(card)}
           >
             <Image
               src={card.thumbnail}
@@ -87,18 +103,27 @@ export const GalleryGrid = ({
                 )}
               </div>
               {loggedUserProfile && (
-                <Button
-                  variant="destructive"
-                  className="absolute top-2 right-2 p-2 bg-red-500/80 hover:bg-red-600/80"
-                  size="icon"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setDeleteConfirmation({ card, isOpen: true });
-                  }}
-                >
-                  <IconTrash size={18} />
-                  <span className="sr-only">Delete image</span>
-                </Button>
+                <div className="absolute top-2 right-2">
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Button
+                        variant="ghost"
+                        className=" p-2 bg-red-500/80 hover:bg-red-600/80"
+                        size="icon"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setDeleteConfirmation({ card, isOpen: true });
+                        }}
+                      >
+                        <IconTrash size={18} />
+                        <span className="sr-only">Delete image</span>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <span className="text-red-500">Delete Image</span>
+                    </TooltipContent>
+                  </Tooltip>
+                </div>
               )}
             </div>
           </motion.div>
@@ -119,21 +144,27 @@ export const GalleryGrid = ({
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="relative w-full max-w-5xl bg-white dark:bg-gray-900 rounded-xl shadow-2xl overflow-hidden"
+              className={`relative w-full ${
+                isZoomed ? "max-w-full h-full" : "max-w-4xl max-h-[90vh]"
+              } bg-white dark:bg-gray-900 rounded-xl shadow-2xl overflow-hidden`}
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="relative aspect-[16/9] w-full bg-gray-100 dark:bg-gray-800">
+              <div
+                className={`relative ${
+                  isZoomed ? "w-full h-full" : "aspect-[16/9]"
+                } bg-gray-100 dark:bg-gray-800`}
+              >
                 <Image
                   src={selectedImage.thumbnail}
                   alt={`Full size image ${selectedImage.index}`}
                   fill
-                  className="object-contain"
+                  className={`${isZoomed ? "object-contain" : "object-cover"}`}
                   sizes="(max-width: 1920px) 90vw, 1400px"
                   priority
                   quality={90}
                 />
               </div>
-              <div className="p-6 bg-white dark:bg-gray-900 border-t dark:border-gray-800">
+              <div className="absolute bottom-0 left-0 right-0 p-6 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-t dark:border-gray-800">
                 {typeof selectedImage.content === "string" ? (
                   <p className="text-gray-700 dark:text-gray-200">
                     {selectedImage.content}
@@ -148,6 +179,17 @@ export const GalleryGrid = ({
                 aria-label="Close image preview"
               >
                 <IconX size={20} className="text-white" />
+              </button>
+              <button
+                className="absolute top-4 right-16 p-2 backdrop-blur-sm bg-black/20 hover:bg-black/30 dark:bg-white/20 dark:hover:bg-white/30 rounded-full transition-colors"
+                onClick={toggleZoom}
+                aria-label={isZoomed ? "Zoom out" : "Zoom in"}
+              >
+                {isZoomed ? (
+                  <IconZoomOut size={20} className="text-white" />
+                ) : (
+                  <IconZoomIn size={20} className="text-white" />
+                )}
               </button>
             </motion.div>
           </motion.div>

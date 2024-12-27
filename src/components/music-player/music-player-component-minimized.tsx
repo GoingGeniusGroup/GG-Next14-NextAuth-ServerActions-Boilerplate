@@ -17,6 +17,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/src/ui/tooltip/tooltip";
+import { usePathname } from "next/navigation";
 
 const MusicPlayerMinimized: React.FC = () => {
   const {
@@ -34,6 +35,8 @@ const MusicPlayerMinimized: React.FC = () => {
     seekTo,
     toggleRepeat,
   } = useMusicPlayer();
+
+  const pathname = usePathname();
 
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
@@ -54,8 +57,11 @@ const MusicPlayerMinimized: React.FC = () => {
   if (!currentSong) return null;
 
   return (
-    // <div className="fixed bottom-0 left-0 w-full bg-white/10 rounded-lg dark:bg-black/20 backdrop-blur-lg border-t border-white/10 p-1">
-    <div className="w-full bg-white/10 rounded-lg dark:bg-black/20 backdrop-blur-lg border-t border-white/10 p-1">
+    <div
+      className={`w-full bg-white/10 rounded-lg dark:bg-black/20 backdrop-blur-lg border-t border-white/10 p-1 ${
+        pathname == "/" ? "" : "hidden"
+      }`}
+    >
       <div className="max-w-4xl mx-auto flex flex-col items-center space-y-1">
         {/* Progress Bar */}
         <input

@@ -2,7 +2,7 @@ import { db } from "@/lib/db";
 import { Prisma } from "@prisma/client";
 
 export const getUserByEmail = async (email: string) => {
-  'use cache'
+  "use cache";
   try {
     const user = await db.user.findUnique({
       where: { email },
@@ -15,7 +15,7 @@ export const getUserByEmail = async (email: string) => {
 };
 
 export const getUserByPhone = async (phone: string) => {
-  'use cache'
+  "use cache";
   try {
     const user = await db.user.findUnique({
       where: { phone_number: phone },
@@ -31,7 +31,7 @@ export const getUserByPhone = async (phone: string) => {
 };
 
 export const getUserByUsername = async (username: string) => {
-  'use cache'
+  "use cache";
   try {
     const user = await db.user.findUnique({
       where: { username },
@@ -47,9 +47,14 @@ export const getUserByUsername = async (username: string) => {
 };
 
 export const getUserById = async (gg_id: string) => {
-  'use cache'
+  "use cache";
   try {
-    const user = await db.user.findUnique({ where: { gg_id } });
+    const user = await db.user.findUnique({
+      where: { gg_id },
+      include: {
+        avatar: true,
+      },
+    });
     return user;
   } catch (error) {
     console.error("Error in getUserById:", error);
