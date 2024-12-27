@@ -24,14 +24,7 @@ export default function GeniusProfileLayout({
 
   return (
     <PublicAvatarProvider username={username}>
-      <div className="relative size-full">
-        <div
-          className="px-4 pb-4 h-full relative overflow-hidden scroll-container"
-          style={{ scrollBehavior: "smooth" }}
-        >
-          {children}
-        </div>
-      </div>
+      <div className="relative size-full rounded-lg">{children}</div>
     </PublicAvatarProvider>
   );
 }

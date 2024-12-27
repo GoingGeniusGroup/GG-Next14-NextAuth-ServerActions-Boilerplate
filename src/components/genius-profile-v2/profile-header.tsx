@@ -1,12 +1,20 @@
 "use client";
 
 import { useEffect } from "react";
-import { Button } from "@/src/ui/button";
-import { Facebook, Twitch, Twitter, Youtube, Instagram } from "lucide-react";
-import Link from "next/link";
-import Image from "next/image";
-import { Avatar, AvatarFallback, AvatarImage } from "@/src/ui/avatar";
 import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Facebook,
+  Twitch,
+  Twitter,
+  Youtube,
+  Instagram,
+  Gamepad2,
+} from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/src/ui/avatar";
+import { Button } from "@/src/ui/button";
+import { Progress } from "@/src/ui/progress";
 import AvatarManagerClientProfile from "../comp/AvatarManager/avatar-manager-client-profile";
 import PublicAvatarManagerClientProfile from "../comp/AvatarManager/public-avatar-manager-client-profile";
 
@@ -20,9 +28,12 @@ interface ProfileHeaderProps {
   profilePic: string;
   coverPic: string;
   loggedUserProfile: boolean;
+  renderTabContent: () => JSX.Element | null;
+  xp: number;
+  level: number;
+  isScrolled: boolean;
 }
 
-// Helper function to calculate age
 const calculateAge = (dob: string) => {
   const birthDate = new Date(dob);
   const today = new Date();
@@ -37,6 +48,11 @@ const calculateAge = (dob: string) => {
   return age;
 };
 
+const calculateXpProgress = (xp: number) => {
+  const xpPerLevel = 1000;
+  return ((xp % xpPerLevel) / xpPerLevel) * 100;
+};
+
 export default function ProfileHeader({
   username,
   fullName,
@@ -47,15 +63,16 @@ export default function ProfileHeader({
   profilePic,
   coverPic,
   loggedUserProfile,
+  renderTabContent,
+  xp,
+  level,
+  isScrolled,
 }: ProfileHeaderProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const age = calculateAge(dob);
-
-  // Get the current tab from query parameter or default to gallery
   const currentTab = searchParams.get("tab") || "gallery";
 
-  // Handle tab changes with URL updates
   const handleTabChange = (tab: string) => {
     if (tab === "gallery") {
       router.push(`/genius-profile/${username}`);
@@ -65,111 +82,174 @@ export default function ProfileHeader({
     onTabChange(tab);
   };
 
-  // Set initial tab on component mount
   useEffect(() => {
     onTabChange(currentTab);
   }, [currentTab, onTabChange]);
 
   return (
-    <div className="relative w-full h-full rounded-xl overflow-hidden">
-      {/* Background Image with Gradient Overlay */}
-      <div className="absolute inset-0 w-full h-full">
-        <Image
-          src={coverPic}
-          alt="Cover background"
-          fill
-          className="object-cover"
-          loading="eager"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80" />
-      </div>
-
-      {/* Content */}
-      <div className="relative container mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center text-white">
-        <div className="space-y-6">
-          <div>
-            <h3 className="text-xl font-semibold text-amber-500 uppercase">
-              {age} YEARS OLD
-            </h3>
-            <div className="flex gap-2 items-center">
-              <Avatar>
-                <AvatarImage src={profilePic} alt="profile picture" />
-                <AvatarFallback>{age}</AvatarFallback>
-              </Avatar>
-              <h1 className="text-6xl font-bold tracking-tighter">
-                {fullName}
-              </h1>
+    <>
+      {/* Sticky Header */}
+      <AnimatePresence>
+        {isScrolled && (
+          <motion.div
+            initial={{ y: -100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -100, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="sticky top-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur-sm border-b border-gray-800"
+          >
+            <div className="container mx-auto px-4 py-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <Avatar className="w-10 h-10 border-2 border-cyan-500">
+                    <AvatarImage src={profilePic} alt={fullName} />
+                    <AvatarFallback>{fullName.charAt(0)}</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <h2 className="text-lg font-semibold text-cyan-500">
+                      {fullName}
+                    </h2>
+                    <p className="text-sm text-gray-400">@{username}</p>
+                  </div>
+                </div>
+                {/* Social Links */}
+                <div className="flex gap-3">
+                  {[Twitter, Youtube, Instagram, Facebook, Twitch].map(
+                    (Icon, index) => (
+                      <Link
+                        key={index}
+                        href="#"
+                        className="text-gray-400 hover:text-cyan-500 transition-colors"
+                      >
+                        <Icon className="h-5 w-5" />
+                      </Link>
+                    )
+                  )}
+                </div>
+              </div>
             </div>
-            <p className="text-xl text-muted-foreground mt-2">@{username}</p>
-          </div>
-          <p className="text-lg leading-relaxed max-w-xl">{bio}</p>
-          <div className="flex gap-4">
-            <Button
-              onClick={() => handleTabChange("gallery")}
-              variant={currentTab === "gallery" ? "default" : "secondary"}
-              className={currentTab === "gallery" ? "ring-2 ring-primary" : ""}
-            >
-              Gallery
-            </Button>
-            <Button
-              onClick={() => handleTabChange("projects")}
-              variant={currentTab === "projects" ? "default" : "secondary"}
-              className={currentTab === "projects" ? "ring-2 ring-primary" : ""}
-            >
-              Projects
-            </Button>
-            <Button
-              onClick={() => handleTabChange("cards")}
-              variant={currentTab === "cards" ? "default" : "secondary"}
-              className={currentTab === "cards" ? "ring-2 ring-primary" : ""}
-            >
-              Profile Cards
-            </Button>
-          </div>
-        </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-        <div className="relative flex justify-center">
-          <div className="w-full h-[300px] md:h-[400px] lg:h-[510px]">
-            {loggedUserProfile ? (
-              <>
+      {/* Main Content */}
+      <div className="relative px-4 text-white">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+          {/* Left column */}
+          <motion.div
+            animate={{ opacity: isScrolled ? 0 : 1 }}
+            className="lg:sticky lg:top-0 lg:col-span-1 space-y-6"
+          >
+            <div className="relative w-full h-[400px] rounded-lg overflow-hidden border-4 border-cyan-500 shadow-lg shadow-cyan-500/50">
+              <div
+                className="absolute inset-0"
+                style={{
+                  backgroundImage: `url(${coverPic})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+              >
+                <div className="absolute inset-0 bg-black/25" />
+              </div>
+              {loggedUserProfile ? (
                 <AvatarManagerClientProfile
                   fov={40}
                   cameraInitialDistance={5}
                   cameraTarget={0}
                   avatarUrl={avatarUrl}
                 />
-              </>
-            ) : (
-              <>
+              ) : (
                 <PublicAvatarManagerClientProfile
                   fov={40}
                   cameraInitialDistance={5}
                   cameraTarget={0}
                   avatarUrl={avatarUrl}
                 />
-              </>
-            )}
+              )}
+            </div>
+            <div className="bg-gray-900 rounded-lg p-4 space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <Gamepad2 className="text-cyan-500" />
+                  <span className="text-lg font-semibold">Level {level}</span>
+                </div>
+                <span className="text-sm text-gray-400">{xp} XP</span>
+              </div>
+              <Progress
+                value={calculateXpProgress(xp)}
+                className="h-2 bg-gray-700"
+              />
+            </div>
+          </motion.div>
+
+          {/* Right column */}
+          <div className="lg:col-span-2 space-y-6">
+            <motion.div
+              animate={{ opacity: isScrolled ? 0 : 1 }}
+              className="space-y-4"
+            >
+              <div className="flex items-center space-x-4">
+                <Avatar className="w-20 h-20 border-4 border-cyan-500">
+                  <AvatarImage src={profilePic} alt={fullName} />
+                  <AvatarFallback>{fullName.charAt(0)}</AvatarFallback>
+                </Avatar>
+                <div>
+                  <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text">
+                    {fullName}
+                  </h1>
+                  <p className="text-xl text-gray-400">@{username}</p>
+                </div>
+              </div>
+              <div>
+                <p className="text-lg leading-relaxed max-w-2xl">{bio}</p>
+                <div className="flex items-center space-x-2 text-gray-400">
+                  <span className="text-cyan-500">{age} years old</span>
+                  <span>•</span>
+                  <span>Joined 2023</span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Tab Navigation */}
+            <div className="sticky top-16 z-40 bg-gray-900/95 backdrop-blur-sm py-4 -mx-4 px-4">
+              <div className="flex flex-wrap gap-4">
+                {["gallery", "projects", "cards"].map((tab) => (
+                  <Button
+                    key={tab}
+                    onClick={() => handleTabChange(tab)}
+                    variant={currentTab === tab ? "default" : "secondary"}
+                    className={`${
+                      currentTab === tab
+                        ? "bg-cyan-500 hover:bg-cyan-600 text-black"
+                        : "bg-gray-800 hover:bg-gray-700"
+                    } transition-all duration-300 ease-in-out transform hover:scale-105`}
+                  >
+                    {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                  </Button>
+                ))}
+              </div>
+            </div>
+
+            {/* Tab Content */}
+            <div className="relative z-30">{renderTabContent()}</div>
           </div>
         </div>
+
+        {/* Social Links */}
         <div className="absolute top-2 right-2 flex gap-3">
-          <Link href="#" className="text-muted-foreground hover:text-primary">
-            <Twitter className="h-5 w-5" />
-          </Link>
-          <Link href="#" className="text-muted-foreground hover:text-primary">
-            <Youtube className="h-5 w-5" />
-          </Link>
-          <Link href="#" className="text-muted-foreground hover:text-primary">
-            <Instagram className="h-5 w-5" />
-          </Link>
-          <Link href="#" className="text-muted-foreground hover:text-primary">
-            <Facebook className="h-5 w-5" />
-          </Link>
-          <Link href="#" className="text-muted-foreground hover:text-primary">
-            <Twitch className="h-5 w-5" />
-          </Link>
+          {[Twitter, Youtube, Instagram, Facebook, Twitch].map(
+            (Icon, index) => (
+              <Link
+                key={index}
+                href="#"
+                className="text-gray-400 hover:text-cyan-500 transition-colors"
+              >
+                <Icon className="h-5 w-5" />
+              </Link>
+            )
+          )}
         </div>
       </div>
-    </div>
+    </>
   );
 }

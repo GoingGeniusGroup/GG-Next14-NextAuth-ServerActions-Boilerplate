@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import ProfileHeader from "./profile-header";
 import { Card, CardContent } from "@/src/ui/card";
@@ -50,8 +50,9 @@ export default function ProfilePageClient({
 }) {
   const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState("gallery");
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  // Set initial tab based on URL query parameter
   useEffect(() => {
     const tab = searchParams.get("tab");
     if (tab && ["gallery", "projects", "cards"].includes(tab)) {
@@ -60,6 +61,21 @@ export default function ProfilePageClient({
       setActiveTab("gallery");
     }
   }, [searchParams]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (scrollContainerRef.current) {
+        const scrollPosition = scrollContainerRef.current.scrollTop;
+        setIsScrolled(scrollPosition > 800);
+      }
+    };
+
+    const scrollContainer = scrollContainerRef.current;
+    if (scrollContainer) {
+      scrollContainer.addEventListener("scroll", handleScroll);
+      return () => scrollContainer.removeEventListener("scroll", handleScroll);
+    }
+  }, []);
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -79,36 +95,23 @@ export default function ProfilePageClient({
         return (
           <div className="relative w-full pt-10">
             <GeniusUserProjectsV2
-              userInfo={{
-                gg_id: gg_id,
-              }}
+              userInfo={{ gg_id: gg_id }}
               LoggedUserProfile={loggedUserProfile}
-              items={experiences.map(
-                (exp: {
-                  name: string;
-                  description: string;
-                  project_pictures: string[];
-                  type: string;
-                  link: string;
-                  tools: string[];
-                  project_skills: string[];
-                  experience_id: string;
-                }) => ({
-                  title: exp.name ?? "Untitled",
-                  description: exp.description ?? "No description available",
-                  image:
-                    exp.project_pictures[0] ??
-                    "/default-pictures/cover-image.png",
-                  icon: (
-                    <IconClipboardCopy className="h-4 w-4 text-neutral-500" />
-                  ),
-                  type: exp.type ?? "Unknown",
-                  link: exp.link ?? "",
-                  tools: exp.tools,
-                  project_skills: exp.project_skills ?? [],
-                  experience_id: exp.experience_id,
-                })
-              )}
+              items={experiences.map((exp: any) => ({
+                title: exp.name ?? "Untitled",
+                description: exp.description ?? "No description available",
+                image:
+                  exp.project_pictures[0] ??
+                  "/default-pictures/cover-image.png",
+                icon: (
+                  <IconClipboardCopy className="h-4 w-4 text-neutral-500" />
+                ),
+                type: exp.type ?? "Unknown",
+                link: exp.link ?? "",
+                tools: exp.tools,
+                project_skills: exp.project_skills ?? [],
+                experience_id: exp.experience_id,
+              }))}
             />
           </div>
         );
@@ -136,7 +139,11 @@ export default function ProfilePageClient({
   };
 
   return (
-    <main className="overflow-y-auto overflow-x-hidden h-full">
+    <div
+      ref={scrollContainerRef}
+      className="overflow-y-auto overflow-x-hidden w-full rounded-lg relative"
+      style={{ height: "calc(100vh - 96px)" }} // Adjust based on your layout
+    >
       <ProfileHeader
         username={username}
         fullName={fullName}
@@ -147,8 +154,11 @@ export default function ProfilePageClient({
         avatarUrl={avatarUrl}
         onTabChange={setActiveTab}
         loggedUserProfile={loggedUserProfile}
+        renderTabContent={renderTabContent}
+        xp={5000}
+        level={10}
+        isScrolled={isScrolled}
       />
-      <div className="container mx-auto pb-8">{renderTabContent()}</div>
-    </main>
+    </div>
   );
 }
