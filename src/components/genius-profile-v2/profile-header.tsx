@@ -25,9 +25,13 @@ import ExpressionCard from "../comp/Huds/ExpressionsCard";
 import ExpressionBottomMidHud from "../comp/Huds/ExpressionBottomMidHud";
 import AchievementSlider from "../comp/console/achievement-slider";
 import { Dialog, DialogContent, DialogTrigger } from "@/src/ui/dialog";
-import { Button } from "@/src/ui/button";
+import { Button } from "@/src/ui/button/button";
 import { AvatarCreator } from "../comp/AvatarComponents/avatar_creator";
 import IconButton from "@/src/layout/base/button/icon-button";
+import { IconTrash } from "@tabler/icons-react";
+import { Carousel, CarouselContent, CarouselItem } from "@/src/ui/carousel";
+import { Card, CardContent } from "@/src/ui/card";
+import Image from "next/image";
 
 interface ProfileHeaderProps {
   username: string;
@@ -198,7 +202,7 @@ const ProfileHeader = ({
                 fov={40}
                 cameraInitialDistance={5}
                 cameraTarget={0}
-                avatarUrl={avatarUrl}
+                avatarUrl={!isLoggedUserProfile ? avatarUrl : selectedAvatar}
               />
 
               {!isLoggedUserProfile ? (
@@ -208,7 +212,11 @@ const ProfileHeader = ({
                       fov={40}
                       cameraInitialDistance={5}
                       cameraTarget={0}
-                      avatarUrl={loggedUserAvatarUrl}
+                      avatarUrl={
+                        // !isLoggedUserProfile
+                        //   ? loggedUserAvatarUrl
+                        selectedAvatar
+                      }
                     />
                   </div>
                 </div>
@@ -310,10 +318,84 @@ const ProfileHeader = ({
                 age={age}
               />
             </div>
-            <div className="grid grid-cols-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               <div className="relative flex border p-2 mt-4 rounded-xl overflow-auto backdrop-blur-md border-black/10 dark:border-white/10 dark:hover:border-[#FCBB3F]/60 hover:border-sky-500/60 transition-all duration-200 ease-in-out">
                 <AchievementSlider />
               </div>
+              {isLoggedUserProfile && (
+                <div className="w-full relative mt-4 h-fit backdrop-blur-lg rounded-lg border dark:border-white/20 border-black/20 hover:border-yellow-500 transition-all duration-300 ease-in-out">
+                  <Carousel className="w-full">
+                    <CarouselContent className="-ml-1">
+                      {avatars.map((avatar, index) => (
+                        <CarouselItem key={index} className="pl-1 basis-1/3">
+                          <div className="p-2">
+                            <Card
+                              key={avatar.avatar_id}
+                              className={`border h-fit rounded-lg  transition-all duration-300 ease-in-out ${
+                                selectedAvatar === avatar.avatar_url
+                                  ? "border-sky-500"
+                                  : "border-black/20 dark:border-white/20 hover:border-black dark:hover:border-white"
+                              }`}
+                            >
+                              <CardContent className="relative pt-6 pb-1">
+                                <div className="flex flex-col items-center space-y-1 w-full">
+                                  <Image
+                                    src={
+                                      avatar.avatar_url?.replace(
+                                        ".glb",
+                                        ".png"
+                                      ) || "/placeholder-avatar.png"
+                                    }
+                                    alt="Avatar"
+                                    width={128}
+                                    height={128}
+                                    className="rounded-full"
+                                  />
+                                  <Button
+                                    variant="black"
+                                    className={`hover:text-yellow-500 w-full h-5 font-light text-xs ${
+                                      selectedAvatar === avatar.avatar_url
+                                        ? "text-sky-500"
+                                        : ""
+                                    }`}
+                                    onClick={() =>
+                                      setSelectedAvatar(avatar.avatar_url)
+                                    }
+                                  >
+                                    {selectedAvatar === avatar.avatar_url
+                                      ? "Selected"
+                                      : "Select"}
+                                  </Button>
+                                </div>
+                                <div className="absolute top-1 flex gap-1 right-1">
+                                  {/* <Button
+                                variant="transparent_rounded"
+                                className="hover:text-yellow-500 hover:bg-transparent text-sky-600 p-[1px]"
+                                size="mini2"
+                                onClick={() => handleEditAvatar(avatar)}
+                              >
+                                <IconEdit size={12} />
+                              </Button> */}
+                                  <Button
+                                    variant="transparent_rounded"
+                                    className="hover:text-yellow-500 hover:bg-transparent text-red-600 p-[1px]"
+                                    size="mini2"
+                                    onClick={() =>
+                                      handleDeleteAvatar(avatar.avatar_id)
+                                    }
+                                  >
+                                    <IconTrash size={12} />
+                                  </Button>
+                                </div>
+                              </CardContent>
+                            </Card>
+                          </div>
+                        </CarouselItem>
+                      ))}
+                    </CarouselContent>
+                  </Carousel>
+                </div>
+              )}
             </div>
           </div>
         </div>
