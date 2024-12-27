@@ -16,6 +16,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/src/ui/dialog";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/src/ui/tooltip/tooltip";
 
 type Card = {
   img_id?: string;
@@ -98,18 +103,27 @@ export const GalleryGrid = ({
                 )}
               </div>
               {loggedUserProfile && (
-                <Button
-                  variant="destructive"
-                  className="absolute top-2 right-2 p-2 bg-red-500/80 hover:bg-red-600/80"
-                  size="icon"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setDeleteConfirmation({ card, isOpen: true });
-                  }}
-                >
-                  <IconTrash size={18} />
-                  <span className="sr-only">Delete image</span>
-                </Button>
+                <div className="absolute top-2 right-2">
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Button
+                        variant="ghost"
+                        className=" p-2 bg-red-500/80 hover:bg-red-600/80"
+                        size="icon"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setDeleteConfirmation({ card, isOpen: true });
+                        }}
+                      >
+                        <IconTrash size={18} />
+                        <span className="sr-only">Delete image</span>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <span className="text-red-500">Delete Image</span>
+                    </TooltipContent>
+                  </Tooltip>
+                </div>
               )}
             </div>
           </motion.div>

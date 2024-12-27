@@ -17,6 +17,11 @@ import { Button } from "@/src/ui/button/button";
 import { deleteUserExperience } from "@/actions/genius-profile/experience";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/src/ui/tooltip/tooltip";
 
 interface DeleteExperienceDialogProps {
   experienceId: string;
@@ -54,14 +59,21 @@ export const DeleteExperienceDialog: React.FC<DeleteExperienceDialogProps> = ({
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger asChild onClick={() => setIsOpen(true)}>
-        <Button
-          variant="ghost"
-          size="mini"
-          className="hover:bg-white/10 hover:text-red-500"
-          type="button"
-        >
-          <IconTrash className="h-4 w-4" />
-        </Button>
+        <Tooltip>
+          <TooltipTrigger>
+            <Button
+              variant="ghost"
+              size="mini"
+              className="hover:bg-white/10 hover:text-red-500"
+              type="button"
+            >
+              <IconTrash className="h-4 w-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <span className="text-red-500">Delete Project</span>
+          </TooltipContent>
+        </Tooltip>
       </AlertDialogTrigger>
       <AlertDialogContent
         className="sm:max-w-[425px]"

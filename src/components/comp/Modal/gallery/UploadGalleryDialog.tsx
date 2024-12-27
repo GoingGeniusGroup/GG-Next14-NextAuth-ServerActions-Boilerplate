@@ -15,6 +15,11 @@ import UploadImagesGalleryForm, {
   imagePostType,
 } from "../../Forms/UploadImagesGalleryForm";
 import { IconPhotoAi } from "@tabler/icons-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/src/ui/tooltip/tooltip";
 
 interface UploadGalleryDialogProps {
   gg_id: string;
@@ -30,12 +35,19 @@ const UploadGalleryDialog: React.FC<UploadGalleryDialogProps> = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <MovingBorderButton
-          borderRadius="1.75rem"
-          className="bg-white size-10 dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800"
-        >
-          <IconPhotoAi size={20} />
-        </MovingBorderButton>
+        <Tooltip>
+          <TooltipTrigger>
+            <MovingBorderButton
+              borderRadius="1.75rem"
+              className="bg-white size-10 dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800"
+            >
+              <IconPhotoAi size={20} />
+            </MovingBorderButton>
+          </TooltipTrigger>
+          <TooltipContent>
+            <span className="text-green-500">Add Images In Galley</span>
+          </TooltipContent>
+        </Tooltip>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-md">
