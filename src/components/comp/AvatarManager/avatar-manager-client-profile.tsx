@@ -9,10 +9,12 @@ export default function AvatarManagerClientProfile({
   fov,
   cameraInitialDistance,
   cameraTarget,
+  avatarUrl,
 }: {
   fov: number;
   cameraInitialDistance: number;
   cameraTarget: number;
+  avatarUrl?: string;
 }) {
   "use cache";
   const { selectedAvatar, currentEmote } = useAvatar();
@@ -22,8 +24,12 @@ export default function AvatarManagerClientProfile({
       <Suspense fallback={<AvatarSkeleton />}>
         <Avatar
           key="avatar private"
+          // modelSrc={
+          //   selectedAvatar ||
+          //   "https://models.readyplayer.me/658be9e8fc8bec93d06806f3.glb?morphTargets=ARKit,Eyes Extra&textureAtlas=none&lod=0"
+          // }
           modelSrc={
-            selectedAvatar ||
+            avatarUrl ||
             "https://models.readyplayer.me/658be9e8fc8bec93d06806f3.glb?morphTargets=ARKit,Eyes Extra&textureAtlas=none&lod=0"
           }
           shadows={false}

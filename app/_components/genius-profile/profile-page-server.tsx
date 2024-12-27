@@ -39,8 +39,10 @@ export default async function ProfilePageServer({
     : profileOwner.gg_id || "No gg_id provided";
 
   const avatarUrl = LoggedUserProfile
-    ? currentUser.image || "/placeholder.svg?height=400&width=400"
-    : profileOwner.image || "/placeholder.svg?height=400&width=400";
+    ? currentUser?.avatar?.[0]?.avatar_url ||
+      "https://models.readyplayer.me/658be9e8fc8bec93d06806f3.glb?morphTargets=ARKit,Eyes Extra&textureAtlas=none&lod=0"
+    : profileOwner?.avatar?.[0]?.avatar_url ||
+      "https://models.readyplayer.me/66fbd22e36a151e549ea8397.glb?morphTargets=ARKit,Eyes Extra&textureAtlas=none&lod=0";
 
   // Get images based on whose profile we're viewing
   const imagePosts = await getImageUrls(

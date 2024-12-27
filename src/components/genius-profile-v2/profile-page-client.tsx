@@ -146,6 +146,7 @@ export default function ProfilePageClient({
         coverPic={coverPic}
         avatarUrl={avatarUrl}
         onTabChange={setActiveTab}
+        loggedUserProfile={loggedUserProfile}
       />
       <div className="container mx-auto pb-8">{renderTabContent()}</div>
     </main>

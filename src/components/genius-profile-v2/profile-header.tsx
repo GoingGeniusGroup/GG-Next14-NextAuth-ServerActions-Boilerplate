@@ -1,12 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Button } from "@/src/ui/button";
 import { Facebook, Twitch, Twitter, Youtube, Instagram } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/src/ui/avatar";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import AvatarManagerClientProfile from "../comp/AvatarManager/avatar-manager-client-profile";
+import PublicAvatarManagerClientProfile from "../comp/AvatarManager/public-avatar-manager-client-profile";
 
 interface ProfileHeaderProps {
   username: string;
@@ -17,6 +19,7 @@ interface ProfileHeaderProps {
   onTabChange: (tab: string) => void;
   profilePic: string;
   coverPic: string;
+  loggedUserProfile: boolean;
 }
 
 // Helper function to calculate age
@@ -43,9 +46,9 @@ export default function ProfileHeader({
   onTabChange,
   profilePic,
   coverPic,
+  loggedUserProfile,
 }: ProfileHeaderProps) {
   const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
   const age = calculateAge(dob);
 
@@ -76,13 +79,14 @@ export default function ProfileHeader({
           alt="Cover background"
           fill
           className="object-cover"
+          loading="eager"
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80" />
       </div>
 
       {/* Content */}
-      <div className="relative container mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      <div className="relative container mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center text-white">
         <div className="space-y-6">
           <div>
             <h3 className="text-xl font-semibold text-amber-500 uppercase">
@@ -126,14 +130,26 @@ export default function ProfileHeader({
         </div>
 
         <div className="relative flex justify-center">
-          <div className="relative w-96 h-96">
-            <Image
-              src={avatarUrl}
-              alt="Profile Avatar"
-              fill
-              className="object-contain"
-              priority
-            />
+          <div className="w-full h-[300px] md:h-[400px] lg:h-[510px]">
+            {loggedUserProfile ? (
+              <>
+                <AvatarManagerClientProfile
+                  fov={40}
+                  cameraInitialDistance={5}
+                  cameraTarget={0}
+                  avatarUrl={avatarUrl}
+                />
+              </>
+            ) : (
+              <>
+                <PublicAvatarManagerClientProfile
+                  fov={40}
+                  cameraInitialDistance={5}
+                  cameraTarget={0}
+                  avatarUrl={avatarUrl}
+                />
+              </>
+            )}
           </div>
         </div>
         <div className="absolute top-2 right-2 flex gap-3">

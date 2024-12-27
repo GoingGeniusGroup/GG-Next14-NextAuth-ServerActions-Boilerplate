@@ -10,11 +10,13 @@ export default function PublicAvatarManagerClientProfile({
   cameraInitialDistance,
   cameraTarget,
   user,
+  avatarUrl,
 }: {
   fov: number;
   cameraInitialDistance: number;
   cameraTarget: number;
-  user: any;
+  user?: any;
+  avatarUrl?: string;
 }) {
   "use cache";
   const { currentPublicEmote } = usePublicAvatar();
@@ -25,10 +27,14 @@ export default function PublicAvatarManagerClientProfile({
         <Avatar
           key="avatar publicx"
           modelSrc={
-            user?.avatar && user.avatar.length > 0 && user.avatar[0]?.avatar_url
-              ? user.avatar[0].avatar_url
-              : "https://models.readyplayer.me/66fbd22e36a151e549ea8397.glb?morphTargets=ARKit,Eyes Extra&textureAtlas=none&lod=0"
+            avatarUrl ||
+            "https://models.readyplayer.me/66fbd22e36a151e549ea8397.glb?morphTargets=ARKit,Eyes Extra&textureAtlas=none&lod=0"
           }
+          // modelSrc={
+          //   user?.avatar && user.avatar.length > 0 && user.avatar[0]?.avatar_url
+          //     ? user.avatar[0].avatar_url
+          //     : "https://models.readyplayer.me/66fbd22e36a151e549ea8397.glb?morphTargets=ARKit,Eyes Extra&textureAtlas=none&lod=0"
+          // }
           shadows={false}
           animationSrc={currentPublicEmote}
           style={{ background: "rgb(0,0,6)", pointerEvents: "none" }}
