@@ -46,11 +46,11 @@ export default async function ProfilePage({ username }: { username: string }) {
     const profileData = {
       username,
       fullName: `${user.first_name} ${user.last_name}`,
-      firstName: user.first_name || "No first name provided",
-      lastName: user.last_name || "No last name provided",
-      dob: user.dob || "No date of birth provided",
-      bio: user.description || "No bio available",
-      address: user.address || "No address provided",
+      firstName: user.first_name || "",
+      lastName: user.last_name || "",
+      dob: user.dob || "",
+      bio: user.description || "",
+      address: user.address || "",
       gg_id: user.gg_id || "No gg_id provided",
       avatarUrl:
         user.avatar?.[0]?.avatar_url ||

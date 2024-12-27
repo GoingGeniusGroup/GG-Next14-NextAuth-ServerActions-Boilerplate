@@ -90,7 +90,7 @@ export const MobileSimulatorProvider = ({
   const [showMobile, setShowMobile] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false);
   const [currentBackground, setCurrentBackground] = useState<BackgroundProps>(
-    backgrounds[4]
+    backgrounds[1]
   );
   const [showLogin, setShowLogin] = useState<boolean>(true);
   const [activeScreens, setActiveScreens] = useState<number[]>([]);
