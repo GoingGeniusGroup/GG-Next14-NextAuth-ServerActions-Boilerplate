@@ -1,8 +1,12 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import { Button } from "@/src/ui/button";
 import { Facebook, Twitch, Twitter, Youtube, Instagram } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/src/ui/avatar";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 interface ProfileHeaderProps {
   username: string;
@@ -40,19 +44,45 @@ export default function ProfileHeader({
   profilePic,
   coverPic,
 }: ProfileHeaderProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const age = calculateAge(dob);
+
+  // Get the current tab from query parameter or default to gallery
+  const currentTab = searchParams.get("tab") || "gallery";
+
+  // Handle tab changes with URL updates
+  const handleTabChange = (tab: string) => {
+    if (tab === "gallery") {
+      router.push(`/genius-profile/${username}`);
+    } else {
+      router.push(`/genius-profile/${username}?tab=${tab}`);
+    }
+    onTabChange(tab);
+  };
+
+  // Set initial tab on component mount
+  useEffect(() => {
+    onTabChange(currentTab);
+  }, [currentTab, onTabChange]);
+
   return (
-    <div
-      className="relative w-full h-full rounded-xl"
-      style={{
-        backgroundImage: `url(${coverPic})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
-      <div className="absolute inset-0 size-full bg-black/20"></div>
-      <div className="container mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+    <div className="relative w-full h-full rounded-xl overflow-hidden">
+      {/* Background Image with Gradient Overlay */}
+      <div className="absolute inset-0 w-full h-full">
+        <Image
+          src={coverPic}
+          alt="Cover background"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80" />
+      </div>
+
+      {/* Content */}
+      <div className="relative container mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <div className="space-y-6">
           <div>
             <h3 className="text-xl font-semibold text-amber-500 uppercase">
@@ -71,11 +101,25 @@ export default function ProfileHeader({
           </div>
           <p className="text-lg leading-relaxed max-w-xl">{bio}</p>
           <div className="flex gap-4">
-            <Button onClick={() => onTabChange("gallery")}>Gallery</Button>
-            <Button onClick={() => onTabChange("projects")} variant="secondary">
+            <Button
+              onClick={() => handleTabChange("gallery")}
+              variant={currentTab === "gallery" ? "default" : "secondary"}
+              className={currentTab === "gallery" ? "ring-2 ring-primary" : ""}
+            >
+              Gallery
+            </Button>
+            <Button
+              onClick={() => handleTabChange("projects")}
+              variant={currentTab === "projects" ? "default" : "secondary"}
+              className={currentTab === "projects" ? "ring-2 ring-primary" : ""}
+            >
               Projects
             </Button>
-            <Button onClick={() => onTabChange("cards")} variant="secondary">
+            <Button
+              onClick={() => handleTabChange("cards")}
+              variant={currentTab === "cards" ? "default" : "secondary"}
+              className={currentTab === "cards" ? "ring-2 ring-primary" : ""}
+            >
               Profile Cards
             </Button>
           </div>

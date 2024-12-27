@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import ProfileHeader from "./profile-header";
 import { Card, CardContent } from "@/src/ui/card";
 import { Trophy, Palette, BadgeIcon as IdCard } from "lucide-react";
@@ -47,7 +48,18 @@ export default function ProfilePageClient({
   profilePic: string;
   coverPic: string;
 }) {
-  const [activeTab, setActiveTab] = useState("achievements");
+  const searchParams = useSearchParams();
+  const [activeTab, setActiveTab] = useState("gallery");
+
+  // Set initial tab based on URL query parameter
+  useEffect(() => {
+    const tab = searchParams.get("tab");
+    if (tab && ["gallery", "projects", "cards"].includes(tab)) {
+      setActiveTab(tab);
+    } else {
+      setActiveTab("gallery");
+    }
+  }, [searchParams]);
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -135,7 +147,7 @@ export default function ProfilePageClient({
         avatarUrl={avatarUrl}
         onTabChange={setActiveTab}
       />
-      <div className="container mx-auto px-4 pb-8">{renderTabContent()}</div>
+      <div className="container mx-auto pb-8">{renderTabContent()}</div>
     </main>
   );
 }
