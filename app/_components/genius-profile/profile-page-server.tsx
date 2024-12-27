@@ -4,7 +4,7 @@ import { getUserByUsername } from "@/app/services/user";
 import { getImageUrls } from "@/app/actions/image-post";
 import { getExperiencesByUserId } from "@/app/services/experience";
 import ProfilePageClient from "@/src/components/genius-profile-v2/profile-page-client";
-import { UserNotFound } from "@/app/(main)/genius-profile/[username]/page";
+import UserNotFound from "@/src/components/genius-profile-v2/user-not-found";
 
 // Cache the data fetching functions
 const getCachedCurrentUser = cache(getCurrentUser);
