@@ -19,6 +19,8 @@ import CardsSection from "./cards-section";
 import { Button } from "@/src/ui/button";
 import Image from "next/image";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
+import UploadGalleryDialog from "../comp/Modal/gallery/UploadGalleryDialog";
+import ExperienceDialog from "../comp/Modal/experience/AddUpdateExperienceDialog";
 
 interface ProfileData {
   username: string;
@@ -169,24 +171,41 @@ export default function ProfilePageClient({
       >
         <div className="flex flex-wrap gap-4">
           {["gallery", "projects", "cards"].map((tab) => (
-            <Button
-              key={tab}
-              onClick={() => handleTabChange(tab)}
-              variant={activeTab === tab ? "default" : "secondary"}
-              className={`${
-                activeTab === tab
-                  ? "bg-cyan-500 hover:bg-cyan-600 text-black"
-                  : "bg-gray-800 hover:bg-gray-700"
-              } transition-all duration-300 ease-in-out transform hover:scale-105`}
-              role="tab"
-              aria-selected={activeTab === tab}
-              aria-controls={`${tab}-content`}
-            >
-              {tab.charAt(0).toUpperCase() + tab.slice(1)}
-            </Button>
+            <div key={tab} className="flex items-center space-x-2">
+              <Button
+                onClick={() => handleTabChange(tab)}
+                variant={activeTab === tab ? "default" : "secondary"}
+                className={`${
+                  activeTab === tab
+                    ? "bg-cyan-500 hover:bg-cyan-600 text-black"
+                    : "bg-gray-800 hover:bg-gray-700"
+                } transition-all duration-300 ease-in-out transform hover:scale-105`}
+                role="tab"
+                aria-selected={activeTab === tab}
+                aria-controls={`${tab}-content`}
+              >
+                {tab.charAt(0).toUpperCase() + tab.slice(1)}
+              </Button>
+
+              {/* Conditionally render the add buttons */}
+              {isLoggedUserProfile && activeTab === tab && (
+                <>
+                  {tab === "gallery" && convertedImagePosts && (
+                    <UploadGalleryDialog
+                      gg_id={profileData.gg_id}
+                      currentGalleryImages={convertedImagePosts}
+                    />
+                  )}
+                  {tab === "projects" && (
+                    <ExperienceDialog gg_id={profileData.gg_id} />
+                  )}
+                </>
+              )}
+            </div>
           ))}
         </div>
       </div>
+
       <div className="mt-6 px-2 mb-10">{renderTabContent()}</div>
     </div>
   );

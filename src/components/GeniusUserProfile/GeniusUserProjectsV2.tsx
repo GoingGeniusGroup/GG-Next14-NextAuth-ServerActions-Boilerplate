@@ -35,11 +35,6 @@ export default function GeniusUserProjects({
 
   return (
     <div className="relative px-2">
-      {LoggedUserProfile && (
-        <div className="absolute top-2 right-2 z-40">
-          <ExperienceDialog gg_id={userInfo.gg_id} />
-        </div>
-      )}
       <BentoGridHoverV2 className="pb-2 h-full overflow-x-hidden overflow-y-auto z-10">
         {items.map((item, idx) => (
           <BentoGridHoverItemV2
