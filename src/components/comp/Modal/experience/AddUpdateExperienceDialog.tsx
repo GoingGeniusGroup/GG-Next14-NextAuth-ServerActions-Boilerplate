@@ -42,36 +42,38 @@ const ExperienceDialog: React.FC<ExperienceDialogProps> = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        {!experience_id ? (
-          <Tooltip>
-            <TooltipTrigger>
-              <MovingBorderButton
-                borderRadius="1.75rem"
-                className="bg-white size-10 dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800"
-              >
-                <IconPlus size={20} />
-              </MovingBorderButton>
-            </TooltipTrigger>
-            <TooltipContent>
-              <span className="text-green-500">Add Projects</span>
-            </TooltipContent>
-          </Tooltip>
-        ) : (
-          <Tooltip>
-            <TooltipTrigger>
-              <Button
-                variant="ghost"
-                size="mini"
-                className="hover:bg-white/10 hover:text-sky-500"
-              >
-                <IconEdit className="h-4 w-4" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <span className="text-cyan-500">Edit Project</span>
-            </TooltipContent>
-          </Tooltip>
-        )}
+        <div>
+          {!experience_id ? (
+            <Tooltip>
+              <TooltipTrigger>
+                <MovingBorderButton
+                  borderRadius="1.75rem"
+                  className="bg-white size-10 dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800"
+                >
+                  <IconPlus size={20} />
+                </MovingBorderButton>
+              </TooltipTrigger>
+              <TooltipContent>
+                <span className="text-green-500">Add Projects</span>
+              </TooltipContent>
+            </Tooltip>
+          ) : (
+            <Tooltip>
+              <TooltipTrigger>
+                <Button
+                  variant="ghost"
+                  size="mini"
+                  className="hover:bg-white/10 hover:text-sky-500"
+                >
+                  <IconEdit className="h-4 w-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <span className="text-cyan-500">Edit Project</span>
+              </TooltipContent>
+            </Tooltip>
+          )}
+        </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md h-[80%] overflow-auto">
         <DialogHeader>

@@ -1,10 +1,10 @@
 import { cache } from "react";
-import { notFound } from "next/navigation";
 import { getCurrentUser } from "@/app/actions/genius-profile/userAndGuild";
 import { getUserByUsername } from "@/app/services/user";
 import { getImageUrls } from "@/app/actions/image-post";
 import { getExperiencesByUserId } from "@/app/services/experience";
 import ProfilePageClient from "@/src/components/genius-profile-v2/profile-page-client";
+import { UserNotFound } from "@/app/(main)/genius-profile/[username]/page";
 
 // Cache the data fetching functions
 const getCachedCurrentUser = cache(getCurrentUser);
@@ -14,18 +14,27 @@ const getCachedExperiences = cache(getExperiencesByUserId);
 
 export default async function ProfilePage({ username }: { username: string }) {
   try {
-    const [currentUser, profileOwner] = await Promise.all([
+    // Use Promise.allSettled to handle potential failures gracefully
+    const [currentUserResult, profileOwnerResult] = await Promise.allSettled([
       getCachedCurrentUser(),
       getCachedUserByUsername(username),
     ]);
 
+    const currentUser =
+      currentUserResult.status === "fulfilled" ? currentUserResult.value : null;
+    const profileOwner =
+      profileOwnerResult.status === "fulfilled"
+        ? profileOwnerResult.value
+        : null;
+
     if (!profileOwner || !currentUser) {
-      notFound();
+      throw new Error("Required data not available");
     }
 
     const isLoggedUserProfile = currentUser.username === username;
     const user = isLoggedUserProfile ? currentUser : profileOwner;
 
+    // Prefetch the next data to prevent waterfall
     const [imagePosts, experiences] = await Promise.all([
       getCachedImageUrls(
         isLoggedUserProfile,
@@ -56,6 +65,7 @@ export default async function ProfilePage({ username }: { username: string }) {
 
     return (
       <ProfilePageClient
+        key={username} // Add a key to force re-render on username change
         profileData={profileData}
         isLoggedUserProfile={isLoggedUserProfile}
         imagePosts={imagePosts}
@@ -68,6 +78,6 @@ export default async function ProfilePage({ username }: { username: string }) {
     );
   } catch (error) {
     console.error("Error loading profile:", error);
-    notFound();
+    return <UserNotFound username={username} />;
   }
 }

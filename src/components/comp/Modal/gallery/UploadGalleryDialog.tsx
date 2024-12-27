@@ -35,19 +35,21 @@ const UploadGalleryDialog: React.FC<UploadGalleryDialogProps> = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Tooltip>
-          <TooltipTrigger>
-            <MovingBorderButton
-              borderRadius="1.75rem"
-              className="bg-white size-10 dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800"
-            >
-              <IconPhotoAi size={20} />
-            </MovingBorderButton>
-          </TooltipTrigger>
-          <TooltipContent>
-            <span className="text-green-500">Add Images In Galley</span>
-          </TooltipContent>
-        </Tooltip>
+        <div>
+          <Tooltip>
+            <TooltipTrigger>
+              <MovingBorderButton
+                borderRadius="1.75rem"
+                className="bg-white size-10 dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800"
+              >
+                <IconPhotoAi size={20} />
+              </MovingBorderButton>
+            </TooltipTrigger>
+            <TooltipContent>
+              <span className="text-green-500">Add Images In Galley</span>
+            </TooltipContent>
+          </Tooltip>
+        </div>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-md">

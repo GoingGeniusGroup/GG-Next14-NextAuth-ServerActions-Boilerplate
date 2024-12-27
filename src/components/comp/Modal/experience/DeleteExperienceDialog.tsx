@@ -59,21 +59,23 @@ export const DeleteExperienceDialog: React.FC<DeleteExperienceDialogProps> = ({
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger asChild onClick={() => setIsOpen(true)}>
-        <Tooltip>
-          <TooltipTrigger>
-            <Button
-              variant="ghost"
-              size="mini"
-              className="hover:bg-white/10 hover:text-red-500"
-              type="button"
-            >
-              <IconTrash className="h-4 w-4" />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <span className="text-red-500">Delete Project</span>
-          </TooltipContent>
-        </Tooltip>
+        <div>
+          <Tooltip>
+            <TooltipTrigger>
+              <Button
+                variant="ghost"
+                size="mini"
+                className="hover:bg-white/10 hover:text-red-500"
+                type="button"
+              >
+                <IconTrash className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <span className="text-red-500">Delete Project</span>
+            </TooltipContent>
+          </Tooltip>
+        </div>
       </AlertDialogTrigger>
       <AlertDialogContent
         className="sm:max-w-[425px]"

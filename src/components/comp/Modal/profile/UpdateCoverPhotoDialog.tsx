@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -26,27 +26,29 @@ const UpdateProfileDialog: React.FC<UpdateCoverPhotoDialogProps> = ({
   gg_id,
   currentCoverImage,
 }) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Tooltip>
-          <TooltipTrigger>
-            <IconButton
-              icon={
-                <IconPhotoEdit
-                  size={20}
-                  className="text-black dark:text-white hover:text-cyan-500"
-                />
-              }
-              label="Edit Cover Picture"
-            />
-          </TooltipTrigger>
-          <TooltipContent>
-            <span className="text-cyan-500">Edit Cover Image</span>
-          </TooltipContent>
-        </Tooltip>
+        <div>
+          <Tooltip>
+            <TooltipTrigger>
+              <IconButton
+                icon={
+                  <IconPhotoEdit
+                    size={20}
+                    className="text-black dark:text-white hover:text-cyan-500"
+                  />
+                }
+                label="Edit Cover Picture"
+              />
+            </TooltipTrigger>
+            <TooltipContent>
+              <span className="text-cyan-500">Edit Cover Image</span>
+            </TooltipContent>
+          </Tooltip>
+        </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>

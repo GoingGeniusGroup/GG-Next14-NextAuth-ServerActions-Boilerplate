@@ -45,7 +45,6 @@ import {
 } from "@/src/ui/tooltip/tooltip";
 import SocialMediaDialog from "../GeniusUserProfile/Info/SocialMediaDialog";
 import { socialType } from "@prisma/client";
-import { FcGoogle } from "react-icons/fc";
 import { FaGithub, FaSteam } from "react-icons/fa";
 import { AiFillInstagram } from "react-icons/ai";
 import { SiFacebook } from "react-icons/si";
@@ -309,22 +308,24 @@ const ProfileHeader = ({
                     onOpenChange={setIsAvatarCreatorOpen}
                   >
                     <DialogTrigger asChild>
-                      <Tooltip>
-                        <TooltipTrigger>
-                          <IconButton
-                            onClick={handleCreateAvatar}
-                            icon={
-                              <Plus className="text-black dark:text-white hover:text-green-500" />
-                            }
-                            label="Create New Avatar"
-                          />
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <span className="text-green-500">
-                            Create New Avatar
-                          </span>
-                        </TooltipContent>
-                      </Tooltip>
+                      <div>
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <IconButton
+                              onClick={handleCreateAvatar}
+                              icon={
+                                <Plus className="text-black dark:text-white hover:text-green-500" />
+                              }
+                              label="Create New Avatar"
+                            />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <span className="text-green-500">
+                              Create New Avatar
+                            </span>
+                          </TooltipContent>
+                        </Tooltip>
+                      </div>
                     </DialogTrigger>
                     <DialogContent>
                       <div className="h-[600px] w-full relative rounded-xl overflow-hidden">
@@ -388,15 +389,17 @@ const ProfileHeader = ({
                     <div className="flex items-start -mt-6 gap-2">
                       <Tooltip>
                         <TooltipTrigger>
-                          <Button
-                            onClick={() => setPopupOpen(true)}
-                            variant="transparent"
-                            size="mini2"
-                            aria-label="Share Button"
-                            className="text-cyan-500 dark:text-green-500 rounded-full hover:text-yellow-500 border border-cyan-500/50 dark:border-green-500/50"
-                          >
-                            <IoShareSocialSharp size={20} />
-                          </Button>
+                          <div>
+                            <Button
+                              onClick={() => setPopupOpen(true)}
+                              variant="transparent"
+                              size="mini2"
+                              aria-label="Share Button"
+                              className="text-cyan-500 dark:text-green-500 rounded-full hover:text-yellow-500 border border-cyan-500/50 dark:border-green-500/50"
+                            >
+                              <IoShareSocialSharp size={20} />
+                            </Button>
+                          </div>
                         </TooltipTrigger>
                         <TooltipContent>
                           <span className="text-green-500">Share</span>

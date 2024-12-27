@@ -38,21 +38,23 @@ const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Tooltip>
-          <TooltipTrigger>
-            <Button
-              variant="transparent"
-              size="mini2"
-              aria-label="Edit Info Button"
-              className="text-cyan-500 dark:text-pink-500 rounded-full hover:text-yellow-500 border border-cyan-500/50 dark:border-pink-500/50"
-            >
-              <IconUserEdit size={20} />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <span className="text-pink-500">Edit Profile</span>
-          </TooltipContent>
-        </Tooltip>
+        <div>
+          <Tooltip>
+            <TooltipTrigger>
+              <Button
+                variant="transparent"
+                size="mini2"
+                aria-label="Edit Info Button"
+                className="text-cyan-500 dark:text-pink-500 rounded-full hover:text-yellow-500 border border-cyan-500/50 dark:border-pink-500/50"
+              >
+                <IconUserEdit size={20} />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <span className="text-pink-500">Edit Profile</span>
+            </TooltipContent>
+          </Tooltip>
+        </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md h-[80%] overflow-auto">
         <DialogHeader>
