@@ -37,7 +37,7 @@ const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
           variant="transparent"
           size="mini2"
           aria-label="Edit Info Button"
-          className="text-cyan-500 dark:text-pink-500 rounded-full hover:text-yellow-500"
+          className="text-cyan-500 dark:text-pink-500 rounded-full hover:text-yellow-500 border border-cyan-500/50 dark:border-pink-500/50"
         >
           <IconUserEdit size={20} />
         </Button>

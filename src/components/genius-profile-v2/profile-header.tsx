@@ -328,7 +328,7 @@ const ProfileHeader = ({
                         variant="transparent"
                         size="mini2"
                         aria-label="Share Button"
-                        className="text-cyan-500 dark:text-green-500 rounded-full hover:text-yellow-500"
+                        className="text-cyan-500 dark:text-green-500 rounded-full hover:text-yellow-500 border border-cyan-500/50 dark:border-green-500/50"
                       >
                         <IoShareSocialSharp size={20} />
                       </Button>
