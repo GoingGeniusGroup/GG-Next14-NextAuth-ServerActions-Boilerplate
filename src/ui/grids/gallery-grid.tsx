@@ -58,26 +58,30 @@ export const GalleryGrid = ({
   };
 
   return (
-    <div className="container size-full overflow-y-auto overflow-x-hidden mx-auto px-4 pb-8">
+    <div className="container mx-auto px-4 pb-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {cards.map((card) => (
           <motion.div
             key={card.index}
-            className="relative aspect-square overflow-hidden rounded-lg shadow-lg cursor-pointer"
-            whileHover={{ scale: 1.05 }}
+            className="relative aspect-square overflow-hidden rounded-lg shadow-lg cursor-pointer bg-gray-100 dark:bg-gray-800"
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.2 }}
             onClick={() => setSelectedImage(card)}
           >
             <Image
               src={card.thumbnail}
               alt={`Gallery image ${card.index}`}
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
               className="object-cover"
-              loading="eager"
+              loading="lazy"
+              placeholder="blur"
+              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQdHx0fHRsdHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR3/2wBDAR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR3/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
             />
-            <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-200 flex items-end p-4">
               <div className="text-white">
                 {typeof card.content === "string" ? (
-                  <p>{card.content}</p>
+                  <p className="text-sm">{card.content}</p>
                 ) : (
                   card.content
                 )}
@@ -85,14 +89,14 @@ export const GalleryGrid = ({
               {loggedUserProfile && (
                 <Button
                   variant="destructive"
-                  className="absolute top-2 right-2 p-2"
+                  className="absolute top-2 right-2 p-2 bg-red-500/80 hover:bg-red-600/80"
                   size="icon"
                   onClick={(e) => {
                     e.stopPropagation();
                     setDeleteConfirmation({ card, isOpen: true });
                   }}
                 >
-                  <IconTrash size={20} />
+                  <IconTrash size={18} />
                   <span className="sr-only">Delete image</span>
                 </Button>
               )}
@@ -107,32 +111,31 @@ export const GalleryGrid = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/80 p-4"
             onClick={() => setSelectedImage(null)}
           >
             <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
+              initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              className="relative w-full max-w-4xl max-h-[90vh] bg-gray-800 rounded-lg shadow-xl overflow-hidden flex flex-col"
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="relative w-full max-w-5xl bg-white dark:bg-gray-900 rounded-xl shadow-2xl overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              <div
-                className="relative flex-grow bg-gray-900 w-full"
-                style={{ minHeight: "60vh" }}
-              >
+              <div className="relative aspect-[16/9] w-full bg-gray-100 dark:bg-gray-800">
                 <Image
                   src={selectedImage.thumbnail}
                   alt={`Full size image ${selectedImage.index}`}
                   fill
                   className="object-contain"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  sizes="(max-width: 1920px) 90vw, 1400px"
                   priority
+                  quality={90}
                 />
               </div>
-              <div className="p-6 bg-gray-900">
+              <div className="p-6 bg-white dark:bg-gray-900 border-t dark:border-gray-800">
                 {typeof selectedImage.content === "string" ? (
-                  <p className="text-gray-800 dark:text-gray-200 text-lg">
+                  <p className="text-gray-700 dark:text-gray-200">
                     {selectedImage.content}
                   </p>
                 ) : (
@@ -140,11 +143,11 @@ export const GalleryGrid = ({
                 )}
               </div>
               <button
-                className="absolute top-4 right-4 text-white bg-gray-800 dark:bg-gray-200 dark:text-gray-800 rounded-full p-2 hover:bg-gray-700 dark:hover:bg-gray-300 transition-colors"
+                className="absolute top-4 right-4 p-2 backdrop-blur-sm bg-black/20 hover:bg-black/30 dark:bg-white/20 dark:hover:bg-white/30 rounded-full transition-colors"
                 onClick={() => setSelectedImage(null)}
                 aria-label="Close image preview"
               >
-                <IconX size={24} />
+                <IconX size={20} className="text-white" />
               </button>
             </motion.div>
           </motion.div>
@@ -188,3 +191,5 @@ export const GalleryGrid = ({
     </div>
   );
 };
+
+export default GalleryGrid;

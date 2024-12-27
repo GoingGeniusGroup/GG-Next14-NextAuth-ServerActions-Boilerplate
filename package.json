@@ -51,6 +51,7 @@
     "@storybook/react": "^8.3.2",
     "@tabler/icons-react": "^3.19.0",
     "@tanstack/react-table": "^8.20.5",
+    "@tanstack/react-virtual": "^3.11.2",
     "@types/storybook__react": "^5.2.1",
     "@uploadcare/file-uploader": "^1.9.0",
     "@uploadcare/nextjs-loader": "^1.0.0",
