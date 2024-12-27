@@ -42,7 +42,7 @@ export const MusicPlayerProvider: React.FC<
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.5);
   const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
+  const [duration, setDuration] = useState(currentSong?.duration || 0);
   const [isRepeat, setIsRepeat] = useState(false);
 
   const audioRef = useRef<HTMLAudioElement>(null);
