@@ -11,10 +11,18 @@ import {
   Gamepad2,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/src/ui/avatar";
-import { Button } from "@/src/ui/button";
 import { Progress } from "@/src/ui/progress";
 import AvatarManagerClientProfile from "../comp/AvatarManager/avatar-manager-client-profile";
 import PublicAvatarManagerClientProfile from "../comp/AvatarManager/public-avatar-manager-client-profile";
+import { useAvatar } from "../comp/AvatarManager/provider/AvatarManagerContext";
+import { usePublicAvatar } from "../comp/AvatarManager/provider/AvatarManagerPublicContext";
+import {
+  AvatarCreatorConfig,
+  BodyType,
+  Language,
+} from "@readyplayerme/react-avatar-creator";
+import ExpressionCard from "../comp/Huds/ExpressionsCard";
+import ExpressionBottomMidHud from "../comp/Huds/ExpressionBottomMidHud";
 
 interface ProfileHeaderProps {
   username: string;
@@ -27,6 +35,7 @@ interface ProfileHeaderProps {
   isLoggedUserProfile: boolean;
   xp: number;
   level: number;
+  loggedUserAvatarUrl: string;
 }
 
 const SocialLinks = memo(() => (
@@ -100,6 +109,7 @@ const ProfileHeader = ({
   dob,
   bio,
   avatarUrl,
+  loggedUserAvatarUrl,
   profilePic,
   coverPic,
   isLoggedUserProfile,
@@ -109,9 +119,61 @@ const ProfileHeader = ({
   const age = useMemo(() => calculateAge(dob.toString()), [dob]);
   const xpProgress = useMemo(() => calculateXpProgress(xp), [xp]);
 
+  ("use cache");
+  const {
+    avatars,
+    selectedAvatar,
+    isAvatarCreatorOpen,
+    isProcessing,
+    expressions,
+    setIsAvatarCreatorOpen,
+    handleCreateAvatar,
+    handleEditAvatar,
+    handleDeleteAvatar,
+    handleAvatarCreated,
+    handleUpdateAvatar,
+    handleEmote,
+    editingAvatar,
+    setSelectedAvatar,
+    getAvatarCreatorUrl,
+    privateExpressions,
+  } = useAvatar();
+
+  const { publicExpressions, handlePublicEmote } = usePublicAvatar();
+
+  const baseAvatarCreatorConfig: AvatarCreatorConfig = {
+    bodyType: "fullbody" as BodyType,
+    quickStart: true,
+    language: "en" as Language,
+  };
+
+  const createAvatarConfig: AvatarCreatorConfig = {
+    ...baseAvatarCreatorConfig,
+    clearCache: true,
+  };
+
+  const editAvatarConfig: AvatarCreatorConfig = {
+    ...baseAvatarCreatorConfig,
+    clearCache: false,
+  };
+
+  const extractUserId = (avatarUrl: string | undefined): string | undefined => {
+    if (!avatarUrl) return undefined;
+    const match = avatarUrl.match(/\/([^/]+)\.glb$/);
+    return match ? match[1] : undefined;
+  };
+
   return (
     <>
       <div className="relative p-4">
+        {!isLoggedUserProfile && (
+          <div className="fixed bottom-4 right-4 z-50">
+            <ExpressionBottomMidHud
+              expressions={expressions}
+              handleEmote={handleEmote}
+            />
+          </div>
+        )}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
           {/* Left column */}
           <div className="lg:sticky lg:top-10 lg:col-span-1 space-y-4">
@@ -126,20 +188,24 @@ const ProfileHeader = ({
               >
                 <div className="absolute inset-0 bg-black/25" />
               </div>
-              {isLoggedUserProfile ? (
-                <AvatarManagerClientProfile
-                  fov={40}
-                  cameraInitialDistance={5}
-                  cameraTarget={0}
-                  avatarUrl={avatarUrl}
-                />
-              ) : (
-                <PublicAvatarManagerClientProfile
-                  fov={40}
-                  cameraInitialDistance={5}
-                  cameraTarget={0}
-                  avatarUrl={avatarUrl}
-                />
+              <PublicAvatarManagerClientProfile
+                fov={40}
+                cameraInitialDistance={5}
+                cameraTarget={0}
+                avatarUrl={avatarUrl}
+              />
+
+              {!isLoggedUserProfile && (
+                <div className="absolute bottom-1 right-0 space-y-4 z-40">
+                  <div className="size-[200px]">
+                    <AvatarManagerClientProfile
+                      fov={40}
+                      cameraInitialDistance={5}
+                      cameraTarget={0}
+                      avatarUrl={loggedUserAvatarUrl}
+                    />
+                  </div>
+                </div>
               )}
             </div>
 
@@ -155,6 +221,11 @@ const ProfileHeader = ({
                 value={xpProgress}
                 className="h-2 bg-gray-700"
                 aria-label={`XP Progress: ${xpProgress.toFixed(2)}%`}
+              />
+
+              <ExpressionCard
+                expressions={publicExpressions}
+                handleEmote={handlePublicEmote}
               />
             </div>
           </div>

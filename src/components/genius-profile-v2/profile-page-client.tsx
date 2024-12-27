@@ -38,6 +38,7 @@ interface ProfilePageClientProps {
   isLoggedUserProfile: boolean;
   imagePosts: any;
   experiences: any[];
+  loggedUserAvatarUrl: string;
 }
 
 export default function ProfilePageClient({
@@ -45,6 +46,7 @@ export default function ProfilePageClient({
   isLoggedUserProfile,
   imagePosts,
   experiences,
+  loggedUserAvatarUrl,
 }: ProfilePageClientProps) {
   const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState("gallery");
@@ -155,6 +157,7 @@ export default function ProfilePageClient({
       <ProfileHeader
         {...profileData}
         isLoggedUserProfile={isLoggedUserProfile}
+        loggedUserAvatarUrl={loggedUserAvatarUrl}
       />
       <div
         className="z-40 bg-gray-900/95 backdrop-blur-sm py-4 mx-4 rounded-lg px-4"

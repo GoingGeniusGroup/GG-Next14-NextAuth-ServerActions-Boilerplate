@@ -34,7 +34,9 @@ export default async function ProfilePage({ username }: { username: string }) {
     dob: user.dob || "No date of birth provided",
     bio: user.description || "No bio available",
     gg_id: user.gg_id || "No gg_id provided",
-    avatarUrl: user.avatar?.[0]?.avatar_url || "/default-pictures/avatar.png",
+    avatarUrl:
+      user.avatar?.[0]?.avatar_url ||
+      "https://models.readyplayer.me/66fbd22e36a151e549ea8397.glb?morphTargets=ARKit,Eyes Extra&textureAtlas=none&lod=0",
     profilePic: user.image || "/default-pictures/profile.png",
     coverPic:
       user.cover_images[user.cover_images.length - 1] ||
@@ -50,6 +52,10 @@ export default async function ProfilePage({ username }: { username: string }) {
         isLoggedUserProfile={isLoggedUserProfile}
         imagePosts={imagePosts}
         experiences={experiences}
+        loggedUserAvatarUrl={
+          currentUser.avatar?.[0]?.avatar_url ||
+          "https://models.readyplayer.me/658be9e8fc8bec93d06806f3.glb?morphTargets=ARKit,Eyes Extra&textureAtlas=none&lod=0"
+        }
       />
     </Suspense>
   );
