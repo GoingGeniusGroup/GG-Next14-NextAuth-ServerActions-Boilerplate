@@ -1,5 +1,4 @@
 "use client";
-"use cache";
 
 import { memo, useMemo, useRef, useState } from "react";
 import Link from "next/link";
@@ -190,7 +189,6 @@ const ProfileHeader = ({
   xp,
   level,
 }: ProfileHeaderProps) => {
-  "use cache";
   const age = useMemo(() => calculateAge(dob.toString()), [dob]);
   const xpProgress = useMemo(() => calculateXpProgress(xp), [xp]);
 

@@ -6,10 +6,11 @@ export const metadata: Metadata = {
   title: "Oops! Something went wrong",
 };
 
-export default function AuthErrorPage({
-  searchParams,
-}: {
-  searchParams: { message: AuthError["type"] };
-}) {
+export default async function AuthErrorPage(
+  props: {
+    searchParams: Promise<{ message: AuthError["type"] }>;
+  }
+) {
+  const searchParams = await props.searchParams;
   return <ErrorCard message={searchParams.message} />;
 }

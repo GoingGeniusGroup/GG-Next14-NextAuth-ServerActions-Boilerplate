@@ -1,5 +1,4 @@
 "use client";
-"use cache";
 import UpdateProfileDialog from "../Modal/profile/UpdateProfileDialog";
 import Image from "next/image";
 import SmallPreviewCard from "../card/SmallPreviewCard";
@@ -70,8 +69,7 @@ export default function AboutSectionProfile({
   userInfo: any | null;
   ifOwnProfile: boolean;
 }) {
-  "use cache";
-  let ref = useRef<HTMLDivElement>(null);
+    let ref = useRef<HTMLDivElement>(null);
   const [isPopupOpen, setPopupOpen] = useState(false);
   const currentPageUrl =
     typeof window !== "undefined" ? window.location.href : "";

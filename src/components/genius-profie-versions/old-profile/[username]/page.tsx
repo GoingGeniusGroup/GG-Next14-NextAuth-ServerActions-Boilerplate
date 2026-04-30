@@ -20,9 +20,9 @@ import {
 } from "@tabler/icons-react";
 
 interface ProfileViewProps {
-  params: {
+  params: Promise<{
     username: string;
-  };
+  }>;
 }
 
 type Tab = {
@@ -32,7 +32,8 @@ type Tab = {
   icon: React.ReactNode;
 };
 
-export default function GeniusProfilePage({ params }: ProfileViewProps) {
+export default async function GeniusProfilePage(props: ProfileViewProps) {
+  const params = await props.params;
   const username = params.username;
 
   const images = [

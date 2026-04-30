@@ -4,12 +4,13 @@ import PublicAvatarManagerClientProfile from "@/src/components/comp/AvatarManage
 import { getUserByUsername } from "@/services/user";
 
 interface AvatarSectionProps {
-  params: {
+  params: Promise<{
     username: string;
-  };
+  }>;
 }
 
-export default async function AvatarSection({ params }: AvatarSectionProps) {
+export default async function AvatarSection(props: AvatarSectionProps) {
+  const params = await props.params;
   const { username } = params;
 
   const currentUser = await getCurrentUser();

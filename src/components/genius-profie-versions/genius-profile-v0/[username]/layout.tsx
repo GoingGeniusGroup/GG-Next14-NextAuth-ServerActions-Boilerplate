@@ -8,12 +8,12 @@ import {
   IconTool,
 } from "@tabler/icons-react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useState, use } from "react";
 
 interface ProfileViewProps {
-  params: {
+  params: Promise<{
     username: string;
-  };
+  }>;
   children: React.ReactNode;
 }
 
@@ -22,7 +22,13 @@ type Tab = {
   link: string;
   icon: React.ReactNode;
 };
-export default function ProfileLayout({ params, children }: ProfileViewProps) {
+export default function ProfileLayout(props: ProfileViewProps) {
+  const params = use(props.params);
+
+  const {
+    children
+  } = props;
+
   const username = params.username;
 
   const tabs: Tab[] = [

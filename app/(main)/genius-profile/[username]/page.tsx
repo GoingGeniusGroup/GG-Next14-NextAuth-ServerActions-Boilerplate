@@ -5,14 +5,13 @@ import { getUserByUsername } from "@/app/services/user";
 import UserNotFound from "@/src/components/genius-profile-v2/user-not-found";
 
 interface GeniusUserInfoProps {
-  params: {
+  params: Promise<{
     username: string;
-  };
+  }>;
 }
 
-export default async function GeniusUserProfile({
-  params,
-}: GeniusUserInfoProps) {
+export default async function GeniusUserProfile(props: GeniusUserInfoProps) {
+  const params = await props.params;
   const { username } = params;
 
   // Check if user exists before rendering the profile

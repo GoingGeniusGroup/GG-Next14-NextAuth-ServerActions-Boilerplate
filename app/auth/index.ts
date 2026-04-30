@@ -13,7 +13,6 @@ export const {
   auth,
   signIn,
   signOut,
-  update,
 } = NextAuth({
   adapter: PrismaAdapter(db),
   session: {
@@ -26,7 +25,7 @@ export const {
   },
   events: {
     async linkAccount({ user }) {
-      await updateUserById(user.id, { emailVerified: new Date() });
+      await updateUserById(user.id as string, { emailVerified: new Date() });
     },
   },
   callbacks: {
@@ -56,8 +55,8 @@ export const {
     async session({ token, session }) {
       if (token) {
         session.user.gg_id = token.id as string;
-        session.user.name = token.name;
-        session.user.email = token.email;
+        session.user.name = token.name as string;
+        session.user.email = token.email as string;
         session.user.username = token.username as string;
         session.user.role = token.role as UserRole;
         session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
@@ -69,7 +68,7 @@ export const {
     async signIn({ user, account }) {
       if (account?.provider !== "credentials") return true;
 
-      const existingUser = await getUserById(user.id);
+      const existingUser = await getUserById(user.id as string);
 
       if (existingUser?.isTwoFactorEnabled) {
         const existingTwoFactorConfirmation =

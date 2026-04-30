@@ -6,11 +6,12 @@ export const metadata: Metadata = {
   title: "Login",
 };
 
-export default async function LoginPage({
-  searchParams,
-}: {
-  searchParams: { error: string };
-}) {
+export default async function LoginPage(
+  props: {
+    searchParams: Promise<{ error: string }>;
+  }
+) {
+  const searchParams = await props.searchParams;
   if (searchParams.error) redirect(`/error?message=${searchParams.error}`);
   return (
     <div className="relative flex max-w-screen-md">

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default async function TwoFactorPage() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
 
   let credentials = cookieStore.get("credentials-session");
   if (!credentials) {

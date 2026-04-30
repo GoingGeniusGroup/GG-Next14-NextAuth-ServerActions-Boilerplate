@@ -21,7 +21,7 @@ const meta: Meta<typeof Avatar> = {
 
 export default meta;
 
-const Template: StoryFn<typeof Avatar> = (args) => (
+const Template: StoryFn<typeof Avatar> = (args: any) => (
   <Avatar style={{ background: "rgb(9,20,26)" }} {...args} />
 );
 /* eslint-disable */

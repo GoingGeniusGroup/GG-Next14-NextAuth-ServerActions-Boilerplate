@@ -7,11 +7,12 @@ export const metadata: Metadata = {
   title: "Verify Email",
 };
 
-export default async function NewVerificationPage({
-  searchParams,
-}: {
-  searchParams: { token: string };
-}) {
+export default async function NewVerificationPage(
+  props: {
+    searchParams: Promise<{ token: string }>;
+  }
+) {
+  const searchParams = await props.searchParams;
   if (!searchParams.token) redirect("/login");
   const data = await newVerification(searchParams.token);
 

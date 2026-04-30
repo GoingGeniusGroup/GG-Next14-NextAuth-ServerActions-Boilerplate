@@ -18,8 +18,7 @@ export default function PublicAvatarManagerClientProfile({
   user?: any;
   avatarUrl?: string;
 }) {
-  "use cache";
-  const { currentPublicEmote } = usePublicAvatar();
+    const { currentPublicEmote } = usePublicAvatar();
 
   return (
     <>

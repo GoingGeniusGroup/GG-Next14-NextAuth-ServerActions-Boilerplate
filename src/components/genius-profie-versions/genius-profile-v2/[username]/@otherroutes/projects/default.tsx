@@ -5,14 +5,13 @@ import { getUserByUsername } from "@/services/user";
 import { IconClipboardCopy } from "@tabler/icons-react";
 
 interface GeniusUserProjectProps {
-  params: {
+  params: Promise<{
     username: string;
-  };
+  }>;
 }
 
-export default async function GeniusUserProjectDefault({
-  params,
-}: GeniusUserProjectProps) {
+export default async function GeniusUserProjectDefault(props: GeniusUserProjectProps) {
+  const params = await props.params;
   const { username } = params;
 
   const currentUser = await getCurrentUser();

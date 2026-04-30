@@ -76,7 +76,7 @@ export const login = async (payload: z.infer<typeof loginSchema>) => {
 
     // If two factor confirmation doesn't exist or if two factor confirmation has expired, then handle 2fa
     if (!existingTwoFactorConfirmation || hasExpired) {
-      const cookieStore = cookies();
+      const cookieStore = await cookies();
       const token = signJwt(validatedFields.data);
       cookieStore.set("credentials-session", token);
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { ReactNode, useEffect, useMemo, useState, useCallback } from "react";
+import { ReactNode, useEffect, useMemo, useState, useCallback, use } from "react";
 import {
   IconExposure,
   IconPhoto,
@@ -19,9 +19,9 @@ interface GeniusProfileLayoutProps {
   projects: ReactNode;
   experience: ReactNode;
   children: ReactNode;
-  params: {
+  params: Promise<{
     username: string;
-  };
+  }>;
 }
 
 // Define the structure for navigation tabs
@@ -31,15 +31,18 @@ type Tab = {
   icon: React.ReactNode;
 };
 
-export default function GeniusProfileLayout({
-  info,
-  gallery,
-  avatar,
-  projects,
-  experience,
-  children,
-  params,
-}: GeniusProfileLayoutProps) {
+export default function GeniusProfileLayout(props: GeniusProfileLayoutProps) {
+  const params = use(props.params);
+
+  const {
+    info,
+    gallery,
+    avatar,
+    projects,
+    experience,
+    children
+  } = props;
+
   const { username } = params;
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState, use } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
@@ -13,17 +13,20 @@ interface GeniusProfileLayoutProps {
   userinfo: ReactNode;
   children: ReactNode;
   otherroutes: ReactNode;
-  params: {
+  params: Promise<{
     username: string;
-  };
+  }>;
 }
 
-export default function GeniusProfileLayout({
-  userinfo,
-  children,
-  params,
-  otherroutes,
-}: GeniusProfileLayoutProps) {
+export default function GeniusProfileLayout(props: GeniusProfileLayoutProps) {
+  const params = use(props.params);
+
+  const {
+    userinfo,
+    children,
+    otherroutes
+  } = props;
+
   const { username } = params;
   const pathname = usePathname();
 

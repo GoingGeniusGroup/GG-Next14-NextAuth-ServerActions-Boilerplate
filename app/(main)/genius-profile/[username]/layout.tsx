@@ -1,6 +1,5 @@
 "use client";
-"use cache";
-import { ReactNode } from "react";
+import { ReactNode, use } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
@@ -11,15 +10,18 @@ import CustomToolTip from "@/src/components/comp/CustomComponents/CustomToolTip"
 
 interface GeniusProfileLayoutProps {
   children: ReactNode;
-  params: {
+  params: Promise<{
     username: string;
-  };
+  }>;
 }
 
-export default function GeniusProfileLayout({
-  children,
-  params,
-}: GeniusProfileLayoutProps) {
+export default function GeniusProfileLayout(props: GeniusProfileLayoutProps) {
+  const params = use(props.params);
+
+  const {
+    children
+  } = props;
+
   const { username } = params;
 
   return (

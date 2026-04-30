@@ -1,5 +1,4 @@
 "use client";
-"use cache";
 
 import React, { useEffect, useState, useTransition } from "react";
 import {

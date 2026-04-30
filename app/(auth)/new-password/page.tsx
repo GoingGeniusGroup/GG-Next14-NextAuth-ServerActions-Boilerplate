@@ -7,11 +7,12 @@ export const metadata: Metadata = {
   title: "Reset Password",
 };
 
-export default async function NewPassword({
-  searchParams,
-}: {
-  searchParams: { token: string };
-}) {
+export default async function NewPassword(
+  props: {
+    searchParams: Promise<{ token: string }>;
+  }
+) {
+  const searchParams = await props.searchParams;
   if (!searchParams.token) redirect("/");
   const resetPasswordToken = await getResetPasswordToken(searchParams.token);
   if (!resetPasswordToken) redirect("/");

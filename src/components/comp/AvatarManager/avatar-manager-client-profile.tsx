@@ -16,8 +16,7 @@ export default function AvatarManagerClientProfile({
   cameraTarget: number;
   avatarUrl?: string;
 }) {
-  "use cache";
-  const { selectedAvatar, currentEmote } = useAvatar();
+    const { selectedAvatar, currentEmote } = useAvatar();
 
   return (
     <>

@@ -1,14 +1,13 @@
 import GeniusUserHome from "@/src/components/GeniusUserProfile/GeniusUserHome";
 
 interface ProfileViewProps {
-  params: {
+  params: Promise<{
     username: string;
-  };
+  }>;
 }
 
-export default async function DefaultGeniusUserInfo({
-  params,
-}: ProfileViewProps) {
+export default async function DefaultGeniusUserInfo(props: ProfileViewProps) {
+  const params = await props.params;
   const username = params.username;
   return (
     <>
