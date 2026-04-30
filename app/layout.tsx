@@ -9,7 +9,8 @@ import { MobileSimulatorProvider } from "@/src/components/MobileSimulator/provid
 import { ThemeSwitcher } from "@/src/components/comp/ThemeToggler/ThemeSwitcher";
 import { UserProvider } from "@/src/hooks/UserProvider";
 import Providers from "@/src/providers/SessionProvider";
-import { AuroraBackground } from "@/src/ui/background/aurora-background";
+import dynamic from "next/dynamic";
+const AuroraBackground = dynamic(() => import("@/src/ui/background/aurora-background").then(mod => mod.AuroraBackground));
 import { Toaster } from "@/src/ui/sonner";
 import "@/styles/globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";

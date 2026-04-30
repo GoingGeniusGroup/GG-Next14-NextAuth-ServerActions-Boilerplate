@@ -1,6 +1,7 @@
 import { getCurrentUser } from "@/app/actions/genius-profile/userAndGuild";
 import { getUserByUsername } from "@/app/services/user";
-import VideoHomeClient from "@/src/components/home/video-home-client";
+import dynamic from "next/dynamic";
+const VideoHomeClient = dynamic(() => import("@/src/components/home/video-home-client"));
 import { Song } from "@/src/core/types/songs";
 import React from "react";
 
@@ -164,13 +165,13 @@ const VideoHomeServer = async () => {
 
   // Fetch all static users whose usernames are in the list
   const staticUsers = await Promise.all(
-    staticUsernames.map(async (username) => {
+    staticUsernames.map(async (username, index) => {
       const user = await getUserByUsername(username);
       return {
-        username: user?.username || "guest",
+        username: user?.username || `guest-${index}`,
         firstName: user?.first_name || "Unknown",
         role: user?.role || "User",
-        image: user?.image || "/default-avatar.png",
+        image: user?.image || `https://avatar.vercel.sh/${username}.png`,
       };
     })
   );

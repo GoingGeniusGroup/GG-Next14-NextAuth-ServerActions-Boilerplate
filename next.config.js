@@ -1,5 +1,21 @@
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    optimizePackageImports: [
+      '@mui/material',
+      'lucide-react',
+      '@tabler/icons-react',
+      'framer-motion',
+      'react-icons',
+      '@radix-ui/react-icons',
+      '@react-three/fiber',
+      '@react-three/drei'
+    ],
+  },
   images: {
     remotePatterns: [
       {
@@ -31,4 +47,4 @@ const nextConfig = {
   transpilePackages: ["swiper"],
 };
 
-module.exports = nextConfig;
+module.exports = withBundleAnalyzer(nextConfig);

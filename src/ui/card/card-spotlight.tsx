@@ -2,7 +2,8 @@
 
 import { useMotionValue, motion, useMotionTemplate } from "framer-motion";
 import React, { MouseEvent as ReactMouseEvent, useState } from "react";
-import { CanvasRevealEffect } from "@/src/ui/canvas/canvas-reveal-effect";
+import dynamic from "next/dynamic";
+const CanvasRevealEffect = dynamic(() => import("@/src/ui/canvas/canvas-reveal-effect").then((mod) => mod.CanvasRevealEffect), { ssr: false });
 import { cn } from "@/lib/utils";
 
 export const CardSpotlight = ({

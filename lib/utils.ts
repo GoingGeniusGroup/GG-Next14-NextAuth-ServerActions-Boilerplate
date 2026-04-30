@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { sign, verify, type SignOptions, type Secret } from "jsonwebtoken";
+import * as jose from "jose";
 import bcrypt from "bcryptjs";
 import {
   Response,
@@ -41,22 +41,24 @@ export function setTokenExpiration(exp: number = 60 * 60) {
  * @return The token generated
  */
 
-export function signJwt(
+export async function signJwt(
   payload: Record<string, unknown>,
-  options?: SignOptions
+  options?: any
 ) {
-  return sign(payload, process.env.JWT_SECRET as Secret, {
-    ...options,
-    algorithm: "HS256",
-  });
+  const secret = new TextEncoder().encode(process.env.JWT_SECRET || "secret");
+  return await new jose.SignJWT(payload)
+    .setProtectedHeader({ alg: "HS256" })
+    .setIssuedAt()
+    .sign(secret);
 }
 
-export const verifyJwtToken = <T extends object>(token: string) => {
+export const verifyJwtToken = async <T extends object>(token: string) => {
   try {
-    const decoded = verify(token, process.env.JWT_SECRET as Secret);
+    const secret = new TextEncoder().encode(process.env.JWT_SECRET || "secret");
+    const { payload } = await jose.jwtVerify(token, secret);
     return {
       valid: true,
-      decoded: decoded as T,
+      decoded: payload as T,
     };
   } catch (error) {
     return {

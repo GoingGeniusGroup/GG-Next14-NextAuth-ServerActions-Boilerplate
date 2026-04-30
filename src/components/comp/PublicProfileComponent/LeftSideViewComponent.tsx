@@ -2,7 +2,8 @@
 
 import { getUserAvatars } from "@/actions/genius-profile/avatar";
 import { getCurrentUser } from "@/actions/genius-profile/userAndGuild";
-import { Avatar } from "@/src/components/comp/Avatar";
+import dynamic from "next/dynamic";
+const Avatar = dynamic(() => import("@/src/components/comp/Avatar").then(mod => mod.Avatar), { ssr: false });
 import { useEffect, useState } from "react";
 
 interface LeftSideViewComponentProps {

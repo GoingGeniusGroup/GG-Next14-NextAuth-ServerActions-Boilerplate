@@ -19,7 +19,7 @@ export default async function TwoFactorPage() {
     redirect("/");
   }
 
-  const verifyToken = verifyJwtToken<z.infer<typeof loginSchema>>(
+  const verifyToken = await verifyJwtToken<z.infer<typeof loginSchema>>(
     credentials.value
   );
   if (!verifyToken.valid || !verifyToken.decoded) {
