@@ -20,7 +20,7 @@ export const BaseCanvas: FC<BaseCanvasProps> = ({
   fov = 50,
   position = new Vector3(0, 0, 5),
   style,
-  dpr = [BASE_DPR * 0.5, 2],
+  dpr = [1, 1.5],
   className,
 }) => (
   <Canvas

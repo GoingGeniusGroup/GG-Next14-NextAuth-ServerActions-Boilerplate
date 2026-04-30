@@ -47,7 +47,8 @@ export default function VideoHomeAvatarSlide() {
               <Image
                 src={avatar}
                 alt={`Avatar ${index + 1}`}
-                layout="fill"
+                fill
+                priority
                 className="rounded-full object-fit"
               />
             </div>

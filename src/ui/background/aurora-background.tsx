@@ -71,7 +71,7 @@ export const AuroraBackground = ({
           ></div>
         </div> */}
         <div className="absolute inset-0 z-0">
-          <Canvas>
+          <Canvas dpr={[1, 1.5]}>
             <Stars radius={50} count={2500} factor={4} fade speed={2} />
           </Canvas>
         </div>

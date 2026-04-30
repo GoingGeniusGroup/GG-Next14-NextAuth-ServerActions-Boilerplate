@@ -1,9 +1,8 @@
 import React, { FC, useRef } from "react";
 import { Mesh, TextureLoader } from "three";
-import { useLoader } from "@react-three/fiber";
-import { MeshProps } from "@react-three/fiber/dist/declarations/src/three-types";
+import { useLoader, ThreeElements } from "@react-three/fiber";
 
-export type Background = { src?: string; color?: string } & MeshProps;
+export type Background = { src?: string; color?: string } & ThreeElements["mesh"];
 
 export const Box: FC<Background> = ({ src = "", ...baseProps }) => {
   const ref = useRef<Mesh>(null);
@@ -11,7 +10,7 @@ export const Box: FC<Background> = ({ src = "", ...baseProps }) => {
 
   return (
     <mesh ref={ref} castShadow receiveShadow {...baseProps}>
-      <boxBufferGeometry />
+      <boxGeometry />
       <meshPhysicalMaterial map={texture} />
     </mesh>
   );

@@ -55,7 +55,7 @@ export default function ProductCategoriesComponent() {
   }: {
     iconName: keyof typeof LucideIcons;
   }) => {
-    const Icon = LucideIcons[iconName] as React.ElementType;
+    const Icon = LucideIcons[iconName] as any;
     return Icon ? <Icon className="h-6 w-6" /> : null;
   };
 

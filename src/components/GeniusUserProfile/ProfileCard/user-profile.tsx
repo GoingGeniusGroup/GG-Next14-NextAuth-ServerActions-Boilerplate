@@ -15,7 +15,9 @@ interface UserProfileProps {
   className?: string; // Added optional className prop
 }
 
-export function UserProfile({
+import React, { memo } from "react";
+
+export const UserProfile = memo(function UserProfile({
   username,
   name,
   role,
@@ -78,4 +80,4 @@ export function UserProfile({
       </Card>
     </div>
   );
-}
+});

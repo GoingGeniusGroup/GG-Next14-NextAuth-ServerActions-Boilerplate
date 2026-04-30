@@ -14,7 +14,7 @@ import {
   Group,
 } from "three";
 import { useFrame } from "@react-three/fiber";
-import type { ObjectMap, SkinnedMeshProps } from "@react-three/fiber";
+import type { ObjectMap, ThreeElements } from "@react-three/fiber";
 import { GLTF, GLTFLoader, DRACOLoader } from "three-stdlib";
 import { suspend } from "suspend-react";
 import { Emotion } from "@/src/components/comp/Avatar/Avatar.component";
@@ -404,7 +404,7 @@ export const useIdleExpression = (
   nodes: Nodes
 ) => {
   const headMesh = (nodes.Wolf3D_Head ||
-    nodes.Wolf3D_Avatar) as unknown as SkinnedMeshProps;
+    nodes.Wolf3D_Avatar) as unknown as SkinnedMesh;
   const selectedExpression =
     expression in expressions ? expressions[expression] : undefined;
   const timeout = useRef<NodeJS.Timeout>();
