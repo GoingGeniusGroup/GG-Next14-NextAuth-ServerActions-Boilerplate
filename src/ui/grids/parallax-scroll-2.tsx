@@ -3,7 +3,7 @@ import { useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { cn } from "@/lib/utils";
+import { cn, getUploadcareUrl } from "@/lib/utils";
 
 export const ParallaxScrollSecond = ({
   images,
@@ -52,7 +52,7 @@ export const ParallaxScrollSecond = ({
               key={"grid-1" + idx}
             >
               <Image
-                src={el}
+                src={getUploadcareUrl(el)}
                 className="h-80 w-full object-cover object-left-top rounded-lg gap-10 !m-0 !p-0"
                 height="400"
                 width="400"
@@ -67,7 +67,7 @@ export const ParallaxScrollSecond = ({
           {secondPart.map((el, idx) => (
             <motion.div key={"grid-2" + idx}>
               <Image
-                src={el}
+                src={getUploadcareUrl(el)}
                 className="h-80 w-full object-cover object-left-top rounded-lg gap-10 !m-0 !p-0"
                 height="400"
                 width="400"
@@ -89,7 +89,7 @@ export const ParallaxScrollSecond = ({
               key={"grid-3" + idx}
             >
               <Image
-                src={el}
+                src={getUploadcareUrl(el)}
                 className="h-80 w-full object-cover object-left-top rounded-lg gap-10 !m-0 !p-0"
                 height="400"
                 width="400"
@@ -104,3 +104,4 @@ export const ParallaxScrollSecond = ({
     </div>
   );
 };
+

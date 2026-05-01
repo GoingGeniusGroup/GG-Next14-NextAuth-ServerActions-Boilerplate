@@ -17,6 +17,8 @@ interface UserProfileProps {
 
 import React, { memo } from "react";
 
+import { getUploadcareUrl } from "@/lib/utils";
+
 export const UserProfile = memo(function UserProfile({
   username,
   name,
@@ -52,7 +54,7 @@ export const UserProfile = memo(function UserProfile({
         <CardContent className="relative overflow-hidden w-full h-full flex items-center p-0">
           <div className="w-full h-full relative">
             <Image
-              src={avatarUrl}
+              src={getUploadcareUrl(avatarUrl)}
               alt={name}
               fill
               className="object-cover"

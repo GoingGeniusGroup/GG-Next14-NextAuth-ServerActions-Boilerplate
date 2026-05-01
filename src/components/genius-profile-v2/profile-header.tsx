@@ -48,6 +48,7 @@ import { FaGithub, FaSteam } from "react-icons/fa";
 import { AiFillInstagram } from "react-icons/ai";
 import { SiFacebook } from "react-icons/si";
 import { BsGoogle } from "react-icons/bs";
+import { getUploadcareUrl } from "@/lib/utils";
 
 type socialvalueType = {
   name: socialType;
@@ -69,7 +70,7 @@ const socials: socialvalueType[] = [
   {
     name: socialType.STEAM,
     icon: <FaSteam />,
-    link: "https://tiktok.com",
+    link: "https://steamcommunity.com",
   },
   {
     name: socialType.INSTAGRAM,
@@ -139,13 +140,17 @@ const ProfileInfo = memo(
     fullName: string;
     username: string;
     bio: string;
-    age: number;
+    age: number | null;
   }) => (
     <div className="space-y-4">
       <p className="text-lg leading-relaxed max-w-2xl">{bio}</p>
       <div className="flex items-center space-x-2 text-gray-400">
-        <span className="text-cyan-500">{age} years old</span>
-        <span>•</span>
+        {age !== null && (
+          <>
+            <span className="text-cyan-500">{age} years old</span>
+            <span>•</span>
+          </>
+        )}
         <span>Joined 2023</span>
       </div>
     </div>
@@ -153,8 +158,11 @@ const ProfileInfo = memo(
 );
 ProfileInfo.displayName = "ProfileInfo";
 
-const calculateAge = (dob: string) => {
+const calculateAge = (dob: string | Date | null | undefined) => {
+  if (!dob) return null;
   const birthDate = new Date(dob);
+  if (isNaN(birthDate.getTime())) return null;
+  
   const today = new Date();
   let age = today.getFullYear() - birthDate.getFullYear();
   const monthDiff = today.getMonth() - birthDate.getMonth();
@@ -189,7 +197,7 @@ const ProfileHeader = ({
   xp,
   level,
 }: ProfileHeaderProps) => {
-  const age = useMemo(() => calculateAge(dob.toString()), [dob]);
+  const age = useMemo(() => calculateAge(dob), [dob]);
   const xpProgress = useMemo(() => calculateXpProgress(xp), [xp]);
 
   let ref = useRef<HTMLDivElement>(null);
@@ -266,7 +274,7 @@ const ProfileHeader = ({
               <div
                 className="absolute inset-0"
                 style={{
-                  backgroundImage: `url(${coverPic})`,
+                  backgroundImage: `url(${getUploadcareUrl(coverPic)})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
@@ -308,7 +316,7 @@ const ProfileHeader = ({
                     <DialogTrigger asChild>
                       <div>
                         <Tooltip>
-                          <TooltipTrigger>
+                          <TooltipTrigger asChild>
                             <IconButton
                               onClick={handleCreateAvatar}
                               icon={
@@ -378,7 +386,7 @@ const ProfileHeader = ({
             <div className="space-y-4">
               <div className="flex items-center space-x-4">
                 <Avatar className="w-20 h-20 border-2 border-cyan-500 hover:border-yellow-600 transition-colors duration-300 ease-in-out shadow shadow-cyan-500 hover:shadow-yellow-500">
-                  <AvatarImage src={profilePic} alt={fullName} />
+                  <AvatarImage src={getUploadcareUrl(profilePic)} alt={fullName} />
                   <AvatarFallback>{fullName.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <div className="w-full">
@@ -386,18 +394,16 @@ const ProfileHeader = ({
                     <h1>{fullName}</h1>
                     <div className="flex items-start -mt-6 gap-2">
                       <Tooltip>
-                        <TooltipTrigger>
-                          <div>
-                            <Button
-                              onClick={() => setPopupOpen(true)}
-                              variant="transparent"
-                              size="mini2"
-                              aria-label="Share Button"
-                              className="text-cyan-500 dark:text-green-500 rounded-full hover:text-yellow-500 border border-cyan-500/50 dark:border-green-500/50"
-                            >
-                              <IoShareSocialSharp size={20} />
-                            </Button>
-                          </div>
+                        <TooltipTrigger asChild>
+                          <Button
+                            onClick={() => setPopupOpen(true)}
+                            variant="transparent"
+                            size="mini2"
+                            aria-label="Share Button"
+                            className="text-cyan-500 dark:text-green-500 rounded-full hover:text-yellow-500 border border-cyan-500/50 dark:border-green-500/50"
+                          >
+                            <IoShareSocialSharp size={20} />
+                          </Button>
                         </TooltipTrigger>
                         <TooltipContent>
                           <span className="text-green-500">Share</span>
@@ -458,12 +464,12 @@ const ProfileHeader = ({
                               <CardContent className="relative pt-6 pb-1">
                                 <div className="flex flex-col items-center space-y-1 w-full">
                                   <Image
-                                    src={
+                                    src={getUploadcareUrl(
                                       avatar.avatar_url?.replace(
                                         ".glb",
                                         ".png"
                                       ) || "/placeholder-avatar.png"
-                                    }
+                                    )}
                                     alt="Avatar"
                                     width={128}
                                     height={128}

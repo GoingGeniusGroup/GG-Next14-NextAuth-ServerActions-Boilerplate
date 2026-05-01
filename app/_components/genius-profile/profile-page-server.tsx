@@ -27,12 +27,12 @@ export default async function ProfilePage({ username }: { username: string }) {
         ? profileOwnerResult.value
         : null;
 
-    if (!profileOwner || !currentUser) {
-      throw new Error("Required data not available");
+    if (!profileOwner) {
+      return <UserNotFound username={username} />;
     }
 
-    const isLoggedUserProfile = currentUser.username === username;
-    const user = isLoggedUserProfile ? currentUser : profileOwner;
+    const isLoggedUserProfile = !!(currentUser && currentUser.username === username);
+    const user = isLoggedUserProfile ? currentUser! : profileOwner;
 
     // Prefetch the next data to prevent waterfall
     const [imagePosts, experiences] = await Promise.all([
@@ -45,7 +45,10 @@ export default async function ProfilePage({ username }: { username: string }) {
 
     const profileData = {
       username,
-      fullName: `${user.first_name} ${user.last_name}`,
+      fullName:
+        user.first_name || user.last_name
+          ? `${user.first_name ?? ""} ${user.last_name ?? ""}`.trim()
+          : username,
       firstName: user.first_name || "",
       lastName: user.last_name || "",
       dob: user.dob || "",
@@ -71,7 +74,7 @@ export default async function ProfilePage({ username }: { username: string }) {
         imagePosts={imagePosts}
         experiences={experiences}
         loggedUserAvatarUrl={
-          currentUser.avatar?.[0]?.avatar_url ||
+          currentUser?.avatar?.[0]?.avatar_url ||
           "https://models.readyplayer.me/658be9e8fc8bec93d06806f3.glb?morphTargets=ARKit,Eyes Extra&textureAtlas=none&lod=0"
         }
       />

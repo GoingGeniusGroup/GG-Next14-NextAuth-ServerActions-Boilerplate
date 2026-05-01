@@ -28,6 +28,14 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "demo.ucarecd.net",
+      },
+      {
+        protocol: "https",
+        hostname: "1mk1fumvci.ucarecd.net",
+      },
+      {
+        protocol: "https",
         hostname: "avatars.githubusercontent.com",
       },
       {

@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, CardContent } from "@/src/ui/card";
 import Image from "next/image";
+import { getUploadcareUrl } from "@/lib/utils";
 
 type Post = {
   id: number;
@@ -24,7 +25,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post, layout }) => {
             style={{ aspectRatio: "16/9" }}
           >
             <Image
-              src={post.image}
+              src={getUploadcareUrl(post.image)}
               alt={post.title}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -48,7 +49,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post, layout }) => {
         {(layout === "headings" || layout === "compact") && (
           <div className="relative w-16 h-16 ml-4">
             <Image
-              src={post.image}
+              src={getUploadcareUrl(post.image)}
               alt={post.title}
               fill
               sizes="64px"
@@ -60,3 +61,4 @@ export const PostCard: React.FC<PostCardProps> = ({ post, layout }) => {
     </Card>
   );
 };
+

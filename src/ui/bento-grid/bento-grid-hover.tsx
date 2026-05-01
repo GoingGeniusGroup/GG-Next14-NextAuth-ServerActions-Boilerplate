@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { Lens } from "../lens/lens";
+import { getUploadcareUrl } from "@/lib/utils";
 
 export const BentoGridHover = ({
   className,
@@ -43,6 +44,8 @@ export const BentoGridHoverItem = ({
   onMouseLeave?: () => void;
   isHovered?: boolean;
 }) => {
+  const imageUrl = getUploadcareUrl(header);
+
   return (
     <div
       className={cn(
@@ -77,7 +80,7 @@ export const BentoGridHoverItem = ({
           <Lens lensSize={70}>
             <div className="relative w-full aspect-[4/3]">
               <Image
-                src={header ?? ""}
+                src={imageUrl}
                 alt={typeof title === "string" ? title : ""}
                 height={100}
                 width={100}

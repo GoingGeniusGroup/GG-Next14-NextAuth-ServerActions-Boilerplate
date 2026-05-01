@@ -85,3 +85,30 @@ export function response<T>(response: ResponseSuccess<T>): Response<T>;
 export function response<T>(response: Response<T>): Response<T> {
   return response;
 }
+
+/**
+ * Formats an Uploadcare URL to ensure it uses the correct CDN domain and has the required operations.
+ */
+export const getUploadcareUrl = (url: string | null | undefined): string => {
+  if (!url) return "";
+
+  // Handle case where it might be a relative path or already formatted
+  if (url.startsWith("/") && !url.includes("ucarecd")) return url;
+
+  // Use the working custom domain provided by the user
+  let formattedUrl = url
+    .replace("ucarecdn.com", "1mk1fumvci.ucarecd.net")
+    .replace("demo.ucarecd.net", "1mk1fumvci.ucarecd.net");
+
+  // Ensure the URL ends with /-/preview/ for correct CDN fetching
+  if (
+    formattedUrl.includes("ucarecd.net") &&
+    !formattedUrl.includes("-/preview")
+  ) {
+    formattedUrl = formattedUrl.endsWith("/")
+      ? `${formattedUrl}-/preview/`
+      : `${formattedUrl}/-/preview/`;
+  }
+
+  return formattedUrl;
+};

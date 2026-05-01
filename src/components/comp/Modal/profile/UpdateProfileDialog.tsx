@@ -45,7 +45,7 @@ const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
       <DialogTrigger asChild>
         <div>
           <Tooltip>
-            <TooltipTrigger>
+            <TooltipTrigger asChild>
               <Button
                 variant="transparent"
                 size="mini2"

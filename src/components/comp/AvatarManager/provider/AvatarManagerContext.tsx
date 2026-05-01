@@ -13,11 +13,12 @@ import {
   addAvatar,
   deleteAvatar,
   updateAvatar,
+  getUserAvatars,
 } from "@/actions/genius-profile/avatar";
 import { AvatarExportedEvent } from "@/components/comp/AvatarComponents/avatar_creator/events";
 import { AvatarResponse } from "@/core/types/utils";
 import { toast } from "sonner";
-import { getAvatarsByUserId } from "@/services/avatar";
+
 
 // Types
 export type AvatarType = {
@@ -153,10 +154,10 @@ export function AvatarProvider({
 
   useEffect(() => {
     const fetchAvatars = async () => {
-      const fetchedAvatars = await getAvatarsByUserId(user);
-      if (fetchedAvatars) {
+      const response = await getUserAvatars(user);
+      if (response.success && Array.isArray(response.data)) {
         setAvatars(
-          fetchedAvatars.map((avatar) => ({
+          response.data.map((avatar: any) => ({
             avatar_id: avatar.avatar_id,
             avatar_url: avatar.avatar_url || undefined,
           }))

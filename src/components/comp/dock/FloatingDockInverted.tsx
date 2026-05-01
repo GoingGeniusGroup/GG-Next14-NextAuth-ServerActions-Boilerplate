@@ -85,11 +85,15 @@ export default function FloatingDockInvertedComponent() {
     //   icon: <IconPhotoStar className="size-full" />,
     //   href: "/posts",
     // },
-    {
-      title: "Profile",
-      icon: <IconUser className="size-full" />,
-      href: `/genius-profile/${username}`,
-    },
+    ...(username
+      ? [
+          {
+            title: "Profile",
+            icon: <IconUser className="size-full" />,
+            href: `/genius-profile/${username}`,
+          },
+        ]
+      : []),
     // {
     //   title: "Profile Parallel Routing",
     //   icon: <Icon3dRotate className="size-full" />,

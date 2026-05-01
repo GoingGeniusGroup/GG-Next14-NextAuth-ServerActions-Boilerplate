@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import React, { useState } from "react";
-import { cn } from "@/lib/utils";
+import { cn, getUploadcareUrl } from "@/lib/utils";
 
 export const Card = React.memo(
   ({
@@ -25,7 +25,7 @@ export const Card = React.memo(
       )}
     >
       <Image
-        src={card.src}
+        src={getUploadcareUrl(card.src)}
         alt={card.title}
         fill
         className="object-cover absolute inset-0"

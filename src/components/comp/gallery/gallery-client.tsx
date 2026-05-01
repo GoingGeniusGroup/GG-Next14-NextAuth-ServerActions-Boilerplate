@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "@/src/ui/button";
 import { IconTrash, IconX, IconZoomIn, IconZoomOut } from "@tabler/icons-react";
+import { getUploadcareUrl } from "@/lib/utils";
 import {
   Dialog,
   DialogContent,
@@ -85,7 +86,7 @@ export const GalleryGrid = ({
             onClick={() => handleImageClick(card)}
           >
             <Image
-              src={card.thumbnail}
+              src={getUploadcareUrl(card.thumbnail)}
               alt={`Gallery image ${card.index}`}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
@@ -105,7 +106,7 @@ export const GalleryGrid = ({
               {loggedUserProfile && (
                 <div className="absolute top-2 right-2">
                   <Tooltip>
-                    <TooltipTrigger>
+                    <TooltipTrigger asChild>
                       <Button
                         variant="ghost"
                         className=" p-2 bg-red-500/80 hover:bg-red-600/80"
@@ -155,7 +156,7 @@ export const GalleryGrid = ({
                 } bg-gray-100 dark:bg-gray-800`}
               >
                 <Image
-                  src={selectedImage.thumbnail}
+                  src={getUploadcareUrl(selectedImage.thumbnail)}
                   alt={`Full size image ${selectedImage.index}`}
                   fill
                   className={`${isZoomed ? "object-contain" : "object-cover"}`}

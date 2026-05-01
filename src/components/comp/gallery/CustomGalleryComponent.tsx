@@ -5,6 +5,7 @@ import { getUserByUsername } from "@/services/user";
 import { imagePostType } from "../Forms/UploadImagesGalleryForm";
 import { GalleryGrid } from "@/src/ui/grids/gallery-grid";
 import Image from "next/image";
+import { getUploadcareUrl } from "@/lib/utils";
 
 export default async function CustomGalleryComponent({
   username,
@@ -38,18 +39,22 @@ export default async function CustomGalleryComponent({
     ) || [];
 
   const cards =
-    convertedImagePosts.map((img_post, index) => ({
+    convertedImagePosts.map((img_post, index) => {
+      const imageUrl = getUploadcareUrl(img_post.image_url);
+      
+      return {
       img_id: img_post.img_id,
       index: index,
       content: (
         <div className="flex flex-col justify-between h-full">
           <div className="flex-1">
             <Image
-              src={img_post.image_url}
+              src={imageUrl}
               alt="gallery"
               width={100}
               height={100}
               className="object-cover w-full h-full"
+              unoptimized
             />
           </div>
           <div className="flex justify-between items-center py-2">
@@ -58,8 +63,9 @@ export default async function CustomGalleryComponent({
         </div>
       ),
       className: index % 2 === 0 ? "md:col-span-2" : "col-span-1",
-      thumbnail: img_post.image_url,
-    })) || [];
+      thumbnail: imageUrl,
+    };
+  }) || [];
 
   return (
     <>

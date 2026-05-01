@@ -37,7 +37,7 @@ const UploadGalleryDialog: React.FC<UploadGalleryDialogProps> = ({
       <DialogTrigger asChild>
         <div>
           <Tooltip>
-            <TooltipTrigger>
+            <TooltipTrigger asChild>
               <MovingBorderButton
                 borderRadius="1.75rem"
                 className="bg-white size-10 dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800"

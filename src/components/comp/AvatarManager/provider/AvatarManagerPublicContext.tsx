@@ -8,8 +8,10 @@ import {
   useEffect,
 } from "react";
 
-import { getAvatarsByUserId } from "@/services/avatar";
-import { getUserByUsername } from "@/services/user";
+import { 
+  getUserByUsernameAction, 
+  getAvatarsByUserIdAction 
+} from "@/actions/genius-profile/user-data";
 
 // Types
 export type AvatarType = {
@@ -97,7 +99,7 @@ export function PublicAvatarProvider({
 
   useEffect(() => {
     const fetchAvatars = async () => {
-      const profileOwner = await getUserByUsername(username);
+      const profileOwner = await getUserByUsernameAction(username);
       setCurrentProfileOwner(profileOwner);
       // if (profileOwner) {
       //   console.log("if statement working------->");
@@ -127,7 +129,7 @@ export function PublicAvatarProvider({
     // Only fetch avatars if currentProfileOwner exists
     if (currentProfileOwner?.gg_id) {
       const fetchAvatars = async () => {
-        const fetchedAvatars = await getAvatarsByUserId(
+        const fetchedAvatars = await getAvatarsByUserIdAction(
           currentProfileOwner.gg_id
         );
         if (fetchedAvatars) {

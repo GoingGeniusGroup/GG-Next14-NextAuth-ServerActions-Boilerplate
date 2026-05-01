@@ -107,7 +107,7 @@ const MusicPlayerMinimized: React.FC = () => {
           {/* Player Controls */}
           <div className="flex items-center space-x-3">
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <button
                   onClick={playPrevious}
                   className=" text-gray-300 hover:text-white"
@@ -120,7 +120,7 @@ const MusicPlayerMinimized: React.FC = () => {
               </TooltipContent>
             </Tooltip>
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <button
                   onClick={isPlaying ? pause : play}
                   className="bg-sky-500 hover:bg-sky-600 text-white rounded-full p-1.5 transition-transform transform hover:scale-105"
@@ -138,7 +138,7 @@ const MusicPlayerMinimized: React.FC = () => {
             </Tooltip>
 
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <button
                   onClick={playNext}
                   className=" text-gray-300 hover:text-white"
@@ -155,7 +155,7 @@ const MusicPlayerMinimized: React.FC = () => {
           {/* Volume and Loop */}
           <div className="flex items-center space-x-2">
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <button
                   onClick={toggleRepeat}
                   className={`transition-colors ${
@@ -172,7 +172,7 @@ const MusicPlayerMinimized: React.FC = () => {
               </TooltipContent>
             </Tooltip>
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <button
                   onClick={() => setVolume(volume > 0 ? 0 : 0.5)}
                   className="text-gray-300 hover:text-white"

@@ -231,7 +231,7 @@ const VideoHomeClient: React.FC<VideoHomeClientProps> = ({
           {/* Play/Pause Button */}
           <div className="absolute bottom-[68px] right-6 z-30 flex flex-col gap-2 items-center">
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <IconButton
                   onClick={togglePlayPause}
                   icon={

@@ -78,7 +78,7 @@ const MusicPlayerMobile: React.FC = () => {
         {/* Volume and Loop */}
         <div className="flex items-center space-x-2">
           <Tooltip>
-            <TooltipTrigger>
+            <TooltipTrigger asChild>
               <button
                 onClick={toggleRepeat}
                 className={`transition-colors ${
@@ -95,7 +95,7 @@ const MusicPlayerMobile: React.FC = () => {
             </TooltipContent>
           </Tooltip>
           <Tooltip>
-            <TooltipTrigger>
+            <TooltipTrigger asChild>
               <button
                 onClick={() => setVolume(volume > 0 ? 0 : 0.5)}
                 className="hover:text-sky-600"
@@ -154,7 +154,7 @@ const MusicPlayerMobile: React.FC = () => {
           {/* Player Controls */}
           <div className="flex items-center space-x-3">
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <button onClick={playPrevious} className=" hover:text-sky-600">
                   <TrackPreviousIcon className="w-3 h-3" />
                 </button>
@@ -164,7 +164,7 @@ const MusicPlayerMobile: React.FC = () => {
               </TooltipContent>
             </Tooltip>
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <button
                   onClick={isPlaying ? pause : play}
                   className="bg-sky-500 hover:bg-sky-600 rounded-full p-1.5 transition-transform transform hover:scale-105"
@@ -182,7 +182,7 @@ const MusicPlayerMobile: React.FC = () => {
             </Tooltip>
 
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <button onClick={playNext} className=" hover:text-sky-600">
                   <TrackNextIcon className="w-3 h-3" />
                 </button>

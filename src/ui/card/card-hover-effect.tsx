@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn, getUploadcareUrl } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -74,7 +74,7 @@ export const HoverEffect = ({
           <Lens lensSize={70}>
             <div className="relative w-full aspect-[5/3]">
               <Image
-                src={item.image || "/api/placeholder/600/450"}
+                src={getUploadcareUrl(item.image || "/api/placeholder/600/450")}
                 alt={item.title}
                 fill
                 className="rounded-xl object-cover"

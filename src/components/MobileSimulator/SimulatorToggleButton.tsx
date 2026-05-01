@@ -25,7 +25,7 @@ export default function SimulatorToggleButton({
     >
       {/* Toggle button for mobile view */}
       <Tooltip>
-        <TooltipTrigger>
+        <TooltipTrigger asChild>
           <IconButton
             onClick={() => setShowMobile(!showMobile)}
             icon={<Smartphone className="size-4 text-black dark:text-white" />}

@@ -1,6 +1,7 @@
 "use client";
 import UpdateProfileDialog from "../Modal/profile/UpdateProfileDialog";
 import Image from "next/image";
+import { getUploadcareUrl } from "@/lib/utils";
 import SmallPreviewCard from "../card/SmallPreviewCard";
 import UpdateCoverPhotoDialog from "../Modal/profile/UpdateCoverPhotoDialog";
 import {
@@ -43,7 +44,7 @@ const socials: socialvalueType[] = [
   {
     name: socialType.STEAM,
     icon: <FaSteam size={38} color="#1b2838" />,
-    link: "https://tiktok.com",
+    link: "https://steamcommunity.com",
   },
   {
     name: socialType.INSTAGRAM,
@@ -118,34 +119,34 @@ export default function AboutSectionProfile({
           </div>
         </div>
 
-        {/* User profile content */}
-        <div className="flex flex-col gap-4">
-          <Image
-            src={
-              userInfo.cover_images && userInfo.cover_images.length > 0
-                ? userInfo.cover_images[0]
-                : "/default-pictures/cover-image.png"
-            }
-            alt="Cover picture"
-            fill
-            className="object-cover rounded-lg"
-            unoptimized
-            loading="lazy"
-          />
-          <div className="absolute inset-0 bg-white/30 dark:bg-black/30 rounded-lg"></div>
+          {/* User profile content */}
+          <div className="flex flex-col gap-4">
+            <Image
+              src={getUploadcareUrl(
+                userInfo.cover_images && userInfo.cover_images.length > 0
+                  ? userInfo.cover_images[0]
+                  : "/default-pictures/cover-image.png"
+              )}
+              alt="Cover picture"
+              fill
+              className="object-cover rounded-lg"
+              unoptimized
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-white/30 dark:bg-black/30 rounded-lg"></div>
 
-          {/* Username */}
-          <div className="flex items-center gap-2 text-black dark:text-gray-300">
-            <div className="relative size-8 rounded-full overflow-hidden border-2 hover:border-[#FCBB3F]/60">
-              <Image
-                src={userInfo.image || "/default-pictures/profile.png"}
-                alt="Profile picture"
-                fill
-                className="object-cover z-0"
-                unoptimized
-                loading="lazy"
-              />
-            </div>
+            {/* Username */}
+            <div className="flex items-center gap-2 text-black dark:text-gray-300">
+              <div className="relative size-8 rounded-full overflow-hidden border-2 hover:border-[#FCBB3F]/60">
+                <Image
+                  src={getUploadcareUrl(userInfo.image || "/default-pictures/profile.png")}
+                  alt="Profile picture"
+                  fill
+                  className="object-cover z-0"
+                  unoptimized
+                  loading="lazy"
+                />
+              </div>
             <span className="uppercase font-bold z-10">
               {userInfo.username || "Username"}
             </span>

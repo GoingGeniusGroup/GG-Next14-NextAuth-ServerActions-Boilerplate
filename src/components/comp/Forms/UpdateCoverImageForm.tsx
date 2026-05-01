@@ -1,4 +1,5 @@
 "use client";
+import { getUploadcareUrl } from "@/lib/utils";
 
 import { Button } from "@/src/ui/button";
 import { Form, FormField, FormItem, FormMessage } from "@/src/ui/form";
@@ -108,7 +109,7 @@ export default function UpdateCoverImageForm({
                   {field.value?.length > 0 && (
                     <div className="relative size-8 rounded-full overflow-hidden">
                       <Image
-                        src={field.value[0]}
+                        src={getUploadcareUrl(field.value[0])}
                         alt="Cover picture"
                         fill
                         className="object-cover"

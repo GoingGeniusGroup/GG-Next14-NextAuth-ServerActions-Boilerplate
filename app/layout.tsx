@@ -64,7 +64,7 @@ export default async function RootLayout({
   if (!user) {
     return (
       <>
-        <html lang="en" className="h-full">
+        <html lang="en" className="h-full" suppressHydrationWarning>
           <body className={inter.className}>
             <Toaster position="bottom-left" richColors theme="light" />
             <Providers>
@@ -125,7 +125,7 @@ export default async function RootLayout({
       : [];
 
   return (
-    <html lang="en" className="h-full">
+    <html lang="en" className="h-full" suppressHydrationWarning>
       <body className={inter.className}>
         <Toaster position="bottom-left" richColors theme="light" />
         <Providers>

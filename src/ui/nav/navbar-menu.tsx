@@ -1,4 +1,5 @@
 "use client";
+import { getUploadcareUrl } from "@/lib/utils";
 import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -91,7 +92,7 @@ export const ProductItem = ({
   return (
     <Link href={href} className="flex space-x-2">
       <Image
-        src={src}
+        src={getUploadcareUrl(src)}
         width={140}
         height={70}
         alt={title}

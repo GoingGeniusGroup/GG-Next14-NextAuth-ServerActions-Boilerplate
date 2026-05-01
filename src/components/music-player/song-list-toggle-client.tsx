@@ -24,7 +24,7 @@ const SongListToggleClient = ({ songs }: { songs: Song[] }) => {
   return (
     <div className={`${pathname == "/" ? "" : "hidden"}`}>
       <Tooltip>
-        <TooltipTrigger>
+        <TooltipTrigger asChild>
           <IconButton
             onClick={toggleSongList}
             icon={

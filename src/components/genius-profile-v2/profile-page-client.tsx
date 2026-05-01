@@ -12,6 +12,8 @@ import {
   ReactPortal,
 } from "react";
 import { useSearchParams } from "next/navigation";
+import { getUploadcareUrl } from "@/lib/utils";
+
 import ProfileHeader from "./profile-header";
 import GalleryClient from "../comp/gallery/gallery-client";
 import GeniusUserProjectsV2 from "../GeniusUserProfile/GeniusUserProjectsV2";
@@ -113,7 +115,7 @@ export default function ProfilePageClient({
             <div className="flex flex-col justify-between h-full">
               <div className="flex-1">
                 <Image
-                  src={img_post.image_url}
+                  src={getUploadcareUrl(img_post.image_url as string)}
                   alt="gallery"
                   width={100}
                   height={100}
@@ -126,7 +128,7 @@ export default function ProfilePageClient({
             </div>
           ),
           className: index % 2 === 0 ? "md:col-span-2" : "col-span-1",
-          thumbnail: img_post.image_url,
+          thumbnail: getUploadcareUrl(img_post.image_url as string),
         })
       ) || [],
     [convertedImagePosts]

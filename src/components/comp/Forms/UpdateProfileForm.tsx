@@ -1,4 +1,5 @@
 "use client";
+import { getUploadcareUrl } from "@/lib/utils";
 
 import { Button } from "@/src/ui/button/button";
 import {
@@ -228,7 +229,7 @@ export default function UpdateProfileForm({
                   {field.value && (
                     <div className="relative size-8 rounded-full overflow-hidden">
                       <Image
-                        src={field.value}
+                        src={getUploadcareUrl(field.value)}
                         alt="Profile picture"
                         fill
                         className="object-cover"

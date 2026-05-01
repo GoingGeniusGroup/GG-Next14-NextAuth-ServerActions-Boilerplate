@@ -33,7 +33,7 @@ const UpdateProfileDialog: React.FC<UpdateCoverPhotoDialogProps> = ({
       <DialogTrigger asChild>
         <div>
           <Tooltip>
-            <TooltipTrigger>
+            <TooltipTrigger asChild>
               <IconButton
                 icon={
                   <IconPhotoEdit

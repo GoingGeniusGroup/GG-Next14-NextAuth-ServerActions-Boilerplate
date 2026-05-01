@@ -269,12 +269,17 @@ loader.setDRACOLoader(dracoLoader);
 export const useGltfLoader = (source: Blob | string): GLTF =>
   suspend(
     async () => {
-      if (source instanceof Blob) {
-        const buffer = await source.arrayBuffer();
-        return (await loader.parseAsync(buffer, "")) as unknown as GLTF;
-      }
+      try {
+        if (source instanceof Blob) {
+          const buffer = await source.arrayBuffer();
+          return (await loader.parseAsync(buffer, "")) as unknown as GLTF;
+        }
 
-      return loader.loadAsync(source);
+        return await loader.loadAsync(source);
+      } catch (error) {
+        console.error("Failed to load 3D model:", source, error);
+        throw error;
+      }
     },
     [source],
     { lifespan: 100 }

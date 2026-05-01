@@ -45,7 +45,7 @@ const ExperienceDialog: React.FC<ExperienceDialogProps> = ({
         <div>
           {!experience_id ? (
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <MovingBorderButton
                   borderRadius="1.75rem"
                   className="bg-white size-10 dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800"
@@ -59,7 +59,7 @@ const ExperienceDialog: React.FC<ExperienceDialogProps> = ({
             </Tooltip>
           ) : (
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <Button
                   variant="ghost"
                   size="mini"

@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "../button/button";
 import { IconTrash, IconX } from "@tabler/icons-react";
+import { getUploadcareUrl } from "@/lib/utils";
 import {
   Dialog,
   DialogContent,
@@ -69,7 +70,7 @@ export const GalleryGrid = ({
             onClick={() => setSelectedImage(card)}
           >
             <Image
-              src={card.thumbnail}
+              src={getUploadcareUrl(card.thumbnail)}
               alt={`Gallery image ${card.index}`}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
@@ -124,7 +125,7 @@ export const GalleryGrid = ({
             >
               <div className="relative aspect-[16/9] w-full bg-gray-100 dark:bg-gray-800">
                 <Image
-                  src={selectedImage.thumbnail}
+                  src={getUploadcareUrl(selectedImage.thumbnail)}
                   alt={`Full size image ${selectedImage.index}`}
                   fill
                   className="object-contain"

@@ -93,7 +93,7 @@ const MobileUI: React.FC<MobileInterfaceProps> = ({
             className="flex justify-center items-center"
           >
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <IconButton
                   onClick={() => toggleScreen(section)}
                   icon={

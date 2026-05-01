@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn, getUploadcareUrl } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
@@ -93,7 +93,7 @@ export const BentoGridHoverItemV2 = ({
         <div className="relative z-10 h-full rounded-lg transition duration-200 bg-white dark:bg-gray-900 flex flex-col">
           <div className="relative w-full h-48 md:h-64">
             <Image
-              src={header ?? "/placeholder.svg"}
+              src={getUploadcareUrl(header ?? "/placeholder.svg")}
               alt={typeof title === "string" ? title : "Project Image"}
               layout="fill"
               objectFit="cover"

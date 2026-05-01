@@ -320,7 +320,7 @@ const Avatar: FC<AvatarProps> = ({
       {capture && <Capture {...capture} />}
       {background?.color && <BackgroundColor color={background.color} />}
       {(effects?.ambientOcclusion || effects?.bloom || effects?.vignette) && (
-        <EffectComposer autoClear multisampling={4}>
+        <EffectComposer autoClear multisampling={2}>
           <>
             {effects?.ambientOcclusion && (
               <SSAO
@@ -368,12 +368,16 @@ const Avatar: FC<AvatarProps> = ({
   );
 };
 
+import ErrorBoundary from "../AvatarComponents/ErrorBoundary";
+
 const AvatarWrapper = (props: AvatarProps) => (
-  <Suspense fallback={props.loader ?? <Loader />}>
-    <Provider>
-      <Avatar {...props} />
-    </Provider>
-  </Suspense>
+  <ErrorBoundary fallback={props.loader ?? <Loader />}>
+    <Suspense fallback={props.loader ?? <Loader />}>
+      <Provider>
+        <Avatar {...props} />
+      </Provider>
+    </Suspense>
+  </ErrorBoundary>
 );
 
 export default AvatarWrapper;

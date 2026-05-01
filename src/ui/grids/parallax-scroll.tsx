@@ -4,7 +4,7 @@ import { AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { cn } from "@/lib/utils";
+import { cn, getUploadcareUrl } from "@/lib/utils";
 import { Lens } from "../lens/lens";
 import { CardSpotlight } from "@/src/components/comp/card/CardSpotlight";
 
@@ -95,7 +95,7 @@ export const ParallaxScroll = ({
           <div className="absolute size-full backface-hidden rounded-lg overflow-hidden">
             <Lens>
               <Image
-                src={el.src}
+                src={getUploadcareUrl(el.src)}
                 alt="thumbnail"
                 className="h-80 w-full object-cover object-left-top rounded-lg gap-10 !m-0 !p-0"
                 quality={90}

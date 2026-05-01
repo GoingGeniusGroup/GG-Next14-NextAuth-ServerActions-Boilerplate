@@ -61,8 +61,8 @@ model skills {
   gg_id            String      @db.Uuid
   experience_id    String?     @db.Uuid
   certifications   String[]
-  users            User        @relation(fields: [gg_id], references: [gg_id], onDelete: Cascade, onUpdate: NoAction)
   experiences      experience? @relation(fields: [experience_id], references: [experience_id], onDelete: Cascade, onUpdate: NoAction)
+  users            User        @relation(fields: [gg_id], references: [gg_id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model User {
